@@ -7,10 +7,16 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-if not exist node_modules (
-  echo First run: installing packages. This takes a minute...
+if not exist node_modules\@supabase\supabase-js (
+  echo Installing packages. This takes a minute...
   call npm install
   if errorlevel 1 ( pause & exit /b 1 )
+)
+if not exist .env.local (
+  echo.
+  echo  Online accounts are not connected on this laptop yet.
+  echo  Copy .env.example to .env.local and paste in your Supabase URL and key - see README.md.
+  echo.
 )
 echo Starting Rep Ledger - your browser will open. Keep this window open while you use the app.
 call npm run dev -- --open

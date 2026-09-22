@@ -28,7 +28,7 @@ function ScrollTop() {
 }
 
 migrateLegacy();
-restoreSession();
+void restoreSession();
 
 function Gate() {
   const signedIn = useAccounts((s) => s.currentId);

@@ -11,6 +11,25 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
+## Online accounts (Supabase)
+
+Profiles and logs are stored in a free Supabase database, so they're on every device you sign in on.
+People sign in once per device with email + password; after that they pick their profile and type their 4-digit PIN.
+The app locks when it's closed. Data is also kept on the device, so it opens instantly and works offline — changes upload when the connection is back.
+
+One-time setup:
+
+1. Create a project at supabase.com.
+2. **SQL Editor → New query**: paste `supabase/schema.sql` and press **Run**.
+3. **Authentication → Sign In / Providers → Email**: turn **Confirm email** off (the free email sender only allows a few emails an hour).
+4. **Authentication → URL Configuration**: set **Site URL** to your Vercel address, and add `http://localhost:5173/**` under Redirect URLs.
+5. **Project Settings → API**: copy the **Project URL** and the **publishable (anon) key**.
+6. Put them in:
+   - **Vercel → Settings → Environment Variables** as `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then redeploy.
+   - A file called `.env.local` next to `package.json` (copy `.env.example`) for running on your laptop.
+
+Profiles created before online accounts are offered for upload the first time you sign in or create an account on that device.
+
 ## Build
 
 ```bash

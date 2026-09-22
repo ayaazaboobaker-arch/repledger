@@ -36,7 +36,7 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
   const [p, setP] = useState<Profile>(initial);
   const [pin, setPin] = useState("");
   const [pin2, setPin2] = useState("");
-  const [usePin, setUsePin] = useState(true);
+  const usePin = true;
   const [step, setStep] = useState(0);
   const up = (patch: Partial<Profile>) => setP((cur) => ({ ...cur, ...patch }));
 
@@ -77,15 +77,14 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
       <form className="card stack" onSubmit={(e) => { e.preventDefault(); next(); }}>
         {key === "Create your profile" && (
           <>
-            <p className="small muted prose">Your profile keeps your workouts, food and weigh-ins separate from anyone else using this laptop.</p>
+            <p className="small muted prose">Your workouts, food and weigh-ins are saved to your account, so they're on every device you sign in on. Your PIN unlocks the app quickly after the first sign-in.</p>
             <label className="f" htmlFor="ob-name">Your name<input className="in" id="ob-name" autoFocus value={p.name} placeholder="e.g. Ayaaz" onChange={(e) => up({ name: e.target.value })} /></label>
             {usePin ? (
               <div className="grid-2">
                 <div><div className="f" style={{ marginBottom: 6 }}>Choose a 4-digit PIN</div><PinInput id="ob-pin" label="PIN" value={pin} onChange={setPin} /></div>
                 <div><div className="f" style={{ marginBottom: 6 }}>Type it again</div><PinInput id="ob-pin2" label="Confirm PIN" value={pin2} onChange={setPin2} invalid={pin2.length === 4 && pin !== pin2} /></div>
               </div>
-            ) : <p className="small muted">No PIN — anyone on this laptop can open your profile.</p>}
-            <button type="button" className="btn ghost sm" style={{ alignSelf: "flex-start" }} onClick={() => setUsePin(!usePin)}>{usePin ? "Skip the PIN" : "Use a PIN"}</button>
+            ) : null}
           </>
         )}
 

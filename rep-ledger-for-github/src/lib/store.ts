@@ -117,13 +117,19 @@ export const useStore = create<State>()((set, get) => ({
   loadDemo: () => set({ ...demoData(), layout: get().layout }),
 }));
 
-/* ---------- per-profile persistence ---------- */
+/* ---------- per-profile persistence ----------
+ * Every profile keeps a copy on this device (rep-ledger:user:<id>) so the app opens
+ * instantly and works offline. Signed-in accounts also sync that copy to the online
+ * database — see cloud.ts, which listens through onDataChange().
+ */
 const DATA_KEYS: (keyof UserData)[] = ["profile", "targets", "plan", "days", "savedMeals", "customFoods", "active", "isDemo", "layout"];
 let currentKey: string | null = null;
 let timer: number | undefined;
+let quiet = false;
+let listener: (() => void) | null = null;
 
 const userKey = (id: string) => `rep-ledger:user:${id}`;
-function snapshot(): UserData {
+export function snapshot(): UserData {
   const s = useStore.getState();
   return Object.fromEntries(DATA_KEYS.map((k) => [k, s[k]])) as unknown as UserData;
 }
@@ -133,27 +139,48 @@ function flush() {
   if (currentKey) store.set(currentKey, JSON.stringify(snapshot()));
 }
 useStore.subscribe(() => {
-  if (!currentKey) return;
+  if (!currentKey || quiet) return;
   clearTimeout(timer);
   timer = window.setTimeout(flush, 250);
+  listener?.();
 });
 if (typeof window !== "undefined") window.addEventListener("pagehide", flush);
 
-/** Load a profile's data into the app. `initial` is used only when nothing is saved yet. */
+/** Called after every change the person makes (not after loading or applying synced data). */
+export function onDataChange(fn: (() => void) | null) { listener = fn; }
+
+const normalise = (saved: Partial<UserData>): UserData => {
+  const data: UserData = { ...blankData(), ...saved };
+  if (data.profile) data.profile = { ...data.profile, goal: normGoal(data.profile.goal) };
+  return data;
+};
+const load = (data: UserData) => { quiet = true; try { useStore.setState(data); } finally { quiet = false; } };
+
+/** Load a profile's data into the app. `initial` is used only when nothing is saved on this device yet. */
 export function openUserData(id: string, initial?: UserData) {
   flush();
   currentKey = null;
   const saved = store.getJSON<Partial<UserData>>(userKey(id));
-  const data: UserData = saved ? { ...blankData(), ...saved } : initial ?? blankData();
-  if (data.profile) data.profile = { ...data.profile, goal: normGoal(data.profile.goal) };
-  useStore.setState(data);
+  load(saved ? normalise(saved) : initial ? normalise(initial) : blankData());
   currentKey = userKey(id);
   flush();
 }
+/** Replace what's on screen with newer data from the database, without treating it as a new edit. */
+export function applyRemoteData(id: string, data: Partial<UserData>) {
+  if (currentKey !== userKey(id)) { store.set(userKey(id), JSON.stringify(normalise(data))); return; }
+  clearTimeout(timer);
+  load(normalise(data));
+  flush();
+}
+export function readUserData(id: string): UserData | null {
+  const saved = store.getJSON<Partial<UserData>>(userKey(id));
+  return saved ? normalise(saved) : null;
+}
+export function writeUserData(id: string, data: UserData) { store.set(userKey(id), JSON.stringify(data)); }
 export function closeUserData() {
   flush();
   currentKey = null;
-  useStore.setState(blankData());
+  load(blankData());
 }
 export function deleteUserData(id: string) {
   if (currentKey === userKey(id)) currentKey = null;
