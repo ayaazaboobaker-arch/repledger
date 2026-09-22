@@ -1,34 +1,28 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Combo } from "../components/Select";
-import { Icon } from "../components/ui";
+import { ConfirmButton } from "../components/safety";
+import { Icon, Sheet, toast } from "../components/ui";
+import { KG_VALUES, SET_VALUES, WheelPicker } from "../components/WheelPicker";
+import { ALL_EXERCISES, defaultsFor, EXERCISES, GROUPS, type ExGroup } from "../lib/exercises";
 import { useStore } from "../lib/store";
-import type { DowKey, PlanExercise } from "../lib/types";
-import { DOW, DOW_LONG, parseNum } from "../lib/util";
+import type { DowKey, PlanExercise, WeekPlan } from "../lib/types";
+import { DOW, DOW_LONG, fmtKg } from "../lib/util";
 
-const LIBRARY = ["Back Squat", "Front Squat", "Goblet Squat", "Bulgarian Split Squat", "Leg Press", "Hack Squat", "Walking Lunge", "Reverse Lunge", "Step-up", "Romanian Deadlift", "Deadlift", "Sumo Deadlift", "Hip Thrust", "Glute Bridge", "Leg Curl", "Leg Extension", "Calf Raise", "Bench Press", "Incline Bench Press", "Dumbbell Bench Press", "Incline Dumbbell Press", "Chest Fly", "Cable Crossover", "Push-up", "Dips", "Overhead Press", "Seated Dumbbell Press", "Arnold Press", "Lateral Raise", "Rear Delt Fly", "Face Pull", "Shrug", "Pull-up", "Chin-up", "Lat Pulldown", "Barbell Row", "Dumbbell Row", "Cable Row", "T-Bar Row", "Inverted Row", "Bicep Curl", "Hammer Curl", "Preacher Curl", "Tricep Pushdown", "Skull Crusher", "Overhead Tricep Extension", "Close-grip Bench Press", "Hanging Leg Raise", "Cable Crunch", "Ab Wheel Rollout", "Russian Twist", "Kettlebell Swing", "Farmer's Carry", "Muscle-up", "Pistol Squat", "Pike Push-up"];
+const REPS = Array.from({ length: 60 }, (_, i) => i + 1);
+const kgLabel = (kg: number) => (kg ? `${fmtKg(kg)} kg` : "Bodyweight");
+
+type Editing =
+  | { mode: "add"; day: DowKey }
+  | { mode: "edit"; day: DowKey; index: number };
 
 export function Plan() {
   const { plan, setPlan } = useStore();
-  const mutate = (fn: (p: typeof plan) => void) => {
-    const p = JSON.parse(JSON.stringify(plan));
+  const [editing, setEditing] = useState<Editing | null>(null);
+  const mutate = (fn: (p: WeekPlan) => void) => {
+    const p: WeekPlan = JSON.parse(JSON.stringify(plan));
     fn(p);
     setPlan(p);
   };
-  const setEx = (k: DowKey, i: number, f: keyof PlanExercise, raw: string) =>
-    mutate((p) => {
-      const e = p[k].exercises[i];
-      if (f === "name") e.name = raw;
-      else {
-        const v = parseNum(raw);
-        (e[f] as number) = v == null ? 0 : f === "kg" ? v : Math.max(f === "sets" ? 1 : 0, Math.round(v));
-      }
-    });
-  const add = (k: DowKey, name: string) =>
-    mutate((p) => {
-      if (!p[k].exercises.length && /^rest$/i.test(p[k].title)) p[k].title = "Session";
-      p[k].exercises.push({ name, sets: 3, reps: 10, kg: 0 });
-    });
   let train = 0, sets = 0;
   DOW.forEach((k) => { if (plan[k].exercises.length) train++; plan[k].exercises.forEach((e) => (sets += e.sets)); });
 
@@ -38,51 +32,238 @@ export function Plan() {
         <div><div className="eyebrow">Weekly plan</div><h1>Your training week</h1></div>
         <Link to="/profile" className="btn">{Icon.star} Get a recommended plan</Link>
       </div>
-      <div className="row" style={{ gap: 26, marginBottom: 8 }}>
-        <div className="small muted"><b className="big-num" style={{ fontSize: 30, color: "var(--ink)", display: "block" }}>{train}</b>training days</div>
-        <div className="small muted"><b className="big-num" style={{ fontSize: 30, color: "var(--ink)", display: "block" }}>{7 - train}</b>rest days</div>
-        <div className="small muted"><b className="big-num" style={{ fontSize: 30, color: "var(--ink)", display: "block" }}>{sets}</b>working sets a week</div>
+      <div className="plan-stats">
+        <div><b>{train}</b><span>training days</span></div>
+        <div><b>{7 - train}</b><span>rest days</span></div>
+        <div><b>{sets}</b><span>working sets a week</span></div>
       </div>
-      <p className="small muted prose" style={{ marginBottom: 16 }}>Each day's list becomes that day's session. Weight is your working target in kg — use 0 for bodyweight moves. Changes apply to sessions you haven't started yet.</p>
+      <p className="small muted prose" style={{ marginBottom: 16 }}>Tap an exercise to change its sets, reps and weight. Changes apply to sessions you haven't started yet.</p>
+
       <div className="plan-grid">
-        {DOW.map((k) => {
-          const pd = plan[k];
-          return (
-            <section key={k} className={`card pday${pd.exercises.length ? "" : " rest"}`}>
-              <div className="dow">{DOW_LONG[k]}</div>
-              <input className="ptitle" id={`pt-${k}`} value={pd.title} onChange={(e) => mutate((p) => { p[k].title = e.target.value; })} aria-label={`${DOW_LONG[k]} session name`} />
-              <input className="in small" id={`pf-${k}`} style={{ marginTop: 4, fontSize: 13 }} value={pd.focus || ""} placeholder="Focus, e.g. Chest and triceps" onChange={(e) => mutate((p) => { p[k].focus = e.target.value; })} aria-label={`${DOW_LONG[k]} focus`} />
-              {pd.exercises.length ? (
-                <>
-                  <div className="prow h"><span>Exercise</span><span>Sets</span><span>Reps</span><span>kg</span><span /></div>
-                  {pd.exercises.map((e, i) => (
-                    <div className="prow" key={i}>
-                      <Combo id={`p-${k}-${i}-n`} label="Exercise" value={e.name} onChange={(v) => setEx(k, i, "name", v)} suggestions={LIBRARY} />
-                      <input key={`s-${e.sets}`} className="in num" id={`p-${k}-${i}-s`} inputMode="numeric" defaultValue={e.sets} onBlur={(ev) => setEx(k, i, "sets", ev.target.value)} aria-label="Sets" />
-                      <input key={`r-${e.reps}`} className="in num" id={`p-${k}-${i}-r`} inputMode="numeric" defaultValue={e.reps} onBlur={(ev) => setEx(k, i, "reps", ev.target.value)} aria-label="Reps" />
-                      <input key={`k-${e.kg}`} className="in num" id={`p-${k}-${i}-k`} inputMode="decimal" defaultValue={e.kg} onBlur={(ev) => setEx(k, i, "kg", ev.target.value)} aria-label="Target kg" />
-                      <button className="icon-btn" onClick={() => mutate((p) => { p[k].exercises.splice(i, 1); })} aria-label={`Remove ${e.name}`}>{Icon.x}</button>
-                    </div>
-                  ))}
-                </>
-              ) : <p className="small muted" style={{ marginTop: 10 }}>Rest day — add an exercise to make it a training day.</p>}
-              <AddExercise day={DOW_LONG[k]} id={`pa-${k}`} onAdd={(n) => add(k, n)} extra={pd.exercises.length > 0 && <button className="btn sm ghost" type="button" onClick={() => mutate((p) => { p[k] = { title: "Rest", exercises: [] }; })}>Make rest</button>} />
-            </section>
-          );
-        })}
+        {DOW.map((k) => (
+          <DayCard key={k} day={k} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: k })} onEdit={(index) => setEditing({ mode: "edit", day: k, index })} />
+        ))}
       </div>
+
+      <ExerciseSheet editing={editing} plan={plan} mutate={mutate} onClose={() => setEditing(null)} />
     </>
   );
 }
 
-function AddExercise({ day, id, onAdd, extra }: { day: string; id: string; onAdd: (name: string) => void; extra: ReactNode }) {
-  const [v, setV] = useState("");
-  const submit = (name: string) => { if (name.trim()) { onAdd(name.trim()); setV(""); } };
+function DayCard({ day, plan, mutate, onAdd, onEdit }: { day: DowKey; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onAdd: () => void; onEdit: (i: number) => void }) {
+  const pd = plan[day];
+  const rest = pd.exercises.length === 0;
+  const sets = pd.exercises.reduce((n, e) => n + e.sets, 0);
   return (
-    <form className="row" style={{ marginTop: 10, flexWrap: "nowrap" }} onSubmit={(e) => { e.preventDefault(); submit(v); }}>
-      <Combo id={id} label={`Add exercise to ${day}`} placeholder="Add exercise" value={v} onChange={setV} suggestions={LIBRARY} style={{ flex: 1 }} />
-      <button className="btn sm" type="submit">Add</button>
-      {extra}
-    </form>
+    <section className={`card pday${rest ? " is-rest" : ""}`}>
+      <div className="pday-top">
+        <div className="dow">{DOW_LONG[day]}</div>
+        <span className={`pill ${rest ? "" : "good"}`}>{rest ? "Rest" : `${pd.exercises.length} exercise${pd.exercises.length === 1 ? "" : "s"} · ${sets} sets`}</span>
+      </div>
+      <input
+        className="ptitle" id={`pt-${day}`} value={pd.title} placeholder={rest ? "Rest" : "Session name"}
+        onChange={(e) => mutate((p) => { p[day].title = e.target.value; })} aria-label={`${DOW_LONG[day]} session name`}
+      />
+      {!rest && (
+        <input className="pfocus" id={`pf-${day}`} value={pd.focus || ""} placeholder="Add a focus, e.g. Chest and triceps"
+          onChange={(e) => mutate((p) => { p[day].focus = e.target.value; })} aria-label={`${DOW_LONG[day]} focus`} />
+      )}
+
+      {rest ? (
+        <div className="rest-body">
+          <span className="rest-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z" /></svg>
+          </span>
+          <div>
+            <b>Rest and recover</b>
+            <div className="small muted">Muscles grow between sessions. Add an exercise to make this a training day.</div>
+          </div>
+        </div>
+      ) : (
+        <ol className="ex-list">
+          {pd.exercises.map((e, i) => (
+            <li key={i}>
+              <button className="ex-row" onClick={() => onEdit(i)} aria-label={`Edit ${e.name}: ${e.sets} sets of ${e.reps}, ${kgLabel(e.kg)}`}>
+                <span className="ex-n">{i + 1}</span>
+                <span className="ex-name">{e.name}</span>
+                <span className="ex-spec"><b>{e.sets}×{e.reps}</b><small>{e.kg ? `${fmtKg(e.kg)} kg` : "BW"}</small></span>
+                <span className="ex-chev">{Icon.right}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
+      )}
+
+      <div className="pday-foot">
+        <button className="btn block add-ex" onClick={onAdd}>{Icon.plus} Add exercise</button>
+        {!rest && (
+          <ConfirmButton className="btn ghost sm" label="Make rest day" question={`Clear ${DOW_LONG[day]} and make it a rest day?`} confirmLabel="Make rest"
+            onConfirm={() => mutate((p) => { p[day] = { title: "Rest", exercises: [] }; })} />
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ---------- add / edit sheet ---------- */
+
+function ExerciseSheet({ editing, plan, mutate, onClose }: { editing: Editing | null; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onClose: () => void }) {
+  const [step, setStep] = useState<"pick" | "numbers">("pick");
+  const [draft, setDraft] = useState<PlanExercise>({ name: "", sets: 3, reps: 10, kg: 0 });
+
+  useEffect(() => {
+    if (!editing) return;
+    if (editing.mode === "edit") { setDraft({ ...plan[editing.day].exercises[editing.index] }); setStep("numbers"); }
+    else { setStep("pick"); setDraft({ name: "", sets: 3, reps: 10, kg: 0 }); }
+    // Only when the sheet opens for a new target.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editing]);
+
+  if (!editing) return null;
+  const day = editing.day;
+  const dayName = DOW_LONG[day];
+  const isEdit = editing.mode === "edit";
+  const list = plan[day].exercises;
+
+  const choose = (name: string) => {
+    setDraft((d) => (isEdit ? { ...d, name } : { name, ...defaultsFor(name) }));
+    setStep("numbers");
+  };
+  const save = () => {
+    mutate((p) => {
+      const pd = p[day];
+      if (isEdit) pd.exercises[editing.index] = { ...draft };
+      else {
+        if (!pd.exercises.length && (!pd.title || /^rest$/i.test(pd.title))) pd.title = "Session";
+        pd.exercises.push({ ...draft });
+      }
+    });
+    toast(isEdit ? `${draft.name} updated` : `${draft.name} added to ${dayName}`);
+    onClose();
+  };
+  const move = (dir: -1 | 1) => {
+    if (!isEdit) return;
+    const j = editing.index + dir;
+    if (j < 0 || j >= list.length) return;
+    mutate((p) => { const ex = p[day].exercises; [ex[editing.index], ex[j]] = [ex[j], ex[editing.index]]; });
+    onClose();
+  };
+  const remove = () => {
+    if (!isEdit) return;
+    mutate((p) => { p[day].exercises.splice(editing.index, 1); if (!p[day].exercises.length) p[day] = { title: "Rest", exercises: [] }; });
+    toast(`${draft.name} removed`);
+    onClose();
+  };
+  const copyDay = (from: DowKey) => {
+    mutate((p) => { p[day] = JSON.parse(JSON.stringify(p[from])); });
+    toast(`${dayName} now matches ${DOW_LONG[from]}`);
+    onClose();
+  };
+
+  const title = step === "pick" ? (isEdit ? "Change exercise" : `Add to ${dayName}`) : draft.name;
+  return (
+    <Sheet
+      open label={title} onClose={onClose}
+      title={
+        <div className="spread">
+          <div className="row" style={{ gap: 6, minWidth: 0 }}>
+            {step === "numbers" && !isEdit && <button className="icon-btn" onClick={() => setStep("pick")} aria-label="Back to exercise list">{Icon.left}</button>}
+            {step === "pick" && isEdit && <button className="icon-btn" onClick={() => setStep("numbers")} aria-label="Back">{Icon.left}</button>}
+            <div style={{ minWidth: 0 }}>
+              <div className="eyebrow">{dayName}</div>
+              <h2 className="sheet-title">{title}</h2>
+            </div>
+          </div>
+          <button className="icon-btn" onClick={onClose} aria-label="Close">{Icon.x}</button>
+        </div>
+      }
+      footer={step === "numbers" ? (
+        <button className="btn primary lg block" onClick={save}>{isEdit ? "Save changes" : `Add to ${dayName}`}</button>
+      ) : undefined}
+    >
+      {step === "pick" ? (
+        <Picker taken={list.map((e) => e.name)} onPick={choose} plan={plan} day={day} onCopy={isEdit ? undefined : copyDay} />
+      ) : (
+        <>
+          <div className="spec-preview">
+            <b>{draft.sets} × {draft.reps}</b><span>{kgLabel(draft.kg)}</span>
+          </div>
+          <div className="wheels">
+            <WheelPicker id="pw-sets" label="Sets" values={SET_VALUES} value={draft.sets} onChange={(sets) => setDraft((d) => ({ ...d, sets }))} />
+            <WheelPicker id="pw-reps" label="Reps" values={REPS} value={draft.reps} onChange={(reps) => setDraft((d) => ({ ...d, reps }))} />
+            <WheelPicker id="pw-kg" label="Weight kg" values={KG_VALUES} value={draft.kg} onChange={(kg) => setDraft((d) => ({ ...d, kg }))} format={(v) => (v === 0 ? "BW" : fmtKg(v))} />
+          </div>
+          <div className="chips quick-picks" style={{ marginTop: 12 }} aria-label="Quick picks">
+            {[[3, 8], [3, 10], [3, 12], [4, 6], [5, 5]].map(([s, r]) => (
+              <button key={`${s}x${r}`} className="chip" aria-pressed={draft.sets === s && draft.reps === r} onClick={() => setDraft((d) => ({ ...d, sets: s, reps: r }))}>{s}×{r}</button>
+            ))}
+            <button className="chip" aria-pressed={draft.kg === 0} onClick={() => setDraft((d) => ({ ...d, kg: 0 }))}>Bodyweight</button>
+          </div>
+          <p className="xs faint" style={{ marginTop: 10 }}>Scroll the wheels or tap a number. Weight is your working target — use BW for bodyweight moves.</p>
+          {isEdit && (
+            <div className="edit-actions">
+              <button className="btn sm" onClick={() => setStep("pick")}>{Icon.edit} Change exercise</button>
+              <button className="btn sm" onClick={() => move(-1)} disabled={editing.index === 0}>{Icon.up} Move up</button>
+              <button className="btn sm" onClick={() => move(1)} disabled={editing.index === list.length - 1}>{Icon.down} Move down</button>
+              <button className="btn sm danger-link" onClick={remove}>{Icon.trash} Remove</button>
+            </div>
+          )}
+        </>
+      )}
+    </Sheet>
+  );
+}
+
+function Picker({ taken, onPick, plan, day, onCopy }: { taken: string[]; onPick: (name: string) => void; plan: WeekPlan; day: DowKey; onCopy?: (from: DowKey) => void }) {
+  const [q, setQ] = useState("");
+  const [group, setGroup] = useState<ExGroup | "All">("All");
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => { if (window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus(); }, []);
+
+  const query = q.trim().toLowerCase();
+  const results = useMemo(() => {
+    const pool = group === "All" ? ALL_EXERCISES : EXERCISES[group];
+    return query ? ALL_EXERCISES.filter((n) => n.toLowerCase().includes(query)) : pool;
+  }, [group, query]);
+  const exact = ALL_EXERCISES.some((n) => n.toLowerCase() === query);
+  const copyable = DOW.filter((k) => k !== day && plan[k].exercises.length);
+
+  return (
+    <div className="picker">
+      <div className="search">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+        <input ref={inputRef} id="ex-search" className="in" placeholder="Search exercises" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search exercises" autoComplete="off"
+          onKeyDown={(e) => { if (e.key === "Enter" && q.trim()) { e.preventDefault(); onPick(results[0] && !exact && results.length === 1 ? results[0] : (ALL_EXERCISES.find((n) => n.toLowerCase() === query) ?? q.trim())); } }} />
+      </div>
+      {!query && (
+        <div className="chips scroll-chips" role="tablist" aria-label="Muscle group">
+          {(["All", ...GROUPS] as const).map((g) => (
+            <button key={g} role="tab" className="chip" aria-selected={group === g} aria-pressed={group === g} onClick={() => setGroup(g)}>{g}</button>
+          ))}
+        </div>
+      )}
+      <ul className="pick-list">
+        {query && !exact && (
+          <li><button className="pick-item custom" onClick={() => onPick(q.trim())}>{Icon.plus}<span>Add “{q.trim()}”</span><small>Custom exercise</small></button></li>
+        )}
+        {results.map((n) => (
+          <li key={n}>
+            <button className="pick-item" onClick={() => onPick(n)}>
+              <span>{n}</span>
+              {taken.includes(n) ? <small className="taken">In this day</small> : <small>{GROUPS.find((g) => EXERCISES[g].includes(n))}</small>}
+            </button>
+          </li>
+        ))}
+        {!results.length && !query && <li className="small muted">Nothing here yet.</li>}
+      </ul>
+      {onCopy && copyable.length > 0 && !query && (
+        <div className="copy-day">
+          <div className="f" style={{ marginBottom: 6 }}>Or copy a whole day</div>
+          <div className="chips">
+            {copyable.map((k) => <button key={k} className="chip" onClick={() => onCopy(k)}>{DOW_LONG[k].slice(0, 3)} · {plan[k].title || "Session"}</button>)}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

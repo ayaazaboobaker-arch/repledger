@@ -305,7 +305,7 @@ function Runner({ onFinish }: { onFinish: (date: string) => void }) {
         </div>
 
         {resting && (
-          <div className="rest" role="timer" aria-live="off">
+          <div className="rest-timer" role="timer" aria-live="off">
             <div><div className="xs" style={{ opacity: 0.7, fontWeight: 700, letterSpacing: ".1em" }}>REST</div><div className="t">{mmss(restLeft)}</div></div>
             <div className="bar"><i style={{ width: `${(restLeft / (a.restSeconds * 1000)) * 100}%` }} /></div>
             <button className="btn sm" onClick={() => setActive({ restEndsAt: a.restEndsAt! + 15000 })}>+15s</button>
