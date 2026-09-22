@@ -614,3 +614,25 @@ button.me-chip:hover, button.me-chip.open { box-shadow: 0 0 0 3px color-mix(in s
 .today-tag { font-family: var(--body); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--accent); color: var(--accent-ink); border-radius: 999px; padding: 4px 10px; }
 .greet { font-size: 16px; font-weight: 600; color: var(--muted); margin-top: 6px; }
 @media (max-width: 560px) { .date-main { font-size: 30px; } .greet { font-size: 14px; } }
+
+/* ---------- online accounts ---------- */
+.auth { display: flex; flex-direction: column; gap: 12px; max-width: 400px; margin: 8px auto 0; text-align: left; }
+.auth h1, .auth > p, .auth > .avatar { text-align: center; }
+.auth .f { display: flex; flex-direction: column; gap: 6px; }
+.auth .in[readonly] { color: var(--muted); background: var(--bg); }
+.auth .grid-2 { gap: 12px; }
+.auth .row { gap: 4px; }
+.auth .danger-link { align-self: center; }
+.notice { text-align: left; font-size: 14px; line-height: 1.5; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); margin: 8px 0 18px; }
+.notice.warn { border-color: color-mix(in srgb, var(--warn) 45%, var(--line)); background: color-mix(in srgb, var(--warn) 8%, var(--surface)); }
+.person.add { border-style: dashed; background: transparent; }
+.person.add .pn { font-size: 15px; }
+.avatar.ghost { background: transparent; border: 1.5px dashed var(--line); color: var(--muted); display: grid; place-items: center; }
+.avatar.ghost svg { width: 20px; height: 20px; }
+.sync-badge { display: inline-flex; align-items: center; gap: 5px; margin-top: 4px; font-size: 12px; color: var(--muted); }
+.sync-badge svg { width: 14px; height: 14px; }
+.sync-badge.saved svg { color: var(--good); }
+.sync-badge.saving svg { color: var(--accent); animation: sync-pulse 1s ease-in-out infinite alternate; }
+.sync-badge.offline svg, .sync-badge.error svg { color: var(--warn); }
+@keyframes sync-pulse { from { opacity: .35; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .sync-badge.saving svg { animation: none; } }

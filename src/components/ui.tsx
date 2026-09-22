@@ -34,6 +34,8 @@ export const Icon = {
   users: S(<><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20c1-3.5 3.5-5.5 6.5-5.5s5.5 2 6.5 5.5" /><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c1.8.7 3 2.5 3.5 5.2" /></>),
   download: S(<><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></>),
   upload: S(<><path d="M12 20V9M7 14l5-5 5 5M5 4h14" /></>),
+  cloud: S(<path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9.5a4.25 4.25 0 0 1-.5 8.5z" />),
+  mail: S(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>),
   trash: S(<><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></>),
 };
 

@@ -13,32 +13,28 @@ export async function keepData(): Promise<boolean> {
   }
 }
 
-/** Every profile, its logs and settings, as one JSON text. */
-export function exportAll(): string {
-  const data: Record<string, unknown> = {};
-  try {
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i)!;
-      if (k.startsWith(PREFIX)) data[k] = JSON.parse(localStorage.getItem(k) || "null");
-    }
-  } catch {
-    /* storage blocked */
-  }
-  return JSON.stringify({ app: "rep-ledger", version: 2, exportedAt: new Date().toISOString(), data }, null, 1);
+/** One profile's logs and settings as a JSON file (tokens and other accounts are never included). */
+export function exportAccount(acc: { id: string; name: string; pinHash: string | null; goal?: string }): string {
+  const data = store.getJSON<unknown>(`${PREFIX}user:${acc.id}`);
+  const entry = { id: acc.id, name: acc.name, pinHash: acc.pinHash, goal: acc.goal, createdAt: Date.now(), lastUsed: Date.now() };
+  return JSON.stringify({ app: "rep-ledger", version: 3, exportedAt: new Date().toISOString(), data: { [PREFIX + "accounts"]: { accounts: [entry] }, [`${PREFIX}user:${acc.id}`]: data } }, null, 1);
 }
 
-export function downloadBackup() {
-  const blob = new Blob([exportAll()], { type: "application/json" });
+export function downloadBackup(acc: { id: string; name: string; pinHash: string | null; goal?: string }) {
+  const blob = new Blob([exportAccount(acc)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `rep-ledger-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.download = `rep-ledger-${acc.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-${new Date().toISOString().slice(0, 10)}.json`;
   document.body.appendChild(a);
   a.click();
   a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-/** Restores a backup file. Profiles already on this device are kept; matching ones are replaced. */
+/**
+ * Restores a backup file as profiles on this device, ready to be brought into an
+ * account after signing in. Only profile data is read from the file.
+ */
 export async function importBackup(file: File): Promise<number> {
   const parsed = JSON.parse(await file.text());
   if (parsed?.app !== "rep-ledger" || typeof parsed.data !== "object") throw new Error("That file isn't a Rep Ledger backup.");
@@ -46,8 +42,11 @@ export async function importBackup(file: File): Promise<number> {
   const accKey = PREFIX + "accounts";
   const current = store.getJSON<{ accounts: { id: string }[]; currentId: string | null }>(accKey) ?? { accounts: [], currentId: null };
   const inAcc = (incoming[accKey] as { accounts: { id: string }[] } | undefined)?.accounts ?? [];
-  for (const [k, v] of Object.entries(incoming)) if (k !== accKey && k.startsWith(PREFIX)) store.set(k, JSON.stringify(v));
-  const merged = [...current.accounts.filter((a) => !inAcc.some((b) => b.id === a.id)), ...inAcc];
+  for (const a of inAcc) {
+    const v = incoming[`${PREFIX}user:${a.id}`];
+    if (v && typeof v === "object") store.set(`${PREFIX}user:${a.id}`, JSON.stringify(v));
+  }
+  const merged = [...current.accounts.filter((a) => !inAcc.some((b) => b.id === a.id)), ...inAcc.filter((a) => a.id !== "demo")];
   store.set(accKey, JSON.stringify({ accounts: merged, currentId: null }));
   return inAcc.length;
 }

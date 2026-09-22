@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NumField } from "../components/forms";
-import { PinSheet } from "../components/ProfileMenu";
+import { PinSheet, SyncBadge } from "../components/ProfileMenu";
 import { CalorieSteps, MacroTargets, Timeline } from "../components/Numbers";
 import { EQUIP, Onboarding } from "../components/Onboarding";
 import { ConfirmButton } from "../components/safety";
 import { Icon, toast } from "../components/ui";
 import { downloadBackup } from "../lib/backup";
-import { deleteAccount, signOut, updateAccount, useCurrentAccount } from "../lib/accounts";
+import { deleteAccount, forgetOnDevice, signOut, updateAccount, useCurrentAccount } from "../lib/accounts";
 import { calculate, GOALS, targetsFrom } from "../lib/calc";
 import { recommendPlan } from "../lib/plans";
 import { useStore } from "../lib/store";
@@ -132,7 +132,8 @@ function AccountCard() {
         <span className={`avatar${acc.demo ? " demo" : ""}`}>{acc.name.slice(0, 1).toUpperCase()}</span>
         <div>
           <h2 style={{ textTransform: "none", letterSpacing: 0 }}>{acc.name}</h2>
-          <div className="xs muted">{acc.pinHash ? "Protected with a PIN" : "No PIN set"} · you stay signed in on this device</div>
+          <div className="xs muted">{acc.demo ? "Sample data on this device only" : acc.email}{acc.pinHash ? " · PIN on" : ""}</div>
+          {!acc.demo && <SyncBadge />}
         </div>
       </div>
       <div className="acct-actions">
@@ -143,9 +144,9 @@ function AccountCard() {
             <span className="at-chev">{Icon.right}</span>
           </button>
         )}
-        <button className="action-tile" onClick={() => { downloadBackup(); toast("Backup downloaded — keep it somewhere safe"); }}>
+        <button className="action-tile" onClick={() => { downloadBackup(acc); toast("Backup downloaded — keep it somewhere safe"); }}>
           <span className="at-icon">{Icon.download}</span>
-          <span className="at-text"><b>Back up my data</b><small>Save a file you can restore on any device</small></span>
+          <span className="at-text"><b>Back up my data</b><small>Download a copy of your logs as a file</small></span>
           <span className="at-chev">{Icon.right}</span>
         </button>
         <button className="action-tile" onClick={signOut}>
@@ -161,7 +162,8 @@ function AccountCard() {
       </div>
       <div className="acct-foot">
         {acc.demo && <ConfirmButton className="btn ghost sm" label="Reset demo data" question="Put the demo back to how it started?" confirmLabel="Reset" onConfirm={() => { loadDemo(); toast("Demo reset"); }} />}
-        <ConfirmButton className="btn ghost sm danger-link" label={<>{Icon.trash} {acc.demo ? "Remove demo profile" : "Delete my profile"}</>} question={`Delete ${acc.name} and all their logs?`} confirmLabel="Delete" onConfirm={() => deleteAccount(acc.id)} />
+        {!acc.demo && <ConfirmButton className="btn ghost sm" label="Remove from this device" question={`Remove ${acc.name} from this device? Everything stays in your account — sign in with your email to get it back.`} confirmLabel="Remove" onConfirm={async () => { await forgetOnDevice(acc.id); toast("Removed from this device"); }} />}
+        <ConfirmButton className="btn ghost sm danger-link" label={<>{Icon.trash} {acc.demo ? "Remove demo profile" : "Delete all my data"}</>} question={acc.demo ? "Remove the demo profile?" : `Delete ${acc.name}'s workouts, food and weigh-ins everywhere? This can't be undone.`} confirmLabel="Delete" onConfirm={async () => { const m = await deleteAccount(acc.id); toast(m ?? "Deleted"); }} />
       </div>
       <PinSheet open={pinOpen} onClose={() => setPinOpen(false)} />
     </section>
