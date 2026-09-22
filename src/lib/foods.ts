@@ -1,6 +1,6 @@
 /**
  * Built-in food list. Values are per 100 g (or 100 ml) and are typical
- * figures rounded for everyday tracking — packaged products vary, so the
+ * figures rounded for everyday tracking - packaged products vary, so the
  * label always wins. Servings give one-tap portion sizes in grams.
  */
 export interface Food {

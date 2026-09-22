@@ -84,8 +84,8 @@ export function PinSheet({ open, onClose }: { open: boolean; onClose: () => void
     if (step === "old" && oldPin.length === 4) verifyPin(acc.id, oldPin).then((ok) => { if (ok) { setStep("new"); setErr(""); } else { setErr("That's not your current PIN."); setOld(""); } });
     if (step === "new" && p1.length === 4) { setStep("confirm"); setErr(""); }
     if (step === "confirm" && p2.length === 4) {
-      if (p2 !== p1) { setErr("The PINs don't match — try again."); setP1(""); setP2(""); setStep("new"); }
-      else setPin(acc.id, p1).then(() => toast("PIN saved"), () => toast("PIN saved on this device — couldn't reach the server, so try again later to update it online")).finally(onClose);
+      if (p2 !== p1) { setErr("The PINs don't match - try again."); setP1(""); setP2(""); setStep("new"); }
+      else setPin(acc.id, p1).then(() => toast("PIN saved"), () => toast("PIN saved on this device - couldn't reach the server, so try again later to update it online")).finally(onClose);
     }
   }, [oldPin, p1, p2, step, acc, onClose]);
   if (!acc) return null;
@@ -107,10 +107,10 @@ export function PinSheet({ open, onClose }: { open: boolean; onClose: () => void
   );
 }
 
-/** "Saved" / "Saving…" / "Offline" — whether your data has reached the online database. */
+/** "Saved" / "Saving…" / "Offline" - whether your data has reached the online database. */
 export function SyncBadge() {
   const { status, message } = useSync();
   if (status === "off") return null;
-  const label = status === "saved" ? "Saved to your account" : status === "saving" ? "Saving…" : status === "offline" ? "Offline — will sync when you're back online" : "Couldn't sync — will retry";
+  const label = status === "saved" ? "Saved to your account" : status === "saving" ? "Saving…" : status === "offline" ? "Offline - will sync when you're back online" : "Couldn't sync - will retry";
   return <div className={`sync-badge ${status}`} title={message ?? undefined}>{Icon.cloud}<span>{label}</span></div>;
 }

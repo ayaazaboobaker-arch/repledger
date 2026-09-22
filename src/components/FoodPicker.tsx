@@ -76,7 +76,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
       </div>
       {!picked && !creating && (
         <>
-          <input className="in" id="food-search" placeholder="Search foods — e.g. chicken, pap, oats" value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); }} autoFocus aria-label="Search foods" />
+          <input className="in" id="food-search" placeholder="Search foods - e.g. chicken, pap, oats" value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); }} autoFocus aria-label="Search foods" />
           <div className="seg" role="tablist" aria-label="Food lists">
             {([["foods", "All foods"], ["recent", "Recent"], ["meals", `Saved meals (${savedMeals.length})`], ["mine", "My foods"]] as [Tab, string][]).map(([k, l]) => (
               <button key={k} role="tab" aria-pressed={tab === k} aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>
@@ -169,7 +169,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
               </li>
             ))}
           </ul>
-        ) : <p className="small muted">Add packaged foods by copying the numbers off the nutrition label — SA labels in kJ are converted for you.</p>}
+        ) : <p className="small muted">Add packaged foods by copying the numbers off the nutrition label - SA labels in kJ are converted for you.</p>}
       </>
     );
   }
@@ -220,7 +220,7 @@ function Portion({ picked, setPicked, preview }: { picked: Picked; setPicked: (p
       </div>
       <input type="range" min={step} max={maxG} step={step} value={picked.grams} onChange={(e) => setPicked({ ...picked, grams: +e.target.value })} aria-label={`Amount in ${unit}`} />
       <MacroStrip m={preview} />
-      <p className="xs faint">Typical values — check the label for packaged products.</p>
+      <p className="xs faint">Typical values - check the label for packaged products.</p>
     </div>
   );
 }

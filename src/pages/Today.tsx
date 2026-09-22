@@ -122,7 +122,7 @@ export function Today() {
       <div className="arrange-bar">
         {arranging ? (
           <>
-            <span className="small"><b>Arrange your page.</b> Drag a card to move it. Drag the corner handle <span className="rz-hint" aria-hidden="true" /> to resize — sideways for width, up or down for height. <span className="muted">Double-click the handle to fit the height to the content.</span></span>
+            <span className="small"><b>Arrange your page.</b> Drag a card to move it. Drag the corner handle <span className="rz-hint" aria-hidden="true" /> to resize - sideways for width, up or down for height. <span className="muted">Double-click the handle to fit the height to the content.</span></span>
             <div className="row">
               <button className="btn sm ghost" onClick={() => { commit(DEFAULT_LAYOUT); toast("Layout reset"); }}>Reset layout</button>
               <button className="btn sm primary" onClick={() => setArranging(false)}>{Icon.check} Done</button>
@@ -370,7 +370,7 @@ function SessionCard({ date }: { date: string }) {
         </ul>
       ) : (
         <div style={{ padding: "8px 20px 20px" }}>
-          <p className="muted prose">Rest day — recovery is where the strength gets built. Want to train anyway? Pick a session:</p>
+          <p className="muted prose">Rest day - recovery is where the strength gets built. Want to train anyway? Pick a session:</p>
           <div className="chips" style={{ marginTop: 12 }}>
             {DOW.filter((k) => plan[k].exercises.length).map((k) => (
               <button key={k} className="chip" onClick={() => { useStore.getState().startSession(date, k); nav("/train"); }}>{plan[k].title} <span className="faint">· {DOW_LONG[k].slice(0, 3)}</span></button>

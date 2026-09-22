@@ -30,7 +30,7 @@ export function Profile() {
           setProfile(p);
           setTargets(targetsFrom(p, calculate(p)));
           if (acc) updateAccount(acc.id, { goal: p.goal, name: acc.demo ? acc.name : p.name || acc.name });
-          toast("Saved — calories and macros recalculated");
+          toast("Saved - calories and macros recalculated");
           setEditing(false);
         }}
       />
@@ -84,7 +84,7 @@ function Results({ onEdit }: { onEdit: () => void }) {
                 <div className="d" key={k}>
                   <div className="xs faint" style={{ fontWeight: 700, letterSpacing: ".1em" }}>{DOW_LONG[k].toUpperCase()}</div>
                   <h4>{rec.plan[k].title}</h4>
-                  <ul>{rec.plan[k].exercises.map((e) => <li key={e.name}>{e.name} — {e.sets}×{e.reps}{e.kg ? ` @ ${fmtKg(e.kg)} kg` : ""}</li>)}</ul>
+                  <ul>{rec.plan[k].exercises.map((e) => <li key={e.name}>{e.name} - {e.sets}×{e.reps}{e.kg ? ` @ ${fmtKg(e.kg)} kg` : ""}</li>)}</ul>
                 </div>
               ))}
             </div>
@@ -116,7 +116,7 @@ function TargetEditor() {
       <div className="fields" style={{ marginTop: 10, gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))" }}>
         {f("kcal", "Calories", "kcal")}{f("protein", "Protein", "g")}{f("carbs", "Carbs", "g")}{f("fat", "Fat", "g")}{f("steps", "Steps", "/day", 100)}{f("goalWeight", "Goal weight", "kg", 0.1)}
       </div>
-      <p className="xs faint" style={{ marginTop: 10 }}>Macros add up to {fmt(fromMacros)} kcal{Math.abs(fromMacros - targets.kcal) > 100 ? ` — ${fmt(Math.abs(fromMacros - targets.kcal))} kcal ${fromMacros > targets.kcal ? "over" : "under"} your calorie target` : ""}.</p>
+      <p className="xs faint" style={{ marginTop: 10 }}>Macros add up to {fmt(fromMacros)} kcal{Math.abs(fromMacros - targets.kcal) > 100 ? ` - ${fmt(Math.abs(fromMacros - targets.kcal))} kcal ${fromMacros > targets.kcal ? "over" : "under"} your calorie target` : ""}.</p>
     </section>
   );
 }
@@ -144,7 +144,7 @@ function AccountCard() {
             <span className="at-chev">{Icon.right}</span>
           </button>
         )}
-        <button className="action-tile" onClick={() => { downloadBackup(acc); toast("Backup downloaded — keep it somewhere safe"); }}>
+        <button className="action-tile" onClick={() => { downloadBackup(acc); toast("Backup downloaded - keep it somewhere safe"); }}>
           <span className="at-icon">{Icon.download}</span>
           <span className="at-text"><b>Back up my data</b><small>Download a copy of your logs as a file</small></span>
           <span className="at-chev">{Icon.right}</span>
@@ -162,7 +162,7 @@ function AccountCard() {
       </div>
       <div className="acct-foot">
         {acc.demo && <ConfirmButton className="btn ghost sm" label="Reset demo data" question="Put the demo back to how it started?" confirmLabel="Reset" onConfirm={() => { loadDemo(); toast("Demo reset"); }} />}
-        {!acc.demo && <ConfirmButton className="btn ghost sm" label="Remove from this device" question={`Remove ${acc.name} from this device? Everything stays in your account — sign in with your email to get it back.`} confirmLabel="Remove" onConfirm={async () => { await forgetOnDevice(acc.id); toast("Removed from this device"); }} />}
+        {!acc.demo && <ConfirmButton className="btn ghost sm" label="Remove from this device" question={`Remove ${acc.name} from this device? Everything stays in your account - sign in with your email to get it back.`} confirmLabel="Remove" onConfirm={async () => { await forgetOnDevice(acc.id); toast("Removed from this device"); }} />}
         <ConfirmButton className="btn ghost sm danger-link" label={<>{Icon.trash} {acc.demo ? "Remove demo profile" : "Delete all my data"}</>} question={acc.demo ? "Remove the demo profile?" : `Delete ${acc.name}'s workouts, food and weigh-ins everywhere? This can't be undone.`} confirmLabel="Delete" onConfirm={async () => { const m = await deleteAccount(acc.id); toast(m ?? "Deleted"); }} />
       </div>
       <PinSheet open={pinOpen} onClose={() => setPinOpen(false)} />

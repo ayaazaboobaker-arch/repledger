@@ -29,7 +29,7 @@ export interface Account {
   demo?: boolean;
 }
 
-/** Signed in with email but no profile saved yet — next step is setup (or bringing over a local profile). */
+/** Signed in with email but no profile saved yet - next step is setup (or bringing over a local profile). */
 export interface Pending { id: string; email: string }
 
 interface AccountsState {
@@ -172,13 +172,13 @@ export async function setPin(id: string, pin: string) {
 /* ---------- email + password ---------- */
 
 const friendly = (e: unknown): string => {
-  if (isNetworkError(e)) return "Can't reach the server — check your internet connection.";
+  if (isNetworkError(e)) return "Can't reach the server - check your internet connection.";
   const m = String((e as Error)?.message ?? e);
   if (/invalid login/i.test(m)) return "That email and password don't match.";
-  if (/email not confirmed/i.test(m)) return "Confirm your email first — check your inbox for the link.";
-  if (/already registered|already exists/i.test(m)) return "There's already an account with that email — sign in instead.";
+  if (/email not confirmed/i.test(m)) return "Confirm your email first - check your inbox for the link.";
+  if (/already registered|already exists/i.test(m)) return "There's already an account with that email - sign in instead.";
   if (/password should be|weak/i.test(m)) return "Choose a longer password (at least 8 characters).";
-  if (/rate limit|too many/i.test(m)) return "Too many tries — wait a minute and try again.";
+  if (/rate limit|too many/i.test(m)) return "Too many tries - wait a minute and try again.";
   return m;
 };
 
@@ -279,7 +279,7 @@ export async function bringOver(localId: string, pin: string): Promise<string | 
   if (!p || !local) return "Please sign in again.";
   if (local.pinHash && (await hashPin(pin, localId)) !== local.pinHash) return "That PIN isn't right.";
   const data = readUserData(localId);
-  if (!data?.profile) return "That profile has no details saved — start fresh instead.";
+  if (!data?.profile) return "That profile has no details saved - start fresh instead.";
   const pinHash = await hashPin(pin, p.id);
   const name = data.profile.name || local.name;
   try {
@@ -340,7 +340,7 @@ export async function deleteAccount(id: string): Promise<string | null> {
   return null;
 }
 
-/** Earlier versions kept a single log under rep-ledger:v2 — keep it as a local profile to bring over. */
+/** Earlier versions kept a single log under rep-ledger:v2 - keep it as a local profile to bring over. */
 export function migrateLegacy() {
   const legacy = store.getJSON<{ state?: Partial<UserData> }>("rep-ledger:v2");
   if (!legacy?.state) return;

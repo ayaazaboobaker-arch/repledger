@@ -123,7 +123,7 @@ export function startSync(id: string) {
   void pull(id);
 }
 
-/** Stop syncing — any last changes are still sent in the background. */
+/** Stop syncing - any last changes are still sent in the background. */
 export function stopSync(): Promise<void> {
   const id = target;
   clearTimeout(timer);

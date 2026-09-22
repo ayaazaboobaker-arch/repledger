@@ -133,7 +133,7 @@ function Chooser() {
               <div><b>~{sel.mins}</b>minutes</div>
             </div>
             {todayDone && <p className="small muted" style={{ marginBottom: 10 }}>You've already finished today's {days[today].workout!.title}. Starting again lets you review or edit it.</p>}
-            {sel.date !== today && !todayDone && <p className="small muted" style={{ marginBottom: 10 }}>This is {DOW_LONG[sel.k]}'s session — starting it now logs it for today.</p>}
+            {sel.date !== today && !todayDone && <p className="small muted" style={{ marginBottom: 10 }}>This is {DOW_LONG[sel.k]}'s session - starting it now logs it for today.</p>}
             <button className="btn primary lg block" onClick={() => start(sel.k)}>{Icon.play} Start {sel.pd.title}</button>
             <p className="xs faint" style={{ marginTop: 10 }}>Log each set with the scroll wheels. Rest timer starts automatically.</p>
           </aside>
@@ -145,7 +145,7 @@ function Chooser() {
             <div className="td-title">Rest day</div>
             <p className="muted prose" style={{ marginTop: 6 }}>Muscle is built while you recover, not while you train. Keep today easy:</p>
             <ul className="notes">
-              <li>Get your steps in — a relaxed walk helps recovery.</li>
+              <li>Get your steps in - a relaxed walk helps recovery.</li>
               <li>Hit your protein target; it matters just as much on rest days.</li>
               <li>Aim for 7–9 hours of sleep.</li>
               <li>Light stretching or mobility work is a bonus, not a must.</li>
@@ -293,7 +293,7 @@ function Runner({ onFinish }: { onFinish: (date: string) => void }) {
           {ex.sets.map((s, i) => (
             <button key={i} className={`lset${s.done ? " done" : ""}${i === setIdx ? " cur" : ""}`} onClick={() => setSetIdx(i)} aria-pressed={i === setIdx}>
               <small>Set {i + 1}</small>
-              {s.done ? `${s.kg ? fmtKg(s.kg) + " × " : ""}${s.reps}` : "—"}
+              {s.done ? `${s.kg ? fmtKg(s.kg) + " × " : ""}${s.reps}` : "-"}
             </button>
           ))}
         </div>
@@ -383,7 +383,7 @@ function Summary({ date }: { date: string }) {
         <h3>Personal bests</h3>
         {prs.length ? prs.map((p) => (
           <div key={p.name} className="pr"><span className="pill good">{Icon.star} PR</span><div><b>{p.name}</b><div className="small muted">{p.text}</div></div></div>
-        )) : <p className="small muted" style={{ marginTop: 6 }}>No new bests this time — consistency is what makes the next one happen.</p>}
+        )) : <p className="small muted" style={{ marginTop: 6 }}>No new bests this time - consistency is what makes the next one happen.</p>}
         <button className="btn primary lg block" style={{ marginTop: 18 }} onClick={() => nav("/")}>Back to today</button>
       </section>
     </div>

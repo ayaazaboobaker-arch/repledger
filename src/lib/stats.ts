@@ -124,13 +124,13 @@ export function lastPerf(days: Record<string, DayLog>, ex: SessionExercise, befo
 /** Next working weight: +2.5 kg for loads ≥ 20 kg, +1 kg below that, or +1 rep for bodyweight moves. */
 export function suggestion(days: Record<string, DayLog>, ex: SessionExercise, before: string) {
   const lp = lastPerf(days, ex, before);
-  if (!lp) return { kg: ex.tKg ?? 0, reps: ex.tReps ?? 8, note: "First time — find a weight you can do with 1–2 reps to spare.", lp };
+  if (!lp) return { kg: ex.tKg ?? 0, reps: ex.tReps ?? 8, note: "First time - find a weight you can do with 1–2 reps to spare.", lp };
   if (lp.allHit) {
     if (lp.top > 0) {
       const inc = lp.top >= 20 ? 2.5 : 1;
-      return { kg: lp.top + inc, reps: ex.tReps ?? lp.bestReps, note: `You hit every rep last time — try ${lp.top + inc} kg.`, lp };
+      return { kg: lp.top + inc, reps: ex.tReps ?? lp.bestReps, note: `You hit every rep last time - try ${lp.top + inc} kg.`, lp };
     }
-    return { kg: 0, reps: lp.bestReps + 1, note: `Every rep last time — go for ${lp.bestReps + 1} reps.`, lp };
+    return { kg: 0, reps: lp.bestReps + 1, note: `Every rep last time - go for ${lp.bestReps + 1} reps.`, lp };
   }
   return { kg: lp.top, reps: ex.tReps ?? lp.bestReps, note: `Stay at ${lp.top ? lp.top + " kg" : "bodyweight"} until you complete all sets.`, lp };
 }

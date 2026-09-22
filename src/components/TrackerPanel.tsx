@@ -29,7 +29,7 @@ export function TrackerPanel() {
 
   const stop = () => {
     const r = stopTracking();
-    if (r.steps < 5) { toast("Tracking stopped — no steps counted"); return; }
+    if (r.steps < 5) { toast("Tracking stopped - no steps counted"); return; }
     const km2 = (r.steps * strideM(h, r.kind)) / 1000;
     updateDay(today, (d) => {
       d.steps = (d.steps || 0) + r.steps;
@@ -65,7 +65,7 @@ export function TrackerPanel() {
             <div><b>{cadence ?? "–"}</b>steps/min</div>
           </div>
           <button className="btn lg block stop-btn" onClick={stop}>{Icon.stop} Stop and save</button>
-          <p className="xs faint" style={{ marginTop: 8 }}>Keep this screen open — phone in your hand or pocket. The screen stays awake while tracking.</p>
+          <p className="xs faint" style={{ marginTop: 8 }}>Keep this screen open - phone in your hand or pocket. The screen stays awake while tracking.</p>
         </div>
       ) : (
         <>

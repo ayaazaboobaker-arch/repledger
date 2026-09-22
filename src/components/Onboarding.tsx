@@ -91,7 +91,7 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
         {key === "About you" && (
           <>
             <div>
-              <div className="f" style={{ marginBottom: 6 }}>Sex — used in the calorie formula</div>
+              <div className="f" style={{ marginBottom: 6 }}>Sex - used in the calorie formula</div>
               <Opts<Sex> label="Sex" cols={140} value={p.sex} onChange={(sex) => up({ sex })} options={{ male: { label: "Male", hint: "" }, female: { label: "Female", hint: "" } }} />
             </div>
             <div className="fields"><NumField id="ob-age" label="Age" unit="years" value={p.age} min={13} max={100} onChange={(age) => up({ age })} /></div>
@@ -105,7 +105,7 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
               <NumField id="ob-w" label="Weight" unit="kg" value={p.weightKg} step={0.1} onChange={(weightKg) => up({ weightKg })} />
               <NumField id="ob-g" label="Goal weight" unit="kg" value={p.goalWeightKg} step={0.1} onChange={(goalWeightKg) => up({ goalWeightKg })} />
             </div>
-            <p className="small muted">BMI {fmt(p.weightKg / (p.heightCm / 100) ** 2, 1)} — a rough guide only; it can't tell muscle from fat. Not sure of a goal weight? Leave it at your current weight.</p>
+            <p className="small muted">BMI {fmt(p.weightKg / (p.heightCm / 100) ** 2, 1)} - a rough guide only; it can't tell muscle from fat. Not sure of a goal weight? Leave it at your current weight.</p>
           </>
         )}
 

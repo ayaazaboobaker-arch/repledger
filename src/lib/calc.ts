@@ -10,9 +10,9 @@ export const ACTIVITY: Record<Activity, { label: string; hint: string; mult: num
 export const GOALS: Record<Goal, { label: string; hint: string }> = {
   lose: { label: "Lose fat", hint: "Drop body fat while keeping your muscle" },
   gain: { label: "Build muscle", hint: "Add size and strength with a small calorie surplus" },
-  recomp: { label: "Lose fat & build muscle", hint: "Get leaner and stronger at the same time — slower, but both at once" },
-  tone: { label: "Stay toned", hint: "Keep a lean, defined look — hold muscle, trim a little fat" },
-  fit: { label: "Just keep fit", hint: "Stay healthy and active — no big change to your body" },
+  recomp: { label: "Lose fat & build muscle", hint: "Get leaner and stronger at the same time - slower, but both at once" },
+  tone: { label: "Stay toned", hint: "Keep a lean, defined look - hold muscle, trim a little fat" },
+  fit: { label: "Just keep fit", hint: "Stay healthy and active - no big change to your body" },
 };
 
 /** Older saves used "maintain"; it is now "fit". */

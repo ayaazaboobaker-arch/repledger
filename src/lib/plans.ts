@@ -50,7 +50,7 @@ interface Template {
 const TEMPLATES: Template[] = [
   {
     id: "fb3", name: "Full body, 3 days", days: 3,
-    why: "Every muscle gets trained three times a week with a rest day between sessions — the fastest way for newer lifters to learn the lifts and add strength, and easy to keep up with a busy week.",
+    why: "Every muscle gets trained three times a week with a rest day between sessions - the fastest way for newer lifters to learn the lifts and add strength, and easy to keep up with a busy week.",
     schedule: {
       mon: { title: "Full Body A", focus: "Squat, press, pull", slots: ["squat", "hpush", "vpull", "glute", "delts", "core"] },
       wed: { title: "Full Body B", focus: "Hinge, overhead, row", slots: ["deadlift", "vpush", "hpull", "lunge", "biceps", "triceps"] },
@@ -80,7 +80,7 @@ const TEMPLATES: Template[] = [
   },
   {
     id: "ppl6", name: "Push / pull / legs, 6 days", days: 6,
-    why: "The classic high-volume split — each muscle twice a week with lots of sets. Best for experienced lifters who recover well and enjoy training most days.",
+    why: "The classic high-volume split - each muscle twice a week with lots of sets. Best for experienced lifters who recover well and enjoy training most days.",
     schedule: {
       mon: { title: "Push", focus: "Heavy press", slots: ["hpush", "vpush", "incline", "delts", "triceps"] },
       tue: { title: "Pull", focus: "Heavy pull", slots: ["deadlift", "vpull", "hpull", "rear", "biceps"] },
@@ -142,14 +142,14 @@ export function recommendPlan(p: Profile): Recommendation {
     plan[k] = day;
   });
   const notes: string[] = [];
-  if (p.experience === "beginner" && d >= 5) notes.push("You picked 5+ days, but as a newer lifter you'll progress just as fast on 4 — use the spare days for walks.");
+  if (p.experience === "beginner" && d >= 5) notes.push("You picked 5+ days, but as a newer lifter you'll progress just as fast on 4 - use the spare days for walks.");
   if (d < 3) notes.push("Two sessions a week works: do Full Body A and B and skip the Friday repeat.");
   notes.push(
     "Starting weights are estimates from your body weight. Use the first week to find a load you can lift for every rep with 1–2 reps to spare, then add weight once you hit all sets.",
   );
-  if (p.goal === "lose") notes.push("Keep lifting heavy while dieting — it's what tells your body to hold on to muscle. The calorie deficit and your step goal do the fat-loss work.");
+  if (p.goal === "lose") notes.push("Keep lifting heavy while dieting - it's what tells your body to hold on to muscle. The calorie deficit and your step goal do the fat-loss work.");
   if (p.goal === "gain") notes.push("Add 2.5 kg to the big lifts (or 1–2 reps to smaller ones) whenever you complete every set. If your weight isn't rising about 0.25 kg a week, add 150 kcal.");
-  if (p.goal === "tone") notes.push("Toning is building a little muscle and keeping body fat in check — so lift with moderate weights for 12–15 controlled reps, and let the small calorie trim and your steps reveal the definition.");
+  if (p.goal === "tone") notes.push("Toning is building a little muscle and keeping body fat in check - so lift with moderate weights for 12–15 controlled reps, and let the small calorie trim and your steps reveal the definition.");
   if (p.goal === "fit") notes.push("For general fitness, two hard sets per exercise is plenty. Add a brisk walk, run or cycle on one or two rest days for your heart and lungs.");
   if (p.goal === "recomp") notes.push("Losing fat and building muscle together works best with heavy lifting, high protein every day and a small deficit. Expect the scale to move slowly while your lifts and the mirror improve.");
   if (p.equipment === "bodyweight") notes.push("Make bodyweight moves harder by slowing the lowering phase to 3 seconds or adding a backpack with books.");

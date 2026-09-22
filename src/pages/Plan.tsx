@@ -18,6 +18,7 @@ type Editing =
 export function Plan() {
   const { plan, setPlan } = useStore();
   const [editing, setEditing] = useState<Editing | null>(null);
+  const [renaming, setRenaming] = useState<DowKey | null>(null);
   const mutate = (fn: (p: WeekPlan) => void) => {
     const p: WeekPlan = JSON.parse(JSON.stringify(plan));
     fn(p);
@@ -41,16 +42,17 @@ export function Plan() {
 
       <div className="plan-grid">
         {DOW.map((k) => (
-          <DayCard key={k} day={k} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: k })} onEdit={(index) => setEditing({ mode: "edit", day: k, index })} />
+          <DayCard key={k} day={k} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: k })} onEdit={(index) => setEditing({ mode: "edit", day: k, index })} onRename={() => setRenaming(k)} />
         ))}
       </div>
 
+      <RenameSheet day={renaming} plan={plan} mutate={mutate} onClose={() => setRenaming(null)} />
       <ExerciseSheet editing={editing} plan={plan} mutate={mutate} onClose={() => setEditing(null)} />
     </>
   );
 }
 
-function DayCard({ day, plan, mutate, onAdd, onEdit }: { day: DowKey; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onAdd: () => void; onEdit: (i: number) => void }) {
+function DayCard({ day, plan, mutate, onAdd, onEdit, onRename }: { day: DowKey; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onAdd: () => void; onEdit: (i: number) => void; onRename: () => void }) {
   const pd = plan[day];
   const rest = pd.exercises.length === 0;
   const sets = pd.exercises.reduce((n, e) => n + e.sets, 0);
@@ -60,14 +62,11 @@ function DayCard({ day, plan, mutate, onAdd, onEdit }: { day: DowKey; plan: Week
         <div className="dow">{DOW_LONG[day]}</div>
         <span className={`pill ${rest ? "" : "good"}`}>{rest ? "Rest" : `${pd.exercises.length} exercise${pd.exercises.length === 1 ? "" : "s"} · ${sets} sets`}</span>
       </div>
-      <input
-        className="ptitle" id={`pt-${day}`} value={pd.title} placeholder={rest ? "Rest" : "Session name"}
-        onChange={(e) => mutate((p) => { p[day].title = e.target.value; })} aria-label={`${DOW_LONG[day]} session name`}
-      />
-      {!rest && (
-        <input className="pfocus" id={`pf-${day}`} value={pd.focus || ""} placeholder="Add a focus, e.g. Chest and triceps"
-          onChange={(e) => mutate((p) => { p[day].focus = e.target.value; })} aria-label={`${DOW_LONG[day]} focus`} />
-      )}
+      <div className="ptitle-row">
+        <h3 className="ptitle">{pd.title || (rest ? "Rest" : "Session")}</h3>
+        {!rest && <button className="icon-btn rename" onClick={onRename} aria-label={`Rename ${DOW_LONG[day]}`}>{Icon.edit}</button>}
+      </div>
+      {!rest && pd.focus && <p className="pfocus">{pd.focus}</p>}
 
       {rest ? (
         <div className="rest-body">
@@ -199,7 +198,7 @@ function ExerciseSheet({ editing, plan, mutate, onClose }: { editing: Editing | 
             ))}
             <button className="chip" aria-pressed={draft.kg === 0} onClick={() => setDraft((d) => ({ ...d, kg: 0 }))}>Bodyweight</button>
           </div>
-          <p className="xs faint" style={{ marginTop: 10 }}>Scroll the wheels or tap a number. Weight is your working target — use BW for bodyweight moves.</p>
+          <p className="xs faint" style={{ marginTop: 10 }}>Scroll the wheels or tap a number. Weight is your working target - use BW for bodyweight moves.</p>
           {isEdit && (
             <div className="edit-actions">
               <button className="btn sm" onClick={() => setStep("pick")}>{Icon.edit} Change exercise</button>
@@ -265,5 +264,31 @@ function Picker({ taken, onPick, plan, day, onCopy }: { taken: string[]; onPick:
         </div>
       )}
     </div>
+  );
+}
+
+const NAME_IDEAS = ["Push", "Pull", "Legs", "Upper", "Lower", "Full body", "Chest & back", "Arms", "Glutes"];
+
+/** Rename a day - only through this sheet, so headings can't be changed by accident. */
+function RenameSheet({ day, plan, mutate, onClose }: { day: DowKey | null; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onClose: () => void }) {
+  const [title, setTitle] = useState("");
+  const [focus, setFocus] = useState("");
+  useEffect(() => { if (day) { setTitle(plan[day].title); setFocus(plan[day].focus || ""); } }, [day, plan]);
+  if (!day) return null;
+  const save = () => {
+    mutate((p) => { p[day].title = title.trim() || "Session"; p[day].focus = focus.trim() || undefined; });
+    toast(`${DOW_LONG[day]} renamed`);
+    onClose();
+  };
+  return (
+    <Sheet open label={`Rename ${DOW_LONG[day]}`} onClose={onClose}
+      title={<div className="spread"><div><div className="eyebrow">{DOW_LONG[day]}</div><h2 className="sheet-title">Rename session</h2></div><button className="icon-btn" onClick={onClose} aria-label="Close">{Icon.x}</button></div>}
+      footer={<button className="btn primary lg block" onClick={save}>Save</button>}>
+      <form className="stack" style={{ gap: 12 }} onSubmit={(e) => { e.preventDefault(); save(); }}>
+        <label className="f">Session name<input className="in" id="rn-title" value={title} maxLength={24} onChange={(e) => setTitle(e.target.value)} /></label>
+        <div className="chips">{NAME_IDEAS.map((n) => <button type="button" key={n} className="chip" aria-pressed={title === n} onClick={() => setTitle(n)}>{n}</button>)}</div>
+        <label className="f">Focus <span className="faint">(optional)</span><input className="in" id="rn-focus" value={focus} maxLength={48} placeholder="e.g. Chest, shoulders, triceps" onChange={(e) => setFocus(e.target.value)} /></label>
+      </form>
+    </Sheet>
   );
 }

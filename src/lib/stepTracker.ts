@@ -4,7 +4,7 @@
  * How: the accelerometer reports acceleration (incl. gravity) ~60×/s. Each
  * footstrike shows up as a bump in the overall magnitude. We smooth the
  * signal, subtract a slowly-moving baseline (gravity + posture), and count a
- * step each time the bump rises above a threshold — with a minimum gap between
+ * step each time the bump rises above a threshold - with a minimum gap between
  * steps so one footstrike can't count twice.
  *
  * Limits (browser rules, not ours): websites only receive motion data while

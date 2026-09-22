@@ -95,7 +95,7 @@ export function Welcome() {
           <h1 style={{ marginTop: 12 }}>Check your email</h1>
           <p className="muted prose" style={{ marginTop: 8 }}>
             {view.what === "confirm"
-              ? <>We sent a link to <b>{view.email}</b>. Tap it to confirm your account — it opens Rep Ledger and takes you to the next step.</>
+              ? <>We sent a link to <b>{view.email}</b>. Tap it to confirm your account - it opens Rep Ledger and takes you to the next step.</>
               : <>We sent a link to <b>{view.email}</b>. Tap it to choose a new password.</>}
           </p>
           <button className="btn" style={{ marginTop: 18 }} onClick={() => setView({ kind: "signin", email: view.email })}>Back to sign in</button>
@@ -136,7 +136,7 @@ function Foot() {
       )}
       <RestoreBackup />
       {!storageWorks && <p className="small" style={{ marginTop: 16, color: "var(--warn)" }}>This browser is blocking storage, so you'll need to sign in with your email each time.</p>}
-      <p className="xs faint" style={{ marginTop: 18 }}>Your data is saved to your account online. For privacy the app locks when it's closed — pick your profile and enter your PIN to get back in.</p>
+      <p className="xs faint" style={{ marginTop: 18 }}>Your data is saved to your account online. For privacy the app locks when it's closed - pick your profile and enter your PIN to get back in.</p>
     </>
   );
 }
@@ -167,7 +167,7 @@ function PinStep({ acc, onBack, onForgot, onNeedPassword }: { acc: Account; onBa
       <h1>Hi, {acc.name}</h1>
       <p className="muted" style={{ margin: "4px 0 16px" }}>{busy ? "Unlocking…" : "Enter your PIN"}</p>
       <PinInput id="login-pin" label={`PIN for ${acc.name}`} value={pin} onChange={(v) => { setBad(false); setPinV(v); }} autoFocus invalid={bad} />
-      <div className="small" style={{ minHeight: 22, marginTop: 8, color: "var(--bad)" }} role="alert">{bad ? "That PIN isn't right — try again." : ""}</div>
+      <div className="small" style={{ minHeight: 22, marginTop: 8, color: "var(--bad)" }} role="alert">{bad ? "That PIN isn't right - try again." : ""}</div>
       <div className="keypad" aria-hidden="true">
         {["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"].map((d, i) => d ? <button key={i} tabIndex={-1} onClick={() => press(d)}>{d}</button> : <span key={i} />)}
       </div>
@@ -193,7 +193,7 @@ function PasswordStep({ acc, reason, onBack, onForgotPassword }: { acc: Account;
     setBusy(true);
     const r = await emailSignIn(acc.email ?? "", password);
     if (!r.ok) { setBusy(false); setErr(r.message); return; }
-    if (needPin) { await setPin(acc.id, p1).catch(() => toast("PIN saved on this device — it'll sync when you're back online")); toast("New PIN saved"); }
+    if (needPin) { await setPin(acc.id, p1).catch(() => toast("PIN saved on this device - it'll sync when you're back online")); toast("New PIN saved"); }
     else toast(`Welcome back, ${acc.name}`);
   };
   return (
@@ -201,7 +201,7 @@ function PasswordStep({ acc, reason, onBack, onForgotPassword }: { acc: Account;
       <span className="avatar lg" style={{ display: "grid", margin: "0 auto" }}>{acc.name.slice(0, 1).toUpperCase()}</span>
       <h1 style={{ marginTop: 10 }}>{needPin ? "Reset your PIN" : "Sign in again"}</h1>
       <p className="muted prose" style={{ margin: "6px auto 16px" }}>
-        {needPin ? "Enter your account password, then choose a new PIN." : "It's been a while — enter your password once to keep your data syncing."}
+        {needPin ? "Enter your account password, then choose a new PIN." : "It's been a while - enter your password once to keep your data syncing."}
       </p>
       <label className="f">Email<input className="in" value={acc.email ?? ""} readOnly /></label>
       <label className="f">Password<input className="in" id="pw" type="password" autoComplete="current-password" autoFocus value={password} onChange={(e) => { setErr(""); setPassword(e.target.value); }} /></label>
@@ -330,7 +330,7 @@ function Setup() {
           onCancel={() => (locals.length ? setMode("choose") : cancelSetup())}
           onFinish={async (p, pin) => {
             const m = await finishSetup(p, pin);
-            if (m) toast(m); else toast(`Account ready — welcome, ${p.name}`);
+            if (m) toast(m); else toast(`Account ready - welcome, ${p.name}`);
           }}
         />
       </div>
@@ -342,7 +342,7 @@ function Setup() {
         <>
           <h1>Bring your data over?</h1>
           <p className="muted prose" style={{ marginTop: 6 }}>
-            Signed in as <b>{pending.email}</b>. {locals.length === 1 ? "This profile is" : "These profiles are"} saved on this device from before — pick yours to move its workouts, food and weigh-ins into your account.
+            Signed in as <b>{pending.email}</b>. {locals.length === 1 ? "This profile is" : "These profiles are"} saved on this device from before - pick yours to move its workouts, food and weigh-ins into your account.
           </p>
           <div className="people">
             {locals.map((a) => (
@@ -403,7 +403,7 @@ function RestoreBackup() {
         const f = e.target.files?.[0];
         e.target.value = "";
         if (!f) return;
-        try { const n = await importBackup(f); reloadAccounts(); toast(`Restored ${n} profile${n === 1 ? "" : "s"} — sign in to bring it into your account`); }
+        try { const n = await importBackup(f); reloadAccounts(); toast(`Restored ${n} profile${n === 1 ? "" : "s"} - sign in to bring it into your account`); }
         catch (err) { toast(err instanceof Error ? err.message : "Couldn't read that file"); }
       }} />
     </>

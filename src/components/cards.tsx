@@ -12,7 +12,7 @@ export function DemoBanner() {
   if (!isDemo) return null;
   return (
     <div className="banner">
-      <span>You're in the <b>demo profile</b> — six weeks of made-up training, food and weigh-ins so every chart has something to show.</span>
+      <span>You're in the <b>demo profile</b> - six weeks of made-up training, food and weigh-ins so every chart has something to show.</span>
       <button className="btn sm primary" onClick={signOut}>Create my own profile</button>
     </div>
   );
@@ -108,7 +108,7 @@ export function StepsCard({ date }: { date: string }) {
       </div>
       <details className="why">
         <summary>Tracking steps all day?</summary>
-        <p className="xs muted">Phones only share motion with web apps while the page is open and the screen is on, so Rep Ledger can't count in the background. For all-day steps, check the step count in your phone's Health or Google Fit app in the evening and type it in above — or use Start walk / Start run to track a walk, run or commute live.</p>
+        <p className="xs muted">Phones only share motion with web apps while the page is open and the screen is on, so Rep Ledger can't count in the background. For all-day steps, check the step count in your phone's Health or Google Fit app in the evening and type it in above - or use Start walk / Start run to track a walk, run or commute live.</p>
       </details>
     </section>
   );
@@ -138,7 +138,7 @@ export function WeightCard({ date }: { date: string }) {
       </div>
       <div className="weigh-val">
         <input
-          className="val" id={`weight-${date}`} inputMode="decimal" aria-label="Body weight in kg — type or use the scale below"
+          className="val" id={`weight-${date}`} inputMode="decimal" aria-label="Body weight in kg - type or use the scale below"
           value={typing ?? fmt(pick, 1)}
           onFocus={(e) => { setTyping(String(pick)); e.target.select(); }}
           onChange={(e) => setTyping(e.target.value)}

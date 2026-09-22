@@ -120,7 +120,7 @@ export const useStore = create<State>()((set, get) => ({
 /* ---------- per-profile persistence ----------
  * Every profile keeps a copy on this device (rep-ledger:user:<id>) so the app opens
  * instantly and works offline. Signed-in accounts also sync that copy to the online
- * database — see cloud.ts, which listens through onDataChange().
+ * database - see cloud.ts, which listens through onDataChange().
  */
 const DATA_KEYS: (keyof UserData)[] = ["profile", "targets", "plan", "days", "savedMeals", "customFoods", "active", "isDemo", "layout"];
 let currentKey: string | null = null;
