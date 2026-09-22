@@ -162,7 +162,7 @@ function ExerciseSheet({ editing, plan, mutate, onClose }: { editing: Editing | 
   const title = step === "pick" ? (isEdit ? "Change exercise" : `Add to ${dayName}`) : draft.name;
   return (
     <Sheet
-      open label={title} onClose={onClose}
+      open tall={step === "pick"} label={title} onClose={onClose}
       title={
         <div className="spread">
           <div className="row" style={{ gap: 6, minWidth: 0 }}>

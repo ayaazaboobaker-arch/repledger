@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 /* ---------- icons ---------- */
@@ -120,20 +120,42 @@ export function Ring({ value, max, children }: { value: number; max: number; chi
   );
 }
 
-export function Sheet({ open, onClose, title, children, footer, label }: { open: boolean; onClose: () => void; title: ReactNode; children: ReactNode; footer?: ReactNode; label: string }) {
+export function Sheet({ open, onClose, title, children, footer, label, tall }: { open: boolean; onClose: () => void; title: ReactNode; children: ReactNode; footer?: ReactNode; label: string; tall?: boolean }) {
+  const scrimRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!open) return;
     const k = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", k);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { window.removeEventListener("keydown", k); document.body.style.overflow = prev; };
+    // Lock the page behind the sheet. overflow:hidden alone doesn't stop iPhone Safari
+    // from scrolling the page, so pin the body in place and restore the scroll after.
+    const y = window.scrollY;
+    const b = document.body.style;
+    const prev = { position: b.position, top: b.top, left: b.left, right: b.right, overflow: b.overflow };
+    Object.assign(b, { position: "fixed", top: `-${y}px`, left: "0", right: "0", overflow: "hidden" });
+    // Keep the sheet inside the visible area when the phone keyboard opens.
+    const vv = window.visualViewport;
+    const fit = () => {
+      const el = scrimRef.current;
+      if (!el || !vv) return;
+      el.style.height = `${vv.height}px`;
+      el.style.top = `${vv.offsetTop}px`;
+    };
+    fit();
+    vv?.addEventListener("resize", fit);
+    vv?.addEventListener("scroll", fit);
+    return () => {
+      window.removeEventListener("keydown", k);
+      vv?.removeEventListener("resize", fit);
+      vv?.removeEventListener("scroll", fit);
+      Object.assign(b, prev);
+      window.scrollTo(0, y);
+    };
   }, [open, onClose]);
   if (!open) return null;
   // Portal to <body> so a parent with backdrop-filter/transform can't trap the fixed overlay.
   return createPortal(
-    <div className="scrim" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className="sheet" role="dialog" aria-modal="true" aria-label={label}>
+    <div className="scrim" ref={scrimRef} onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div className={`sheet${tall ? " tall" : ""}`} role="dialog" aria-modal="true" aria-label={label}>
         <div className="sheet-h">{title}</div>
         <div className="sheet-b">{children}</div>
         {footer && <div className="sheet-f">{footer}</div>}
