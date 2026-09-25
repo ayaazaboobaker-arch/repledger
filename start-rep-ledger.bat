@@ -7,7 +7,10 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-if not exist node_modules\@supabase\supabase-js (
+set NEED_INSTALL=
+if not exist node_modules\@supabase\supabase-js set NEED_INSTALL=1
+if not exist node_modules\@mediapipe\tasks-vision set NEED_INSTALL=1
+if defined NEED_INSTALL (
   echo Installing packages. This takes a minute...
   call npm install
   if errorlevel 1 ( pause & exit /b 1 )
