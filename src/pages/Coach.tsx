@@ -1,9 +1,17 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { FormCheck } from "../components/coach/FormCheck";
+import { NutritionCoach } from "../components/coach/Nutrition";
 import { Icon, Sparkline, toast } from "../components/ui";
-import { devUnlockAllowed, setDevUnlock, useCoachAccess } from "../lib/coach/access";
+import { devUnlockAllowed, FREE_FORM_CHECKS, freeFormChecksUsed, setDevUnlock, spendFreeFormCheck, useCoachAccess } from "../lib/coach/access";
+import { useCurrentAccount } from "../lib/accounts";
 import { applyToPlan, recommendAll, weekReview, type Recommendation, type RecKind, type Target } from "../lib/coach/engine";
 import { useStore } from "../lib/store";
+import { knowFor } from "../lib/coach/library";
+import { coachPicks, type Pick } from "../lib/coach/picks";
+import { loadHist } from "../components/coach/FormCheck";
+import type { WeekPlan } from "../lib/types";
+import { DOW } from "../lib/util";
 import { fmtKg, shortDate } from "../lib/util";
 
 const KIND: Record<RecKind, { label: string; tone: "up" | "hold" | "down" | "new" }> = {
@@ -30,7 +38,7 @@ export function Coach() {
         </div>
         {access.pro && <span className="pill coach-pill">{Icon.coach} {access.source === "demo" ? "Pro · demo" : access.source === "dev" ? "Pro · testing" : "Pro"}</span>}
       </div>
-      {access.loading ? <div className="card empty">Checking your plan…</div> : access.pro ? <CoachHome /> : <Paywall />}
+      {access.loading ? <div className="card empty">Checking your plan…</div> : access.pro ? <CoachTabs /> : <Paywall />}
       {access.source === "dev" && <button className="btn ghost sm" style={{ marginTop: 12 }} onClick={() => setDevUnlock(false)}>{Icon.lock} Lock again (testing)</button>}
     </div>
   );
@@ -38,7 +46,29 @@ export function Coach() {
 
 /* ---------- the paid view ---------- */
 
-function CoachHome() {
+const TABS = [
+  { id: "training", label: "Training", icon: Icon.train },
+  { id: "nutrition", label: "Nutrition", icon: Icon.food },
+  { id: "form", label: "Form check", icon: Icon.video },
+] as const;
+type TabId = (typeof TABS)[number]["id"];
+
+function CoachTabs() {
+  const [params, setParams] = useSearchParams();
+  const tab = (TABS.find((t) => t.id === params.get("tab"))?.id ?? "training") as TabId;
+  return (
+    <>
+      <div className="seg coach-tabs" role="tablist" aria-label="Coach">
+        {TABS.map((t) => (
+          <button key={t.id} role="tab" aria-selected={tab === t.id} aria-pressed={tab === t.id} onClick={() => setParams(t.id === "training" ? {} : { tab: t.id }, { replace: true })}>{t.icon}{t.label}</button>
+        ))}
+      </div>
+      {tab === "training" ? <TrainingCoach /> : tab === "nutrition" ? <NutritionCoach /> : <FormCheck />}
+    </>
+  );
+}
+
+function TrainingCoach() {
   const { days, plan, setPlan } = useStore();
   const recs = useMemo(() => recommendAll(days, plan), [days, plan]);
   const review = useMemo(() => weekReview(days, plan, recs), [days, plan, recs]);
@@ -60,6 +90,7 @@ function CoachHome() {
   return (
     <div className="stack">
       <WeekCard r={review} />
+      <PicksCard recs={recs} />
 
       <section className="card">
         <div className="card-h">
@@ -76,10 +107,6 @@ function CoachHome() {
         )}
       </section>
 
-      <div className="grid-2">
-        <Soon icon={Icon.video} title="Form check" text="Film a set and get a rep-by-rep breakdown - depth, knees, back angle and tempo. The video stays on your phone." />
-        <Soon icon={Icon.food} title="Nutrition coach" text="A weekly calorie check-in from your weigh-ins, and meal plans built from your foods to hit your macros." />
-      </div>
       <p className="xs faint coach-note">The Coach gives general training guidance from your logs, not medical advice. Stop if anything hurts and check with a professional.</p>
     </div>
   );
@@ -117,6 +144,7 @@ function WeekCard({ r }: { r: ReturnType<typeof weekReview> }) {
 
 function RecRow({ r, onApply }: { r: Recommendation; onApply: () => void }) {
   const [open, setOpen] = useState(false);
+  const [tips, setTips] = useState(false);
   const k = KIND[r.kind];
   const changed = !same(r.now, r.next);
   return (
@@ -134,10 +162,12 @@ function RecRow({ r, onApply }: { r: Recommendation; onApply: () => void }) {
           {changed ? <><s>{spec(r.now, r.bodyweight)}</s> {Icon.right} <b>{spec(r.next, r.bodyweight)}</b></> : <b>{spec(r.now, r.bodyweight)}</b>}
         </span>
         <div className="row" style={{ gap: 6 }}>
+          <button className="btn ghost sm" aria-expanded={tips} onClick={() => setTips(!tips)}>Tips & swaps {tips ? Icon.up : Icon.down}</button>
           <button className="btn ghost sm" aria-expanded={open} onClick={() => setOpen(!open)}>Why {open ? Icon.up : Icon.down}</button>
           {changed && <button className="btn sm primary" onClick={onApply}>Apply</button>}
         </div>
       </div>
+      {tips && <TipsPanel name={r.name} />}
       {open && (
         <ul className="rec-why">
           {r.why.map((w) => <li key={w}>{w}</li>)}
@@ -148,11 +178,73 @@ function RecRow({ r, onApply }: { r: Recommendation; onApply: () => void }) {
   );
 }
 
-function Soon({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
+/* ---------- tips, swaps and the coach's picks ---------- */
+
+function TipsPanel({ name }: { name: string }) {
+  const k = knowFor(name);
+  const { plan, setPlan } = useStore();
   return (
-    <section className="card soon">
-      <span className="at-icon">{icon}</span>
-      <div><div className="row" style={{ gap: 8 }}><b>{title}</b><span className="pill off">Coming next</span></div><p className="small muted" style={{ marginTop: 4 }}>{text}</p></div>
+    <div className="tips">
+      <div className="tips-col">
+        <div className="eyebrow">Form cues</div>
+        <ul>{k.cues.map((c) => <li key={c}>{c}</li>)}</ul>
+      </div>
+      {k.accessories.length > 0 && (
+        <div className="tips-col">
+          <div className="eyebrow">To get better at it</div>
+          <ul className="ideas">{k.accessories.map((a) => <li key={a.name}><b>{a.name}</b><small>{a.why}</small><AddBtn name={a.name} after={name} plan={plan} setPlan={setPlan} /></li>)}</ul>
+        </div>
+      )}
+      {k.swaps.length > 0 && (
+        <div className="tips-col">
+          <div className="eyebrow">Swap it for</div>
+          <ul className="ideas">{k.swaps.map((a) => <li key={a.name}><b>{a.name}</b><small>{a.why}</small></li>)}</ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Add an exercise to the plan: straight after `after` on each day it appears, or onto a given day. */
+function addToPlan(plan: WeekPlan, name: string, after?: string): WeekPlan {
+  const p = structuredClone(plan);
+  const isHold = /plank/i.test(name);
+  const ex = { name, sets: 3, reps: isHold ? 30 : /raise|curl|pushdown|extension|fly|face pull|calf/i.test(name) ? 12 : 10, kg: 0 };
+  if (after?.startsWith("__day:")) { const k = after.slice(6) as keyof WeekPlan; p[k].exercises.push(ex); return p; }
+  let done = false;
+  for (const k of DOW) {
+    const i = p[k].exercises.findIndex((e) => e.name.toLowerCase() === (after ?? "").toLowerCase());
+    if (i >= 0 && !done) { p[k].exercises.splice(i + 1, 0, ex); done = true; }
+  }
+  if (!done) { const k = DOW.find((d) => p[d].exercises.length) ?? "mon"; p[k].exercises.push(ex); }
+  return p;
+}
+const inPlanAlready = (plan: WeekPlan, name: string) => DOW.some((k) => plan[k].exercises.some((e) => e.name.toLowerCase() === name.toLowerCase()));
+
+function AddBtn({ name, after, plan, setPlan }: { name: string; after?: string; plan: WeekPlan; setPlan: (p: WeekPlan) => void }) {
+  if (inPlanAlready(plan, name)) return <span className="pill off">In your plan</span>;
+  return <button className="btn sm" onClick={() => { setPlan(addToPlan(plan, name, after)); toast(`${name} added to your plan - adjust sets and weight on the Plan page`); }}>{Icon.plus} Add to plan</button>;
+}
+
+function PicksCard({ recs }: { recs: Recommendation[] }) {
+  const { plan, setPlan } = useStore();
+  const acc = useCurrentAccount();
+  const picks = useMemo(() => coachPicks(plan, recs, acc ? loadHist(acc.id) : []), [plan, recs, acc]);
+  if (!picks.length) return null;
+  const icon = (p: Pick) => (p.kind === "form" ? Icon.video : p.kind === "plateau" ? Icon.progress : Icon.target);
+  return (
+    <section className="card picks">
+      <div className="eyebrow">Coach's picks</div>
+      <h2 style={{ marginBottom: 10 }}>What I'd change this week</h2>
+      <ul className="pick-list-c">
+        {picks.map((p) => (
+          <li key={p.id}>
+            <span className={`at-icon k-${p.kind}`}>{icon(p)}</span>
+            <div className="pick-main"><b>{p.title}</b><small>{p.why}</small></div>
+            {p.add && <AddBtn name={p.add.name} after={p.add.after} plan={plan} setPlan={setPlan} />}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }
@@ -168,6 +260,9 @@ const PERKS = [
 
 function Paywall() {
   const { days, plan } = useStore();
+  const acc = useCurrentAccount();
+  const [tryIt, setTryIt] = useState(false);
+  const [used, setUsed] = useState(() => (acc ? freeFormChecksUsed(acc.id) : 0));
   const preview = useMemo(() => recommendAll(days, plan).slice(0, 3), [days, plan]);
   const dev = devUnlockAllowed();
   return (
@@ -183,6 +278,19 @@ function Paywall() {
         <p className="xs faint" style={{ textAlign: "center", marginTop: 8 }}>Payments are coming soon. Your basic next-weight tip in Train stays free.</p>
         {dev && <button className="btn ghost sm block" style={{ marginTop: 8 }} onClick={() => { setDevUnlock(true); toast("Coach unlocked on this device for testing"); }}>{Icon.lock} Unlock for testing</button>}
       </section>
+
+      {tryIt ? (
+        <FormCheck freeLeft={Math.max(0, FREE_FORM_CHECKS - used)} onUsed={() => { if (acc) { spendFreeFormCheck(acc.id); setUsed(freeFormChecksUsed(acc.id)); } }} />
+      ) : used < FREE_FORM_CHECKS && (
+        <section className="card soon">
+          <span className="at-icon">{Icon.video}</span>
+          <div style={{ flex: 1 }}>
+            <b>Try a form check free</b>
+            <p className="small muted" style={{ marginTop: 4 }}>Film a squat, deadlift, press or push-up and see your rep-by-rep breakdown. One on the house.</p>
+            <button className="btn sm primary" style={{ marginTop: 10 }} onClick={() => setTryIt(true)}>{Icon.video} Try it now</button>
+          </div>
+        </section>
+      )}
 
       {preview.length > 0 && (
         <section className="card paywall-preview" aria-hidden="true">

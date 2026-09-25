@@ -40,6 +40,7 @@ export const Icon = {
   mail: S(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>),
   coach: S(<><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" /><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" /></>),
   video: S(<><rect x="3" y="6" width="13" height="12" rx="2" /><path d="M16 10.5l5-3v9l-5-3" /></>),
+  swap: S(<><path d="M7 7h11l-3-3M17 17H6l3 3" /></>),
   pause: S(<path d="M9 6v12M15 6v12" />, 2.6),
   trash: S(<><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></>),
 };
