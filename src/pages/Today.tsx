@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CalorieSummary, DateBar, DemoBanner, StepsCard, WeightCard } from "../components/cards";
+import { BurnCard, CardioPlanRows } from "../components/BurnCard";
 import { ExerciseProgress } from "../components/ExerciseProgress";
 import { Select } from "../components/Select";
 import { defaultMeal, FoodPicker, MEAL_LABEL } from "../components/FoodPicker";
@@ -15,6 +16,7 @@ import { useWeekRows, WeeklyBars, WeekStats, WeightTrend } from "./Progress";
 const WIDGETS: Record<WidgetId, { title: string; size: "full" | "half" }> = {
   session: { title: "Today's session", size: "full" },
   nutrition: { title: "Nutrition", size: "half" },
+  burn: { title: "Calories burned", size: "half" },
   weight: { title: "Weigh-in", size: "half" },
   steps: { title: "Steps", size: "half" },
   kcalChart: { title: "Calories by week", size: "half" },
@@ -25,7 +27,8 @@ const WIDGETS: Record<WidgetId, { title: string; size: "full" | "half" }> = {
   sessionsChart: { title: "Sessions graph", size: "half" },
 };
 const ALL = Object.keys(WIDGETS) as WidgetId[];
-export const DEFAULT_LAYOUT: LayoutItem[] = ["session", "nutrition", "weight", "steps", "kcalChart", "week", "strength", "weightChart", "stepsChart"].map((id) => ({ id: id as WidgetId, size: WIDGETS[id as WidgetId].size }));
+// Today stays about today; the week-by-week graphs live on Progress (and can still be added here with "Arrange").
+export const DEFAULT_LAYOUT: LayoutItem[] = ["session", "nutrition", "burn", "steps", "weight", "week"].map((id) => ({ id: id as WidgetId, size: WIDGETS[id as WidgetId].size }));
 
 const colsOf = (l: LayoutItem) => l.cols ?? (l.size === "full" ? 6 : 3);
 const WIDTHS = [2, 3, 4, 6];
@@ -206,6 +209,13 @@ export function Today() {
         })}
         {!layout.length && <div className="empty widget full">Your page is empty. Tap <b>Add a card</b> above to bring cards back.</div>}
       </div>
+      {!arranging && (
+        <Link to="/progress" className="more-link card">
+          <span>{Icon.progress}</span>
+          <span><b>Strength, body weight and steps over time</b><small>See every graph on Progress</small></span>
+          <span className="at-chev">{Icon.right}</span>
+        </Link>
+      )}
 
       <FoodPicker open={picker} onClose={() => setPicker(false)} date={date} meal={defaultMeal()} />
     </>
@@ -216,6 +226,7 @@ function Widget({ id, date, openFood }: { id: WidgetId; date: string; openFood: 
   switch (id) {
     case "session": return <SessionCard date={date} />;
     case "nutrition": return <NutritionCard date={date} openFood={openFood} />;
+    case "burn": return <BurnCard date={date} />;
     case "steps": return <StepsCard date={date} />;
     case "weight": return <WeightCard date={date} />;
     case "week": return <section className="card"><div className="spread" style={{ marginBottom: 12 }}><h2>This week</h2><Link to="/progress" className="btn ghost sm">All progress {Icon.right}</Link></div><WeekStats /></section>;
@@ -301,7 +312,7 @@ function NutritionCard({ date, openFood }: { date: string; openFood: () => void 
 function SessionCard({ date }: { date: string }) {
   const { days, plan, active } = useStore();
   const nav = useNavigate();
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
   const logged = days[date]?.workout;
   const w = logged || planSession(plan, dowKey(date));
   const totalSets = w.exercises.reduce((a, e) => a + e.sets.length, 0);
@@ -370,7 +381,13 @@ function SessionCard({ date }: { date: string }) {
         </ul>
       ) : (
         <div style={{ padding: "8px 20px 20px" }}>
-          <p className="muted prose">Rest day - recovery is where the strength gets built. Want to train anyway? Pick a session:</p>
+          {plan[w.planKey]?.cardio?.length ? (
+            <>
+              <p className="muted prose" style={{ marginBottom: 10 }}>Cardio day - no weights today. Log it when you're done and it counts towards what you burn.</p>
+              <CardioPlanRows date={date} planKey={w.planKey} />
+              <p className="small muted" style={{ marginTop: 14 }}>Want to lift as well? Pick a session:</p>
+            </>
+          ) : <p className="muted prose">Rest day - recovery is where the strength gets built. Want to train anyway? Pick a session:</p>}
           <div className="chips" style={{ marginTop: 12 }}>
             {DOW.filter((k) => plan[k].exercises.length).map((k) => (
               <button key={k} className="chip" onClick={() => { useStore.getState().startSession(date, k); nav("/train"); }}>{plan[k].title} <span className="faint">· {DOW_LONG[k].slice(0, 3)}</span></button>
@@ -379,6 +396,12 @@ function SessionCard({ date }: { date: string }) {
         </div>
       )}
 
+      {w.exercises.length > 0 && (plan[w.planKey]?.cardio?.length ?? 0) > 0 && (
+        <div style={{ padding: "0 20px 6px" }}>
+          <div className="eyebrow" style={{ margin: "6px 0 8px" }}>Plus cardio</div>
+          <CardioPlanRows date={date} planKey={w.planKey} />
+        </div>
+      )}
       {w.exercises.length > 0 && (
         <div className="hero-foot">
           <Link to="/plan" className="btn ghost sm">{Icon.plan} Edit plan</Link>

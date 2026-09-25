@@ -4,6 +4,7 @@ import { setPin, signOut, useCurrentAccount, verifyPin } from "../lib/accounts";
 import { GOALS } from "../lib/calc";
 import { useSync } from "../lib/cloud";
 import { useStore } from "../lib/store";
+import { setTheme, useThemeChoice, type ThemeChoice } from "../lib/theme";
 import { fmt } from "../lib/util";
 import { PinInput } from "./forms";
 import { Icon, Sheet, toast } from "./ui";
@@ -58,6 +59,7 @@ export function ProfileMenu() {
           <button role="menuitem" className="menu-item" onClick={() => go("/profile")}>{Icon.target}<span>My plan &amp; targets<small>Calories, macros, training split</small></span></button>
           <button role="menuitem" className="menu-item" onClick={() => go("/profile", { edit: true })}>{Icon.edit}<span>Edit my details<small>Age, weight, goal, training days</small></span></button>
           {!acc.demo && <button role="menuitem" className="menu-item" onClick={() => { setOpen(false); setPinOpen(true); }}>{Icon.lock}<span>{acc.pinHash ? "Change PIN" : "Add a PIN"}<small>{acc.pinHash ? "Update your 4-digit PIN" : "Lock the app when it opens"}</small></span></button>}
+          <ThemeSwitch />
           <div className="me-sep" />
           <button role="menuitem" className="menu-item" onClick={() => { setOpen(false); signOut(); }}>{Icon.users}<span>Switch profile</span></button>
           <button role="menuitem" className="menu-item danger" onClick={() => { setOpen(false); signOut(); toast("Logged out"); }}>{Icon.logout}<span>Log out</span></button>
@@ -113,4 +115,19 @@ export function SyncBadge() {
   if (status === "off") return null;
   const label = status === "saved" ? "Saved to your account" : status === "saving" ? "Saving…" : status === "offline" ? "Offline - will sync when you're back online" : "Couldn't sync - will retry";
   return <div className={`sync-badge ${status}`} title={message ?? undefined}>{Icon.cloud}<span>{label}</span></div>;
+}
+
+const THEMES: { v: ThemeChoice; label: string }[] = [{ v: "dark", label: "Dark" }, { v: "light", label: "Light" }, { v: "auto", label: "Auto" }];
+
+/** Dark / Light / Auto (follow the phone). */
+function ThemeSwitch() {
+  const choice = useThemeChoice();
+  return (
+    <div className="theme-row">
+      <span className="theme-l">Look</span>
+      <div className="seg theme-seg" role="group" aria-label="App look">
+        {THEMES.map((t) => <button key={t.v} aria-pressed={choice === t.v} onClick={() => setTheme(t.v)}>{t.label}</button>)}
+      </div>
+    </div>
+  );
 }

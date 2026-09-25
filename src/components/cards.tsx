@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react";
 import { signOut } from "../lib/accounts";
 import { useStore } from "../lib/store";
+import { dayBurn, dayFraction } from "../lib/burn";
+import { useCalibration } from "../lib/calibration";
 import { foodTotals } from "../lib/stats";
+import { weightOn } from "./BurnCard";
 import { addDays, DOW_LONG, dowKey, fmt, parseNum, parseYmd, shortDate, todayStr, weekStart } from "../lib/util";
 import { TrackerPanel } from "./TrackerPanel";
-import { Icon, Meter, Ring, Sparkline, toast } from "./ui";
+import { CountUp, Icon, Meter, Ring, Sparkline, toast } from "./ui";
 import { WeightRuler } from "./WeightRuler";
+
+const BANNER_KEY = "rl-demo-banner-hidden";
+const bannerHidden = () => { try { return sessionStorage.getItem(BANNER_KEY) === "1"; } catch { return false; } };
 
 export function DemoBanner() {
   const { isDemo } = useStore();
-  if (!isDemo) return null;
+  const [hidden, setHidden] = useState(bannerHidden);
+  if (!isDemo || hidden) return null;
+  const hide = () => { try { sessionStorage.setItem(BANNER_KEY, "1"); } catch { /* fine: hides until reload */ } setHidden(true); };
   return (
     <div className="banner">
-      <span>You're in the <b>demo profile</b> - six weeks of made-up training, food and weigh-ins so every chart has something to show.</span>
-      <button className="btn sm primary" onClick={signOut}>Create my own profile</button>
+      <span>You're in the <b>demo profile</b><span className="hide-sm"> - six weeks of made-up training, food and weigh-ins so every chart has something to show</span>.</span>
+      <div className="row banner-actions">
+        <button className="btn sm primary" onClick={signOut}>Create my own profile</button>
+        <button className="icon-btn plain" onClick={hide} aria-label="Hide this message">{Icon.x}</button>
+      </div>
     </div>
   );
 }
@@ -42,8 +53,10 @@ export function DateBar({ date, setDate, children }: { date: string; setDate: (d
 }
 
 export function CalorieSummary({ date }: { date: string }) {
-  const { days, targets } = useStore();
+  const { days, targets, profile } = useStore();
   const t = foodTotals(days[date]?.foods);
+  const factor = useCalibration().factor;
+  const burn = dayBurn(days[date], profile, weightOn(days, date), dayFraction(date, todayStr()), factor);
   const left = targets.kcal - t.kcal;
   const mac = (cls: string, label: string, v: number, tg: number) => (
     <div className={`macro ${cls}`}>
@@ -54,11 +67,12 @@ export function CalorieSummary({ date }: { date: string }) {
   return (
     <div className="ringbox">
       <Ring value={t.kcal} max={targets.kcal}>
-        <b>{fmt(Math.abs(left))}</b>
+        <b><CountUp value={Math.abs(left)} /></b>
         <span>{left >= 0 ? "kcal left" : "kcal over"}</span>
       </Ring>
       <div className="macros">
         <div className="small muted num"><b style={{ color: "var(--ink)" }}>{fmt(t.kcal)}</b> of {fmt(targets.kcal)} kcal · {fmt(t.kcal * 4.184)} kJ</div>
+        {burn && <div className="small muted num">Burned ~<b style={{ color: "var(--ink)" }}>{fmt(burn.total)}</b> kcal{date === todayStr() ? " so far" : ""}{burn.sports + burn.workout > 0 ? ` (${fmt(burn.sports + burn.workout)} from exercise)` : ""}</div>}
         {mac("p", "Protein", t.p, targets.protein)}
         {mac("c", "Carbs", t.c, targets.carbs)}
         {mac("f", "Fat", t.f, targets.fat)}

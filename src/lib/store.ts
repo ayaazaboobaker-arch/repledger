@@ -18,6 +18,8 @@ export interface UserData {
   isDemo: boolean;
   /** Today page card order and widths; null = default */
   layout: LayoutItem[] | null;
+  /** one-off upgrades already applied to this profile */
+  flags?: Record<string, boolean>;
 }
 
 interface Actions {
@@ -122,7 +124,7 @@ export const useStore = create<State>()((set, get) => ({
  * instantly and works offline. Signed-in accounts also sync that copy to the online
  * database - see cloud.ts, which listens through onDataChange().
  */
-const DATA_KEYS: (keyof UserData)[] = ["profile", "targets", "plan", "days", "savedMeals", "customFoods", "active", "isDemo", "layout"];
+const DATA_KEYS: (keyof UserData)[] = ["profile", "targets", "plan", "days", "savedMeals", "customFoods", "active", "isDemo", "layout", "flags"];
 let currentKey: string | null = null;
 let timer: number | undefined;
 let quiet = false;
@@ -152,6 +154,14 @@ export function onDataChange(fn: (() => void) | null) { listener = fn; }
 const normalise = (saved: Partial<UserData>): UserData => {
   const data: UserData = { ...blankData(), ...saved };
   if (data.profile) data.profile = { ...data.profile, goal: normGoal(data.profile.goal) };
+  // New Today card: put "Calories burned" next to Nutrition once for layouts saved before it existed.
+  if (data.layout && !data.flags?.burnCard) {
+    if (!data.layout.some((l) => l.id === "burn")) {
+      const i = data.layout.findIndex((l) => l.id === "nutrition");
+      data.layout = [...data.layout.slice(0, i + 1), { id: "burn", size: "half" }, ...data.layout.slice(i + 1)];
+    }
+    data.flags = { ...data.flags, burnCard: true };
+  }
   return data;
 };
 const load = (data: UserData) => { quiet = true; try { useStore.setState(data); } finally { quiet = false; } };

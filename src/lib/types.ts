@@ -6,10 +6,18 @@ export interface PlanExercise {
   reps: number;
   kg: number;
 }
+export type Intensity = "easy" | "moderate" | "hard";
+/** A cardio block planned for a day, e.g. 30 min easy running. */
+export interface PlanCardio {
+  sport: string;
+  minutes: number;
+  intensity: Intensity;
+}
 export interface PlanDay {
   title: string;
   focus?: string;
   exercises: PlanExercise[];
+  cardio?: PlanCardio[];
 }
 export type WeekPlan = Record<DowKey, PlanDay>;
 
@@ -50,12 +58,20 @@ export interface FoodEntry {
 
 export interface Activity {
   id: string;
-  kind: "walk" | "run";
+  /** "walk" / "run" from the step tracker, or a sport id (see burn.ts) */
+  kind: string;
   start: number;
   seconds: number;
   steps: number;
   km: number;
   kcal: number;
+  /** logged by hand (sports, cardio) rather than the step tracker */
+  manual?: boolean;
+  intensity?: Intensity;
+  /** walks/runs logged by hand: false = these steps are NOT in the day's step count */
+  inSteps?: boolean;
+  /** calories came from a watch or machine rather than our estimate */
+  fromDevice?: boolean;
 }
 
 export interface DayLog {
@@ -81,6 +97,14 @@ export type ActivityLevel = "sedentary" | "light" | "moderate" | "very";
 export type Goal = "lose" | "gain" | "recomp" | "tone" | "fit";
 export type Experience = "beginner" | "intermediate" | "advanced";
 export type Equipment = "gym" | "dumbbells" | "bodyweight";
+export type TrainingFocus = "strength" | "balanced" | "cardio";
+export interface CardioPrefs {
+  /** sport ids the person enjoys, most preferred first */
+  sports: string[];
+  daysPerWeek: number;
+  minutes: number;
+  intensity: Intensity;
+}
 
 export interface Profile {
   name: string;
@@ -97,6 +121,9 @@ export interface Profile {
   daysPerWeek: number;
   equipment: Equipment;
   sessionMinutes: number;
+  /** added later - older profiles don't have these */
+  focus?: TrainingFocus;
+  cardio?: CardioPrefs;
 }
 
 export interface SavedMeal {
@@ -116,7 +143,7 @@ export interface CustomFood {
   f: number;
 }
 
-export type WidgetId = "session" | "nutrition" | "steps" | "weight" | "week" | "strength" | "weightChart" | "stepsChart" | "kcalChart" | "sessionsChart";
+export type WidgetId = "session" | "nutrition" | "burn" | "steps" | "weight" | "week" | "strength" | "weightChart" | "stepsChart" | "kcalChart" | "sessionsChart";
 export interface LayoutItem {
   id: WidgetId;
   /** legacy width, kept so older saved layouts still load */

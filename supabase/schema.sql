@@ -34,3 +34,34 @@ create policy "read own profile"   on public.profiles for select using (auth.uid
 create policy "insert own profile" on public.profiles for insert with check (auth.uid() = id);
 create policy "update own profile" on public.profiles for update using (auth.uid() = id) with check (auth.uid() = id);
 create policy "delete own profile" on public.profiles for delete using (auth.uid() = id);
+
+-- ---------------------------------------------------------------------------
+-- Rep Ledger Pro (the Coach). One row per paying person.
+-- The app can only READ its own row. Rows are written by the payment webhook
+-- (a Supabase Edge Function using the service-role key), never by the app,
+-- so nobody can give themselves Pro by editing their data.
+-- ---------------------------------------------------------------------------
+create table if not exists public.subscriptions (
+  user_id             uuid primary key references auth.users (id) on delete cascade,
+  status              text not null default 'inactive',  -- active | trialing | non-renewing | past_due | cancelled | inactive
+  plan                text,                               -- e.g. 'pro-monthly', 'pro-yearly'
+  provider            text not null default 'paystack',
+  customer_code       text,                               -- Paystack customer code
+  subscription_code   text,                               -- Paystack subscription code
+  current_period_end  timestamptz,
+  updated_at          timestamptz not null default now()
+);
+
+drop trigger if exists subscriptions_touch on public.subscriptions;
+create trigger subscriptions_touch before insert or update on public.subscriptions
+  for each row execute function public.touch_updated_at();
+
+alter table public.subscriptions enable row level security;
+drop policy if exists "read own subscription" on public.subscriptions;
+create policy "read own subscription" on public.subscriptions for select using (auth.uid() = user_id);
+-- No insert / update / delete policies on purpose: only the service role (webhook) can write.
+
+-- To give yourself Pro while testing (run in the SQL Editor, swap in your email):
+--   insert into public.subscriptions (user_id, status, plan, current_period_end)
+--   select id, 'active', 'pro-monthly', now() + interval '30 days' from auth.users where email = 'you@example.com'
+--   on conflict (user_id) do update set status = excluded.status, current_period_end = excluded.current_period_end;

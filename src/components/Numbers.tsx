@@ -1,4 +1,5 @@
-import { ACTIVITY, GOALS, type CalorieBreakdown } from "../lib/calc";
+import { SPORT_BY_ID, INTENSITY } from "../lib/burn";
+import { ACTIVITY, cardioOf, GOALS, type CalorieBreakdown } from "../lib/calc";
 import type { Profile } from "../lib/types";
 import { addDays, fmt, shortDate, todayStr } from "../lib/util";
 
@@ -8,7 +9,13 @@ export function CalorieSteps({ p, b }: { p: Profile; b: CalorieBreakdown }) {
     <div className="calc-steps">
       <div className="calc-step"><div><div className="t">Resting burn (BMR)</div><div className="h">What your body uses just to stay alive - breathing, heart, brain. Worked out from your age, height, weight and sex (Mifflin–St Jeor).</div></div><div className="v">{fmt(b.bmr)}</div></div>
       <div className="calc-step"><div><div className="t">+ Everyday movement</div><div className="h">{ACTIVITY[p.activity].label} (× {ACTIVITY[p.activity].mult}) - walking, work, chores.</div></div><div className="v">+{fmt(b.daily - b.bmr)}</div></div>
-      <div className="calc-step"><div><div className="t">+ Training</div><div className="h">{p.daysPerWeek} × {p.sessionMinutes} min a week, averaged per day.</div></div><div className="v">+{fmt(b.training)}</div></div>
+      <div className="calc-step"><div><div className="t">+ Weight training</div><div className="h">{p.daysPerWeek ? `${p.daysPerWeek} × ${p.sessionMinutes} min a week, averaged per day.` : "No lifting sessions planned."}</div></div><div className="v">+{fmt(b.weights)}</div></div>
+      {(() => {
+        const c = cardioOf(p);
+        if (!c.daysPerWeek) return null;
+        const names = c.sports.map((s) => SPORT_BY_ID.get(s)?.label.toLowerCase()).filter(Boolean).join(", ");
+        return <div className="calc-step"><div><div className="t">+ Cardio</div><div className="h">{c.daysPerWeek} × {c.minutes} min of {INTENSITY[c.intensity].label.toLowerCase()} {names} a week, averaged per day.</div></div><div className="v">+{fmt(b.cardio)}</div></div>;
+      })()}
       <div className="calc-step"><div><div className="t">= Maintenance</div><div className="h">Eat this and your weight stays roughly the same.</div></div><div className="v">{fmt(b.tdee)}</div></div>
       <div className="calc-step">
         <div>

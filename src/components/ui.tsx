@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
+import { fmt as fmtNum } from "../lib/util";
 
 /* ---------- icons ---------- */
 const S = (d: ReactNode, sw = 2) => (
@@ -35,7 +36,11 @@ export const Icon = {
   download: S(<><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></>),
   upload: S(<><path d="M12 20V9M7 14l5-5 5 5M5 4h14" /></>),
   cloud: S(<path d="M7 18a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9.5a4.25 4.25 0 0 1-.5 8.5z" />),
+  search: S(<><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></>),
   mail: S(<><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></>),
+  coach: S(<><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z" /><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" /></>),
+  video: S(<><rect x="3" y="6" width="13" height="12" rx="2" /><path d="M16 10.5l5-3v9l-5-3" /></>),
+  pause: S(<path d="M9 6v12M15 6v12" />, 2.6),
   trash: S(<><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></>),
 };
 
@@ -62,7 +67,7 @@ export function Toaster() {
 const readVars = () => {
   const cs = getComputedStyle(document.documentElement);
   const g = (n: string) => cs.getPropertyValue(n).trim();
-  return { accent: g("--accent"), accentSoft: g("--accent-soft"), ink: g("--ink"), muted: g("--muted"), faint: g("--faint"), line: g("--line"), surface: g("--surface"), good: g("--good"), warn: g("--warn") };
+  return { accent: g("--accent"), accentSoft: g("--accent-soft"), ink: g("--ink"), muted: g("--muted"), faint: g("--faint"), line: g("--line"), surface: g("--solid") || g("--surface"), good: g("--good"), warn: g("--warn") };
 };
 export type Theme = ReturnType<typeof readVars>;
 export function useTheme(): Theme {
@@ -109,11 +114,18 @@ export function Ring({ value, max, children }: { value: number; max: number; chi
   const r = 58, c = 2 * Math.PI * r;
   const pct = max > 0 ? Math.min(1, value / max) : 0;
   const over = value > max * 1.05;
+  const gid = "ring-" + useId().replace(/:/g, "");
   return (
     <div className="ring">
       <svg viewBox="0 0 132 132" aria-hidden="true">
-        <circle cx="66" cy="66" r={r} style={{ fill: "none", stroke: "var(--surface-2)", strokeWidth: 12 }} />
-        <circle cx="66" cy="66" r={r} style={{ fill: "none", stroke: over ? "var(--warn)" : "var(--accent)", strokeWidth: 12, strokeLinecap: "round", strokeDasharray: `${c * pct} ${c}`, transition: "stroke-dasharray .4s ease" }} />
+        <defs>
+          <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" style={{ stopColor: "var(--accent)" }} />
+            <stop offset="100%" style={{ stopColor: "var(--accent-2)" }} />
+          </linearGradient>
+        </defs>
+        <circle cx="66" cy="66" r={r} style={{ fill: "none", stroke: "var(--line)", strokeWidth: 12 }} />
+        <circle cx="66" cy="66" r={r} className="ring-arc" style={{ fill: "none", stroke: over ? "var(--warn)" : `url(#${gid})`, strokeWidth: 12, strokeLinecap: "round", strokeDasharray: `${c * pct} ${c}`, transition: "stroke-dasharray .4s ease" }} />
       </svg>
       <div className="c">{children}</div>
     </div>
@@ -163,4 +175,27 @@ export function Sheet({ open, onClose, title, children, footer, label, tall }: {
     </div>,
     document.body,
   );
+}
+
+/* ---------- count-up numbers ---------- */
+const calm = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** A number that rolls up to its value (from 0 the first time, then from the last value). Reduced motion: shows the value straight away. */
+export function CountUp({ value, digits = 0, ms = 700 }: { value: number; digits?: number; ms?: number }) {
+  const [shown, setShown] = useState(() => (calm() ? value : 0));
+  const from = useRef(shown);
+  useEffect(() => {
+    if (calm() || !isFinite(value)) { setShown(value); from.current = value; return; }
+    const start = performance.now(), a = from.current, b = value;
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / ms), e = 1 - Math.pow(1 - t, 3);
+      const v = a + (b - a) * e;
+      setShown(v); from.current = v;
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [value, ms]);
+  return <>{fmtNum(shown, digits)}</>;
 }

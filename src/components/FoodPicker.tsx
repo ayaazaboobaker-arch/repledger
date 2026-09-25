@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { FOOD_BY_ID, FOODS, macrosFor, searchFoods, type Food, type FoodCat } from "../lib/foods";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { FOOD_BY_ID, FOOD_CATS, FOODS, macrosFor, searchFoods, searchOnline, type Food, type FoodCat } from "../lib/foods";
 import { useStore } from "../lib/store";
 import { foodTotals, recentFoods } from "../lib/stats";
 import type { CustomFood, FoodEntry, MealSlot } from "../lib/types";
@@ -15,7 +15,7 @@ export const defaultMeal = (): MealSlot => {
 
 type Tab = "foods" | "recent" | "meals" | "mine";
 type Picked = { kind: "food"; food: Food; grams: number } | { kind: "custom"; food: CustomFood; qty: number };
-const CATS: FoodCat[] = ["Protein", "SA favourites", "Carbs & grains", "Dairy & eggs", "Fruit & veg", "Fats & snacks", "Drinks", "Meals & takeaway"];
+const PAGE = 60;
 
 export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: boolean; onClose: () => void; date: string; meal: MealSlot }) {
   const { days, savedMeals, customFoods, addFoods, addCustomFood } = useStore();
@@ -26,12 +26,14 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   const [picked, setPicked] = useState<Picked | null>(null);
   const [creating, setCreating] = useState(false);
   const recent = useMemo(() => recentFoods(days, 14), [days]);
+  const [shown, setShown] = useState(PAGE);
+  const online = useOnlineSearch(q);
 
   // reset when reopened
   const [lastOpen, setLastOpen] = useState(open);
   if (open !== lastOpen) {
     setLastOpen(open);
-    if (open) { setMeal(initialMeal); setPicked(null); setQ(""); setCreating(false); setTab("foods"); setCat(null); }
+    if (open) { setMeal(initialMeal); setPicked(null); setQ(""); setCreating(false); setTab("foods"); setCat(null); setShown(PAGE); }
   }
 
   const list = useMemo(() => {
@@ -76,7 +78,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
       </div>
       {!picked && !creating && (
         <>
-          <input className="in" id="food-search" placeholder="Search foods - e.g. chicken, pap, oats" value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); }} autoFocus aria-label="Search foods" />
+          <input className="in" id="food-search" placeholder={`Search ${FOODS.length}+ foods, or any brand online`} value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); setShown(PAGE); }} autoFocus aria-label="Search foods" />
           <div className="seg" role="tablist" aria-label="Food lists">
             {([["foods", "All foods"], ["recent", "Recent"], ["meals", `Saved meals (${savedMeals.length})`], ["mine", "My foods"]] as [Tab, string][]).map(([k, l]) => (
               <button key={k} role="tab" aria-pressed={tab === k} aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>
@@ -93,31 +95,52 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   } else if (creating) {
     body = <CustomForm onSave={(f) => { const cf = addCustomFood(f); setCreating(false); setPicked({ kind: "custom", food: cf, qty: 1 }); }} />;
   } else if (tab === "foods") {
+    const row = (f: Food) => {
+      const sv = f.servings[0];
+      const m = macrosFor(f, sv.g);
+      return (
+        <li key={f.id}>
+          <button onClick={() => setPicked({ kind: "food", food: f, grams: sv.g })}>
+            <span><div className="n">{f.name}</div><div className="m">{sv.label} · P {fmt(m.p)} · C {fmt(m.c)} · F {fmt(m.f)}</div></span>
+            <span className="k">{fmt(m.kcal)} kcal</span>
+          </button>
+        </li>
+      );
+    };
+    const qq = q.trim();
     body = (
       <>
         {!q && (
-          <div className="chips" style={{ marginBottom: 10 }}>
-            <button className="chip" aria-pressed={cat === null} onClick={() => setCat(null)}>All</button>
-            {CATS.map((c) => <button key={c} className="chip" aria-pressed={cat === c} onClick={() => setCat(c)}>{c}</button>)}
+          <div className="chips scroll-chips food-cats" role="tablist" aria-label="Food categories">
+            <button className="chip" aria-pressed={cat === null} onClick={() => { setCat(null); setShown(PAGE); }}>All</button>
+            {FOOD_CATS.map((c) => <button key={c} className="chip" aria-pressed={cat === c} onClick={() => { setCat(c); setShown(PAGE); }}>{c}</button>)}
           </div>
         )}
-        {list.length ? (
-          <ul className="flist">
-            {list.map((f) => {
-              const sv = f.servings[0];
-              const m = macrosFor(f, sv.g);
-              return (
-                <li key={f.id}>
-                  <button onClick={() => setPicked({ kind: "food", food: f, grams: sv.g })}>
-                    <span><div className="n">{f.name}</div><div className="m">{sv.label} · P {fmt(m.p)} · C {fmt(m.c)} · F {fmt(m.f)}</div></span>
-                    <span className="k">{fmt(m.kcal)} kcal</span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <div className="empty">No match for “{q}”. <button className="btn sm" style={{ marginLeft: 6 }} onClick={() => setCreating(true)}>Add it from the label</button></div>
+        {list.length > 0 && (
+          <>
+            {qq && <div className="flist-h">In the food list</div>}
+            <ul className="flist">{list.slice(0, shown).map(row)}</ul>
+            {list.length > shown && <button className="btn ghost sm block" onClick={() => setShown(shown + PAGE)}>Show more ({list.length - shown} left)</button>}
+          </>
+        )}
+        {qq.length >= 2 && (
+          <div className="online">
+            <div className="flist-h">
+              <span>Branded &amp; packaged foods</span>
+              <span className="faint xs">from Open Food Facts</span>
+            </div>
+            {online.state === "idle" && (
+              <button className="btn block" onClick={online.run}>{Icon.search} Search online for “{qq}”</button>
+            )}
+            {online.state === "loading" && <div className="empty small">Searching millions of products…</div>}
+            {online.state === "error" && <div className="empty small">{online.error} <button className="btn sm" style={{ marginLeft: 6 }} onClick={online.run}>Try again</button></div>}
+            {online.state === "done" && (online.results.length
+              ? <ul className="flist">{online.results.map(row)}</ul>
+              : <div className="empty small">Nothing online for “{qq}” either.</div>)}
+          </div>
+        )}
+        {qq && (
+          <div className="empty small" style={{ marginTop: 10 }}>Can't find it? <button className="btn sm" style={{ marginLeft: 6 }} onClick={() => setCreating(true)}>Add it from the label</button></div>
         )}
       </>
     );
@@ -182,7 +205,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   ) : creating ? <button className="btn block" onClick={() => setCreating(false)}>Cancel</button> : undefined;
 
   return (
-    <Sheet open={open} onClose={onClose} title={header} footer={footer} label="Log food">
+    <Sheet open={open} tall={!picked && !creating} onClose={onClose} title={header} footer={footer} label="Log food">
       {body}
     </Sheet>
   );
@@ -262,4 +285,38 @@ function CustomForm({ onSave }: { onSave: (f: Omit<CustomFood, "id">) => void })
       <button className="btn primary" type="submit">Save food</button>
     </form>
   );
+}
+
+/** Online product search: runs on request, or by itself when the food list has nothing. */
+function useOnlineSearch(q: string) {
+  const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [results, setResults] = useState<Food[]>([]);
+  const [error, setError] = useState("");
+  const ctrl = useRef<AbortController | null>(null);
+  const query = q.trim();
+  const local = useMemo(() => (query ? searchFoods(query).length : 1), [query]);
+
+  const run = () => {
+    if (query.length < 2) return;
+    ctrl.current?.abort();
+    const c = new AbortController();
+    ctrl.current = c;
+    setState("loading");
+    searchOnline(query, c.signal)
+      .then((r) => { if (!c.signal.aborted) { setResults(r); setState("done"); } })
+      .catch((e: Error) => { if (e.name !== "AbortError") { setError(e.message); setState("error"); } });
+  };
+
+  useEffect(() => {
+    ctrl.current?.abort();
+    setState("idle");
+    setResults([]);
+    if (query.length < 3 || local > 0) return;
+    const t = window.setTimeout(run, 700);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+  useEffect(() => () => ctrl.current?.abort(), []);
+
+  return { state, results, error, run };
 }

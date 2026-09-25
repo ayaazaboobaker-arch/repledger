@@ -1,12 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { CardioPlanRows, openCardio } from "../components/BurnCard";
 import { ExerciseProgress } from "../components/ExerciseProgress";
-import { Icon, Sparkline, toast } from "../components/ui";
+import { INTENSITY, SPORT_BY_ID } from "../lib/burn";
+import { CountUp, Icon, Sparkline, toast } from "../components/ui";
 import { KG_VALUES, REP_VALUES, SET_VALUES, WheelPicker } from "../components/WheelPicker";
 import { useStore } from "../lib/store";
 import { exerciseHistory, planSession, sessionDone, suggestion, weeklyExercise } from "../lib/stats";
 import type { DowKey, SessionExercise } from "../lib/types";
-import { addDays, DOW, DOW_LONG, dowKey, fmt, fmtKg, parseYmd, shortDate, todayStr, weekStart } from "../lib/util";
+import { addDays, DOW, DOW_LONG, dowKey, fmtKg, parseYmd, shortDate, todayStr, weekStart } from "../lib/util";
 
 const mmss = (ms: number) => {
   const s = Math.max(0, Math.round(ms / 1000));
@@ -41,16 +43,27 @@ function Chooser() {
     const date = addDays(ws, i);
     const pd = plan[k];
     const train = pd.exercises.length > 0;
+    const cardio = pd.cardio || [];
+    const cardioOnly = !train && cardio.length > 0;
     const w = days[date]?.workout;
-    const done = sessionDone(w);
+    const cardioDone = cardio.length > 0 && openCardio(days, cardio, date).length === 0;
+    const done = sessionDone(w) || (cardioOnly && cardioDone);
     const sets = pd.exercises.reduce((a, e) => a + (e.sets || 0), 0);
     const status: "done" | "today" | "missed" | "upcoming" | "rest" =
-      done ? "done" : !train ? "rest" : date === today ? "today" : date < today ? "missed" : "upcoming";
-    return { k, i, date, pd, train, done, sets, mins: Math.round(sets * 2.6 + 5), status, loggedTitle: w?.title };
+      done ? "done" : !train && !cardioOnly ? "rest" : date === today ? "today" : date < today ? "missed" : "upcoming";
+    const cardioMins = cardio.reduce((a, c) => a + c.minutes, 0);
+    return { k, i, date, pd, train, cardio, cardioOnly, done, sets, mins: Math.round(sets * 2.6 + 5) + (train ? 0 : cardioMins), cardioMins, status, loggedTitle: w?.title };
   });
   const [key, setKey] = useState<DowKey>(() => dowKey(today));
+  const strip = useRef<HTMLDivElement>(null);
+  // On phones the week scrolls sideways: start with today's tile in view.
+  useEffect(() => {
+    const el = strip.current, tile = el?.querySelector<HTMLElement>(".is-today");
+    if (el && tile && el.scrollWidth > el.clientWidth) el.scrollLeft = tile.offsetLeft - (el.clientWidth - tile.offsetWidth) / 2;
+  }, []);
   const sel = week.find((d) => d.k === key)!;
-  const trainingDays = week.filter((d) => d.train);
+  const trainingDays = week.filter((d) => d.train || d.cardioOnly);
+  const liftDays = week.filter((d) => d.train);
   const doneCount = week.filter((d) => d.done).length;
   const todayDone = days[today]?.workout?.finishedAt;
   const start = (k: DowKey) => { startSession(today, k); nav("/train"); };
@@ -72,21 +85,21 @@ function Chooser() {
         </div>
       </div>
 
-      <div className="week-strip" role="radiogroup" aria-label="Day of the week">
+      <div className="week-strip" ref={strip} role="radiogroup" aria-label="Day of the week">
         {week.map((d) => {
           const dt = parseYmd(d.date);
           return (
             <button
               key={d.k} role="radio" aria-checked={key === d.k}
-              className={`day-tile ${d.train ? "train glow" : "rest"} s-${d.status}${key === d.k ? " sel" : ""}${d.date === today ? " is-today" : ""}`}
+              className={`day-tile ${d.train ? "train glow" : d.cardioOnly ? "train cardio glow" : "rest"} s-${d.status}${key === d.k ? " sel" : ""}${d.date === today ? " is-today" : ""}`}
               onClick={() => setKey(d.k)}
             >
               <div className="dt-top">
                 <span className="dt-dow">{DOW_LONG[d.k].slice(0, 3)}</span>
                 <span className="dt-num">{dt.getDate()}</span>
               </div>
-              <div className="dt-title">{d.done && d.loggedTitle ? d.loggedTitle : d.train ? d.pd.title : "Rest"}</div>
-              <div className="dt-sub">{d.train ? `${d.pd.exercises.length} exercises · ~${d.mins} min` : "Recovery"}</div>
+              <div className="dt-title">{d.done && d.loggedTitle ? d.loggedTitle : d.train || d.cardioOnly ? d.pd.title : "Rest"}</div>
+              <div className="dt-sub">{d.train ? `${d.pd.exercises.length} exercises${d.cardio.length ? " + cardio" : ` · ~${d.mins} min`}` : d.cardioOnly ? `Cardio · ${d.cardioMins} min` : "Recovery"}</div>
               <span className={`dt-badge b-${d.status}`}>
                 {d.status === "done" ? <>{Icon.check} Done</> : d.status === "today" ? "Today" : d.status === "missed" ? "Missed" : d.status === "rest" ? (d.date === today ? "Today · rest" : "Rest") : "Upcoming"}
               </span>
@@ -124,6 +137,12 @@ function Chooser() {
                 );
               })}
             </ul>
+            {sel.cardio.length > 0 && (
+              <>
+                <div className="eyebrow" style={{ margin: "14px 0 8px" }}>Plus cardio - after lifting</div>
+                <CardioPlanRows date={sel.date <= today ? sel.date : today} planKey={sel.k} />
+              </>
+            )}
           </section>
           <aside className="card td-side">
             <div className="eyebrow">Ready to train?</div>
@@ -136,6 +155,31 @@ function Chooser() {
             {sel.date !== today && !todayDone && <p className="small muted" style={{ marginBottom: 10 }}>This is {DOW_LONG[sel.k]}'s session - starting it now logs it for today.</p>}
             <button className="btn primary lg block" onClick={() => start(sel.k)}>{Icon.play} Start {sel.pd.title}</button>
             <p className="xs faint" style={{ marginTop: 10 }}>Log each set with the scroll wheels. Rest timer starts automatically.</p>
+          </aside>
+        </div>
+      ) : sel.cardioOnly ? (
+        <div className="train-detail">
+          <section className="card">
+            <div className="eyebrow">{DOW_LONG[sel.k]}{sel.date === today ? " · today" : ""}</div>
+            <div className="td-title">{sel.pd.title}</div>
+            <div className="muted">Cardio day - {sel.cardio.map((c) => `${c.minutes} min ${INTENSITY[c.intensity].label.toLowerCase()} ${SPORT_BY_ID.get(c.sport)?.label.toLowerCase() ?? "cardio"}`).join(", ")}</div>
+            <div style={{ marginTop: 14 }}><CardioPlanRows date={sel.date <= today ? sel.date : today} planKey={sel.k} /></div>
+            <ul className="notes small" style={{ marginTop: 14 }}>
+              {sel.cardio.some((c) => c.intensity === "easy") && <li>Easy means you could hold a conversation the whole way - it builds your aerobic base without tiring you for lifting.</li>}
+              {sel.cardio.some((c) => c.intensity === "hard") && <li>Hard sessions: warm up for 5–10 minutes first, and keep the next day easy.</li>}
+              <li>Tap <b>Log it</b> when you're done - it's added to the calories you burned today.</li>
+            </ul>
+          </section>
+          <aside className="card td-side">
+            <div className="eyebrow">Want to lift as well?</div>
+            <p className="small muted" style={{ margin: "6px 0 12px" }}>Pick a session to do today.</p>
+            <div className="stack" style={{ gap: 8 }}>
+              {liftDays.map((d) => (
+                <button key={d.k} className="btn block glow-btn" style={{ justifyContent: "space-between" }} onClick={() => start(d.k)}>
+                  <span>{d.pd.title}</span><span className="xs muted">{DOW_LONG[d.k].slice(0, 3)} · {d.pd.exercises.length} ex</span>
+                </button>
+              ))}
+            </div>
           </aside>
         </div>
       ) : (
@@ -155,7 +199,7 @@ function Chooser() {
             <div className="eyebrow">Want to train anyway?</div>
             <p className="small muted" style={{ margin: "6px 0 12px" }}>Pick a session to do today instead.</p>
             <div className="stack" style={{ gap: 8 }}>
-              {trainingDays.map((d) => (
+              {liftDays.map((d) => (
                 <button key={d.k} className="btn block glow-btn" style={{ justifyContent: "space-between" }} onClick={() => start(d.k)}>
                   <span>{d.pd.title}</span><span className="xs muted">{DOW_LONG[d.k].slice(0, 3)} · {d.pd.exercises.length} ex</span>
                 </button>
@@ -374,18 +418,33 @@ function Summary({ date }: { date: string }) {
   return (
     <div className="runner">
       <div className="page-head"><div><div className="eyebrow">Session complete</div><h1>{w.title} done</h1></div></div>
-      <section className="card">
+      <section className="card summary-card">
+        {prs.length > 0 && <Confetti />}
         <div className="summary-grid">
-          <div className="xp-kpi"><div className="l">Sets</div><div className="v">{sets.length}</div></div>
-          <div className="xp-kpi"><div className="l">Volume</div><div className="v">{fmt(vol)} kg</div></div>
+          <div className="xp-kpi"><div className="l">Sets</div><div className="v"><CountUp value={sets.length} /></div></div>
+          <div className="xp-kpi"><div className="l">Volume</div><div className="v"><CountUp value={vol} ms={1100} /> kg</div></div>
           <div className="xp-kpi"><div className="l">Time</div><div className="v">{mins != null ? mins + " min" : "–"}</div></div>
         </div>
         <h3>Personal bests</h3>
         {prs.length ? prs.map((p) => (
-          <div key={p.name} className="pr"><span className="pill good">{Icon.star} PR</span><div><b>{p.name}</b><div className="small muted">{p.text}</div></div></div>
+          <div key={p.name} className="pr pr-new"><span className="pill good">{Icon.star} PR</span><div><b>{p.name}</b><div className="small muted">{p.text}</div></div></div>
         )) : <p className="small muted" style={{ marginTop: 6 }}>No new bests this time - consistency is what makes the next one happen.</p>}
         <button className="btn primary lg block" style={{ marginTop: 18 }} onClick={() => nav("/")}>Back to today</button>
       </section>
+    </div>
+  );
+}
+
+/** A short cyan-and-lime burst when a session brings new personal bests. Skipped for reduced motion. */
+function Confetti() {
+  const bits = useMemo(() => Array.from({ length: 28 }, (_, i) => ({
+    x: Math.round((Math.random() - 0.5) * 520), y: Math.round(-120 - Math.random() * 220), r: Math.round(Math.random() * 540 - 270),
+    d: Math.round(Math.random() * 180), c: i % 3,
+  })), []);
+  useEffect(() => { try { navigator.vibrate?.([30, 40, 30]); } catch { /* no vibration here */ } }, []);
+  return (
+    <div className="confetti" aria-hidden="true">
+      {bits.map((b, i) => <i key={i} className={`c${b.c}`} style={{ "--x": `${b.x}px`, "--y": `${b.y}px`, "--r": `${b.r}deg`, animationDelay: `${b.d}ms` } as React.CSSProperties} />)}
     </div>
   );
 }

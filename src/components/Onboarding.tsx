@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import { ACTIVITY, calculate, GOALS } from "../lib/calc";
+import { INTENSITY, SPORT_BY_ID, sportKcal } from "../lib/burn";
+import { ACTIVITY, calculate, cardioOf, FOCUS, focusOf, GOALS } from "../lib/calc";
 import { recommendPlan } from "../lib/plans";
-import type { ActivityLevel as Activity, Equipment, Experience, Goal, Profile, Sex } from "../lib/types";
+import type { ActivityLevel as Activity, CardioPrefs, Equipment, Experience, Goal, Intensity, Profile, Sex, TrainingFocus } from "../lib/types";
 import { DOW, DOW_LONG, fmt } from "../lib/util";
 import { NumField, Opts, PinInput } from "./forms";
 import { CalorieSteps, MacroTargets, Timeline } from "./Numbers";
@@ -22,7 +23,12 @@ const ACT_OPTS = Object.fromEntries(Object.entries(ACTIVITY).map(([k, v]) => [k,
 export const BLANK_PROFILE: Profile = {
   name: "", sex: "male", age: 28, heightCm: 175, weightKg: 80, goalWeightKg: 75, activity: "light", goal: "recomp", rate: 0.5,
   experience: "beginner", daysPerWeek: 3, equipment: "gym", sessionMinutes: 60,
+  focus: "balanced", cardio: { sports: ["walk"], daysPerWeek: 2, minutes: 30, intensity: "moderate" },
 };
+
+/** Cardio choices shown in the questionnaire (the full list is in the activity logger). */
+const CARDIO_PICKS = ["walk", "run", "cycle", "spin", "swim", "row", "elliptical", "stairs", "hiit", "skip", "hike", "dance", "boxing", "soccer", "netball", "tennis", "padel", "squash"];
+const INT_OPTS = Object.fromEntries(Object.entries(INTENSITY).map(([k, v]) => [k, { label: v.label, hint: v.hint }])) as Record<Intensity, { label: string; hint: string }>;
 
 interface Props {
   initial: Profile;
@@ -33,7 +39,16 @@ interface Props {
 }
 
 export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
-  const [p, setP] = useState<Profile>(initial);
+  const [p, setP] = useState<Profile>(() => ({ ...initial, focus: focusOf(initial), cardio: cardioOf(initial) }));
+  const cardio = p.cardio!;
+  const upC = (patch: Partial<CardioPrefs>) => setP((cur) => ({ ...cur, cardio: { ...cur.cardio!, ...patch } }));
+  const setFocus = (focus: TrainingFocus) => setP((cur) => {
+    const c = cur.cardio!;
+    // Nudge the numbers to fit the choice; everything can still be changed.
+    if (focus === "cardio") return { ...cur, focus, daysPerWeek: Math.min(cur.daysPerWeek, 2), cardio: { ...c, daysPerWeek: Math.max(c.daysPerWeek, 4), sports: c.sports.length ? c.sports : ["run"] } };
+    if (focus === "balanced") return { ...cur, focus, cardio: { ...c, daysPerWeek: Math.max(c.daysPerWeek, 2) } };
+    return { ...cur, focus };
+  });
   const [pin, setPin] = useState("");
   const [pin2, setPin2] = useState("");
   const usePin = true;
@@ -41,8 +56,8 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
   const up = (patch: Partial<Profile>) => setP((cur) => ({ ...cur, ...patch }));
 
   const STEPS = mode === "create"
-    ? ["Create your profile", "About you", "Your body", "Your goal", "Daily activity", "Your training", "Your numbers"]
-    : ["About you", "Your body", "Your goal", "Daily activity", "Your training"];
+    ? ["Create your profile", "About you", "Your body", "Your goal", "Daily activity", "Your training", "Your cardio", "Your numbers"]
+    : ["About you", "Your body", "Your goal", "Daily activity", "Your training", "Your cardio"];
   const key = STEPS[step];
   const last = step === STEPS.length - 1;
   const b = useMemo(() => calculate(p), [p]);
@@ -56,6 +71,9 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
   }
   if (key === "About you" && (p.age < 13 || p.age > 100)) problem = "Enter an age between 13 and 100.";
   if (key === "Your body" && (p.heightCm < 120 || p.heightCm > 230 || p.weightKg < 35 || p.weightKg > 300)) problem = "Check your height and weight.";
+  if (key === "Your training" && p.daysPerWeek === 0 && focusOf(p) !== "cardio") problem = "Pick at least one day of weight training, or choose “Mostly cardio”.";
+  if (key === "Your cardio" && cardio.daysPerWeek > 0 && !cardio.sports.length) problem = "Pick at least one kind of cardio, or set cardio days to none.";
+  if (key === "Your cardio" && focusOf(p) === "cardio" && cardio.daysPerWeek === 0) problem = "You chose mostly cardio - pick how many days a week you do it.";
   const [showProblem, setShowProblem] = useState(false);
 
   const next = () => {
@@ -137,19 +155,72 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
 
         {key === "Your training" && (
           <>
+            <div>
+              <div className="f" style={{ marginBottom: 6 }}>What kind of training do you want?</div>
+              <Opts<TrainingFocus> label="Training focus" value={focusOf(p)} onChange={setFocus} options={FOCUS} />
+            </div>
             <Opts<Experience> label="Experience" value={p.experience} onChange={(experience) => up({ experience })} options={EXP} />
             <div>
-              <div className="f" style={{ marginBottom: 6 }}>Days a week you can train</div>
-              <div className="chips">{[2, 3, 4, 5, 6].map((d) => <button type="button" key={d} className="chip" aria-pressed={p.daysPerWeek === d} onClick={() => up({ daysPerWeek: d })}>{d} days</button>)}</div>
+              <div className="f" style={{ marginBottom: 6 }}>Days a week of weight training</div>
+              <div className="chips">
+                {(focusOf(p) === "cardio" ? [0, 1, 2, 3, 4] : [1, 2, 3, 4, 5, 6]).map((d) => (
+                  <button type="button" key={d} className="chip" aria-pressed={p.daysPerWeek === d} onClick={() => up({ daysPerWeek: d })}>{d === 0 ? "None" : `${d} day${d > 1 ? "s" : ""}`}</button>
+                ))}
+              </div>
+            </div>
+            {p.daysPerWeek > 0 && (
+              <>
+                <div>
+                  <div className="f" style={{ marginBottom: 6 }}>Time per weights session</div>
+                  <div className="chips">{[30, 45, 60, 75, 90].map((m) => <button type="button" key={m} className="chip" aria-pressed={p.sessionMinutes === m} onClick={() => up({ sessionMinutes: m })}>{m} min</button>)}</div>
+                </div>
+                <div>
+                  <div className="f" style={{ marginBottom: 6 }}>Where you train</div>
+                  <Opts<Equipment> label="Equipment" value={p.equipment} onChange={(equipment) => up({ equipment })} options={EQUIP} />
+                </div>
+              </>
+            )}
+          </>
+        )}
+
+        {key === "Your cardio" && (
+          <>
+            <p className="small muted prose">Cardio strengthens your heart and lungs and burns extra calories. {p.goal === "lose" ? "For fat loss, regular easy-to-moderate cardio on top of your steps helps a lot." : p.goal === "gain" ? "When building muscle, keep it to 2–3 easy sessions so it doesn't eat into recovery." : "Around 150 minutes of moderate cardio a week is the health guideline."}</p>
+            <div>
+              <div className="f" style={{ marginBottom: 6 }}>Which cardio do you enjoy? <span className="faint">Pick any</span></div>
+              <div className="chips">
+                {CARDIO_PICKS.map((id) => {
+                  const on = cardio.sports.includes(id);
+                  return (
+                    <button type="button" key={id} className="chip" aria-pressed={on} onClick={() => upC({ sports: on ? cardio.sports.filter((x) => x !== id) : [...cardio.sports, id] })}>
+                      {SPORT_BY_ID.get(id)!.label}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
             <div>
-              <div className="f" style={{ marginBottom: 6 }}>Time per session</div>
-              <div className="chips">{[30, 45, 60, 75, 90].map((m) => <button type="button" key={m} className="chip" aria-pressed={p.sessionMinutes === m} onClick={() => up({ sessionMinutes: m })}>{m} min</button>)}</div>
+              <div className="f" style={{ marginBottom: 6 }}>Cardio days a week</div>
+              <div className="chips">{[0, 1, 2, 3, 4, 5, 6, 7].map((d) => <button type="button" key={d} className="chip" aria-pressed={cardio.daysPerWeek === d} onClick={() => upC({ daysPerWeek: d })}>{d === 0 ? "None" : d}</button>)}</div>
             </div>
-            <div>
-              <div className="f" style={{ marginBottom: 6 }}>Where you train</div>
-              <Opts<Equipment> label="Equipment" value={p.equipment} onChange={(equipment) => up({ equipment })} options={EQUIP} />
-            </div>
+            {cardio.daysPerWeek > 0 && (
+              <>
+                <div>
+                  <div className="f" style={{ marginBottom: 6 }}>Time per cardio session</div>
+                  <div className="chips">{[15, 20, 30, 45, 60, 90].map((m) => <button type="button" key={m} className="chip" aria-pressed={cardio.minutes === m} onClick={() => upC({ minutes: m })}>{m} min</button>)}</div>
+                </div>
+                <div>
+                  <div className="f" style={{ marginBottom: 6 }}>How hard?</div>
+                  <Opts<Intensity> label="Cardio intensity" value={cardio.intensity} onChange={(intensity) => upC({ intensity })} options={INT_OPTS} cols={150} />
+                </div>
+                {cardio.sports.length > 0 && (
+                  <div className="card flat small">
+                    <b>{cardio.daysPerWeek * cardio.minutes} minutes a week</b> of cardio burns about{" "}
+                    <b>{fmt(Math.round((cardio.daysPerWeek * cardio.sports.reduce((a, s) => a + sportKcal(s, cardio.minutes, cardio.intensity, p.weightKg), 0)) / cardio.sports.length / 10) * 10)} kcal</b> - we add that to your daily calories and put the sessions in your plan.
+                  </div>
+                )}
+              </>
+            )}
           </>
         )}
 
@@ -165,7 +236,7 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
             <div className="card flat">
               <div className="eyebrow">Your training plan</div>
               <div style={{ fontWeight: 700, marginTop: 4 }}>{rec.template.name}</div>
-              <div className="small muted">{DOW.filter((k) => rec.plan[k].exercises.length).map((k) => `${DOW_LONG[k].slice(0, 3)} ${rec.plan[k].title}`).join(" · ")}</div>
+              <div className="small muted">{DOW.filter((k) => rec.plan[k].exercises.length || rec.plan[k].cardio?.length).map((k) => `${DOW_LONG[k].slice(0, 3)} ${rec.plan[k].title}`).join(" · ")}</div>
             </div>
             <p className="xs faint">Estimates to start from, not medical advice. You can change any number later on the Me page.</p>
           </>
@@ -176,7 +247,7 @@ export function Onboarding({ initial, mode, onFinish, onCancel }: Props) {
         <div className="spread" style={{ marginTop: 4 }}>
           {step > 0 ? <button type="button" className="btn" onClick={() => { setShowProblem(false); setStep(step - 1); }}>{Icon.left} Back</button> : <span />}
           <button type="submit" className="btn primary lg">
-            {key === "Your numbers" ? <>Start using Rep Ledger {Icon.right}</> : mode === "edit" && last ? "Save and recalculate" : key === "Your training" && mode === "create" ? <>See my numbers {Icon.right}</> : <>Next {Icon.right}</>}
+            {key === "Your numbers" ? <>Start using Rep Ledger {Icon.right}</> : mode === "edit" && last ? "Save and recalculate" : key === "Your cardio" && mode === "create" ? <>See my numbers {Icon.right}</> : <>Next {Icon.right}</>}
           </button>
         </div>
       </form>

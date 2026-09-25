@@ -3,6 +3,7 @@
  * leading up to today, generated relative to the current date so the demo
  * never looks stale. Deterministic (seeded) so it's the same every reset.
  */
+import { sportKcal } from "./burn";
 import { calculate, targetsFrom } from "./calc";
 import { FOOD_BY_ID, macrosFor } from "./foods";
 import type { DayLog, FoodEntry, MealSlot, Profile, SavedMeal, Targets, WeekPlan } from "./types";
@@ -22,6 +23,8 @@ export const DEMO_PROFILE: Profile = {
   daysPerWeek: 5,
   equipment: "gym",
   sessionMinutes: 60,
+  focus: "balanced",
+  cardio: { sports: ["run", "cycle"], daysPerWeek: 2, minutes: 30, intensity: "moderate" },
 };
 
 export const DEMO_TARGETS: Targets = targetsFrom(DEMO_PROFILE, calculate(DEMO_PROFILE));
@@ -30,11 +33,11 @@ const ex = (name: string, sets: number, reps: number, kg: number) => ({ name, se
 export const DEMO_PLAN: WeekPlan = {
   mon: { title: "Push", focus: "Chest, shoulders, triceps", exercises: [ex("Bench Press", 4, 8, 67.5), ex("Overhead Press", 3, 8, 45), ex("Incline Dumbbell Press", 3, 10, 24), ex("Lateral Raise", 3, 15, 10), ex("Tricep Pushdown", 3, 12, 30)] },
   tue: { title: "Pull", focus: "Back and biceps", exercises: [ex("Deadlift", 3, 5, 110), ex("Pull-up", 4, 8, 0), ex("Barbell Row", 3, 8, 65), ex("Face Pull", 3, 15, 22.5), ex("Bicep Curl", 3, 12, 14)] },
-  wed: { title: "Rest", exercises: [] },
+  wed: { title: "Running", focus: "30 min · moderate", exercises: [], cardio: [{ sport: "run", minutes: 30, intensity: "moderate" }] },
   thu: { title: "Legs", focus: "Quads, hamstrings, calves", exercises: [ex("Back Squat", 4, 6, 87.5), ex("Romanian Deadlift", 3, 10, 75), ex("Leg Press", 3, 12, 150), ex("Walking Lunge", 3, 12, 18), ex("Calf Raise", 4, 15, 50)] },
   fri: { title: "Upper", focus: "Strength upper body", exercises: [ex("Incline Bench Press", 3, 6, 60), ex("Chin-up", 3, 8, 0), ex("Seated Dumbbell Press", 3, 10, 20), ex("Cable Row", 3, 12, 55), ex("Dips", 3, 10, 0)] },
   sat: { title: "Lower", focus: "Glutes and hamstrings", exercises: [ex("Front Squat", 3, 8, 65), ex("Hip Thrust", 3, 10, 90), ex("Leg Curl", 3, 12, 40), ex("Calf Raise", 3, 15, 50)] },
-  sun: { title: "Rest", exercises: [] },
+  sun: { title: "Cycling", focus: "45 min · easy", exercises: [], cardio: [{ sport: "cycle", minutes: 45, intensity: "easy" }] },
 };
 
 type Item = [string, number, string?]; // foodId, grams, portion label
@@ -110,6 +113,16 @@ export function buildDemoDays(weeks = 6): Record<string, DayLog> {
           return { name: e.name, tSets: e.sets, tReps: e.reps, tKg: kg, sets };
         }),
       };
+    }
+    // cardio on the planned days (and the odd game of padel)
+    if (!isToday) {
+      const acts = [];
+      for (const c of pd.cardio || []) if (rnd() < 0.85) {
+        const min = c.minutes + Math.round((rnd() - 0.5) * 10);
+        acts.push({ id: `a${idx}${c.sport}`, kind: c.sport, start: 1, seconds: min * 60, steps: 0, km: c.sport === "run" ? +(min / 5.8).toFixed(1) : c.sport === "cycle" ? +(min / 2.6).toFixed(1) : 0, kcal: sportKcal(c.sport, min, c.intensity, 82 - 0.4 * wk), manual: true, intensity: c.intensity });
+      }
+      if (key === "sat" && rnd() < 0.4) acts.push({ id: `a${idx}p`, kind: "padel", start: 1, seconds: 3600, steps: 0, km: 0, kcal: sportKcal("padel", 60, "moderate", 82), manual: true, intensity: "moderate" as const });
+      if (acts.length) day.activities = acts;
     }
     // food
     const foods: FoodEntry[] = [];

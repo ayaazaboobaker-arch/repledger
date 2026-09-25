@@ -6,6 +6,7 @@ import { Icon, Toaster } from "./components/ui";
 import { migrateLegacy, restoreSession, useAccounts, useCurrentAccount } from "./lib/accounts";
 import { useStore } from "./lib/store";
 import { Welcome } from "./pages/Welcome";
+import { Coach } from "./pages/Coach";
 import { Food } from "./pages/Food";
 import { Plan } from "./pages/Plan";
 import { Profile } from "./pages/Profile";
@@ -18,6 +19,7 @@ const NAV = [
   { to: "/train", label: "Train", icon: Icon.train },
   { to: "/food", label: "Food", icon: Icon.food },
   { to: "/progress", label: "Progress", icon: Icon.progress },
+  { to: "/coach", label: "Coach", icon: Icon.coach },
   { to: "/plan", label: "Plan", icon: Icon.plan },
 ];
 
@@ -67,6 +69,7 @@ function Shell() {
             <Route path="/food" element={<Food />} />
             <Route path="/progress" element={<Progress />} />
             <Route path="/plan" element={<Plan />} />
+            <Route path="/coach" element={<Coach />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<Today />} />
           </Routes>

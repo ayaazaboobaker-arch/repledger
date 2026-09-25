@@ -8,7 +8,8 @@ import { ConfirmButton } from "../components/safety";
 import { Icon, toast } from "../components/ui";
 import { downloadBackup } from "../lib/backup";
 import { deleteAccount, forgetOnDevice, signOut, updateAccount, useCurrentAccount } from "../lib/accounts";
-import { calculate, GOALS, targetsFrom } from "../lib/calc";
+import { calculate, GOALS, targetsFrom, cardioOf } from "../lib/calc";
+import { SPORT_BY_ID } from "../lib/burn";
 import { recommendPlan } from "../lib/plans";
 import { useStore } from "../lib/store";
 import type { Targets } from "../lib/types";
@@ -75,16 +76,19 @@ function Results({ onEdit }: { onEdit: () => void }) {
           </section>
           <section className="card">
             <div className="card-h">
-              <div><h2>Recommended training</h2><div className="small muted">{rec.template.name} · {EQUIP[p.equipment].label.toLowerCase()} · ~{p.sessionMinutes} min</div></div>
+              <div><h2>Recommended training</h2><div className="small muted">{p.daysPerWeek ? `${rec.template.name} · ${EQUIP[p.equipment].label.toLowerCase()} · ~${p.sessionMinutes} min` : "Cardio-focused week"}{cardioOf(p).daysPerWeek ? ` · ${cardioOf(p).daysPerWeek}× cardio` : ""}</div></div>
               <ConfirmButton className="btn primary" label="Use this plan" question="Replace your weekly plan? Logged workouts stay." confirmLabel="Replace plan" onConfirm={() => { setPlan(rec.plan); toast("Plan applied"); nav("/plan"); }} />
             </div>
-            <p className="prose" style={{ marginBottom: 12 }}>{rec.template.why}</p>
+            {p.daysPerWeek > 0 && <p className="prose" style={{ marginBottom: 12 }}>{rec.template.why}</p>}
             <div className="plan-preview">
-              {DOW.filter((k) => rec.plan[k].exercises.length).map((k) => (
+              {DOW.filter((k) => rec.plan[k].exercises.length || rec.plan[k].cardio?.length).map((k) => (
                 <div className="d" key={k}>
                   <div className="xs faint" style={{ fontWeight: 700, letterSpacing: ".1em" }}>{DOW_LONG[k].toUpperCase()}</div>
                   <h4>{rec.plan[k].title}</h4>
-                  <ul>{rec.plan[k].exercises.map((e) => <li key={e.name}>{e.name} - {e.sets}×{e.reps}{e.kg ? ` @ ${fmtKg(e.kg)} kg` : ""}</li>)}</ul>
+                  <ul>
+                    {rec.plan[k].exercises.map((e) => <li key={e.name}>{e.name} - {e.sets}×{e.reps}{e.kg ? ` @ ${fmtKg(e.kg)} kg` : ""}</li>)}
+                    {(rec.plan[k].cardio || []).map((c, i) => <li key={"c" + i} className="cardio-li">{SPORT_BY_ID.get(c.sport)?.label} - {c.minutes} min, {c.intensity}</li>)}
+                  </ul>
                 </div>
               ))}
             </div>

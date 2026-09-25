@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { ActivitySheet } from "../components/ActivitySheet";
 import { ConfirmButton } from "../components/safety";
+import { INTENSITY, SPORT_BY_ID } from "../lib/burn";
 import { Icon, Sheet, toast } from "../components/ui";
 import { KG_VALUES, SET_VALUES, WheelPicker } from "../components/WheelPicker";
 import { ALL_EXERCISES, defaultsFor, EXERCISES, GROUPS, type ExGroup } from "../lib/exercises";
@@ -19,13 +21,18 @@ export function Plan() {
   const { plan, setPlan } = useStore();
   const [editing, setEditing] = useState<Editing | null>(null);
   const [renaming, setRenaming] = useState<DowKey | null>(null);
+  const [cardioEdit, setCardioEdit] = useState<{ day: DowKey; index: number | null } | null>(null);
   const mutate = (fn: (p: WeekPlan) => void) => {
     const p: WeekPlan = JSON.parse(JSON.stringify(plan));
     fn(p);
     setPlan(p);
   };
-  let train = 0, sets = 0;
-  DOW.forEach((k) => { if (plan[k].exercises.length) train++; plan[k].exercises.forEach((e) => (sets += e.sets)); });
+  let train = 0, sets = 0, cardioMin = 0;
+  DOW.forEach((k) => {
+    if (plan[k].exercises.length || plan[k].cardio?.length) train++;
+    plan[k].exercises.forEach((e) => (sets += e.sets));
+    (plan[k].cardio || []).forEach((c) => (cardioMin += c.minutes));
+  });
 
   return (
     <>
@@ -37,36 +44,64 @@ export function Plan() {
         <div><b>{train}</b><span>training days</span></div>
         <div><b>{7 - train}</b><span>rest days</span></div>
         <div><b>{sets}</b><span>working sets a week</span></div>
+        <div><b>{cardioMin}</b><span>cardio minutes a week</span></div>
       </div>
       <p className="small muted prose" style={{ marginBottom: 16 }}>Tap an exercise to change its sets, reps and weight. Changes apply to sessions you haven't started yet.</p>
 
       <div className="plan-grid">
         {DOW.map((k) => (
-          <DayCard key={k} day={k} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: k })} onEdit={(index) => setEditing({ mode: "edit", day: k, index })} onRename={() => setRenaming(k)} />
+          <DayCard key={k} day={k} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: k })} onEdit={(index) => setEditing({ mode: "edit", day: k, index })} onRename={() => setRenaming(k)} onCardio={(index) => setCardioEdit({ day: k, index })} />
         ))}
       </div>
 
+      <ActivitySheet
+        open={!!cardioEdit} mode="plan"
+        heading={cardioEdit ? `Add cardio to ${DOW_LONG[cardioEdit.day]}` : undefined}
+        initial={cardioEdit && cardioEdit.index != null ? { ...plan[cardioEdit.day].cardio![cardioEdit.index] } : null}
+        onClose={() => setCardioEdit(null)}
+        onSave={(a) => {
+          const { day, index } = cardioEdit!;
+          mutate((p) => {
+            const pd = p[day];
+            const block = { sport: a.sport, minutes: a.minutes, intensity: a.intensity };
+            const list = [...(pd.cardio || [])];
+            if (index != null) list[index] = block; else list.push(block);
+            if (!pd.exercises.length && (!pd.cardio?.length || index != null)) { pd.title = SPORT_BY_ID.get(a.sport)?.label ?? "Cardio"; pd.focus = `${a.minutes} min · ${a.intensity}`; }
+            pd.cardio = list;
+          });
+          toast(index != null ? "Cardio updated" : `Cardio added to ${DOW_LONG[day]}`);
+          setCardioEdit(null);
+        }}
+      />
       <RenameSheet day={renaming} plan={plan} mutate={mutate} onClose={() => setRenaming(null)} />
       <ExerciseSheet editing={editing} plan={plan} mutate={mutate} onClose={() => setEditing(null)} />
     </>
   );
 }
 
-function DayCard({ day, plan, mutate, onAdd, onEdit, onRename }: { day: DowKey; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onAdd: () => void; onEdit: (i: number) => void; onRename: () => void }) {
+function DayCard({ day, plan, mutate, onAdd, onEdit, onRename, onCardio }: { day: DowKey; plan: WeekPlan; mutate: (fn: (p: WeekPlan) => void) => void; onAdd: () => void; onEdit: (i: number) => void; onRename: () => void; onCardio: (i: number | null) => void }) {
   const pd = plan[day];
-  const rest = pd.exercises.length === 0;
+  const cardio = pd.cardio || [];
+  const lifting = pd.exercises.length > 0;
+  const rest = !lifting && !cardio.length;
   const sets = pd.exercises.reduce((n, e) => n + e.sets, 0);
+  const cMin = cardio.reduce((n, c) => n + c.minutes, 0);
+  const removeCardio = (i: number) => mutate((p) => {
+    const list = (p[day].cardio || []).filter((_, j) => j !== i);
+    p[day].cardio = list.length ? list : undefined;
+    if (!p[day].exercises.length && !list.length) p[day] = { title: "Rest", exercises: [] };
+  });
   return (
     <section className={`card pday${rest ? " is-rest" : ""}`}>
       <div className="pday-top">
         <div className="dow">{DOW_LONG[day]}</div>
-        <span className={`pill ${rest ? "" : "good"}`}>{rest ? "Rest" : `${pd.exercises.length} exercise${pd.exercises.length === 1 ? "" : "s"} · ${sets} sets`}</span>
+        <span className={`pill ${rest ? "" : "good"}`}>{rest ? "Rest" : [lifting && `${pd.exercises.length} exercise${pd.exercises.length === 1 ? "" : "s"} · ${sets} sets`, cardio.length && `${cMin} min cardio`].filter(Boolean).join(" · ")}</span>
       </div>
       <div className="ptitle-row">
         <h3 className="ptitle">{pd.title || (rest ? "Rest" : "Session")}</h3>
-        {!rest && <button className="icon-btn rename" onClick={onRename} aria-label={`Rename ${DOW_LONG[day]}`}>{Icon.edit}</button>}
+        {lifting && <button className="icon-btn rename" onClick={onRename} aria-label={`Rename ${DOW_LONG[day]}`}>{Icon.edit}</button>}
       </div>
-      {!rest && pd.focus && <p className="pfocus">{pd.focus}</p>}
+      {lifting && pd.focus && <p className="pfocus">{pd.focus}</p>}
 
       {rest ? (
         <div className="rest-body">
@@ -78,7 +113,7 @@ function DayCard({ day, plan, mutate, onAdd, onEdit, onRename }: { day: DowKey; 
             <div className="small muted">Muscles grow between sessions. Add an exercise to make this a training day.</div>
           </div>
         </div>
-      ) : (
+      ) : !lifting ? null : (
         <ol className="ex-list">
           {pd.exercises.map((e, i) => (
             <li key={i}>
@@ -93,10 +128,30 @@ function DayCard({ day, plan, mutate, onAdd, onEdit, onRename }: { day: DowKey; 
         </ol>
       )}
 
+      {cardio.length > 0 && (
+        <ul className="ex-list cardio-list">
+          {cardio.map((c, i) => (
+            <li key={i}>
+              <div className="ex-row cardio-ex">
+                <button className="cx-main" onClick={() => onCardio(i)} aria-label={`Edit ${SPORT_BY_ID.get(c.sport)?.label}: ${c.minutes} minutes, ${c.intensity}`}>
+                  <span className="ex-n cardio-n">{Icon.run}</span>
+                  <span className="ex-name">{SPORT_BY_ID.get(c.sport)?.label ?? "Cardio"}</span>
+                  <span className="ex-spec"><b>{c.minutes} min</b><small>{INTENSITY[c.intensity].label}</small></span>
+                </button>
+                <button className="icon-btn" onClick={() => removeCardio(i)} aria-label={`Remove ${SPORT_BY_ID.get(c.sport)?.label}`}>{Icon.x}</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="pday-foot">
-        <button className="btn block add-ex" onClick={onAdd}>{Icon.plus} Add exercise</button>
+        <div className="add-row">
+          <button className="btn block add-ex" onClick={onAdd}>{Icon.plus} Exercise</button>
+          <button className="btn block add-ex" onClick={() => onCardio(null)}>{Icon.run} Cardio</button>
+        </div>
         {!rest && (
-          <ConfirmButton className="btn ghost sm" label="Make rest day" question={`Clear ${DOW_LONG[day]} and make it a rest day?`} confirmLabel="Make rest"
+          <ConfirmButton className="btn ghost sm" label="Make rest day" question={`Clear ${DOW_LONG[day]}'s exercises and cardio and make it a rest day?`} confirmLabel="Make rest"
             onConfirm={() => mutate((p) => { p[day] = { title: "Rest", exercises: [] }; })} />
         )}
       </div>
@@ -133,7 +188,7 @@ function ExerciseSheet({ editing, plan, mutate, onClose }: { editing: Editing | 
       const pd = p[day];
       if (isEdit) pd.exercises[editing.index] = { ...draft };
       else {
-        if (!pd.exercises.length && (!pd.title || /^rest$/i.test(pd.title))) pd.title = "Session";
+        if (!pd.exercises.length && (!pd.title || /^rest$/i.test(pd.title) || pd.cardio?.length)) { pd.title = "Session"; pd.focus = undefined; }
         pd.exercises.push({ ...draft });
       }
     });
@@ -149,7 +204,12 @@ function ExerciseSheet({ editing, plan, mutate, onClose }: { editing: Editing | 
   };
   const remove = () => {
     if (!isEdit) return;
-    mutate((p) => { p[day].exercises.splice(editing.index, 1); if (!p[day].exercises.length) p[day] = { title: "Rest", exercises: [] }; });
+    mutate((p) => {
+      p[day].exercises.splice(editing.index, 1);
+      if (p[day].exercises.length) return;
+      const c = p[day].cardio;
+      p[day] = c?.length ? { title: SPORT_BY_ID.get(c[0].sport)?.label ?? "Cardio", focus: `${c[0].minutes} min · ${c[0].intensity}`, exercises: [], cardio: c } : { title: "Rest", exercises: [] };
+    });
     toast(`${draft.name} removed`);
     onClose();
   };

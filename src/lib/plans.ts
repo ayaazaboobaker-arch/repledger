@@ -1,4 +1,8 @@
-import type { DowKey, Equipment, Experience, Goal, PlanDay, Profile, WeekPlan } from "./types";
+import { SPORT_BY_ID } from "./burn";
+import { cardioOf, focusOf } from "./calc";
+import type { DowKey, Equipment, Experience, Goal, Intensity, PlanCardio, PlanDay, Profile, WeekPlan } from "./types";
+
+const ALL_DAYS: DowKey[] = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
 type Pattern =
   | "squat" | "squat2" | "hinge" | "deadlift" | "hpush" | "incline" | "vpush" | "hpull" | "hpull2" | "vpull"
@@ -122,10 +126,16 @@ export function recommendPlan(p: Profile): Recommendation {
   const d = p.daysPerWeek;
   let t = d <= 3 ? TEMPLATES[0] : d === 4 ? TEMPLATES[1] : d === 5 ? TEMPLATES[2] : TEMPLATES[3];
   if (p.experience === "beginner" && d >= 5) t = TEMPLATES[1];
+  // Fewer than three lifting days: keep only some of the full-body sessions.
+  let schedule = t.schedule;
+  if (d <= 2) {
+    const fb = TEMPLATES[0].schedule;
+    schedule = d === 2 ? { mon: fb.mon, thu: { ...fb.wed! } } : d === 1 ? { wed: fb.mon } : {};
+  }
   const maxEx = p.sessionMinutes <= 40 ? 4 : p.sessionMinutes <= 55 ? 5 : 6;
   const plan = {} as WeekPlan;
-  (["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as DowKey[]).forEach((k) => {
-    const s = t.schedule[k];
+  ALL_DAYS.forEach((k) => {
+    const s = schedule[k];
     if (!s) {
       plan[k] = { title: "Rest", exercises: [] };
       return;
@@ -141,17 +151,56 @@ export function recommendPlan(p: Profile): Recommendation {
     };
     plan[k] = day;
   });
+  addCardio(plan, p);
   const notes: string[] = [];
   if (p.experience === "beginner" && d >= 5) notes.push("You picked 5+ days, but as a newer lifter you'll progress just as fast on 4 - use the spare days for walks.");
-  if (d < 3) notes.push("Two sessions a week works: do Full Body A and B and skip the Friday repeat.");
+  if (d === 2) notes.push("Two full-body sessions a week, three days apart, is plenty to build and keep strength.");
+  const c = cardioOf(p);
+  if (c.daysPerWeek > 0) {
+    const names = c.sports.map((x) => SPORT_BY_ID.get(x)?.label.toLowerCase()).filter(Boolean);
+    notes.push(`Cardio: ${c.daysPerWeek} × ${c.minutes} min of ${names.join(", ") || "cardio"}${c.daysPerWeek > 7 - d ? ", some of it after a lifting session (lift first, then cardio)" : " on your non-lifting days"}. Log it with “Log activity” on the Today page and it counts towards the calories you burn.`);
+    if (c.intensity === "hard" && c.daysPerWeek > 2) notes.push("Only two of your cardio sessions are set as hard - the rest are moderate. Too many hard sessions stall recovery, and most fitness gains come from easier work.");
+  } else if (focusOf(p) !== "cardio") {
+    notes.push("A brisk walk, cycle or swim on one or two rest days is good for your heart and helps recovery - add cardio to any day on the Plan page.");
+  }
   notes.push(
     "Starting weights are estimates from your body weight. Use the first week to find a load you can lift for every rep with 1–2 reps to spare, then add weight once you hit all sets.",
   );
   if (p.goal === "lose") notes.push("Keep lifting heavy while dieting - it's what tells your body to hold on to muscle. The calorie deficit and your step goal do the fat-loss work.");
   if (p.goal === "gain") notes.push("Add 2.5 kg to the big lifts (or 1–2 reps to smaller ones) whenever you complete every set. If your weight isn't rising about 0.25 kg a week, add 150 kcal.");
   if (p.goal === "tone") notes.push("Toning is building a little muscle and keeping body fat in check - so lift with moderate weights for 12–15 controlled reps, and let the small calorie trim and your steps reveal the definition.");
-  if (p.goal === "fit") notes.push("For general fitness, two hard sets per exercise is plenty. Add a brisk walk, run or cycle on one or two rest days for your heart and lungs.");
+  if (p.goal === "fit") notes.push("For general fitness, two hard sets per exercise is plenty.");
   if (p.goal === "recomp") notes.push("Losing fat and building muscle together works best with heavy lifting, high protein every day and a small deficit. Expect the scale to move slowly while your lifts and the mirror improve.");
   if (p.equipment === "bodyweight") notes.push("Make bodyweight moves harder by slowing the lowering phase to 3 seconds or adding a backpack with books.");
   return { template: t, plan, notes };
+}
+
+/** Spread the person's cardio over the week: rest days first, then after lifting sessions. */
+function addCardio(plan: WeekPlan, p: Profile) {
+  const c = cardioOf(p);
+  const n = Math.min(7, c.daysPerWeek);
+  if (!n || !c.sports.length) return;
+  const rest = ALL_DAYS.filter((k) => !plan[k].exercises.length);
+  const lift = ALL_DAYS.filter((k) => plan[k].exercises.length);
+  const spread = (list: DowKey[], count: number) =>
+    count >= list.length ? list : Array.from({ length: count }, (_, i) => list[Math.floor(((i + 0.5) * list.length) / count)]);
+  // Keep one full rest day (the last one) when the week allows it.
+  const keep = n >= rest.length && rest.length > 1 && lift.length > 0 ? rest[rest.length - 1] : null;
+  const restPool = rest.filter((k) => k !== keep);
+  const onRest = spread(restPool, Math.min(n, restPool.length));
+  const onLift = spread(lift, Math.min(lift.length, n - onRest.length));
+  if (keep && onRest.length + onLift.length < n) onRest.push(keep);
+  const days = ALL_DAYS.filter((k) => onRest.includes(k) || onLift.includes(k));
+  let hard = 0;
+  days.forEach((k, i) => {
+    const sport = c.sports[i % c.sports.length];
+    let intensity: Intensity = c.intensity;
+    if (intensity === "hard" && ++hard > 2) intensity = "moderate";
+    const block: PlanCardio = { sport, minutes: plan[k].exercises.length ? Math.min(c.minutes, 30) : c.minutes, intensity };
+    plan[k].cardio = [block];
+    if (!plan[k].exercises.length) {
+      plan[k].title = SPORT_BY_ID.get(sport)?.label ?? "Cardio";
+      plan[k].focus = `${block.minutes} min · ${intensity}`;
+    }
+  });
 }
