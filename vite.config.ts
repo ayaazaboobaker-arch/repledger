@@ -34,7 +34,11 @@ function mediapipe(): Plugin {
 
 // `npm run build` -> normal multi-file build in dist/
 // `SINGLE=1 npm run build` -> one self-contained dist/index.html (handy for sharing a preview)
+// shown in the profile menu, so you can tell at a glance which version is live
+const BUILD = new Date().toLocaleString("en-ZA", { timeZone: "Africa/Johannesburg", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
+
 export default defineConfig({
+  define: { __BUILD__: JSON.stringify(BUILD) },
   plugins: [react(), mediapipe(), ...(process.env.SINGLE ? [viteSingleFile()] : [])],
   base: "./",
 });

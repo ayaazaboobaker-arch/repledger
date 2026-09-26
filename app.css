@@ -1325,3 +1325,4 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
     box-shadow: 0 1px 0 var(--line);
   }
 }
+.build-stamp { padding: 2px 10px 6px; font-size: 11px; color: var(--faint); text-align: right; }
