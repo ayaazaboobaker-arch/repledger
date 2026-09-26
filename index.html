@@ -16,7 +16,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Rep Ledger" />
     <title>Rep Ledger</title>
-    <script>try{var t=localStorage.getItem("rl-theme");document.documentElement.dataset.theme=t==="light"||t==="auto"?t:"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+    <script>try{var t=localStorage.getItem("rl-theme");document.documentElement.dataset.theme=t==="light"||t==="auto"?t:"dark"}catch(e){document.documentElement.dataset.theme="dark"};if(navigator.standalone||matchMedia("(display-mode: standalone)").matches)document.documentElement.classList.add("standalone")</script>
   </head>
   <body>
     <div id="root"></div>
