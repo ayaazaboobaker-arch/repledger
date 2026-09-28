@@ -128,18 +128,10 @@ function DayCard({ day, plan, mutate, onAdd, onEdit, onRename, onCardio }: { day
           </div>
         </div>
       ) : !lifting ? null : (
-        <ol className="ex-list">
-          {pd.exercises.map((e, i) => (
-            <li key={i}>
-              <button className="ex-row" onClick={() => onEdit(i)} aria-label={`Edit ${e.name}: ${e.sets} sets of ${e.reps}, ${kgLabel(e.kg)}`}>
-                <span className="ex-n">{i + 1}</span>
-                <span className="ex-name">{e.name}</span>
-                <span className="ex-spec"><b>{e.sets}×{e.reps}</b><small>{e.kg ? `${fmtKg(e.kg)} kg` : "BW"}</small></span>
-                <span className="ex-chev">{Icon.right}</span>
-              </button>
-            </li>
-          ))}
-        </ol>
+        <ExerciseList
+          day={day} items={pd.exercises} onEdit={onEdit}
+          onMove={(from, to) => mutate((p) => { const ex = p[day].exercises; const [m] = ex.splice(from, 1); ex.splice(to, 0, m); })}
+        />
       )}
 
       {cardio.length > 0 && (
@@ -203,6 +195,126 @@ function PlanWeek({ plan, sel, setSel }: { plan: WeekPlan; sel: DowKey; setSel: 
         );
       })}
     </div>
+  );
+}
+
+/**
+ * Exercises you can put in any order: drag the grip (or press and hold a row) and drop it where you want it.
+ * Keyboard: focus the grip and use the up/down arrow keys.
+ */
+function ExerciseList({ day, items, onEdit, onMove }: { day: DowKey; items: PlanExercise[]; onEdit: (i: number) => void; onMove: (from: number, to: number) => void }) {
+  const listRef = useRef<HTMLOListElement>(null);
+  const [drag, setDrag] = useState<{ from: number; to: number; dy: number } | null>(null);
+  const st = useRef<{ from: number; to: number; y0: number; mids: number[]; h: number; scroll0: number; pid: number; el: HTMLElement; raf: number; lastY: number } | null>(null);
+  const press = useRef<{ t: number; x: number; y: number; i: number; pid: number; el: HTMLElement } | null>(null);
+  const justDragged = useRef(false);
+
+  const begin = (i: number, e: { clientY: number; pointerId: number }, el: HTMLElement) => {
+    const list = listRef.current;
+    if (!list) return;
+    const rows = [...list.children] as HTMLElement[];
+    const rects = rows.map((r) => r.getBoundingClientRect());
+    const gap = rects.length > 1 ? rects[1].top - rects[0].bottom : 6;
+    st.current = { from: i, to: i, y0: e.clientY, mids: rects.map((r) => r.top + r.height / 2 + window.scrollY), h: rects[i].height + gap, scroll0: window.scrollY, pid: e.pointerId, el, raf: 0, lastY: e.clientY };
+    try { el.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+    navigator.vibrate?.(8);
+    setDrag({ from: i, to: i, dy: 0 });
+    const tick = () => {
+      const s = st.current;
+      if (!s) return;
+      // Scroll the page when the row is dragged near the top or bottom edge.
+      const edge = 90, y = s.lastY, vh = window.innerHeight;
+      const v = y < edge ? -(edge - y) / 6 : y > vh - edge ? (y - (vh - edge)) / 6 : 0;
+      if (v) { window.scrollBy(0, v); update(s.lastY); }
+      s.raf = requestAnimationFrame(tick);
+    };
+    st.current.raf = requestAnimationFrame(tick);
+  };
+  const update = (clientY: number) => {
+    const s = st.current;
+    if (!s) return;
+    s.lastY = clientY;
+    const dy = clientY - s.y0 + (window.scrollY - s.scroll0);
+    const at = s.mids[s.from] + dy;
+    let to = s.from;
+    while (to < s.mids.length - 1 && at > s.mids[to + 1]) to++;
+    while (to > 0 && at < s.mids[to - 1]) to--;
+    if (to !== s.to) navigator.vibrate?.(4);
+    s.to = to;
+    setDrag({ from: s.from, to, dy });
+  };
+  const end = () => {
+    const s = st.current;
+    if (!s) return;
+    cancelAnimationFrame(s.raf);
+    try { s.el.releasePointerCapture(s.pid); } catch { /* ignore */ }
+    st.current = null;
+    setDrag(null);
+    if (s.to !== s.from) { onMove(s.from, s.to); justDragged.current = true; setTimeout(() => (justDragged.current = false), 350); }
+  };
+  useEffect(() => () => { if (st.current) cancelAnimationFrame(st.current.raf); if (press.current) clearTimeout(press.current.t); }, []);
+  // Once a row is picked up, stop the finger from scrolling the page instead (touch-action can't change mid-touch).
+  useEffect(() => {
+    const el = listRef.current;
+    if (!el) return;
+    const block = (e: TouchEvent) => { if (st.current) e.preventDefault(); };
+    el.addEventListener("touchmove", block, { passive: false });
+    return () => el.removeEventListener("touchmove", block);
+  }, []);
+
+  const shiftFor = (i: number) => {
+    if (!drag || i === drag.from) return 0;
+    const h = st.current?.h ?? 0;
+    if (drag.from < drag.to && i > drag.from && i <= drag.to) return -h;
+    if (drag.from > drag.to && i < drag.from && i >= drag.to) return h;
+    return 0;
+  };
+
+  return (
+    <ol className={`ex-list reorder${drag ? " is-dragging" : ""}`} ref={listRef} aria-label={`${DOW_LONG[day]} exercises. Drag the handles to reorder.`}>
+      {items.map((e, i) => {
+        const lifted = drag?.from === i;
+        return (
+          <li key={e.name + i} className={lifted ? "lifted" : ""} style={{ transform: `translateY(${lifted ? drag!.dy : shiftFor(i)}px)` }}>
+            <div className="ex-row reorder-row">
+              <button
+                className="ex-grip" aria-label={`Move ${e.name}. Use up and down arrow keys.`}
+                onPointerDown={(ev) => { ev.preventDefault(); begin(i, ev, ev.currentTarget); }}
+                onPointerMove={(ev) => st.current && update(ev.clientY)}
+                onPointerUp={end} onPointerCancel={end}
+                onKeyDown={(ev) => {
+                  if (ev.key === "ArrowUp" && i > 0) { ev.preventDefault(); onMove(i, i - 1); requestAnimationFrame(() => (listRef.current?.children[i - 1]?.querySelector(".ex-grip") as HTMLElement)?.focus()); }
+                  if (ev.key === "ArrowDown" && i < items.length - 1) { ev.preventDefault(); onMove(i, i + 1); requestAnimationFrame(() => (listRef.current?.children[i + 1]?.querySelector(".ex-grip") as HTMLElement)?.focus()); }
+                }}
+              >{Icon.grip}</button>
+              <button
+                className="ex-main" aria-label={`Edit ${e.name}: ${e.sets} sets of ${e.reps}, ${kgLabel(e.kg)}`}
+                onClick={() => { if (!justDragged.current) onEdit(i); }}
+                onContextMenu={(ev) => ev.preventDefault()}
+                onPointerDown={(ev) => {
+                  if (ev.pointerType === "mouse") return;
+                  const el = ev.currentTarget, x = ev.clientX, y = ev.clientY, pid = ev.pointerId;
+                  press.current = { x, y, i, pid, el, t: window.setTimeout(() => { if (press.current) { begin(i, { clientY: press.current.y, pointerId: pid }, el); press.current = null; } }, 380) };
+                }}
+                onPointerMove={(ev) => {
+                  if (st.current) { ev.preventDefault(); update(ev.clientY); return; }
+                  const pr = press.current;
+                  if (pr && Math.hypot(ev.clientX - pr.x, ev.clientY - pr.y) > 8) { clearTimeout(pr.t); press.current = null; }
+                }}
+                onPointerUp={() => { if (press.current) { clearTimeout(press.current.t); press.current = null; } if (st.current) end(); }}
+                onPointerCancel={() => { if (press.current) { clearTimeout(press.current.t); press.current = null; } if (st.current) end(); }}
+              >
+                <span className="ex-n">{drag && drag.from !== i ? i + 1 + (shiftFor(i) < 0 ? -1 : shiftFor(i) > 0 ? 1 : 0) : drag ? drag.to + 1 : i + 1}</span>
+                <span className="ex-name">{e.name}</span>
+                <span className="ex-spec"><b>{e.sets}×{e.reps}</b><small>{e.kg ? `${fmtKg(e.kg)} kg` : "BW"}</small></span>
+                <span className="ex-chev">{Icon.right}</span>
+              </button>
+            </div>
+          </li>
+        );
+      })}
+      {items.length > 1 && <li className="reorder-hint xs faint" aria-hidden="true">Drag {Icon.grip} or press and hold to reorder</li>}
+    </ol>
   );
 }
 

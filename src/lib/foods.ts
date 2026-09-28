@@ -21,10 +21,9 @@ export interface Food {
 export type FoodCat = (typeof CAT_CODES)[keyof typeof CAT_CODES] | "Packaged";
 export const FOOD_CATS = Object.values(CAT_CODES) as FoodCat[];
 
-function parse(): Food[] {
+function parse(data: string, seen: Set<string>, tier: number): Food[] {
   const out: Food[] = [];
-  const seen = new Set<string>();
-  for (const raw of FOOD_DATA.split("\n")) {
+  for (const raw of data.split("\n")) {
     const line = raw.trim();
     if (!line) continue;
     const [id, name, code, kcal, p, c, f, sv = "", tags = "", ...rest] = line.split("|");
@@ -40,13 +39,34 @@ function parse(): Food[] {
       id, name, cat: CAT_CODES[code as keyof typeof CAT_CODES] ?? "Home meals",
       kcal: +kcal, p: +p, c: +c, f: +f, servings, liquid: liquid || undefined, tags: tags === "L" ? undefined : tags || undefined,
     });
+    if (tier) TIER.set(id, tier);
   }
   return out;
 }
 
-export const FOODS: Food[] = parse();
+/** 0 = hand-picked everyday foods, 1 = restaurant & chain menus, 2 = USDA reference foods. Ties in search go to the lower tier. */
+const TIER = new Map<string, number>();
+const SEEN = new Set<string>();
+/** The everyday list ships with the app; the big chain + USDA list loads in the background. */
+export const FOODS: Food[] = parse(FOOD_DATA, SEEN, 0);
 
 export const FOOD_BY_ID = new Map(FOODS.map((f) => [f.id, f]));
+
+let loading: Promise<void> | null = null;
+const listeners = new Set<() => void>();
+/** Load the full list (chains + USDA). Safe to call many times. */
+export function loadAllFoods(): Promise<void> {
+  if (!loading) {
+    loading = import("./foodDataMore").then(({ CHAIN_FOOD_DATA, USDA_FOOD_DATA }) => {
+      for (const f of [...parse(CHAIN_FOOD_DATA, SEEN, 1), ...parse(USDA_FOOD_DATA, SEEN, 2)]) { FOODS.push(f); FOOD_BY_ID.set(f.id, f); }
+      ORDER.clear();
+      listeners.forEach((l) => l());
+    }).catch((e) => { loading = null; throw e; });
+  }
+  return loading;
+}
+export const allFoodsLoaded = () => TIER.size > 0;
+export function onFoodsLoaded(fn: () => void) { listeners.add(fn); return () => void listeners.delete(fn); }
 
 export function macrosFor(food: { kcal: number; p: number; c: number; f: number }, grams: number) {
   const k = grams / 100;
@@ -59,25 +79,32 @@ const ORDER = new Map<string, number>();
 const esc = (t: string) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const singular = (w: string) => (w.length > 3 && /ies$/.test(w) ? w.slice(0, -3) + "y" : w.length > 3 && /[^s]s$/.test(w) ? w.slice(0, -1) : w);
 
+const HAY = new WeakMap<Food, { name: string; hay: string }>();
+const hayOf = (f: Food) => {
+  let h = HAY.get(f);
+  if (!h) { const name = norm(f.name); h = { name, hay: name + " " + norm(f.tags || "") + " " + norm(f.cat) }; HAY.set(f, h); }
+  return h;
+};
+
 export function searchFoods(q: string, list: Food[] = FOODS): Food[] {
   const t = norm(q.trim());
   if (!t) return list;
   if (!ORDER.size) FOODS.forEach((f, i) => ORDER.set(f.id, i));
   const words = t.split(/\s+/);
+  const alts = words.map((w) => [w, singular(w)]);
   const w0 = singular(words[0]);
   const whole = new RegExp(`\\b${esc(w0)}s?\\b`);
   const starts = new RegExp(`^${esc(w0)}s?\\b`);
-  return list
-    .map((f) => {
-      const name = norm(f.name);
-      const hay = name + " " + norm(f.tags || "") + " " + norm(f.cat);
-      if (!words.every((w) => hay.includes(w) || hay.includes(singular(w)))) return null;
-      const score = starts.test(name) ? 0 : whole.test(name) ? 1 : name.startsWith(w0) ? 2 : name.includes(w0) ? 3 : 4;
-      return { f, score };
-    })
-    .filter((x): x is { f: Food; score: number } => !!x)
-    .sort((a, b) => a.score - b.score || (ORDER.get(a.f.id) ?? 9999) - (ORDER.get(b.f.id) ?? 9999))
-    .map((x) => x.f);
+  const out: { f: Food; score: number }[] = [];
+  for (const f of list) {
+    const { name, hay } = hayOf(f);
+    if (!alts.every(([w, s1]) => hay.includes(w) || hay.includes(s1))) continue;
+    const base = starts.test(name) ? 0 : whole.test(name) ? 1 : name.startsWith(w0) ? 2 : name.includes(w0) ? 3 : 4;
+    // Everyday foods first, then chains, then the USDA reference list.
+    const tier = TIER.get(f.id) ?? 0;
+    out.push({ f, score: base * 3 + tier + (tier === 2 ? 3 : 0) + (words.length > 1 && words.every((w) => name.includes(w)) ? -1 : 0) });
+  }
+  return out.sort((a, b) => a.score - b.score || (ORDER.get(a.f.id) ?? 99999) - (ORDER.get(b.f.id) ?? 99999)).map((x) => x.f);
 }
 
 /* ---------- online search (Open Food Facts: millions of packaged products worldwide) ---------- */

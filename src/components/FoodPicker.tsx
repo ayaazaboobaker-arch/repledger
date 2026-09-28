@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FOOD_BY_ID, FOOD_CATS, FOODS, macrosFor, searchFoods, searchOnline, type Food, type FoodCat } from "../lib/foods";
+import { allFoodsLoaded, FOOD_BY_ID, FOOD_CATS, FOODS, loadAllFoods, macrosFor, onFoodsLoaded, searchFoods, searchOnline, type Food, type FoodCat } from "../lib/foods";
 import { useStore } from "../lib/store";
 import { foodTotals, recentFoods } from "../lib/stats";
 import type { CustomFood, FoodEntry, MealSlot } from "../lib/types";
@@ -17,6 +17,18 @@ type Tab = "foods" | "recent" | "meals" | "mine";
 type Picked = { kind: "food"; food: Food; grams: number } | { kind: "custom"; food: CustomFood; qty: number };
 const PAGE = 60;
 
+/** Loads the full food list in the background and re-renders when it arrives. */
+function useAllFoods(active: boolean) {
+  const [v, setV] = useState(allFoodsLoaded() ? 1 : 0);
+  useEffect(() => {
+    if (!active) return;
+    const off = onFoodsLoaded(() => setV((n) => n + 1));
+    loadAllFoods().then(() => setV((n) => n || 1)).catch(() => { /* the everyday list still works */ });
+    return off;
+  }, [active]);
+  return v;
+}
+
 export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: boolean; onClose: () => void; date: string; meal: MealSlot }) {
   const { days, savedMeals, customFoods, addFoods, addCustomFood } = useStore();
   const [meal, setMeal] = useState<MealSlot>(initialMeal);
@@ -28,6 +40,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   const recent = useMemo(() => recentFoods(days, 14), [days]);
   const [shown, setShown] = useState(PAGE);
   const online = useOnlineSearch(q);
+  const foodsVersion = useAllFoods(open);
 
   // reset when reopened
   const [lastOpen, setLastOpen] = useState(open);
@@ -39,7 +52,8 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   const list = useMemo(() => {
     const base = searchFoods(q, FOODS);
     return cat && !q ? base.filter((f) => f.cat === cat) : base;
-  }, [q, cat]);
+    // foodsVersion: re-run once the full list has loaded
+  }, [q, cat, foodsVersion]);
 
   const add = (items: Omit<FoodEntry, "id" | "meal">[], label: string) => {
     addFoods(date, meal, items);
@@ -78,7 +92,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
       </div>
       {!picked && !creating && (
         <>
-          <input className="in" id="food-search" placeholder={`Search ${FOODS.length}+ foods, or any brand online`} value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); setShown(PAGE); }} autoFocus aria-label="Search foods" />
+          <input className="in" id="food-search" placeholder={`Search ${Math.floor(FOODS.length / 100) * 100}+ foods, or any brand online`} value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); setShown(PAGE); }} autoFocus aria-label="Search foods" />
           <div className="seg" role="tablist" aria-label="Food lists">
             {([["foods", "All foods"], ["recent", "Recent"], ["meals", `Saved meals (${savedMeals.length})`], ["mine", "My foods"]] as [Tab, string][]).map(([k, l]) => (
               <button key={k} role="tab" aria-pressed={tab === k} aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>
@@ -121,6 +135,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
             {qq && <div className="flist-h">In the food list</div>}
             <ul className="flist">{list.slice(0, shown).map(row)}</ul>
             {list.length > shown && <button className="btn ghost sm block" onClick={() => setShown(shown + PAGE)}>Show more ({list.length - shown} left)</button>}
+            <p className="xs faint food-credit">SA restaurant values are estimates unless the chain publishes them; international chains use their US or UK figures. Reference foods from USDA FoodData Central via TempoLife (CC-BY-4.0).</p>
           </>
         )}
         {qq.length >= 2 && (
