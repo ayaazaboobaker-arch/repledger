@@ -68,7 +68,7 @@ export function Toaster() {
 const readVars = () => {
   const cs = getComputedStyle(document.documentElement);
   const g = (n: string) => cs.getPropertyValue(n).trim();
-  return { accent: g("--accent"), accentSoft: g("--accent-soft"), ink: g("--ink"), muted: g("--muted"), faint: g("--faint"), line: g("--line"), surface: g("--solid") || g("--surface"), good: g("--good"), warn: g("--warn") };
+  return { accent: g("--accent"), accentSoft: g("--accent-soft"), ink: g("--ink"), muted: g("--muted"), faint: g("--faint"), line: g("--line"), surface: g("--solid") || g("--surface"), good: g("--good"), warn: g("--warn"), protein: g("--protein"), carbs: g("--carbs"), fat: g("--fat") };
 };
 export type Theme = ReturnType<typeof readVars>;
 export function useTheme(): Theme {
@@ -164,12 +164,31 @@ export function Sheet({ open, onClose, title, children, footer, label, tall }: {
       window.scrollTo(0, y);
     };
   }, [open, onClose]);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ y: number; dy: number } | null>(null);
+  // swipe down on the top of a sheet to close it, like a native bottom sheet
+  const onTouchStart = (e: React.TouchEvent) => { drag.current = { y: e.touches[0].clientY, dy: 0 }; };
+  const onTouchMove = (e: React.TouchEvent) => {
+    const d = drag.current, el = sheetRef.current;
+    if (!d || !el) return;
+    d.dy = Math.max(0, e.touches[0].clientY - d.y);
+    el.style.transition = "none";
+    el.style.transform = `translateY(${d.dy}px)`;
+  };
+  const onTouchEnd = () => {
+    const d = drag.current, el = sheetRef.current;
+    drag.current = null;
+    if (!d || !el) return;
+    el.style.transition = "transform .22s ease";
+    if (d.dy > 90) { el.style.transform = "translateY(100%)"; setTimeout(onClose, 180); }
+    else el.style.transform = "";
+  };
   if (!open) return null;
   // Portal to <body> so a parent with backdrop-filter/transform can't trap the fixed overlay.
   return createPortal(
     <div className="scrim" ref={scrimRef} onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <div className={`sheet${tall ? " tall" : ""}`} role="dialog" aria-modal="true" aria-label={label}>
-        <div className="sheet-h">{title}</div>
+      <div ref={sheetRef} className={`sheet${tall ? " tall" : ""}`} role="dialog" aria-modal="true" aria-label={label}>
+        <div className="sheet-h" onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>{title}</div>
         <div className="sheet-b">{children}</div>
         {footer && <div className="sheet-f">{footer}</div>}
       </div>

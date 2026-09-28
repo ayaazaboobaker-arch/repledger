@@ -8,7 +8,7 @@ import { KG_VALUES, SET_VALUES, WheelPicker } from "../components/WheelPicker";
 import { ALL_EXERCISES, defaultsFor, EXERCISES, GROUPS, type ExGroup } from "../lib/exercises";
 import { useStore } from "../lib/store";
 import type { DowKey, PlanExercise, WeekPlan } from "../lib/types";
-import { DOW, DOW_LONG, fmtKg } from "../lib/util";
+import { addDays, DOW, DOW_LONG, dowKey, fmtKg, parseYmd, todayStr, weekStart } from "../lib/util";
 
 const REPS = Array.from({ length: 60 }, (_, i) => i + 1);
 const kgLabel = (kg: number) => (kg ? `${fmtKg(kg)} kg` : "Bodyweight");
@@ -22,6 +22,10 @@ export function Plan() {
   const [editing, setEditing] = useState<Editing | null>(null);
   const [renaming, setRenaming] = useState<DowKey | null>(null);
   const [cardioEdit, setCardioEdit] = useState<{ day: DowKey; index: number | null } | null>(null);
+  const [sel, setSelRaw] = useState<DowKey>(() => { try { const v = sessionStorage.getItem("rl.planday") as DowKey | null; if (v && DOW.includes(v)) return v; } catch { /* ignore */ } return dowKey(todayStr()); });
+  const setSel = (k: DowKey) => { setSelRaw(k); try { sessionStorage.setItem("rl.planday", k); } catch { /* ignore */ } };
+  const step = (dir: 1 | -1) => setSel(DOW[(DOW.indexOf(sel) + dir + 7) % 7]);
+  const swipe = useRef<{ x: number; y: number } | null>(null);
   const mutate = (fn: (p: WeekPlan) => void) => {
     const p: WeekPlan = JSON.parse(JSON.stringify(plan));
     fn(p);
@@ -46,12 +50,22 @@ export function Plan() {
         <div><b>{sets}</b><span>working sets a week</span></div>
         <div><b>{cardioMin}</b><span>cardio minutes a week</span></div>
       </div>
-      <p className="small muted prose" style={{ marginBottom: 16 }}>Tap an exercise to change its sets, reps and weight. Changes apply to sessions you haven't started yet.</p>
+      <PlanWeek plan={plan} sel={sel} setSel={setSel} />
 
-      <div className="plan-grid">
-        {DOW.map((k) => (
-          <DayCard key={k} day={k} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: k })} onEdit={(index) => setEditing({ mode: "edit", day: k, index })} onRename={() => setRenaming(k)} onCardio={(index) => setCardioEdit({ day: k, index })} />
-        ))}
+      <div className="plan-day" key={sel}
+        onTouchStart={(e) => { swipe.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }}
+        onTouchEnd={(e) => {
+          const s0 = swipe.current; swipe.current = null;
+          if (!s0) return;
+          const dx = e.changedTouches[0].clientX - s0.x, dy = e.changedTouches[0].clientY - s0.y;
+          if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+        }}>
+        <DayCard day={sel} plan={plan} mutate={mutate} onAdd={() => setEditing({ mode: "add", day: sel })} onEdit={(index) => setEditing({ mode: "edit", day: sel, index })} onRename={() => setRenaming(sel)} onCardio={(index) => setCardioEdit({ day: sel, index })} />
+        <div className="plan-daynav">
+          <button className="btn ghost sm" onClick={() => step(-1)}>{Icon.left} {DOW_LONG[DOW[(DOW.indexOf(sel) + 6) % 7]]}</button>
+          <span className="xs faint">Tap an exercise to change it</span>
+          <button className="btn ghost sm" onClick={() => step(1)}>{DOW_LONG[DOW[(DOW.indexOf(sel) + 1) % 7]]} {Icon.right}</button>
+        </div>
       </div>
 
       <ActivitySheet
@@ -156,6 +170,39 @@ function DayCard({ day, plan, mutate, onAdd, onEdit, onRename, onCardio }: { day
         )}
       </div>
     </section>
+  );
+}
+
+/** The week as tiles, like Train: tap a day to see and edit just that day. */
+function PlanWeek({ plan, sel, setSel }: { plan: WeekPlan; sel: DowKey; setSel: (k: DowKey) => void }) {
+  const today = todayStr();
+  const ws = weekStart(today);
+  const strip = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = strip.current, tile = el?.querySelector<HTMLElement>(".sel");
+    if (el && tile && el.scrollWidth > el.clientWidth) el.scrollTo({ left: tile.offsetLeft - (el.clientWidth - tile.offsetWidth) / 2, behavior: "smooth" });
+  }, [sel]);
+  return (
+    <div className="week-strip plan-strip" ref={strip} role="radiogroup" aria-label="Day of the week">
+      {DOW.map((k, i) => {
+        const pd = plan[k];
+        const date = addDays(ws, i);
+        const lift = pd.exercises.length > 0;
+        const cardio = pd.cardio || [];
+        const kind = lift ? "train glow" : cardio.length ? "train cardio glow" : "rest";
+        const sets = pd.exercises.reduce((n, e) => n + e.sets, 0);
+        return (
+          <button key={k} role="radio" aria-checked={sel === k} className={`day-tile ${kind}${sel === k ? " sel" : ""}${date === today ? " is-today" : ""}`} onClick={() => setSel(k)}>
+            <div className="dt-top">
+              <span className="dt-dow">{DOW_LONG[k].slice(0, 3)}</span>
+              <span className="dt-num">{parseYmd(date).getDate()}</span>
+            </div>
+            <div className="dt-title">{lift || cardio.length ? pd.title || "Session" : "Rest"}</div>
+            <div className="dt-sub">{lift ? `${pd.exercises.length} ex · ${sets} sets${cardio.length ? " + cardio" : ""}` : cardio.length ? `Cardio · ${cardio.reduce((n, c) => n + c.minutes, 0)} min` : "Recovery"}</div>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 

@@ -1,11 +1,13 @@
 import { useMemo, useState } from "react";
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { DemoBanner } from "../components/cards";
+import { DemoBanner, WeightCard } from "../components/cards";
+import { BurnCard } from "../components/BurnCard";
+import { MacroTracker } from "../components/MacroTracker";
 import { DatePicker } from "../components/DatePicker";
 import { useCalibration } from "../lib/calibration";
 import { ExerciseProgress } from "../components/ExerciseProgress";
 import { Select } from "../components/Select";
-import { CountUp, useTheme } from "../components/ui";
+import { CountUp, Icon, useTheme } from "../components/ui";
 import { useStore } from "../lib/store";
 import { daysIn, periodAgg, periods, presetRange, PRESETS, rangeDays, rangeLabel, rangeSummary, type DateRange, type PeriodRow, type RangePreset } from "../lib/range";
 import { exerciseHistory, norm, weekAgg, weeksRange } from "../lib/stats";
@@ -48,13 +50,25 @@ export function WeekStats() {
   );
 }
 
+type Tab = "overview" | "strength" | "body" | "nutrition" | "activity";
+const TABS: { id: Tab; label: string }[] = [
+  { id: "overview", label: "Overview" },
+  { id: "strength", label: "Strength" },
+  { id: "body", label: "Body" },
+  { id: "nutrition", label: "Nutrition" },
+  { id: "activity", label: "Activity" },
+];
+const ss = { get: (k: string) => { try { return sessionStorage.getItem(k); } catch { return null; } }, set: (k: string, v: string) => { try { sessionStorage.setItem(k, v); } catch { /* ignore */ } } };
+
 export function Progress() {
   const { days, plan, targets, profile } = useStore();
-  const [preset, setPreset] = useState<RangePreset>(() => { try { return (sessionStorage.getItem("rl.range") as RangePreset) || "3m"; } catch { return "3m"; } });
+  const [tab, setTabRaw] = useState<Tab>(() => (ss.get("rl.ptab") as Tab) || "overview");
+  const setTab = (t: Tab) => { setTabRaw(t); ss.set("rl.ptab", t); };
+  const [preset, setPreset] = useState<RangePreset>(() => (ss.get("rl.range") as RangePreset) || "4w");
   const [custom, setCustom] = useState<DateRange>(() => ({ from: addDays(todayStr(), -55), to: todayStr() }));
   const range = useMemo(() => presetRange(preset, days, custom), [preset, days, custom]);
   const inRange = useMemo(() => daysIn(days, range), [days, range]);
-  const pick = (p: RangePreset) => { setPreset(p); try { sessionStorage.setItem("rl.range", p); } catch { /* ignore */ } };
+  const pick = (p: RangePreset) => { setPreset(p); ss.set("rl.range", p); };
 
   const names = useMemo(() => {
     const m = new Map<string, string>();
@@ -70,10 +84,18 @@ export function Progress() {
   const per = monthly ? "month" : "week";
   const planned = DOW.filter((k) => plan[k].exercises.length).length;
 
+  const eaten = <WeeklyBars title="Calories eaten" sub={`Daily average per ${per}`} data={rows} k="kcal" target={targets.kcal} targetLabel={`Target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.kcal != null ? <><b>{fmt(p.kcal)} kcal/day</b>{p.period} · protein {fmt(p.protein)} g · {p.nKcal} days logged</> : null)} />;
+  const burned = <WeeklyBars title="Calories burned" sub={`Daily average per ${per} · resting + steps + training + cardio`} data={rows} k="burn" target={targets.kcal} targetLabel={`Eating target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.burn != null ? <><b>{fmt(p.burn)} kcal/day burned</b>{p.period}{p.kcal != null ? ` · ate ${fmt(p.kcal)}/day` : ""}{p.nActs ? ` · ${p.nActs} cardio/sport` : ""}</> : null)} hitAbove />;
+  const sessions = <WeeklyBars title="Weight sessions" sub={`Workouts completed per ${per}`} data={rows} k="sess" target={monthly ? Math.round(planned * 4.3) : planned} targetLabel={`Plan ${monthly ? Math.round(planned * 4.3) : planned}`} fmtY={(v) => fmt(v)} tipText={(p) => <><b>{p.sess} session{p.sess === 1 ? "" : "s"}</b>{p.period}</>} hitAbove />;
+
   return (
     <>
       <DemoBanner />
       <div className="page-head"><div><div className="eyebrow">Progress</div><h1>Your progress</h1></div></div>
+
+      <div className="prog-tabs" role="tablist" aria-label="Progress sections">
+        {TABS.map((t) => <button key={t.id} role="tab" aria-selected={tab === t.id} className={tab === t.id ? "on" : ""} onClick={() => setTab(t.id)}>{t.label}</button>)}
+      </div>
 
       <section className="card range-card">
         <div className="range-top">
@@ -90,37 +112,102 @@ export function Progress() {
         )}
       </section>
 
-      <RangeStats days={days} range={range} />
+      <div className="prog-pane" key={tab}>
+        {tab === "overview" && (
+          <>
+            <RangeStats days={days} range={range} />
+            <div className="grid-2" style={{ marginTop: 16 }}>
+              <WeightTrend data={rows} sub={`Average of your weigh-ins per ${per}`} />
+              {eaten}
+            </div>
+            <div className="jump-grid">
+              {TABS.slice(1).map((t) => (
+                <button key={t.id} className="card jump" onClick={() => { setTab(t.id); window.scrollTo({ top: 0 }); }}>
+                  <b>{t.label}</b><small>{{ strength: "Every lift, week by week", body: "Weigh-ins and your trend", nutrition: "Protein, carbs and fat each day", activity: "Steps, burn and cardio" }[t.id as Exclude<Tab, "overview">]}</small>
+                  <span className="at-chev">{Icon.right}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
 
-      <section className="card" style={{ marginTop: 16 }}>
-        <div className="card-h">
-          <div><h2>Strength</h2><div className="small muted">Weight, sets and reps for each exercise in this period</div></div>
-          <Select id="prog-ex" label="Exercise" width={260} value={ex} onChange={setEx} options={names.map((n) => { const c = exerciseHistory(inRange, n).length; return { value: n, label: n, hint: c ? `${c} session${c > 1 ? "s" : ""} in this period` : "none in this period" }; })} />
-        </div>
-        {ex && <ExerciseProgress key={ex + range.from + range.to} name={ex} days={inRange} size="tall" idPrefix="pg" />}
-        {hist.length > 0 && (
-          <div className="table-wrap" style={{ marginTop: 14 }}>
-            <table className="hist">
-              <thead><tr><th>Date</th><th>Sets × reps</th><th>Every set</th><th>Volume</th><th>Est. 1RM</th></tr></thead>
-              <tbody>
-                {hist.slice(-12).reverse().map((r) => (
-                  <tr key={r.date}><td>{shortDate(r.date)}</td><td>{r.scheme}{r.top ? " kg" : " reps"}</td><td className="muted">{r.detail}</td><td>{r.vol ? fmt(r.vol) + " kg" : "–"}</td><td>{r.one ? fmtKg(Math.round(r.one * 10) / 10) + " kg" : "–"}</td></tr>
-                ))}
-              </tbody>
-            </table>
+        {tab === "strength" && (
+          <>
+            <section className="card">
+              <div className="card-h">
+                <div><h2>Strength</h2><div className="small muted">Weight, sets and reps for each exercise in this period</div></div>
+                <Select id="prog-ex" label="Exercise" width={260} value={ex} onChange={setEx} options={names.map((n) => { const c = exerciseHistory(inRange, n).length; return { value: n, label: n, hint: c ? `${c} session${c > 1 ? "s" : ""} in this period` : "none in this period" }; })} />
+              </div>
+              {ex && <ExerciseProgress key={ex + range.from + range.to} name={ex} days={inRange} size="tall" idPrefix="pg" />}
+              {hist.length > 0 && (
+                <div className="table-wrap" style={{ marginTop: 14 }}>
+                  <table className="hist">
+                    <thead><tr><th>Date</th><th>Sets × reps</th><th>Every set</th><th>Volume</th><th>Est. 1RM</th></tr></thead>
+                    <tbody>
+                      {hist.slice(-12).reverse().map((r) => (
+                        <tr key={r.date}><td>{shortDate(r.date)}</td><td>{r.scheme}{r.top ? " kg" : " reps"}</td><td className="muted">{r.detail}</td><td>{r.vol ? fmt(r.vol) + " kg" : "–"}</td><td>{r.one ? fmtKg(Math.round(r.one * 10) / 10) + " kg" : "–"}</td></tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+            <div style={{ marginTop: 16 }}>{sessions}</div>
+          </>
+        )}
+
+        {tab === "body" && (
+          <div className="grid-2">
+            <WeightCard date={todayStr()} />
+            <WeightTrend data={rows} sub={`Average of your weigh-ins per ${per}`} />
+            <WeighIns days={days} range={range} />
           </div>
         )}
-      </section>
 
-      <div className="grid-2" style={{ marginTop: 16 }}>
-        <WeightTrend data={rows} sub={`Average of your weigh-ins per ${per}`} />
-        <WeeklyBars title="Calories burned" sub={`Daily average per ${per} · resting + steps + training + cardio`} data={rows} k="burn" target={targets.kcal} targetLabel={`Eating target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.burn != null ? <><b>{fmt(p.burn)} kcal/day burned</b>{p.period}{p.kcal != null ? ` · ate ${fmt(p.kcal)}/day` : ""}{p.nActs ? ` · ${p.nActs} cardio/sport` : ""}</> : null)} hitAbove />
-        <WeeklyBars title="Calories eaten" sub={`Daily average per ${per}`} data={rows} k="kcal" target={targets.kcal} targetLabel={`Target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.kcal != null ? <><b>{fmt(p.kcal)} kcal/day</b>{p.period} · protein {fmt(p.protein)} g · {p.nKcal} days logged</> : null)} />
-        <WeeklyBars title="Steps" sub={`Daily average per ${per}`} data={rows} k="steps" target={targets.steps} targetLabel={`Goal ${fmt(targets.steps)}`} fmtY={(v) => (v >= 1000 ? fmt(v / 1000, 0) + "k" : fmt(v))} tipText={(p) => (p.steps != null ? <><b>{fmt(p.steps)} steps/day</b>{p.period} · {p.nSteps} days logged</> : null)} hitAbove />
-        <WeeklyBars title="Weight sessions" sub={`Workouts completed per ${per}`} data={rows} k="sess" target={monthly ? Math.round(planned * 4.3) : planned} targetLabel={`Plan ${monthly ? Math.round(planned * 4.3) : planned}`} fmtY={(v) => fmt(v)} tipText={(p) => <><b>{p.sess} session{p.sess === 1 ? "" : "s"}</b>{p.period}</>} hitAbove />
-        <WeeklyBars title="Cardio" sub={`Minutes of cardio and sport per ${per}`} data={rows} k="cardioMin" target={0} targetLabel="" fmtY={(v) => fmt(v)} tipText={(p) => <><b>{fmt(p.cardioMin)} min</b>{p.period} · {p.nActs} session{p.nActs === 1 ? "" : "s"} · {fmt(p.cardioKcal)} kcal</>} />
+        {tab === "nutrition" && (
+          <>
+            <MacroTracker days={days} range={range} rows={rows} />
+            <div style={{ marginTop: 12 }}>{eaten}</div>
+          </>
+        )}
+
+        {tab === "activity" && (
+          <div className="grid-2">
+            <BurnCard date={todayStr()} />
+            {burned}
+            <WeeklyBars title="Steps" sub={`Daily average per ${per}`} data={rows} k="steps" target={targets.steps} targetLabel={`Goal ${fmt(targets.steps)}`} fmtY={(v) => (v >= 1000 ? fmt(v / 1000, 0) + "k" : fmt(v))} tipText={(p) => (p.steps != null ? <><b>{fmt(p.steps)} steps/day</b>{p.period} · {p.nSteps} days logged</> : null)} hitAbove />
+            <WeeklyBars title="Cardio" sub={`Minutes of cardio and sport per ${per}`} data={rows} k="cardioMin" target={0} targetLabel="" fmtY={(v) => fmt(v)} tipText={(p) => <><b>{fmt(p.cardioMin)} min</b>{p.period} · {p.nActs} session{p.nActs === 1 ? "" : "s"} · {fmt(p.cardioKcal)} kcal</>} />
+          </div>
+        )}
       </div>
     </>
+  );
+}
+
+/** Every weigh-in in the period, newest first, with the change from the one before. */
+function WeighIns({ days, range }: { days: Record<string, DayLog>; range: DateRange }) {
+  const all = Object.keys(days).filter((d) => days[d].weight != null).sort();
+  const list = all.filter((d) => d >= range.from && d <= range.to).reverse();
+  return (
+    <section className="card">
+      <h2>Weigh-ins</h2><div className="small muted">{list.length} in this period</div>
+      {list.length ? (
+        <ul className="weigh-list">
+          {list.slice(0, 20).map((d) => {
+            const i = all.indexOf(d);
+            const prev = i > 0 ? days[all[i - 1]].weight! : null;
+            const ch = prev != null ? days[d].weight! - prev : null;
+            return (
+              <li key={d}>
+                <span>{shortDate(d)}</span>
+                <b className="num">{fmt(days[d].weight!, 1)} kg</b>
+                <span className={`num xs ${ch == null ? "faint" : ch <= 0 ? "down" : "up"}`}>{ch == null ? "first" : `${ch > 0 ? "+" : ch < 0 ? "−" : "±"}${fmt(Math.abs(ch), 1)}`}</span>
+              </li>
+            );
+          })}
+        </ul>
+      ) : <div className="empty" style={{ marginTop: 10 }}>No weigh-ins in this period.</div>}
+    </section>
   );
 }
 

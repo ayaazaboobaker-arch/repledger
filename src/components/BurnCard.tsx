@@ -36,7 +36,7 @@ export function openCardio(days: Record<string, { activities?: { kind: string; m
   });
 }
 
-export function BurnCard({ date }: { date: string }) {
+export function BurnCard({ date, compact }: { date: string; compact?: boolean }) {
   const { days, profile, plan, updateDay } = useStore();
   const [sheet, setSheet] = useState<{ initial: ActivityDraft | null } | null>(null);
   const log = useLogActivity(date);
@@ -75,11 +75,17 @@ export function BurnCard({ date }: { date: string }) {
       </div>
       <div className="burn-total"><b><CountUp value={b.total} /></b><span>kcal</span></div>
       <div className="burn-bar" aria-hidden="true">{parts.map((p) => p.v > 0 && <i key={p.k} style={{ flex: p.v, background: p.c }} />)}</div>
+      {compact ? (
+        <div className="burn-legend">
+          {parts.filter((p) => p.v > 0).map((p) => <span key={p.k}><i className="dot" style={{ background: p.c }} />{p.label} <b className="num">{fmt(p.v)}</b></span>)}
+        </div>
+      ) : (
       <ul className="burn-parts">
         {parts.map((p) => (
           <li key={p.k}><i className="dot" style={{ background: p.c }} /><span><b>{p.label}</b><small>{p.hint}</small></span><span className="num">{p.v < 0 ? "−" + fmt(-p.v) : fmt(p.v)}</span></li>
         ))}
       </ul>
+      )}
 
       {b.hasFood && !isToday && (
         <div className={`balance ${b.balance < 0 ? "deficit" : "surplus"}`}>
@@ -94,7 +100,7 @@ export function BurnCard({ date }: { date: string }) {
         </div>
       )}
 
-      {acts.length > 0 && (
+      {!compact && acts.length > 0 && (
         <ul className="act-list">
           {acts.map((a) => {
             const ab = b.acts.find((x) => x.id === a.id);
@@ -127,10 +133,10 @@ export function BurnCard({ date }: { date: string }) {
       )}
 
       <button className="btn primary block" style={{ marginTop: 14 }} onClick={() => setSheet({ initial: null })}>{Icon.plus} Log activity or sport</button>
-      <button className="btn ghost sm block how-acc" onClick={() => setWhy(!why)} aria-expanded={why}>
+      {!compact && <button className="btn ghost sm block how-acc" onClick={() => setWhy(!why)} aria-expanded={why}>
         {cal.status === "ready" ? `Tuned to you from ${cal.foodDays} days of logs` : "How accurate is this?"} {why ? Icon.up : Icon.down}
-      </button>
-      {why && <Accuracy cal={cal} />}
+      </button>}
+      {!compact && why && <Accuracy cal={cal} />}
       <ActivitySheet open={!!sheet} initial={sheet?.initial} mode="log" onClose={() => setSheet(null)} onSave={(a) => { log(a); setSheet(null); }} />
     </section>
   );

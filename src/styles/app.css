@@ -1229,3 +1229,235 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 .at-icon.k-form { background: var(--accent-soft); color: var(--accent); }
 .at-icon.k-plateau { background: var(--warn-soft); color: var(--warn); }
 .at-icon.k-balance { background: var(--good-soft); color: var(--good); }
+
+/* =====================================================================
+   SCROLL + LIQUID GLASS (header and bottom bar)
+   - Cards no longer blur what's behind them: the background is one flat colour,
+     so the blur added nothing but cost a lot while scrolling on phones.
+   - Only the header and bottom bar are glass, because content scrolls under them.
+   ===================================================================== */
+.card { -webkit-backdrop-filter: none; backdrop-filter: none; }
+
+/* header: clear at the top of the page, light glass once content scrolls under it.
+   It sits at the very top and pads itself below the status bar, so nothing peeks out above it. */
+.top { top: 0; padding-top: env(safe-area-inset-top, 0px); border-bottom-color: transparent; transition: border-color .25s ease; }
+.top::before {
+  background: color-mix(in srgb, var(--bg) 62%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(170%); backdrop-filter: blur(14px) saturate(170%);
+  opacity: 0; transition: opacity .25s ease;
+}
+.top.scrolled { border-bottom-color: var(--line); }
+.top.scrolled::before { opacity: 1; }
+
+@media (max-width: 760px) {
+  .botnav {
+    /* liquid glass: very see-through, strong blur, a bright rim and a soft top highlight */
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / .10), rgb(255 255 255 / .02) 45%, rgb(255 255 255 / 0) 60%),
+      color-mix(in srgb, var(--bg) 28%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(190%) brightness(1.08); backdrop-filter: blur(22px) saturate(190%) brightness(1.08);
+    border: 1px solid rgb(255 255 255 / .16);
+    box-shadow: 0 18px 40px rgb(0 0 0 / .35), inset 0 1px 0 rgb(255 255 255 / .28), inset 0 -1px 0 rgb(255 255 255 / .06);
+    border-radius: 28px;
+    /* its own layer, so scrolling never has to repaint it (this is what stops the stick-and-jump) */
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    transform-origin: 50% 100%;
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease;
+  }
+  .botnav a { transition: color .2s ease, background-color .2s ease, transform .35s cubic-bezier(.2, .8, .2, 1); }
+  .botnav a span { transition: opacity .2s ease; }
+  .botnav a.active {
+    background: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(255 255 255 / .04)), color-mix(in srgb, var(--accent) 16%, transparent);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+  /* scrolling down: the bar tucks down into a smaller pill (icons only); scrolling up brings it back */
+  .botnav.min { transform: translate3d(0, 14px, 0) scale(.86); box-shadow: 0 10px 26px rgb(0 0 0 / .3), inset 0 1px 0 rgb(255 255 255 / .22); }
+  .botnav.min a span { opacity: 0; }
+  .botnav.min a svg { transform: translateY(7px); }
+}
+@media (max-width: 760px) {
+  :root[data-theme="light"] .botnav {
+    background: linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / .25)), color-mix(in srgb, var(--bg) 30%, transparent);
+    border-color: rgb(255 255 255 / .7);
+    box-shadow: 0 14px 34px rgb(15 35 50 / .16), inset 0 1px 0 rgb(255 255 255 / .9);
+  }
+}
+@media (max-width: 760px) and (prefers-color-scheme: light) {
+  :root[data-theme="auto"] .botnav {
+    background: linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / .25)), color-mix(in srgb, var(--bg) 30%, transparent);
+    border-color: rgb(255 255 255 / .7);
+    box-shadow: 0 14px 34px rgb(15 35 50 / .16), inset 0 1px 0 rgb(255 255 255 / .9);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .botnav, .botnav a, .botnav a svg, .top::before { transition: none !important; }
+  .botnav.min { transform: translate3d(0, 0, 0); }
+  .botnav.min a span { opacity: 1; }
+  .botnav.min a svg { transform: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .botnav { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--solid) !important; }
+  .top::before { background: var(--solid); }
+}
+
+/* =====================================================================
+   PHONE HEADER
+   On phones the header scrolls away with the page instead of sticking (the bottom bar
+   is how you get around there), so nothing is ever blurred or hidden underneath it.
+   A solid strip sits behind the clock and battery (installed app), so page content
+   never shows through up there.
+   ===================================================================== */
+@media (max-width: 760px) {
+  .top {
+    position: relative; top: auto;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: transparent; border-bottom: 0;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .top::before { display: none; }
+  .top-in { padding: 10px 16px 2px; }
+  body::after {
+    content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 25; pointer-events: none;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--bg);
+    box-shadow: 0 1px 0 var(--line);
+  }
+}
+.build-stamp { padding: 2px 10px 6px; font-size: 11px; color: var(--faint); text-align: right; }
+.update-pill { position: fixed; left: 50%; transform: translateX(-50%); top: calc(12px + env(safe-area-inset-top, 0px)); z-index: 150; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 999px; font-size: 13.5px; font-weight: 600; white-space: nowrap;
+  background: color-mix(in srgb, var(--solid) 80%, transparent); -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
+  border: 1px solid var(--line); box-shadow: var(--shadow), inset 0 1px 0 var(--edge-hi); max-width: calc(100vw - 24px); }
+.update-pill span { overflow: hidden; text-overflow: ellipsis; }
+
+/* Home-screen app (standalone): same scroll-away header at any width, with the page reaching up
+   behind the clock and battery, and a solid strip there so nothing shows through. */
+@media (display-mode: standalone) {
+  .top {
+    position: relative; top: auto;
+    padding-top: env(safe-area-inset-top, 0px);
+    background: transparent; border-bottom: 0;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .top::before { display: none; }
+  body::after {
+    content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 25; pointer-events: none;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--bg);
+    box-shadow: 0 1px 0 var(--line);
+  }
+}
+html.standalone .top { position: relative; top: auto; padding-top: env(safe-area-inset-top, 0px); background: transparent; border-bottom: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.standalone .top::before { display: none; }
+html.standalone body::after { content: ""; position: fixed; top: 0; left: 0; right: 0; z-index: 25; pointer-events: none; height: env(safe-area-inset-top, 0px); background: var(--bg); box-shadow: 0 1px 0 var(--line); }
+
+/* =====================================================================
+   APP FEEL - so the home-screen app behaves like a native app
+   ===================================================================== */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: manipulation; }
+html, body { overscroll-behavior: none; }
+* { -webkit-tap-highlight-color: transparent; }
+/* buttons, tabs and cards don't select text or pop up the copy menu when you hold them */
+button, .btn, .chip, .seg, .botnav, .topnav, .top, .day-tile, .pill, .fc-rep, .rec-tag, .eyebrow, .brand, label.btn, .opt, .menu-item, .action-tile, .cam {
+  -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+}
+img, svg { -webkit-user-drag: none; -webkit-touch-callout: none; }
+/* iPhone zooms into any text box with writing under 16px - keep them at 16px on touch screens */
+@media (pointer: coarse) {
+  input, select, textarea, .in { font-size: 16px !important; }
+}
+/* tab switches: a quick cross-fade; the bars stay put */
+.botnav { view-transition-name: botnav; }
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: vt-out .14s ease-in both; }
+  ::view-transition-new(root) { animation: vt-in .2s ease-out both; }
+}
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(6px); } }
+/* after the first open, cards appear instantly on tab switches */
+html.booted main.page .card, html.booted main.page .banner { animation: none !important; }
+/* sheets: a grab bar to show they can be swiped down */
+@media (max-width: 760px) {
+  .sheet-h { position: relative; padding-top: 22px; touch-action: none; }
+  .sheet-h::before { content: ""; position: absolute; top: 8px; left: 50%; width: 38px; height: 5px; margin-left: -19px; border-radius: 3px; background: var(--line); }
+}
+
+/* ===== TODAY · quick glance ===== */
+.today-stack { display: flex; flex-direction: column; gap: 16px; }
+.glance-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+@media (max-width: 1180px) { .glance-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .glance-grid { grid-template-columns: minmax(0, 1fr); } }
+.sess-brief .hero-title { font-size: 40px; }
+@media (max-width: 560px) { .sess-brief .hero-title { font-size: 34px; } .sess-brief .hero-meta { gap: 18px; } .sess-brief .hero-meta b { font-size: 22px; } }
+.sess-bar { height: 6px; border-radius: 99px; background: var(--surface-2); margin-top: 14px; overflow: hidden; }
+.sess-bar i { display: block; height: 100%; background: var(--grad); border-radius: inherit; transition: width .4s ease; }
+.brief-list { list-style: none; margin: 0; padding: 4px 20px 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); column-gap: 24px; }
+.brief-list li { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.bl-n { width: 24px; height: 24px; flex: none; border-radius: 8px; display: grid; place-items: center; font-size: 12px; font-weight: 700; background: var(--surface-2); color: var(--muted); }
+.bl-n svg { width: 14px; height: 14px; }
+.bl-name { flex: 1; min-width: 0; font-weight: 600; font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bl-spec { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.brief-list li.done .bl-n { background: color-mix(in srgb, var(--good) 22%, transparent); color: var(--good); }
+.brief-list li.done .bl-name { color: var(--muted); }
+.burn-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 12.5px; color: var(--muted); }
+.burn-legend b { color: var(--ink); font-weight: 600; margin-left: 2px; }
+
+/* ===== PROGRESS · sections ===== */
+.prog-tabs { display: flex; gap: 4px; padding: 4px; margin-bottom: 14px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.prog-tabs::-webkit-scrollbar { display: none; }
+.prog-tabs button { flex: 1 0 auto; border: 0; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 650; padding: 9px 14px; border-radius: 10px; cursor: pointer; white-space: nowrap; transition: background .2s ease, color .2s ease; }
+.prog-tabs button.on { background: var(--surface); color: var(--ink); box-shadow: var(--shadow), inset 0 0 0 1px color-mix(in srgb, var(--accent) 40%, transparent); }
+.prog-pane { margin-top: 16px; animation: pane-in .25s ease both; }
+@keyframes pane-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.jump-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 16px; }
+@media (max-width: 860px) { .jump-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card.jump { all: unset; box-sizing: border-box; cursor: pointer; position: relative; display: flex; flex-direction: column; gap: 3px; padding: 14px 34px 14px 16px; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); }
+.card.jump b { font-size: 15px; }
+.card.jump small { color: var(--muted); font-size: 12.5px; }
+.card.jump .at-chev { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
+.card.jump:focus-visible { outline: 2px solid var(--accent); }
+
+.macro-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 700px) { .macro-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card.macro-stat { all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); border-top: 3px solid var(--mc, var(--accent)); }
+.card.macro-stat.p { --mc: var(--protein); } .card.macro-stat.c { --mc: var(--carbs); } .card.macro-stat.f { --mc: var(--fat); }
+.card.macro-stat b { font-family: var(--display); font-size: 26px; line-height: 1.05; }
+.card.macro-stat b small { font-family: var(--body, inherit); font-size: 12px; color: var(--muted); font-weight: 600; }
+.card.macro-stat[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--mc, var(--accent)); }
+.split-row { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: center; gap: 10px; margin-top: 12px; }
+.split-bar { display: flex; height: 22px; border-radius: 7px; overflow: hidden; gap: 2px; }
+.split-bar i { display: grid; place-items: center; font-style: normal; font-size: 11px; font-weight: 700; color: #0b1217; min-width: 4px; }
+.split-bar i.p, .dot.p { background: var(--protein); } .split-bar i.c, .dot.c { background: var(--carbs); } .split-bar i.f, .dot.f { background: var(--fat); }
+.split-key { display: flex; gap: 14px; margin-top: 10px; }
+.macro-days { list-style: none; margin: 10px 0 0; padding: 0; }
+.macro-days li { padding: 11px 0; border-bottom: 1px solid var(--line); }
+.macro-days li:last-child { border-bottom: 0; }
+.md-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.md-top .ok b { color: var(--good); }
+.md-macros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 7px; }
+.md-m .xs { display: block; color: var(--muted); white-space: nowrap; }
+.md-m .xs b { color: var(--ink); }
+.md-l { display: inline-grid; place-items: center; width: 16px; height: 16px; border-radius: 5px; font-size: 10px; font-weight: 800; color: #0b1217; background: var(--mc); }
+.md-m.p { --mc: var(--protein); } .md-m.c { --mc: var(--carbs); } .md-m.f { --mc: var(--fat); }
+.md-track { height: 5px; border-radius: 99px; background: var(--surface-2); margin-top: 4px; overflow: hidden; }
+.md-track i { display: block; height: 100%; background: var(--mc); opacity: .5; border-radius: inherit; }
+.md-m.ok .md-track i { opacity: 1; }
+.weigh-list { list-style: none; margin: 10px 0 0; padding: 0; max-height: 340px; overflow-y: auto; }
+.weigh-list li { display: grid; grid-template-columns: minmax(0, 1fr) auto 56px; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.weigh-list li > span:last-child { text-align: right; }
+.weigh-list .down { color: var(--good); } .weigh-list .up { color: var(--muted); }
+
+/* ===== PLAN · one day at a time ===== */
+.plan-strip .day-tile { min-height: 112px; }
+.plan-day { margin-top: 16px; animation: pane-in .22s ease both; touch-action: pan-y; }
+.plan-day > .pday { max-width: 760px; margin: 0 auto; }
+.plan-daynav { display: flex; align-items: center; justify-content: space-between; gap: 8px; max-width: 760px; margin: 10px auto 0; }
+@media (max-width: 560px) { .plan-daynav .xs { display: none; } }
+@media (max-width: 560px) {
+  .prog-tabs button { padding: 8px 10px; font-size: 13px; }
+  .plan-stats { gap: 10px 14px; }
+  .plan-stats b { font-size: 24px; }
+  .plan-stats span { font-size: 11.5px; line-height: 1.25; }
+}
+@media (max-width: 560px) { .prog-tabs { gap: 2px; } .prog-tabs button { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 12.5px; } }

@@ -81,7 +81,7 @@ export function CalorieSummary({ date }: { date: string }) {
   );
 }
 
-export function StepsCard({ date }: { date: string }) {
+export function StepsCard({ date, compact }: { date: string; compact?: boolean }) {
   const { days, targets, updateDay } = useStore();
   const v = days[date]?.steps ?? null;
   const tg = targets.steps;
@@ -111,6 +111,7 @@ export function StepsCard({ date }: { date: string }) {
       {date === todayStr() && <TrackerPanel />}
       <div style={{ marginTop: 12 }}><Meter value={v || 0} max={tg} label="Steps progress" /></div>
       <div className="small muted" style={{ marginTop: 6 }}>{v == null ? "Not logged yet" : v >= tg ? "Goal reached" : `${fmt(tg - v)} to go`}</div>
+      {!compact && <>
       <div className="weekbars" aria-label="Steps this week">
         {vals.map((o, i) => (
           <div key={o.dd} className={`b${(o.s || 0) >= tg ? " hit" : ""}${o.dd === date ? " cur" : ""}`} title={`${shortDate(o.dd)}: ${o.s != null ? fmt(o.s) + " steps" : "not logged"}`}>
@@ -124,6 +125,7 @@ export function StepsCard({ date }: { date: string }) {
         <summary>Tracking steps all day?</summary>
         <p className="xs muted">Phones only share motion with web apps while the page is open and the screen is on, so Rep Ledger can't count in the background. For all-day steps, check the step count in your phone's Health or Google Fit app in the evening and type it in above - or use Start walk / Start run to track a walk, run or commute live.</p>
       </details>
+      </>}
     </section>
   );
 }

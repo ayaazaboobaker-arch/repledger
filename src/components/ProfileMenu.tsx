@@ -60,6 +60,7 @@ export function ProfileMenu() {
           <button role="menuitem" className="menu-item" onClick={() => go("/profile", { edit: true })}>{Icon.edit}<span>Edit my details<small>Age, weight, goal, training days</small></span></button>
           {!acc.demo && <button role="menuitem" className="menu-item" onClick={() => { setOpen(false); setPinOpen(true); }}>{Icon.lock}<span>{acc.pinHash ? "Change PIN" : "Add a PIN"}<small>{acc.pinHash ? "Update your 4-digit PIN" : "Lock the app when it opens"}</small></span></button>}
           <ThemeSwitch />
+          <div className="build-stamp">Build {__BUILD__}</div>
           <div className="me-sep" />
           <button role="menuitem" className="menu-item" onClick={() => { setOpen(false); signOut(); }}>{Icon.users}<span>Switch profile</span></button>
           <button role="menuitem" className="menu-item danger" onClick={() => { setOpen(false); signOut(); toast("Logged out"); }}>{Icon.logout}<span>Log out</span></button>

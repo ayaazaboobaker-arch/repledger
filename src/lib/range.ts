@@ -3,10 +3,11 @@ import { foodTotals, sessionDone } from "./stats";
 import type { DayLog, Profile } from "./types";
 import { addDays, MONTHS, parseYmd, shortDate, todayStr, weekStart, ymd } from "./util";
 
-export type RangePreset = "4w" | "3m" | "6m" | "1y" | "all" | "custom";
+export type RangePreset = "1w" | "4w" | "3m" | "6m" | "1y" | "all" | "custom";
 export interface DateRange { from: string; to: string }
 
 export const PRESETS: { id: RangePreset; label: string }[] = [
+  { id: "1w", label: "7 days" },
   { id: "4w", label: "4 weeks" },
   { id: "3m", label: "3 months" },
   { id: "6m", label: "6 months" },
@@ -24,6 +25,7 @@ const monthsBack = (to: string, n: number) => {
 export function presetRange(p: RangePreset, days: Record<string, DayLog>, custom?: DateRange): DateRange {
   const to = todayStr();
   if (p === "custom" && custom) return custom.from <= custom.to ? custom : { from: custom.to, to: custom.from };
+  if (p === "1w") return { from: addDays(to, -6), to };
   if (p === "4w") return { from: addDays(to, -27), to };
   if (p === "3m") return { from: monthsBack(to, 3), to };
   if (p === "6m") return { from: monthsBack(to, 6), to };
@@ -76,7 +78,7 @@ const avg = (a: number[]) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length
 const hasActivity = (d?: DayLog) => !!d && (d.steps != null || !!d.foods?.length || !!d.activities?.length || sessionDone(d.workout));
 
 export function periodAgg(days: Record<string, DayLog>, p: Period, profile: Profile | null, factor = 1) {
-  const w: number[] = [], steps: number[] = [], kcal: number[] = [], prot: number[] = [], burn: number[] = [];
+  const w: number[] = [], steps: number[] = [], kcal: number[] = [], prot: number[] = [], carb: number[] = [], fat: number[] = [], burn: number[] = [];
   let sess = 0, cardioMin = 0, cardioKcal = 0, nActs = 0;
   let lastW: number | null = profile?.weightKg ?? null;
   const today = todayStr();
@@ -90,10 +92,10 @@ export function periodAgg(days: Record<string, DayLog>, p: Period, profile: Prof
     // Today isn't over yet - half a day of food, steps and burn would drag the daily averages down.
     if (d === today) continue;
     if (day.steps != null) steps.push(day.steps);
-    if (day.foods?.length) { const t = foodTotals(day.foods); kcal.push(t.kcal); prot.push(t.p); }
+    if (day.foods?.length) { const t = foodTotals(day.foods); kcal.push(t.kcal); prot.push(t.p); carb.push(t.c); fat.push(t.f); }
     if (hasActivity(day)) { const b = dayBurn(day, profile, lastW, 1, factor); if (b) burn.push(b.total); }
   }
-  return { ...p, weight: avg(w), steps: avg(steps), kcal: avg(kcal), protein: avg(prot), burn: avg(burn), sess, cardioMin, cardioKcal, nActs, nSteps: steps.length, nKcal: kcal.length };
+  return { ...p, weight: avg(w), steps: avg(steps), kcal: avg(kcal), protein: avg(prot), carbs: avg(carb), fat: avg(fat), burn: avg(burn), sess, cardioMin, cardioKcal, nActs, nSteps: steps.length, nKcal: kcal.length };
 }
 export type PeriodRow = ReturnType<typeof periodAgg>;
 
