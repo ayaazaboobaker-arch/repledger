@@ -1599,3 +1599,18 @@ li.lifted .ex-grip { color: var(--accent); }
 @media (pointer: coarse) { .meal-items .meal-x { display: none; } .meal-items .swipe-body { grid-template-columns: minmax(0, 1fr) auto; } }
 .toast.has-action { display: flex; align-items: center; gap: 14px; }
 .toast-act { border: 0; background: none; color: var(--accent); font: inherit; font-weight: 800; cursor: pointer; padding: 2px 4px; text-transform: uppercase; letter-spacing: .04em; font-size: 13px; }
+
+/* ===== Full screen width on every page ===== */
+.top-in, main.page { max-width: none; padding-inline: clamp(16px, 3vw, 48px); }
+.train-page, .coach { max-width: none; }
+.plan-day > .pday, .plan-daynav { max-width: none; }
+
+/* ===== Barcode scanner ===== */
+.bc-view { aspect-ratio: 4 / 3; }
+.bc-frame { position: absolute; left: 10%; right: 10%; top: 32%; bottom: 32%; border-radius: 14px; border: 2px solid color-mix(in srgb, #fff 80%, transparent); box-shadow: 0 0 0 999px rgba(0,0,0,.35); overflow: hidden; pointer-events: none; }
+.bc-frame i { position: absolute; left: 6%; right: 6%; height: 2px; top: 50%; background: #ef4444; box-shadow: 0 0 10px #ef4444; animation: bcline 1.6s ease-in-out infinite alternate; }
+@keyframes bcline { from { transform: translateY(-26px); } to { transform: translateY(26px); } }
+.bc-status { min-height: 44px; margin-top: 12px; }
+.bc-type { display: flex; gap: 8px; margin-top: 10px; }
+.bc-type .in { flex: 1; min-width: 0; }
+@media (max-width: 440px) { .search-scan .scan-btn span { display: none; } }

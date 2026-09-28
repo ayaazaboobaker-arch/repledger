@@ -165,3 +165,33 @@ export async function searchOnline(q: string, signal?: AbortSignal): Promise<Foo
   }
   throw new Error(lastErr && typeof navigator !== "undefined" && !navigator.onLine ? "You're offline - online search needs internet." : "Online search isn't responding right now. Try again in a moment.");
 }
+
+/* ---------- barcode lookup (Open Food Facts), with a cache on this device ---------- */
+const BC_KEY = "rl-barcodes";
+const bcCache = (): Record<string, Food> => { try { return JSON.parse(localStorage.getItem(BC_KEY) || "{}"); } catch { return {}; } };
+/** Remember a food for a barcode (also used when someone adds a product that wasn't found). */
+export function rememberBarcode(code: string, food: Food) {
+  try { const m = bcCache(); m[code] = food; localStorage.setItem(BC_KEY, JSON.stringify(m)); } catch { /* ignore */ }
+}
+
+/** Look a product up by its barcode. Returns null when nobody has added it to Open Food Facts yet. */
+export async function lookupBarcode(code: string, signal?: AbortSignal): Promise<Food | null> {
+  const clean = code.replace(/\D/g, "");
+  if (!clean) return null;
+  const hit = bcCache()[clean];
+  if (hit) return hit;
+  let res: Response;
+  try {
+    res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${clean}.json?fields=${FIELDS}`, { signal, headers: { Accept: "application/json" } });
+  } catch (e) {
+    if ((e as Error).name === "AbortError") throw e;
+    throw new Error(typeof navigator !== "undefined" && !navigator.onLine ? "You're offline - barcode lookup needs internet." : "Couldn't reach the product database. Try again in a moment.");
+  }
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("The product database isn't responding right now.");
+  const data = await res.json();
+  if (data.status !== 1 || !data.product) return null;
+  const f = fromOff({ ...data.product, code: clean });
+  if (f) rememberBarcode(clean, f);
+  return f;
+}

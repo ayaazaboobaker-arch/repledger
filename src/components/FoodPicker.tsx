@@ -4,6 +4,7 @@ import { useStore } from "../lib/store";
 import { foodTotals, recentFoods } from "../lib/stats";
 import type { CustomFood, FoodEntry, MealSlot } from "../lib/types";
 import { fmt, KJ_PER_KCAL, parseNum } from "../lib/util";
+import { BarcodeScanner } from "./BarcodeScanner";
 import { MealScanner } from "./MealScanner";
 import { Select } from "./Select";
 import { Icon, Sheet, toast } from "./ui";
@@ -39,6 +40,8 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }
   const [picked, setPicked] = useState<Picked | null>(null);
   const [creating, setCreating] = useState(false);
   const [scanning, setScanning] = useState(false);
+  const [barcode, setBarcode] = useState(false);
+  const [newCode, setNewCode] = useState<string | null>(null);
   const recent = useMemo(() => recentFoods(days, 14), [days]);
   const [shown, setShown] = useState(PAGE);
   const online = useOnlineSearch(q);
@@ -48,7 +51,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }
   const [lastOpen, setLastOpen] = useState(open);
   if (open !== lastOpen) {
     setLastOpen(open);
-    if (open) { setMeal(initialMeal); setPicked(null); setQ(""); setCreating(false); setScanning(!!startScan); setTab("foods"); setCat(null); setShown(PAGE); }
+    if (open) { setMeal(initialMeal); setPicked(null); setQ(""); setCreating(false); setScanning(!!startScan); setBarcode(false); setNewCode(null); setTab("foods"); setCat(null); setShown(PAGE); }
   }
 
   const list = useMemo(() => {
@@ -96,7 +99,8 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }
         <>
           <div className="search-scan">
             <input className="in" id="food-search" placeholder={`Search ${Math.floor(FOODS.length / 100) * 100}+ foods, or any brand online`} value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); setShown(PAGE); }} autoFocus aria-label="Search foods" />
-            <button className="btn scan-btn" onClick={() => setScanning(true)} aria-label="Scan a meal with the camera">{Icon.camera}<span>Scan</span></button>
+            <button className="btn scan-btn" onClick={() => setBarcode(true)} aria-label="Scan a barcode">{Icon.barcode}<span>Barcode</span></button>
+            <button className="btn scan-btn" onClick={() => setScanning(true)} aria-label="Scan a meal with the camera">{Icon.camera}<span>Meal</span></button>
           </div>
           <div className="seg" role="tablist" aria-label="Food lists">
             {([["foods", "All foods"], ["recent", "Recent"], ["meals", `Saved meals (${savedMeals.length})`], ["mine", "My foods"]] as [Tab, string][]).map(([k, l]) => (
@@ -112,7 +116,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }
   if (picked && preview) {
     body = <Portion picked={picked} setPicked={setPicked} preview={preview} />;
   } else if (creating) {
-    body = <CustomForm onSave={(f) => { const cf = addCustomFood(f); setCreating(false); setPicked({ kind: "custom", food: cf, qty: 1 }); }} />;
+    body = <CustomForm barcode={newCode} onSave={(f) => { const cf = addCustomFood(f); if (newCode) { saveBarcodeFood(newCode, cf.id); setNewCode(null); } setCreating(false); setPicked({ kind: "custom", food: cf, qty: 1 }); }} />;
   } else if (tab === "foods") {
     const row = (f: Food) => {
       const sv = f.servings[0];
@@ -226,7 +230,17 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }
 
   return (
     <>
-      <Sheet open={open && !scanning} tall={!picked && !creating} onClose={onClose} title={header} footer={footer} label="Log food">
+      <BarcodeScanner
+        open={open && barcode} onClose={() => setBarcode(false)}
+        localFirst={(code) => {
+          const cf = customFoods.find((c) => c.id === barcodeFood(code));
+          if (!cf) return false;
+          setBarcode(false); setPicked({ kind: "custom", food: cf, qty: 1 }); return true;
+        }}
+        onFound={(f) => { setBarcode(false); setPicked({ kind: "food", food: f, grams: f.servings[0].g }); }}
+        onAddOwn={(code) => { setBarcode(false); setNewCode(code); setCreating(true); }}
+      />
+      <Sheet open={open && !scanning && !barcode} tall={!picked && !creating} onClose={onClose} title={header} footer={footer} label="Log food">
         {body}
       </Sheet>
       <MealScanner open={open && scanning} onClose={() => setScanning(false)} onDone={() => { setScanning(false); onClose(); }} date={date} meal={meal} />
@@ -282,13 +296,19 @@ export function MacroStrip({ m }: { m: { kcal: number; p: number; c: number; f: 
   );
 }
 
-function CustomForm({ onSave }: { onSave: (f: Omit<CustomFood, "id">) => void }) {
+/** Barcodes of products people added themselves (not found online) → their own food, on this device. */
+const BC_OWN = "rl-barcodes-own";
+const barcodeFood = (code: string): string | undefined => { try { return JSON.parse(localStorage.getItem(BC_OWN) || "{}")[code]; } catch { return undefined; } };
+const saveBarcodeFood = (code: string, id: string) => { try { const m = JSON.parse(localStorage.getItem(BC_OWN) || "{}"); m[code] = id; localStorage.setItem(BC_OWN, JSON.stringify(m)); } catch { /* ignore */ } };
+
+function CustomForm({ onSave, barcode }: { onSave: (f: Omit<CustomFood, "id">) => void; barcode?: string | null }) {
   const [v, setV] = useState({ name: "", serving: "1 serving", energy: "", unit: "kJ", p: "", c: "", f: "" });
   const set = (k: keyof typeof v) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => setV({ ...v, [k]: e.target.value });
   const e = parseNum(v.energy);
   const kcal = e == null ? null : v.unit === "kJ" ? e / KJ_PER_KCAL : e;
   return (
     <form className="stack" onSubmit={(ev) => { ev.preventDefault(); if (!v.name.trim() || kcal == null) { toast("Add a name and the energy value"); return; } onSave({ name: v.name.trim(), servingLabel: v.serving.trim() || "1 serving", kcal: Math.round(kcal), p: parseNum(v.p) || 0, c: parseNum(v.c) || 0, f: parseNum(v.f) || 0 }); }}>
+      {barcode && <div className="notice small">Barcode <b className="num">{barcode}</b> - copy the values from the label. Next time you scan it, this food comes up straight away.</div>}
       <div className="grid-2">
         <label className="f">Name<input className="in" id="cf-name" value={v.name} onChange={set("name")} placeholder="e.g. Futurelife bar" /></label>
         <label className="f">Serving<input className="in" id="cf-serving" value={v.serving} onChange={set("serving")} placeholder="e.g. 1 bar (40 g)" /></label>
