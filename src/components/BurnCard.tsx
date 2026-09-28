@@ -132,7 +132,7 @@ export function BurnCard({ date, compact }: { date: string; compact?: boolean })
         </div>
       )}
 
-      <button className="btn primary block" style={{ marginTop: 14 }} onClick={() => setSheet({ initial: null })}>{Icon.plus} Log activity or sport</button>
+      <button className="btn primary block glance-foot" style={{ marginTop: 14 }} onClick={() => setSheet({ initial: null })}>{Icon.plus} Log activity or sport</button>
       {!compact && <button className="btn ghost sm block how-acc" onClick={() => setWhy(!why)} aria-expanded={why}>
         {cal.status === "ready" ? `Tuned to you from ${cal.foodDays} days of logs` : "How accurate is this?"} {why ? Icon.up : Icon.down}
       </button>}

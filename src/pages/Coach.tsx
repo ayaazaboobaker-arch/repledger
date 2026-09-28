@@ -103,7 +103,7 @@ function TrainingCoach() {
         {sorted.length ? (
           <ul className="recs">{sorted.map((r) => <RecRow key={r.name} r={r} onApply={() => apply(r)} />)}</ul>
         ) : (
-          <div className="empty">Add exercises to your <Link to="/plan">weekly plan</Link> and the Coach will make a call for each one.</div>
+          <div className="empty">Add exercises to your <Link to="/train">weekly plan</Link> and the Coach will make a call for each one.</div>
         )}
       </section>
 

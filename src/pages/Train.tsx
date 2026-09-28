@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CardioPlanRows, openCardio } from "../components/BurnCard";
+import { PlanDayEditor, planStats } from "../components/PlanEditor";
 import { ExerciseProgress } from "../components/ExerciseProgress";
-import { INTENSITY, SPORT_BY_ID } from "../lib/burn";
 import { CountUp, Icon, Sparkline, toast } from "../components/ui";
 import { KG_VALUES, REP_VALUES, SET_VALUES, WheelPicker } from "../components/WheelPicker";
 import { useStore } from "../lib/store";
-import { exerciseHistory, planSession, sessionDone, suggestion, weeklyExercise } from "../lib/stats";
+import { exerciseHistory, sessionDone, suggestion, weeklyExercise } from "../lib/stats";
 import type { DowKey, SessionExercise } from "../lib/types";
 import { addDays, DOW, DOW_LONG, dowKey, fmtKg, parseYmd, shortDate, todayStr, weekStart } from "../lib/util";
 
@@ -55,6 +55,8 @@ function Chooser() {
     return { k, i, date, pd, train, cardio, cardioOnly, done, sets, mins: Math.round(sets * 2.6 + 5) + (train ? 0 : cardioMins), cardioMins, status, loggedTitle: w?.title };
   });
   const [key, setKey] = useState<DowKey>(() => dowKey(today));
+  const swipe = useRef<{ x: number; y: number } | null>(null);
+  const stats = planStats(plan);
   const strip = useRef<HTMLDivElement>(null);
   // On phones the week scrolls sideways: start with today's tile in view.
   useEffect(() => {
@@ -75,7 +77,7 @@ function Chooser() {
           <div className="eyebrow">Train · week of {shortDate(ws)}</div>
           <h1>Your training week</h1>
         </div>
-        <Link to="/plan" className="btn ghost sm">{Icon.plan} Edit plan</Link>
+        <Link to="/profile" className="btn ghost sm">{Icon.star} Recommended plan</Link>
       </div>
 
       <div className="week-progress">
@@ -83,6 +85,13 @@ function Chooser() {
         <div className="wp-bar" aria-hidden="true">
           {trainingDays.map((d) => <i key={d.k} className={d.done ? "on" : d.status === "missed" ? "miss" : ""} />)}
         </div>
+      </div>
+
+      <div className="plan-stats">
+        <div><b>{stats.train}</b><span>training days</span></div>
+        <div><b>{stats.rest}</b><span>rest days</span></div>
+        <div><b>{stats.sets}</b><span>sets a week</span></div>
+        <div><b>{stats.cardioMin}</b><span>cardio min a week</span></div>
       </div>
 
       <div className="week-strip" ref={strip} role="radiogroup" aria-label="Day of the week">
@@ -108,42 +117,17 @@ function Chooser() {
         })}
       </div>
 
-      {sel.train ? (
-        <div className="train-detail">
-          <section className="card">
-            <div className="eyebrow">{DOW_LONG[sel.k]}{sel.date === today ? " · today" : ""}</div>
-            <div className="td-title">{sel.pd.title}</div>
-            {sel.pd.focus && <div className="muted">{sel.pd.focus}</div>}
-            <ul className="td-list">
-              {planSession(plan, sel.k).exercises.map((e, i) => {
-                const hist = exerciseHistory(days, e.name, today);
-                const wk = weeklyExercise(hist);
-                const bw = !e.tKg;
-                const last = hist[hist.length - 1];
-                const sug = suggestion(days, e, today);
-                return (
-                  <li key={e.name + i}>
-                    <span className="td-n">{i + 1}</span>
-                    <div className="td-main">
-                      <div className="td-name">{e.name}</div>
-                      <div className="small muted">
-                        {e.tSets} × {e.tReps}{e.tKg ? ` @ ${fmtKg(e.tKg)} kg` : " · bodyweight"}
-                        {last ? ` · last ${last.scheme}${last.top ? " kg" : ""}, ${shortDate(last.date)}` : ""}
-                      </div>
-                      {last && sug.lp?.allHit && <span className="pill good" style={{ marginTop: 6 }}>{bw ? `Go for ${sug.reps} reps` : `Try ${fmtKg(sug.kg)} kg`}</span>}
-                    </div>
-                    <Sparkline values={wk.map((x) => (bw ? x.reps / x.sessions : x.top))} width={90} height={30} />
-                  </li>
-                );
-              })}
-            </ul>
-            {sel.cardio.length > 0 && (
-              <>
-                <div className="eyebrow" style={{ margin: "14px 0 8px" }}>Plus cardio - after lifting</div>
-                <CardioPlanRows date={sel.date <= today ? sel.date : today} planKey={sel.k} />
-              </>
-            )}
-          </section>
+      <p className="small muted train-hint">Tap an exercise to change it, drag {Icon.grip} to reorder,, or add exercises and cardio.</p>
+      <div className="train-detail" key={sel.k}
+        onTouchStart={(e) => { swipe.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }}
+        onTouchEnd={(e) => {
+          const s0 = swipe.current; swipe.current = null;
+          if (!s0 || (e.target as HTMLElement).closest(".ex-list.reorder, .sheet")) return;
+          const dx = e.changedTouches[0].clientX - s0.x, dy = e.changedTouches[0].clientY - s0.y;
+          if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) setKey(DOW[(DOW.indexOf(sel.k) + (dx < 0 ? 1 : 6)) % 7]);
+        }}>
+        <div className="td-main-col"><PlanDayEditor day={sel.k} /></div>
+        {sel.train ? (
           <aside className="card td-side">
             <div className="eyebrow">Ready to train?</div>
             <div className="td-stats">
@@ -156,21 +140,10 @@ function Chooser() {
             <button className="btn primary lg block" onClick={() => start(sel.k)}>{Icon.play} Start {sel.pd.title}</button>
             <p className="xs faint" style={{ marginTop: 10 }}>Log each set with the scroll wheels. Rest timer starts automatically.</p>
           </aside>
-        </div>
-      ) : sel.cardioOnly ? (
-        <div className="train-detail">
-          <section className="card">
-            <div className="eyebrow">{DOW_LONG[sel.k]}{sel.date === today ? " · today" : ""}</div>
-            <div className="td-title">{sel.pd.title}</div>
-            <div className="muted">Cardio day - {sel.cardio.map((c) => `${c.minutes} min ${INTENSITY[c.intensity].label.toLowerCase()} ${SPORT_BY_ID.get(c.sport)?.label.toLowerCase() ?? "cardio"}`).join(", ")}</div>
-            <div style={{ marginTop: 14 }}><CardioPlanRows date={sel.date <= today ? sel.date : today} planKey={sel.k} /></div>
-            <ul className="notes small" style={{ marginTop: 14 }}>
-              {sel.cardio.some((c) => c.intensity === "easy") && <li>Easy means you could hold a conversation the whole way - it builds your aerobic base without tiring you for lifting.</li>}
-              {sel.cardio.some((c) => c.intensity === "hard") && <li>Hard sessions: warm up for 5–10 minutes first, and keep the next day easy.</li>}
-              <li>Tap <b>Log it</b> when you're done - it's added to the calories you burned today.</li>
-            </ul>
-          </section>
+        ) : sel.cardioOnly ? (
           <aside className="card td-side">
+            <div className="eyebrow">{DOW_LONG[sel.k]}'s cardio</div>
+            <div style={{ margin: "8px 0 14px" }}><CardioPlanRows date={sel.date <= today ? sel.date : today} planKey={sel.k} /></div>
             <div className="eyebrow">Want to lift as well?</div>
             <p className="small muted" style={{ margin: "6px 0 12px" }}>Pick a session to do today.</p>
             <div className="stack" style={{ gap: 8 }}>
@@ -181,20 +154,7 @@ function Chooser() {
               ))}
             </div>
           </aside>
-        </div>
-      ) : (
-        <div className="train-detail">
-          <section className="card rest-card">
-            <div className="eyebrow">{DOW_LONG[sel.k]}{sel.date === today ? " · today" : ""}</div>
-            <div className="td-title">Rest day</div>
-            <p className="muted prose" style={{ marginTop: 6 }}>Muscle is built while you recover, not while you train. Keep today easy:</p>
-            <ul className="notes">
-              <li>Get your steps in - a relaxed walk helps recovery.</li>
-              <li>Hit your protein target; it matters just as much on rest days.</li>
-              <li>Aim for 7–9 hours of sleep.</li>
-              <li>Light stretching or mobility work is a bonus, not a must.</li>
-            </ul>
-          </section>
+        ) : (
           <aside className="card td-side">
             <div className="eyebrow">Want to train anyway?</div>
             <p className="small muted" style={{ margin: "6px 0 12px" }}>Pick a session to do today instead.</p>
@@ -206,8 +166,12 @@ function Chooser() {
               ))}
             </div>
           </aside>
-        </div>
-      )}
+        )}
+      </div>
+      <div className="plan-daynav">
+        <button className="btn ghost sm" onClick={() => setKey(DOW[(DOW.indexOf(sel.k) + 6) % 7])}>{Icon.left} {DOW_LONG[DOW[(DOW.indexOf(sel.k) + 6) % 7]]}</button>
+        <button className="btn ghost sm" onClick={() => setKey(DOW[(DOW.indexOf(sel.k) + 1) % 7])}>{DOW_LONG[DOW[(DOW.indexOf(sel.k) + 1) % 7]]} {Icon.right}</button>
+      </div>
     </div>
   );
 }

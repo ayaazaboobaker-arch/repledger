@@ -77,7 +77,7 @@ function Results({ onEdit }: { onEdit: () => void }) {
           <section className="card">
             <div className="card-h">
               <div><h2>Recommended training</h2><div className="small muted">{p.daysPerWeek ? `${rec.template.name} · ${EQUIP[p.equipment].label.toLowerCase()} · ~${p.sessionMinutes} min` : "Cardio-focused week"}{cardioOf(p).daysPerWeek ? ` · ${cardioOf(p).daysPerWeek}× cardio` : ""}</div></div>
-              <ConfirmButton className="btn primary" label="Use this plan" question="Replace your weekly plan? Logged workouts stay." confirmLabel="Replace plan" onConfirm={() => { setPlan(rec.plan); toast("Plan applied"); nav("/plan"); }} />
+              <ConfirmButton className="btn primary" label="Use this plan" question="Replace your weekly plan? Logged workouts stay." confirmLabel="Replace plan" onConfirm={() => { setPlan(rec.plan); toast("Plan applied"); nav("/train"); }} />
             </div>
             {p.daysPerWeek > 0 && <p className="prose" style={{ marginBottom: 12 }}>{rec.template.why}</p>}
             <div className="plan-preview">

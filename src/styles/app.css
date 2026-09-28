@@ -1482,3 +1482,56 @@ li.lifted .ex-grip { color: var(--accent); }
 .reorder-hint { list-style: none; display: flex; align-items: center; justify-content: center; gap: 4px; padding-top: 2px; }
 .reorder-hint svg { width: 12px; height: 12px; }
 @media (pointer: fine) { .reorder-hint { display: none; } }
+
+/* Today: the three glance cards share one height; their main action sits on the bottom edge. */
+.glance-grid { align-items: stretch; }
+.glance-grid > .card { display: flex; flex-direction: column; height: 100%; }
+.glance-grid > .card > .glance-foot { margin-top: auto !important; }
+.glance-grid > .card > :has(+ .glance-foot) { margin-bottom: 14px; }
+
+/* ===== TRAIN · editable plan day ===== */
+.train-hint { margin: 14px 0 -4px; display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.train-hint svg { width: 13px; height: 13px; }
+.td-main-col { min-width: 0; }
+.td-main-col > .pday { height: 100%; }
+@media (pointer: coarse) { .train-hint { display: none; } }
+
+/* ===== PLANS · subscription ===== */
+.plan-current { position: relative; overflow: hidden; }
+.plan-current.is-pro { background: radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--accent-2) 14%, transparent), transparent 55%), linear-gradient(180deg, var(--accent-soft), var(--surface) 70%); border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.pc-name { font-family: var(--display); font-size: 34px; font-weight: 700; line-height: 1.05; text-transform: uppercase; margin: 2px 0 4px; }
+.plan-current.is-pro .pc-name { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pc-renew { margin-top: 10px; padding: 8px 12px; border-radius: 10px; background: var(--surface-2); display: inline-block; }
+.pc-usage { list-style: none; margin: 0; padding: 0; }
+.pc-usage li { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); font-weight: 600; font-size: 14px; }
+.pc-usage li:last-child { border-bottom: 0; }
+.pc-usage li.off span:first-child { color: var(--muted); font-weight: 500; }
+.pc-usage li > span:last-child { text-align: right; }
+.plans-h { margin: 26px 0 12px; }
+.plan-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+@media (max-width: 900px) { .plan-cards { grid-template-columns: minmax(0, 1fr); } }
+.plan-card { display: flex; flex-direction: column; gap: 10px; }
+.plan-card h3 { font-size: 18px; }
+.plan-card.best { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); box-shadow: var(--shadow), 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
+.plan-card.current { border-color: var(--good); box-shadow: 0 0 0 2px color-mix(in srgb, var(--good) 35%, transparent); }
+.pcard-price { display: flex; align-items: baseline; gap: 6px; }
+.pcard-price b { font-family: var(--display); font-size: 40px; line-height: 1; }
+.pcard-price span { color: var(--muted); font-size: 14px; }
+.pcard-points { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.pcard-points li { display: flex; gap: 8px; align-items: flex-start; }
+.pcard-points svg { width: 16px; height: 16px; flex: none; margin-top: 2px; color: var(--accent); }
+.pcard-points li.muted svg { color: var(--muted); }
+.pcard-foot { margin-top: auto; padding-top: 8px; }
+.topup { display: flex; align-items: center; gap: 14px; }
+.topup .at-icon { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); flex: none; }
+.topup .at-icon svg { width: 20px; height: 20px; }
+.compare { width: 100%; border-collapse: collapse; font-size: 14px; }
+.compare th, .compare td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: center; }
+.compare th:first-child, .compare td:first-child { text-align: left; }
+.compare thead th { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.compare td svg { width: 16px; height: 16px; color: var(--good); vertical-align: middle; }
+.faq details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+.faq details:last-child { border-bottom: 0; }
+.faq summary { cursor: pointer; font-weight: 650; }
+.faq details p { margin-top: 8px; }
+.train-page .plan-daynav { max-width: none; margin-top: 12px; }

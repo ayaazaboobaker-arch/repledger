@@ -67,7 +67,7 @@ function NutritionCard({ date, openFood }: { date: string; openFood: () => void 
           </div>
         </>
       )}
-      <button className="btn primary block" style={{ marginTop: 14 }} onClick={openFood}>{Icon.plus} Log food</button>
+      <button className="btn primary block glance-foot" style={{ marginTop: 14 }} onClick={openFood}>{Icon.plus} Log food</button>
     </section>
   );
 }
@@ -144,7 +144,7 @@ function SessionCard({ date }: { date: string }) {
       )}
       {w.exercises.length > 0 && (
         <div className="hero-foot">
-          <Link to="/plan" className="btn ghost sm">{Icon.plan} Edit plan</Link>
+          <Link to="/train" className="btn ghost sm">{Icon.plan} Edit plan</Link>
           {status === "done" ? (
             <button className="btn" onClick={start}>Review session</button>
           ) : (

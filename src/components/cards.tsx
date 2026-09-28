@@ -109,7 +109,7 @@ export function StepsCard({ date, compact }: { date: string; compact?: boolean }
         {[1000, 2500, 5000].map((n) => <button key={n} className="chip" onClick={() => set((v || 0) + n)}>+{fmt(n)}</button>)}
       </div>
       {date === todayStr() && <TrackerPanel />}
-      <div style={{ marginTop: 12 }}><Meter value={v || 0} max={tg} label="Steps progress" /></div>
+      <div className="glance-foot" style={{ marginTop: 12 }}><Meter value={v || 0} max={tg} label="Steps progress" /></div>
       <div className="small muted" style={{ marginTop: 6 }}>{v == null ? "Not logged yet" : v >= tg ? "Goal reached" : `${fmt(tg - v)} to go`}</div>
       {!compact && <>
       <div className="weekbars" aria-label="Steps this week">

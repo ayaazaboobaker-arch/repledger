@@ -21,7 +21,7 @@ const NAV = [
   { to: "/food", label: "Food", icon: Icon.food },
   { to: "/progress", label: "Progress", icon: Icon.progress },
   { to: "/coach", label: "Coach", icon: Icon.coach },
-  { to: "/plan", label: "Plan", icon: Icon.plan },
+  { to: "/plan", label: "Plans", icon: Icon.star },
 ];
 
 /**
