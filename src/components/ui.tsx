@@ -49,22 +49,31 @@ export const Icon = {
 };
 
 /* ---------- toast ---------- */
-type Listener = (m: string) => void;
+type ToastAction = { label: string; run: () => void };
+type Listener = (m: string, action?: ToastAction) => void;
 const listeners = new Set<Listener>();
-export const toast = (m: string) => listeners.forEach((l) => l(m));
+/** Show a short message. Pass an action (e.g. Undo) to add a button; the message then stays a little longer. */
+export const toast = (m: string, action?: ToastAction) => listeners.forEach((l) => l(m, action));
 export function Toaster() {
   const [msg, setMsg] = useState<string | null>(null);
+  const [act, setAct] = useState<ToastAction | null>(null);
   useEffect(() => {
     let t: number | undefined;
-    const l: Listener = (m) => {
+    const l: Listener = (m, action) => {
       setMsg(m);
+      setAct(action ?? null);
       clearTimeout(t);
-      t = window.setTimeout(() => setMsg(null), 2600);
+      t = window.setTimeout(() => { setMsg(null); setAct(null); }, action ? 5000 : 2600);
     };
     listeners.add(l);
     return () => void listeners.delete(l);
   }, []);
-  return msg ? <div className="toast" role="status">{msg}</div> : null;
+  return msg ? (
+    <div className={`toast${act ? " has-action" : ""}`} role="status">
+      <span>{msg}</span>
+      {act && <button className="toast-act" onClick={() => { act.run(); setMsg(null); setAct(null); }}>{act.label}</button>}
+    </div>
+  ) : null;
 }
 
 /* ---------- theme colours for charts ---------- */

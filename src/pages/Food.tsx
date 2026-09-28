@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { CalorieSummary, DateBar, DemoBanner } from "../components/cards";
 import { defaultMeal, FoodPicker, MEAL_LABEL } from "../components/FoodPicker";
 import { NameInline } from "../components/safety";
+import { SwipeRow } from "../components/SwipeRow";
 import { Icon, toast } from "../components/ui";
 import { useStore } from "../lib/store";
 import { foodTotals, recentFoods } from "../lib/stats";
@@ -13,12 +14,19 @@ const SHORT: Record<MealSlot, string> = { breakfast: "Bkfst", lunch: "Lunch", di
 
 export function Food() {
   const [date, setDate] = useState(todayStr());
-  const { days, savedMeals, addFoods, removeFood, saveMeal, deleteMeal } = useStore();
+  const { days, savedMeals, addFoods, removeFood, saveMeal, deleteMeal, updateDay } = useStore();
   const [picker, setPicker] = useState<MealSlot | null>(null);
   const [scan, setScan] = useState(false);
   const [quickMeal, setQuickMeal] = useState<MealSlot>(defaultMeal());
   const foods = days[date]?.foods || [];
   const recent = useMemo(() => recentFoods(days, 8), [days]);
+
+  // Delete with an Undo that puts the food back exactly where it was.
+  const deleteFood = (f: FoodEntry) => {
+    const at = foods.findIndex((x) => x.id === f.id);
+    removeFood(date, f.id);
+    toast(`Removed ${f.name}`, { label: "Undo", run: () => updateDay(date, (d) => { const list = [...(d.foods || [])]; list.splice(Math.max(0, at), 0, f); d.foods = list; }) });
+  };
 
   const strip = (e: FoodEntry) => ({ name: e.name, portion: e.portion, kcal: e.kcal, p: e.p, c: e.c, f: e.f, foodId: e.foodId, grams: e.grams });
 
@@ -40,11 +48,11 @@ export function Food() {
                 {items.length > 0 && (
                   <ul className="meal-items">
                     {items.map((f) => (
-                      <li key={f.id}>
+                      <SwipeRow key={f.id} label={`${f.name}, ${fmt(f.kcal)} kcal`} onDelete={() => deleteFood(f)}>
                         <div><div className="n">{f.name}</div><div className="m">{f.portion} · P {fmt(f.p)} · C {fmt(f.c)} · F {fmt(f.f)}</div></div>
                         <span className="k">{fmt(f.kcal)}</span>
-                        <button className="icon-btn" onClick={() => removeFood(date, f.id)} aria-label={`Remove ${f.name}`}>{Icon.x}</button>
-                      </li>
+                        <button className="icon-btn meal-x" onClick={() => deleteFood(f)} aria-label={`Remove ${f.name}`}>{Icon.x}</button>
+                      </SwipeRow>
                     ))}
                   </ul>
                 )}

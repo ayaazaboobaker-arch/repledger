@@ -1585,3 +1585,17 @@ li.lifted .ex-grip { color: var(--accent); }
 .si-conf { margin-left: auto; width: 46px; height: 5px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
 .si-conf i { display: block; height: 100%; background: var(--good); }
 .si-conf.low i { background: var(--warn); }
+
+/* ===== swipe to delete ===== */
+.swipe-row { position: relative; overflow: hidden; list-style: none; transition: max-height .22s ease .1s, opacity .2s ease; max-height: 200px; }
+.swipe-row.gone { max-height: 0; opacity: 0; }
+.meal-items li.swipe-row { display: block; padding: 0; }
+.swipe-body { position: relative; z-index: 1; background: var(--surface); touch-action: pan-y; transition: transform .22s cubic-bezier(.2,.8,.2,1); outline: none; user-select: none; -webkit-user-select: none; }
+.meal-items .swipe-body { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 9px 18px; }
+.swipe-body:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+.swipe-del { position: absolute; right: 0; top: 0; bottom: 0; border: 0; background: var(--bad, #ef4444); color: #fff; font: inherit; font-weight: 700; font-size: 13px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; cursor: pointer; }
+.swipe-del svg { width: 18px; height: 18px; }
+.swipe-row:not(.swiping) .swipe-del { visibility: hidden; }
+@media (pointer: coarse) { .meal-items .meal-x { display: none; } .meal-items .swipe-body { grid-template-columns: minmax(0, 1fr) auto; } }
+.toast.has-action { display: flex; align-items: center; gap: 14px; }
+.toast-act { border: 0; background: none; color: var(--accent); font: inherit; font-weight: 800; cursor: pointer; padding: 2px 4px; text-transform: uppercase; letter-spacing: .04em; font-size: 13px; }

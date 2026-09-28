@@ -4,6 +4,8 @@
  *
  * CHAIN_FOOD_DATA: restaurant and fast-food menu items. SA chain values are estimates unless a chain publishes them;
  *   international chains use their published US/UK figures where known (tagged "us").
+ * BRANDED_FOOD_DATA: SA and international branded drinks, chocolates, sweets, snacks, biscuits and supermarket
+ *   products - typical label values per 100 g / 100 ml, entered by hand; always check the pack.
  * USDA_FOOD_DATA: USDA FoodData Central, SR Legacy (public domain), via the TempoLife food dataset
  *   (tempolife.app, CC-BY-4.0). Names shortened to plain English.
  */
@@ -6074,4 +6076,2038 @@ us-vinegar-balsamic|Vinegar, balsamic|OS|88|0.5|17|0|1 tbsp=15;2 tbsp=30|
 us-vinegar-cider|Vinegar, cider|OS|21|0|0.9|0|1 tbsp=15;2 tbsp=30|
 us-vinegar-distilled|Vinegar, distilled|OS|18|0|0|0|1 tbsp=15;2 tbsp=30|
 us-vinegar-red-wine|Vinegar, red wine|OS|19|0|0.3|0|1 glass=150;1 bottle=750|
+`;
+
+export const BRANDED_FOOD_DATA = `
+coca-cola-original|Coca-Cola Original|DR|42|0|10.6|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|coke cola fizzy soft drink|L
+coca-cola-zero|Coca-Cola Zero|DR|0|0|0|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|coke zero no sugar diet cola|L
+coca-cola-light|Coca-Cola Light|DR|0|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|coke light diet cola|L
+coca-cola-zero-vanilla|Coca-Cola Zero Vanilla|DR|0|0|0|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|coke zero vanilla diet cola|L
+fanta-orange|Fanta Orange|DR|30|0|7.6|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|fanta orange fizzy soft drink|L
+fanta-grape|Fanta Grape|DR|34|0|8.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|fanta grape fizzy soft drink|L
+fanta-pineapple|Fanta Pineapple|DR|34|0|8.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|fanta pineapple fizzy soft drink|L
+fanta-zero-orange|Fanta Zero Orange|DR|1|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|fanta zero sugar free diet orange|L
+fanta-zero-grape|Fanta Zero Grape|DR|1|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|fanta zero sugar free diet grape|L
+fanta-zero-pineapple|Fanta Zero Pineapple|DR|1|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|fanta zero sugar free diet pineapple|L
+sprite-2|Sprite|DR|25|0|6.2|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|sprite lemon lime lemonade fizzy|L
+sprite-zero|Sprite Zero|DR|1|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|sprite zero no sugar diet lemonade|L
+stoney-ginger-beer|Stoney Ginger Beer|DR|39|0|9.8|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|stoney ginger beer fizzy|L
+stoney-zero-ginger-beer|Stoney Zero Ginger Beer|DR|1|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|stoney zero sugar free ginger beer|L
+sparletta-creme-soda|Sparletta Creme Soda|DR|44|0|11|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|sparletta creme soda fizzy soft drink|L
+sparletta-iron-brew|Sparletta Iron Brew|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|sparletta iron brew fizzy soft drink|L
+sparletta-pine-nut|Sparletta Pine Nut|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|sparletta pine nut fizzy soft drink|L
+sparletta-sparberry|Sparletta Sparberry|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|sparletta sparberry fizzy soft drink|L
+schweppes-indian-tonic|Schweppes Indian Tonic|DR|34|0|8.5|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|schweppes tonic water mixer|L
+schweppes-tonic-zero|Schweppes Tonic Zero|DR|1|0|0.2|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|schweppes diet tonic sugar free mixer|L
+schweppes-soda-water|Schweppes Soda Water|DR|0|0|0|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|schweppes soda water club soda mixer|L
+schweppes-lemonade|Schweppes Lemonade|DR|38|0|9.5|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|schweppes lemonade fizzy mixer|L
+schweppes-dry-lemon|Schweppes Dry Lemon|DR|40|0|10|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|schweppes dry lemon mixer|L
+schweppes-ginger-ale|Schweppes Ginger Ale|DR|35|0|8.8|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|schweppes ginger ale mixer|L
+appletiser|Appletiser|DR|47|0.1|11.4|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|appletiser sparkling apple juice|L
+grapetiser-red|Grapetiser Red|DR|66|0.2|16.2|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|grapetiser red sparkling grape juice|L
+grapetiser-white|Grapetiser White|DR|66|0.2|16.2|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|grapetiser white sparkling grape juice|L
+peartiser|Peartiser|DR|46|0.1|11.3|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|peartiser sparkling pear juice|L
+twizza-cola|Twizza Cola|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza cola soft drink|L
+twizza-cream-soda|Twizza Cream Soda|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza cream soda soft drink|L
+twizza-pineapple|Twizza Pineapple|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza pineapple soft drink|L
+twizza-granadilla|Twizza Granadilla|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza granadilla soft drink|L
+twizza-lemon-twist|Twizza Lemon Twist|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza lemon twist soft drink|L
+twizza-orange|Twizza Orange|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza orange soft drink|L
+twizza-iron-brew|Twizza Iron Brew|DR|38|0|9.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|twizza iron brew soft drink|L
+jive-cola|Jive Cola|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive cola soft drink|L
+jive-cream-soda|Jive Cream Soda|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive cream soda soft drink|L
+jive-pineapple|Jive Pineapple|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive pineapple soft drink|L
+jive-granadilla|Jive Granadilla|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive granadilla soft drink|L
+jive-ginger-beer|Jive Ginger Beer|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive ginger beer soft drink|L
+jive-orange|Jive Orange|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive orange soft drink|L
+jive-apple|Jive Apple|DR|42|0|10.5|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|jive apple soft drink|L
+coo-ee-cola|Coo-ee Cola|DR|40|0|10|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|cooee coo ee cola soft drink|L
+coo-ee-cream-soda|Coo-ee Cream Soda|DR|40|0|10|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|cooee coo ee cream soda soft drink|L
+coo-ee-pine-nut|Coo-ee Pine Nut|DR|40|0|10|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|cooee coo ee pine nut soft drink|L
+coo-ee-granadilla|Coo-ee Granadilla|DR|40|0|10|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|cooee coo ee granadilla soft drink|L
+coo-ee-iron-brew|Coo-ee Iron Brew|DR|40|0|10|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|cooee coo ee iron brew soft drink|L
+coo-ee-orange|Coo-ee Orange|DR|40|0|10|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|cooee coo ee orange soft drink|L
+pepsi|Pepsi|DR|42|0|10.6|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|pepsi cola|L
+pepsi-max|Pepsi Max|DR|0|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|pepsi max zero sugar diet cola|L
+7up|7Up|DR|42|0|10.4|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|7up seven up lemonade lemon lime|L
+7up-free|7Up Free|DR|1|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|7up free zero sugar diet seven up|L
+mountain-dew|Mountain Dew|DR|48|0|12|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|mountain dew citrus soda|L
+dr-pepper|Dr Pepper|DR|42|0|10.4|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|dr pepper doctor pepper soda|L
+dr-pepper-zero|Dr Pepper Zero|DR|1|0|0.1|0|1 can (330 ml)=330;1 bottle (500 ml)=500;1 glass=250|dr pepper zero diet|L
+tab|Tab|DR|0|0|0.1|0|1 can (300 ml)=300;1 bottle (500 ml)=500;1 glass=250;1 bottle (2 L)=2000|tab diet cola|L
+bos-ice-tea-lemon|Bos Ice Tea Lemon|DR|22|0|5.4|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|bos rooibos iced tea lemon|L
+bos-ice-tea-peach|Bos Ice Tea Peach|DR|22|0|5.4|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|bos rooibos iced tea peach|L
+bos-ice-tea-berry|Bos Ice Tea Berry|DR|22|0|5.4|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|bos rooibos iced tea berry|L
+bos-ice-tea-lime-and-ginger|Bos Ice Tea Lime and Ginger|DR|22|0|5.4|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|bos rooibos iced tea lime and ginger|L
+bos-ice-tea-passion-fruit|Bos Ice Tea Passion Fruit|DR|22|0|5.4|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|bos rooibos iced tea passion fruit|L
+bos-ice-tea-unsweetened-lemon|Bos Ice Tea Unsweetened Lemon|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|bos rooibos iced tea no sugar|L
+lipton-ice-tea-lemon|Lipton Ice Tea Lemon|DR|19|0|4.7|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|lipton iced tea lemon|L
+lipton-ice-tea-peach|Lipton Ice Tea Peach|DR|19|0|4.7|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|lipton iced tea peach|L
+lipton-ice-tea-mango|Lipton Ice Tea Mango|DR|19|0|4.7|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|lipton iced tea mango|L
+lipton-ice-tea-lemon-zero|Lipton Ice Tea Lemon Zero|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|lipton iced tea zero sugar|L
+fuze-tea-lemon|Fuze Tea Lemon|DR|18|0|4.6|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|fuze iced tea lemon|L
+fuze-tea-peach|Fuze Tea Peach|DR|18|0|4.6|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|fuze iced tea peach|L
+fuze-tea-mango|Fuze Tea Mango|DR|18|0|4.6|0|1 bottle (500 ml)=500;1 can (330 ml)=330;1 glass=250|fuze iced tea mango|L
+liqui-fruit-red-grape|Liqui Fruit Red Grape|DR|67|0.3|16.5|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice red grape|L
+liqui-fruit-white-grape|Liqui Fruit White Grape|DR|66|0.3|16.2|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice white grape|L
+liqui-fruit-orange|Liqui Fruit Orange|DR|44|0.3|10.3|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice orange|L
+liqui-fruit-mango-orange|Liqui Fruit Mango Orange|DR|49|0.3|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice mango orange|L
+liqui-fruit-cloudy-apple|Liqui Fruit Cloudy Apple|DR|47|0.3|11.5|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice cloudy apple|L
+liqui-fruit-clear-apple|Liqui Fruit Clear Apple|DR|46|0.3|11.3|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice clear apple|L
+liqui-fruit-guava|Liqui Fruit Guava|DR|52|0.3|12.7|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice guava|L
+liqui-fruit-pineapple|Liqui Fruit Pineapple|DR|52|0.3|12.6|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice pineapple|L
+liqui-fruit-medley-of-fruits|Liqui Fruit Medley of Fruits|DR|49|0.3|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice medley of fruits|L
+liqui-fruit-summer-pine|Liqui Fruit Summer Pine|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice summer pine|L
+liqui-fruit-peach-and-apricot|Liqui Fruit Peach and Apricot|DR|48|0.3|11.7|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice peach and apricot|L
+liqui-fruit-berry-blast|Liqui Fruit Berry Blast|DR|50|0.3|12.2|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice berry blast|L
+liqui-fruit-tropical|Liqui Fruit Tropical|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|liqui fruit liquifruit juice tropical|L
+ceres-medley-of-fruits|Ceres Medley of Fruits|DR|49|0.3|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice medley of fruits|L
+ceres-orange|Ceres Orange|DR|45|0.3|10.5|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice orange|L
+ceres-apple|Ceres Apple|DR|46|0.3|11.3|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice apple|L
+ceres-mango|Ceres Mango|DR|55|0.3|13.3|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice mango|L
+ceres-guava|Ceres Guava|DR|52|0.3|12.7|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice guava|L
+ceres-litchi|Ceres Litchi|DR|54|0.3|13.2|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice litchi|L
+ceres-red-grape|Ceres Red Grape|DR|67|0.3|16.5|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice red grape|L
+ceres-whispers-of-summer|Ceres Whispers of Summer|DR|48|0.3|11.7|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice whispers of summer|L
+ceres-secrets-of-the-valley|Ceres Secrets of the Valley|DR|48|0.3|11.7|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice secrets of the valley|L
+ceres-passion-of-fruit|Ceres Passion of Fruit|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|ceres juice passion of fruit|L
+clover-krush-mango|Clover Krush Mango|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|krush clover juice mango|L
+clover-krush-orange|Clover Krush Orange|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|krush clover juice orange|L
+clover-krush-tropical|Clover Krush Tropical|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|krush clover juice tropical|L
+clover-krush-litchi|Clover Krush Litchi|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|krush clover juice litchi|L
+clover-krush-guava|Clover Krush Guava|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|krush clover juice guava|L
+minute-maid-orange|Minute Maid Orange|DR|43|0.2|10.4|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|minute maid juice orange|L
+minute-maid-mango|Minute Maid Mango|DR|50|0.2|12.2|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|minute maid juice mango|L
+minute-maid-apple|Minute Maid Apple|DR|46|0.2|11.3|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|minute maid juice apple|L
+minute-maid-pulpy-orange|Minute Maid Pulpy Orange|DR|45|0.2|10.9|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|minute maid juice pulpy orange|L
+minute-maid-tropical|Minute Maid Tropical|DR|48|0.2|11.7|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|minute maid juice tropical|L
+fruitree-mango|Fruitree Mango|DR|48|0.2|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|fruitree fruit tree juice nectar mango|L
+fruitree-apple|Fruitree Apple|DR|48|0.2|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|fruitree fruit tree juice nectar apple|L
+fruitree-orange|Fruitree Orange|DR|48|0.2|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|fruitree fruit tree juice nectar orange|L
+fruitree-guava|Fruitree Guava|DR|48|0.2|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|fruitree fruit tree juice nectar guava|L
+fruitree-tropical|Fruitree Tropical|DR|48|0.2|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|fruitree fruit tree juice nectar tropical|L
+fruitree-cranberry|Fruitree Cranberry|DR|48|0.2|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|fruitree fruit tree juice nectar cranberry|L
+halls-fruit-juice-blend-orange|Halls Fruit Juice Blend Orange|DR|44|0.2|10.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|halls juice blend orange|L
+halls-fruit-juice-blend-mango|Halls Fruit Juice Blend Mango|DR|44|0.2|10.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|halls juice blend mango|L
+halls-fruit-juice-blend-tropical|Halls Fruit Juice Blend Tropical|DR|44|0.2|10.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|halls juice blend tropical|L
+oros-orange-concentrate|Oros Orange concentrate|DR|90|0|22|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|oros squash cordial concentrate orange
+oros-orange-diluted|Oros Orange, diluted|DR|15|0|3.7|0|1 glass=250;1 jug (1 L)=1000|oros squash cordial mixed orange|L
+oros-naartjie-concentrate|Oros Naartjie concentrate|DR|90|0|22|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|oros squash cordial concentrate naartjie
+oros-naartjie-diluted|Oros Naartjie, diluted|DR|15|0|3.7|0|1 glass=250;1 jug (1 L)=1000|oros squash cordial mixed naartjie|L
+oros-mango-concentrate|Oros Mango concentrate|DR|90|0|22|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|oros squash cordial concentrate mango
+oros-mango-diluted|Oros Mango, diluted|DR|15|0|3.7|0|1 glass=250;1 jug (1 L)=1000|oros squash cordial mixed mango|L
+oros-tropical-concentrate|Oros Tropical concentrate|DR|90|0|22|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|oros squash cordial concentrate tropical
+oros-tropical-diluted|Oros Tropical, diluted|DR|15|0|3.7|0|1 glass=250;1 jug (1 L)=1000|oros squash cordial mixed tropical|L
+wild-island-pink-grapefruit-concentrate|Wild Island Pink Grapefruit concentrate|DR|110|0|27|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|wild island cordial concentrate pink grapefruit
+wild-island-pink-grapefruit-diluted|Wild Island Pink Grapefruit, diluted|DR|22|0|5.4|0|1 glass=250;1 jug (1 L)=1000|wild island cordial mixed pink grapefruit|L
+wild-island-cranberry-concentrate|Wild Island Cranberry concentrate|DR|110|0|27|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|wild island cordial concentrate cranberry
+wild-island-cranberry-diluted|Wild Island Cranberry, diluted|DR|22|0|5.4|0|1 glass=250;1 jug (1 L)=1000|wild island cordial mixed cranberry|L
+wild-island-kiwi-lemon-concentrate|Wild Island Kiwi Lemon concentrate|DR|110|0|27|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|wild island cordial concentrate kiwi lemon
+wild-island-kiwi-lemon-diluted|Wild Island Kiwi Lemon, diluted|DR|22|0|5.4|0|1 glass=250;1 jug (1 L)=1000|wild island cordial mixed kiwi lemon|L
+wild-island-passion-fruit-concentrate|Wild Island Passion Fruit concentrate|DR|110|0|27|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|wild island cordial concentrate passion fruit
+wild-island-passion-fruit-diluted|Wild Island Passion Fruit, diluted|DR|22|0|5.4|0|1 glass=250;1 jug (1 L)=1000|wild island cordial mixed passion fruit|L
+wild-island-litchi-concentrate|Wild Island Litchi concentrate|DR|110|0|27|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|wild island cordial concentrate litchi
+wild-island-litchi-diluted|Wild Island Litchi, diluted|DR|22|0|5.4|0|1 glass=250;1 jug (1 L)=1000|wild island cordial mixed litchi|L
+roses-lime-cordial-concentrate|Rose's Lime Cordial concentrate|DR|105|0|26|0|concentrate for 1 glass (50 g)=50;1 tbsp (15 g)=15|roses lime cordial concentrate
+roses-lime-cordial-diluted|Rose's Lime Cordial, diluted|DR|21|0|5.2|0|1 glass=250;1 jug (1 L)=1000|roses lime cordial mixed|L
+woolworths-100-orange-juice|Woolworths 100% Orange Juice|DR|44|0.7|10|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice 100% orange juice|L
+woolworths-cloudy-apple-juice|Woolworths Cloudy Apple Juice|DR|46|0.1|11.3|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice cloudy apple juice|L
+woolworths-mango-and-orange-juice|Woolworths Mango and Orange Juice|DR|49|0.4|11.8|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice mango and orange juice|L
+woolworths-pineapple-juice|Woolworths Pineapple Juice|DR|52|0.3|12.6|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice pineapple juice|L
+woolworths-tropical-juice|Woolworths Tropical Juice|DR|50|0.3|12.1|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice tropical juice|L
+woolworths-freshly-squeezed-orange-juice|Woolworths Freshly Squeezed Orange Juice|DR|45|0.7|10.2|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice freshly squeezed orange juice|L
+woolworths-cranberry-juice-drink|Woolworths Cranberry Juice Drink|DR|46|0|11.4|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice cranberry juice drink|L
+woolworths-pomegranate-juice|Woolworths Pomegranate Juice|DR|60|0.2|14.5|0|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|woolies woolworths juice pomegranate juice|L
+clover-tropika-mango-orange|Clover Tropika Mango Orange|DR|46|0.5|11|0.1|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|tropika clover dairy fruit blend mango orange|L
+clover-tropika-tropical|Clover Tropika Tropical|DR|46|0.5|11|0.1|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|tropika clover dairy fruit blend tropical|L
+clover-tropika-orange|Clover Tropika Orange|DR|46|0.5|11|0.1|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|tropika clover dairy fruit blend orange|L
+clover-tropika-guava|Clover Tropika Guava|DR|46|0.5|11|0.1|1 glass=250;1 carton (200 ml)=200;1 can (330 ml)=330;1 carton (1 L)=1000|tropika clover dairy fruit blend guava|L
+red-bull-energy-drink|Red Bull Energy Drink|DR|46|0|11|0|1 can (250 ml)=250;1 can (355 ml)=355;1 can (473 ml)=473|redbull energy|L
+red-bull-sugarfree|Red Bull Sugarfree|DR|3|0|0|0|1 can (250 ml)=250;1 can (355 ml)=355;1 can (473 ml)=473|redbull sugar free energy|L
+red-bull-zero|Red Bull Zero|DR|3|0|0|0|1 can (250 ml)=250;1 can (355 ml)=355;1 can (473 ml)=473|redbull zero energy|L
+red-bull-tropical-edition|Red Bull Tropical Edition|DR|46|0|11|0|1 can (250 ml)=250;1 can (355 ml)=355;1 can (473 ml)=473|redbull energy tropical edition|L
+red-bull-red-edition-watermelon|Red Bull Red Edition Watermelon|DR|46|0|11|0|1 can (250 ml)=250;1 can (355 ml)=355;1 can (473 ml)=473|redbull energy red edition watermelon|L
+red-bull-blue-edition|Red Bull Blue Edition|DR|46|0|11|0|1 can (250 ml)=250;1 can (355 ml)=355;1 can (473 ml)=473|redbull energy blue edition|L
+monster-energy-original|Monster Energy Original|DR|47|0|11.2|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster energy green|L
+monster-energy-ultra-white|Monster Energy Ultra White|DR|2|0|0.9|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster ultra zero sugar energy white|L
+monster-energy-ultra-paradise|Monster Energy Ultra Paradise|DR|2|0|0.9|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster ultra zero sugar energy paradise|L
+monster-energy-ultra-fiesta|Monster Energy Ultra Fiesta|DR|2|0|0.9|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster ultra zero sugar energy fiesta|L
+monster-energy-ultra-rosa|Monster Energy Ultra Rosa|DR|2|0|0.9|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster ultra zero sugar energy rosa|L
+monster-energy-ultra-watermelon|Monster Energy Ultra Watermelon|DR|2|0|0.9|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster ultra zero sugar energy watermelon|L
+monster-juiced-mango-loco|Monster Juiced Mango Loco|DR|47|0|11.5|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster juice energy mango loco|L
+monster-juiced-pipeline-punch|Monster Juiced Pipeline Punch|DR|47|0|11.5|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster juice energy pipeline punch|L
+monster-juiced-pacific-punch|Monster Juiced Pacific Punch|DR|47|0|11.5|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|monster juice energy pacific punch|L
+dragon-energy-original|Dragon Energy Original|DR|47|0|11.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|dragon energy drink original|L
+dragon-energy-mixed-berry|Dragon Energy Mixed Berry|DR|47|0|11.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|dragon energy drink mixed berry|L
+dragon-energy-sugar-free|Dragon Energy Sugar Free|DR|4|0|0.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|dragon energy sugar free|L
+play-energy-original|Play Energy Original|DR|45|0|11.2|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|play energy drink original|L
+play-energy-mango|Play Energy Mango|DR|45|0|11.2|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|play energy drink mango|L
+switch-energy-original|Switch Energy Original|DR|42|0|10.4|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|switch energy drink|L
+switch-energy-sugar-free|Switch Energy Sugar Free|DR|3|0|0.5|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|switch energy sugar free|L
+score-energy-original|Score Energy Original|DR|43|0|10.7|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|score energy drink original|L
+score-energy-mango|Score Energy Mango|DR|43|0|10.7|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|score energy drink mango|L
+mofaya-energy-original|Mofaya Energy Original|DR|48|0|11.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|mofaya energy drink original|L
+mofaya-energy-berry|Mofaya Energy Berry|DR|48|0|11.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|mofaya energy drink berry|L
+reboost-energy-original|Reboost Energy Original|DR|45|0|11.2|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|reboost energy drink|L
+energade-naartjie|Energade Naartjie|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|energade sports drink naartjie|L
+energade-blueberry|Energade Blueberry|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|energade sports drink blueberry|L
+energade-mixed-berry|Energade Mixed Berry|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|energade sports drink mixed berry|L
+energade-pineapple|Energade Pineapple|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|energade sports drink pineapple|L
+energade-litchi|Energade Litchi|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|energade sports drink litchi|L
+energade-grape|Energade Grape|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|energade sports drink grape|L
+powerade-mountain-blast|Powerade Mountain Blast|DR|25|0|6.1|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|powerade sports drink isotonic mountain blast|L
+powerade-berry-ice|Powerade Berry Ice|DR|25|0|6.1|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|powerade sports drink isotonic berry ice|L
+powerade-orange|Powerade Orange|DR|25|0|6.1|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|powerade sports drink isotonic orange|L
+powerade-zero-mountain-blast|Powerade Zero Mountain Blast|DR|1|0|0.1|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|powerade zero sugar free sports drink|L
+game-sports-drink-naartjie|Game Sports Drink Naartjie|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|game thirst quencher sports drink naartjie|L
+game-sports-drink-lemon-lime|Game Sports Drink Lemon Lime|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|game thirst quencher sports drink lemon lime|L
+game-sports-drink-grape|Game Sports Drink Grape|DR|24|0|6|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|game thirst quencher sports drink grape|L
+lucozade-energy-original|Lucozade Energy Original|DR|24|0|5.8|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|lucozade energy glucose|L
+lucozade-energy-orange|Lucozade Energy Orange|DR|24|0|5.8|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|lucozade energy orange|L
+lucozade-sport-orange|Lucozade Sport Orange|DR|28|0|6.7|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|lucozade sport isotonic orange|L
+prime-hydration-tropical-punch|Prime Hydration Tropical Punch|DR|5|0|1.2|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|prime hydration sports drink logan paul ksi tropical punch|L
+prime-hydration-ice-pop|Prime Hydration Ice Pop|DR|5|0|1.2|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|prime hydration sports drink logan paul ksi ice pop|L
+prime-hydration-blue-raspberry|Prime Hydration Blue Raspberry|DR|5|0|1.2|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|prime hydration sports drink logan paul ksi blue raspberry|L
+prime-hydration-lemon-lime|Prime Hydration Lemon Lime|DR|5|0|1.2|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|prime hydration sports drink logan paul ksi lemon lime|L
+prime-hydration-grape|Prime Hydration Grape|DR|5|0|1.2|0|1 bottle (500 ml)=500;1 bottle (750 ml)=750;1 glass=250|prime hydration sports drink logan paul ksi grape|L
+prime-energy-tropical-punch|Prime Energy Tropical Punch|DR|3|0|0.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|prime energy drink can tropical punch|L
+prime-energy-blue-raspberry|Prime Energy Blue Raspberry|DR|3|0|0.6|0|1 can (500 ml)=500;1 can (440 ml)=440;1 glass=250|prime energy drink can blue raspberry|L
+bonaqua-still-water|Bonaqua Still Water|DR|0|0|0|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|bonaqua water still|L
+valpre-still-water|Valpre Still Water|DR|0|0|0|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|valpre valpré water still|L
+bonaqua-sparkling-water|Bonaqua Sparkling Water|DR|0|0|0|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|bonaqua water sparkling|L
+valpre-sparkling-water|Valpre Sparkling Water|DR|0|0|0|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|valpre valpré water sparkling|L
+aquelle-flavoured-water-litchi|Aquelle Flavoured Water Litchi|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|aquelle flavoured sparkling water sugar free litchi|L
+aquelle-flavoured-water-granadilla|Aquelle Flavoured Water Granadilla|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|aquelle flavoured sparkling water sugar free granadilla|L
+aquelle-flavoured-water-berry|Aquelle Flavoured Water Berry|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|aquelle flavoured sparkling water sugar free berry|L
+aquelle-flavoured-water-lemon-lime|Aquelle Flavoured Water Lemon Lime|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|aquelle flavoured sparkling water sugar free lemon lime|L
+aquelle-flavoured-water-peach|Aquelle Flavoured Water Peach|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|aquelle flavoured sparkling water sugar free peach|L
+bonaqua-flavoured-water-lemon|Bonaqua Flavoured Water Lemon|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|bonaqua flavoured water zero sugar lemon|L
+bonaqua-flavoured-water-berry|Bonaqua Flavoured Water Berry|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|bonaqua flavoured water zero sugar berry|L
+bonaqua-flavoured-water-litchi|Bonaqua Flavoured Water Litchi|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|bonaqua flavoured water zero sugar litchi|L
+bonaqua-flavoured-water-peach|Bonaqua Flavoured Water Peach|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|bonaqua flavoured water zero sugar peach|L
+valpre-flavoured-water-litchi|Valpre Flavoured Water Litchi|DR|16|0|4|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|valpre valpré flavoured still water litchi|L
+valpre-flavoured-water-lemon|Valpre Flavoured Water Lemon|DR|16|0|4|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|valpre valpré flavoured still water lemon|L
+valpre-flavoured-water-berry|Valpre Flavoured Water Berry|DR|16|0|4|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|valpre valpré flavoured still water berry|L
+valpre-flavoured-water-granadilla|Valpre Flavoured Water Granadilla|DR|16|0|4|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|valpre valpré flavoured still water granadilla|L
+perrier-sparkling-water|Perrier Sparkling Water|DR|0|0|0|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|perrier sparkling mineral water|L
+san-pellegrino-sparkling-water|San Pellegrino Sparkling Water|DR|0|0|0|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|san pellegrino sparkling mineral water|L
+vita-coco-coconut-water|Vita Coco Coconut Water|DR|18|0|4.5|0|1 carton (330 ml)=330;1 carton (1 L)=1000;1 glass=250|vita coco coconut water|L
+woolworths-coconut-water|Woolworths Coconut Water|DR|20|0.2|4.8|0|1 carton (330 ml)=330;1 carton (1 L)=1000;1 glass=250|woolies coconut water|L
+vitaminwater-power-c|Vitaminwater Power-C|DR|20|0|4.8|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|vitamin water glaceau power-c|L
+vitaminwater-refresh|Vitaminwater Refresh|DR|20|0|4.8|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|vitamin water glaceau refresh|L
+vitaminwater-revive|Vitaminwater Revive|DR|20|0|4.8|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|vitamin water glaceau revive|L
+vitaminwater-xxx|Vitaminwater XXX|DR|20|0|4.8|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|vitamin water glaceau xxx|L
+vitaminwater-zero|Vitaminwater Zero|DR|1|0|0.2|0|1 bottle (500 ml)=500;1 bottle (1.5 L)=1500;1 glass=250|vitamin water zero sugar glaceau|L
+steri-stumpie-chocolate|Steri Stumpie Chocolate|DR|79|3.1|11.6|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|steri stumpie flavoured milk chocolate|L
+steri-stumpie-strawberry|Steri Stumpie Strawberry|DR|79|3.1|11.6|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|steri stumpie flavoured milk strawberry|L
+steri-stumpie-banana|Steri Stumpie Banana|DR|79|3.1|11.6|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|steri stumpie flavoured milk banana|L
+steri-stumpie-bubblegum|Steri Stumpie Bubblegum|DR|79|3.1|11.6|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|steri stumpie flavoured milk bubblegum|L
+steri-stumpie-coffee|Steri Stumpie Coffee|DR|79|3.1|11.6|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|steri stumpie flavoured milk coffee|L
+steri-stumpie-cream-soda|Steri Stumpie Cream Soda|DR|79|3.1|11.6|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|steri stumpie flavoured milk cream soda|L
+super-m-chocolate|Super M Chocolate|DR|78|3.1|11.4|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|super m flavoured milk chocolate|L
+super-m-strawberry|Super M Strawberry|DR|78|3.1|11.4|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|super m flavoured milk strawberry|L
+super-m-banana|Super M Banana|DR|78|3.1|11.4|2.2|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|super m flavoured milk banana|L
+milo-powder|Milo powder|DR|410|9.6|70|9.5|1 heaped tsp (7 g)=7;3 heaped tsp (20 g)=20|milo chocolate malt powder
+milo-made-with-low-fat-milk|Milo made with low-fat milk|DR|91|4.3|11.8|3|1 cup (250 ml)=250;1 mug (350 ml)=350|milo drink 2% milk|L
+milo-ready-to-drink|Milo Ready-to-Drink|DR|66|2.7|10|1.7|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|milo rtd carton chocolate malt|L
+nesquik-chocolate-powder|Nesquik Chocolate powder|DR|373|3.5|80|3|1 serving (25 g)=25;1 heaped tsp (8 g)=8|nesquik chocolate milkshake powder
+nesquik-strawberry-powder|Nesquik Strawberry powder|DR|394|0|98.5|0|1 serving (25 g)=25;1 heaped tsp (8 g)=8|nesquik strawberry milkshake powder
+nesquik-chocolate-made-with-full-cream-milk|Nesquik Chocolate made with full-cream milk|DR|89|3.6|10.7|3.5|1 cup (250 ml)=250;1 mug (350 ml)=350|nesquik chocolate milk|L
+clover-inkomazi-amasi|Clover Inkomazi Amasi|DR|63|3.1|4.5|3.4|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|inkomazi amasi maas sour milk|L
+coronation-amasi|Coronation Amasi|DR|63|3.1|4.5|3.4|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|coronation amasi maas sour milk|L
+clover-buttermilk|Clover Buttermilk|DR|46|3.4|4.6|1.5|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|clover karringmelk buttermilk cultured|L
+yogi-sip-strawberry|Yogi Sip Strawberry|DR|74|2.5|12.5|1.5|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|yogisip drinking yoghurt strawberry|L
+yogi-sip-banana|Yogi Sip Banana|DR|74|2.5|12.5|1.5|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|yogisip drinking yoghurt banana|L
+yogi-sip-mixed-berry|Yogi Sip Mixed Berry|DR|74|2.5|12.5|1.5|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|yogisip drinking yoghurt mixed berry|L
+yogi-sip-peach|Yogi Sip Peach|DR|74|2.5|12.5|1.5|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|yogisip drinking yoghurt peach|L
+danone-nutriday-drinking-yoghurt-strawberry|Danone Nutriday Drinking Yoghurt Strawberry|DR|72|2.4|12|1.4|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|danone drinking yoghurt strawberry|L
+danone-nutriday-drinking-yoghurt-vanilla|Danone Nutriday Drinking Yoghurt Vanilla|DR|72|2.4|12|1.4|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|danone drinking yoghurt vanilla|L
+danone-actimel-original|Danone Actimel Original|DR|71|2.7|11.5|1.5|1 bottle (100 ml)=100;1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|actimel probiotic yoghurt drink|L
+woolworths-chocolate-milk|Woolworths Chocolate Milk|DR|75|3.3|10.5|2.1|1 bottle (350 ml)=350;1 bottle (500 ml)=500;1 glass=250|woolies chocolate flavoured milk|L
+oatly-oat-drink-original|Oatly Oat Drink Original|DR|46|1|6.7|1.5|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|oatly oat milk|L
+oatly-oat-drink-barista|Oatly Oat Drink Barista|DR|59|1|6.6|3|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|oatly barista oat milk|L
+oatly-oat-drink-chocolate|Oatly Oat Drink Chocolate|DR|57|1|9.6|1.5|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|oatly chocolate oat milk|L
+alpro-soya-original|Alpro Soya Original|DR|39|3|2.5|1.8|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|alpro soy milk|L
+alpro-soya-chocolate|Alpro Soya Chocolate|DR|64|3|9.2|1.8|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|alpro soy chocolate milk|L
+alpro-almond-original|Alpro Almond Original|DR|24|0.5|3|1.1|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|alpro almond milk|L
+alpro-almond-unsweetened|Alpro Almond Unsweetened|DR|13|0.4|0|1.1|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|alpro almond milk no sugar|L
+alpro-oat-original|Alpro Oat Original|DR|44|0.3|6.8|1.5|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|alpro oat milk|L
+alpro-coconut-original|Alpro Coconut Original|DR|20|0.1|2.7|0.9|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|alpro coconut milk drink|L
+good-hope-oat-milk|Good Hope Oat Milk|DR|48|0.8|7|1.6|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|good hope oat milk plant|L
+good-hope-barista-oat-milk|Good Hope Barista Oat Milk|DR|58|0.8|6.8|3|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|good hope barista oat milk|L
+good-hope-almond-milk|Good Hope Almond Milk|DR|25|0.6|2.8|1.2|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|good hope almond milk|L
+woolworths-oat-milk|Woolworths Oat Milk|DR|47|0.8|7|1.5|1 glass=250;1 cup (125 ml)=125;1 tbsp (15 ml)=15|woolies oat milk|L
+rooibos-tea-with-milk|Rooibos tea with milk|DR|8|0.4|0.6|0.4|1 cup (250 ml)=250;1 mug (350 ml)=350|rooibos red bush tea milk|L
+rooibos-tea-with-milk-and-sugar|Rooibos tea with milk and sugar|DR|14|0.4|2.2|0.4|1 cup (250 ml)=250;1 mug (350 ml)=350|rooibos red bush tea milk sugar|L
+five-roses-tea-black|Five Roses tea, black|DR|1|0|0.2|0|1 cup (250 ml)=250;1 mug (350 ml)=350|five roses black tea|L
+joko-tea-black|Joko tea, black|DR|1|0|0.2|0|1 cup (250 ml)=250;1 mug (350 ml)=350|joko black tea|L
+freshpack-rooibos-tea-black|Freshpack Rooibos tea, black|DR|1|0|0.2|0|1 cup (250 ml)=250;1 mug (350 ml)=350|freshpack rooibos|L
+laager-rooibos-tea-black|Laager Rooibos tea, black|DR|1|0|0.2|0|1 cup (250 ml)=250;1 mug (350 ml)=350|laager rooibos|L
+five-roses-tea-with-milk-and-sugar|Five Roses tea with milk and sugar|DR|15|0.4|2.4|0.4|1 cup (250 ml)=250;1 mug (350 ml)=350|five roses tea milk sugar|L
+joko-tea-with-milk-and-sugar|Joko tea with milk and sugar|DR|15|0.4|2.4|0.4|1 cup (250 ml)=250;1 mug (350 ml)=350|joko tea milk sugar|L
+ricoffy-powder|Ricoffy powder|DR|330|6.5|72|0.3|1 tsp (2 g)=2;1 heaped tsp (3 g)=3|ricoffy instant coffee chicory
+frisco-powder|Frisco powder|DR|330|6|73|0.3|1 tsp (2 g)=2;1 heaped tsp (3 g)=3|frisco instant coffee chicory
+ricoffy-made-with-milk-and-sugar|Ricoffy made with milk and sugar|DR|32|0.8|5.6|0.7|1 cup (250 ml)=250;1 mug (350 ml)=350|ricoffy coffee milk sugar|L
+frisco-made-with-milk-and-sugar|Frisco made with milk and sugar|DR|32|0.8|5.6|0.7|1 cup (250 ml)=250;1 mug (350 ml)=350|frisco coffee milk sugar|L
+nescafe-classic-instant-coffee-powder|Nescafe Classic instant coffee powder|DR|110|12|12|0.5|1 tsp (2 g)=2;1 heaped tsp (3 g)=3|nescafe classic instant coffee
+nescafe-gold-instant-coffee-powder|Nescafe Gold instant coffee powder|DR|110|12|12|0.5|1 tsp (2 g)=2;1 heaped tsp (3 g)=3|nescafe gold instant coffee
+jacobs-kronung-instant-coffee-powder|Jacobs Kronung instant coffee powder|DR|110|12|12|0.5|1 tsp (2 g)=2;1 heaped tsp (3 g)=3|jacobs kronung instant coffee
+nescafe-classic-black-made|Nescafe Classic, black (made)|DR|1|0.1|0.1|0|1 cup (250 ml)=250;1 mug (350 ml)=350|nescafe black instant coffee|L
+instant-coffee-with-milk|Instant coffee with milk|DR|9|0.5|0.6|0.4|1 cup (250 ml)=250;1 mug (350 ml)=350|instant coffee milk|L
+instant-coffee-with-milk-and-sugar|Instant coffee with milk and sugar|DR|15|0.5|2.3|0.4|1 cup (250 ml)=250;1 mug (350 ml)=350|instant coffee milk sugar|L
+cadbury-drinking-chocolate-powder|Cadbury Drinking Chocolate powder|DR|377|6.5|77|5.7|1 serving (25 g)=25;1 heaped tsp (8 g)=8|cadbury hot chocolate cocoa
+nestle-hot-chocolate-powder|Nestle Hot Chocolate powder|DR|405|7|73|9|1 serving (25 g)=25;1 heaped tsp (8 g)=8|nestle hot choc cocoa
+cadbury-hot-chocolate-made-with-full-cream-milk|Cadbury Hot Chocolate made with full-cream milk|DR|93|3.8|11.5|3.5|1 cup (250 ml)=250;1 mug (350 ml)=350|cadbury hot chocolate milk|L
+drink-me-chai-spiced-chai-latte-powder|Drink Me Chai Spiced Chai Latte powder|DR|420|5|77|10|1 serving (25 g)=25;1 heaped tsp (8 g)=8|chai latte powder spiced tea
+nescafe-3-in-1-original-sachet-powder|Nescafe 3-in-1 Original sachet powder|DR|440|3|72|15|1 sachet (18 g)=18;1 sachet (20 g)=20|nescafe three in one coffee sachet
+nescafe-gold-cappuccino-sachet-powder|Nescafe Gold Cappuccino sachet powder|DR|410|11|64|12|1 sachet (18 g)=18;1 sachet (20 g)=20|nescafe gold cappuccino sachet
+nescafe-gold-mocha-sachet-powder|Nescafe Gold Mocha sachet powder|DR|400|8|68|10|1 sachet (18 g)=18;1 sachet (20 g)=20|nescafe gold mocha sachet
+ricoffy-3-in-1-sachet-powder|Ricoffy 3-in-1 sachet powder|DR|430|3.5|73|13|1 sachet (18 g)=18;1 sachet (20 g)=20|ricoffy three in one coffee sachet
+nescafe-3-in-1-made-with-water|Nescafe 3-in-1 made with water|DR|50|0.4|8.1|1.7|1 cup (250 ml)=250;1 mug (350 ml)=350|nescafe three in one coffee made|L
+castle-lager|Castle Lager|AL|42|0.4|3.3|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|castle lager beer|L
+castle-lite|Castle Lite|AL|27|0.4|0.9|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|castle lite light beer|L
+castle-milk-stout|Castle Milk Stout|AL|55|0.4|5|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|castle milk stout beer|L
+carling-black-label|Carling Black Label|AL|46|0.4|3.5|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|black label carling zamalek beer|L
+hansa-pilsener|Hansa Pilsener|AL|38|0.4|3|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|hansa pilsner beer|L
+windhoek-lager|Windhoek Lager|AL|36|0.4|3|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|windhoek lager beer|L
+windhoek-draught|Windhoek Draught|AL|36|0.4|3|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|windhoek draught beer|L
+windhoek-light|Windhoek Light|AL|23|0.4|2|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|windhoek light beer|L
+heineken|Heineken|AL|42|0.4|3.2|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|heineken lager beer|L
+heineken-silver|Heineken Silver|AL|31|0.4|1.9|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|heineken silver light beer|L
+corona-extra|Corona Extra|AL|42|0.4|3.9|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|corona beer|L
+stella-artois|Stella Artois|AL|43|0.4|3.5|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|stella artois lager beer|L
+amstel-lager|Amstel Lager|AL|43|0.4|3.4|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|amstel lager beer|L
+amstel-radler|Amstel Radler|AL|43|0.4|7.5|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|amstel radler lemon beer|L
+lion-lager|Lion Lager|AL|36|0.4|3|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|lion lager beer|L
+guinness-draught|Guinness Draught|AL|37|0.4|3.1|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|guinness stout beer|L
+guinness-foreign-extra-stout|Guinness Foreign Extra Stout|AL|63|0.4|5|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|guinness fes stout beer|L
+miller-genuine-draft|Miller Genuine Draft|AL|40|0.4|3|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|miller mgd beer|L
+peroni-nastro-azzurro|Peroni Nastro Azzurro|AL|43|0.4|3.4|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|peroni lager beer|L
+becks|Beck's|AL|42|0.4|3.1|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|becks lager beer|L
+carlsberg|Carlsberg|AL|42|0.4|3.2|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|carlsberg lager beer|L
+sol|Sol|AL|39|0.4|3.2|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|sol lager beer|L
+castle-lite-lime|Castle Lite Lime|AL|30|0.4|1.5|0|1 bottle (340 ml)=340;1 can (330 ml)=330;1 can (440 ml)=440;1 quart (750 ml)=750|castle lite lime beer|L
+flying-fish-lemon|Flying Fish Lemon|AL|54|0.4|7|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|flying fish flavoured beer lemon|L
+flying-fish-chilli-pineapple|Flying Fish Chilli Pineapple|AL|54|0.4|7|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|flying fish flavoured beer chilli pineapple|L
+flying-fish-orange|Flying Fish Orange|AL|54|0.4|7|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|flying fish flavoured beer orange|L
+castle-free|Castle Free|AL|17|0.3|4|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|castle free non alcoholic beer 0.0|L
+heineken-0-0|Heineken 0.0|AL|20|0.3|4.8|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|heineken zero non alcoholic beer|L
+stella-artois-0-0|Stella Artois 0.0|AL|21|0.3|4.9|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|stella zero non alcoholic beer|L
+guinness-0-0|Guinness 0.0|AL|17|0.3|4|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|guinness zero non alcoholic stout|L
+erdinger-alkoholfrei|Erdinger Alkoholfrei|AL|22|0.3|5.3|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|erdinger non alcoholic beer|L
+becks-blue|Beck's Blue|AL|20|0.3|4.6|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 bottle (500 ml)=500|becks blue non alcoholic beer|L
+savanna-dry|Savanna Dry|AL|56|0|5.8|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|savanna cider dry|L
+savanna-light|Savanna Light|AL|31|0|3|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|savanna light cider|L
+savanna-angry-lemon|Savanna Angry Lemon|AL|60|0|6.8|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|savanna angry lemon cider|L
+hunters-dry|Hunter's Dry|AL|52|0|5.5|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|hunters dry cider|L
+hunters-gold|Hunter's Gold|AL|57|0|8|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|hunters gold cider|L
+hunters-extreme|Hunter's Extreme|AL|56|0|5|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|hunters extreme cider|L
+strongbow-original|Strongbow Original|AL|39|0|3.6|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|strongbow cider|L
+strongbow-gold-apple|Strongbow Gold Apple|AL|45|0|5|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|strongbow gold apple cider|L
+strongbow-red-berries|Strongbow Red Berries|AL|48|0|5.7|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|strongbow red berries cider|L
+brutal-fruit-ruby-apple|Brutal Fruit Ruby Apple|AL|66|0|8.8|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|brutal fruit ruby apple spritzer|L
+brutal-fruit-litchi|Brutal Fruit Litchi|AL|66|0|8.8|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|brutal fruit litchi spritzer|L
+brutal-fruit-strawberry-and-passion-fruit|Brutal Fruit Strawberry and Passion Fruit|AL|66|0|8.8|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|brutal fruit strawberry passion fruit|L
+bernini-classic|Bernini Classic|AL|64|0|8.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|bernini sparkling grape frizzante|L
+bernini-blush|Bernini Blush|AL|64|0|8.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|bernini blush sparkling grape|L
+smirnoff-spin|Smirnoff Spin|AL|66|0|9.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|smirnoff spin vodka premix|L
+smirnoff-storm|Smirnoff Storm|AL|71|0|8|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|smirnoff storm vodka premix|L
+smirnoff-ice|Smirnoff Ice|AL|69|0|11|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|smirnoff ice vodka premix|L
+redds-original|Redd's Original|AL|59|0|8.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|redds apple flavoured malt|L
+redds-dry|Redd's Dry|AL|56|0|6.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|redds dry flavoured malt|L
+belgravia-gin-and-tonic|Belgravia Gin and Tonic|AL|60|0|8|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|belgravia gin tonic premix|L
+belgravia-pink-gin-and-tonic|Belgravia Pink Gin and Tonic|AL|62|0|8.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|belgravia pink gin tonic premix|L
+gordons-gin-and-tonic|Gordon's Gin and Tonic|AL|56|0|7|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|gordons gin tonic premix|L
+esprit|Esprit|AL|61|0|7|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|esprit premix spritzer|L
+klipdrift-and-cola|Klipdrift and Cola|AL|66|0|9.5|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|klipdrift klippies cola premix|L
+jack-daniels-and-cola|Jack Daniel's and Cola|AL|67|0|9.9|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|jack daniels jd cola premix|L
+captain-morgan-and-cola|Captain Morgan and Cola|AL|67|0|9.8|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|captain morgan cola premix|L
+bacardi-breezer-watermelon|Bacardi Breezer Watermelon|AL|52|0|7.6|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|bacardi breezer watermelon|L
+bacardi-breezer-pineapple|Bacardi Breezer Pineapple|AL|52|0|7.6|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|bacardi breezer pineapple|L
+bacardi-breezer-orange|Bacardi Breezer Orange|AL|52|0|7.6|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|bacardi breezer orange|L
+bacardi-breezer-lime|Bacardi Breezer Lime|AL|52|0|7.6|0|1 bottle (275 ml)=275;1 can (330 ml)=330;1 can (440 ml)=440|bacardi breezer lime|L
+savanna-zero|Savanna Zero|AL|21|0|5.2|0|1 bottle (330 ml)=330;1 can (440 ml)=440;1 can (500 ml)=500|savanna non alcoholic cider zero|L
+klipdrift-export-brandy|Klipdrift Export Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|klipdrift klippies brandy|L
+klipdrift-premium-brandy|Klipdrift Premium Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|klipdrift premium brandy|L
+richelieu-brandy|Richelieu Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|richelieu brandy|L
+viceroy-brandy|Viceroy Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|viceroy brandy|L
+kwv-3-year-brandy|KWV 3 Year Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|kwv brandy|L
+olof-bergh-brandy|Olof Bergh Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|olof bergh brandy|L
+commando-brandy|Commando Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|commando brandy|L
+mellow-wood-brandy|Mellow-Wood Brandy|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|mellow wood brandy|L
+hennessy-vs-cognac|Hennessy VS Cognac|AL|221|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|hennessy cognac|L
+jameson-irish-whiskey|Jameson Irish Whiskey|AL|221|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|jameson whiskey|L
+johnnie-walker-red-label|Johnnie Walker Red Label|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|johnnie walker red whisky|L
+johnnie-walker-black-label|Johnnie Walker Black Label|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|johnnie walker black whisky|L
+jack-daniels-old-no-7|Jack Daniel's Old No. 7|AL|221|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|jack daniels tennessee whiskey|L
+j-b-rare-whisky|J&B Rare Whisky|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|jb whisky|L
+bells-whisky|Bell's Whisky|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|bells whisky|L
+three-ships-whisky|Three Ships Whisky|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|three ships whisky|L
+grants-whisky|Grant's Whisky|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|grants whisky|L
+chivas-regal-12|Chivas Regal 12|AL|221|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|chivas whisky|L
+glenfiddich-12|Glenfiddich 12|AL|221|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|glenfiddich single malt whisky|L
+smirnoff-1818-vodka|Smirnoff 1818 Vodka|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|smirnoff vodka|L
+absolut-vodka|Absolut Vodka|AL|221|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|absolut vodka|L
+count-pushkin-vodka|Count Pushkin Vodka|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|count pushkin vodka|L
+gordons-london-dry-gin|Gordon's London Dry Gin|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|gordons gin|L
+gordons-pink-gin|Gordon's Pink Gin|AL|215|0|2|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|gordons pink gin|L
+tanqueray-gin|Tanqueray Gin|AL|238|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|tanqueray gin|L
+belgravia-gin|Belgravia Gin|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|belgravia gin|L
+inverroche-gin|Inverroche Gin|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|inverroche fynbos gin|L
+old-buck-gin|Old Buck Gin|AL|237|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|old buck gin|L
+captain-morgan-original-spiced-gold|Captain Morgan Original Spiced Gold|AL|201|0|2|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|captain morgan spiced rum|L
+bacardi-carta-blanca|Bacardi Carta Blanca|AL|207|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|bacardi white rum|L
+jose-cuervo-especial-tequila|Jose Cuervo Especial Tequila|AL|210|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|jose cuervo tequila|L
+olmeca-blanco-tequila|Olmeca Blanco Tequila|AL|210|0|0|0|1 tot (25 ml)=25;1 double tot (50 ml)=50;1 bottle (750 ml)=750|olmeca tequila|L
+jagermeister|Jagermeister|AL|248|0|13.7|0|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|jagermeister jager herbal liqueur|L
+southern-comfort|Southern Comfort|AL|241|0|12|0|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|southern comfort liqueur|L
+malibu|Malibu|AL|204|0|22|0|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|malibu coconut rum liqueur|L
+kahlua|Kahlua|AL|286|0|44|0|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|kahlua coffee liqueur|L
+baileys-original-irish-cream|Baileys Original Irish Cream|AL|323|3|25|13|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|baileys cream liqueur|L
+amarula-cream|Amarula Cream|AL|292|1|25|10.5|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|amarula marula cream liqueur|L
+cape-velvet-cream|Cape Velvet Cream|AL|295|1.5|24|11|1 tot (25 ml)=25;1 serving (50 ml)=50;1 bottle (750 ml)=750|cape velvet cream liqueur|L
+autumn-harvest-crackling|Autumn Harvest Crackling|AL|79|0|4.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|autumn harvest crackling semi sweet wine|L
+autumn-harvest-crackling-rose|Autumn Harvest Crackling Rose|AL|79|0|4.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|autumn harvest crackling rose wine|L
+4th-street-natural-sweet-red|4th Street Natural Sweet Red|AL|69|0|7|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|4th street fourth street sweet red wine|L
+4th-street-natural-sweet-rose|4th Street Natural Sweet Rose|AL|69|0|7|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|4th street fourth street sweet rose wine|L
+4th-street-natural-sweet-white|4th Street Natural Sweet White|AL|69|0|7|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|4th street fourth street sweet white wine|L
+four-cousins-natural-sweet-red|Four Cousins Natural Sweet Red|AL|69|0|7|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|four cousins sweet red wine|L
+four-cousins-natural-sweet-rose|Four Cousins Natural Sweet Rose|AL|69|0|7|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|four cousins sweet rose wine|L
+robertson-natural-sweet-rose|Robertson Natural Sweet Rose|AL|69|0|7|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|robertson sweet rose wine|L
+overmeer-stein|Overmeer Stein|AL|71|0|2.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|overmeer semi sweet stein box wine|L
+overmeer-selected-red|Overmeer Selected Red|AL|68|0|0.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|overmeer dry red box wine|L
+drostdy-hof-premier-grand-cru|Drostdy-Hof Premier Grand Cru|AL|67|0|0.3|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|drostdy hof dry white wine|L
+graca|Graca|AL|65|0|2.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|graca semi sweet white wine|L
+tassenberg|Tassenberg|AL|71|0|0.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|tassies tassenberg dry red wine|L
+jc-le-roux-le-domaine|JC Le Roux Le Domaine|AL|73|0|8|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|jc le roux sweet sparkling wine|L
+jc-le-roux-la-fleurette|JC Le Roux La Fleurette|AL|73|0|8|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|jc le roux rose sparkling wine|L
+wine-red-pinotage|Wine, red, Pinotage|AL|80|0|0.6|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|pinotage red wine|L
+wine-red-shiraz|Wine, red, Shiraz|AL|80|0|0.6|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|shiraz red wine|L
+wine-white-colombard|Wine, white, Colombard|AL|69|0|0.8|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|colombar colombard white wine|L
+wine-semi-sweet-white|Wine, semi-sweet white|AL|72|0|2.8|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|semi sweet white wine stein|L
+wine-cap-classique-mcc-brut|Wine, Cap Classique (MCC) brut|AL|71|0|1.2|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|mcc methode cap classique sparkling brut|L
+prosecco|Prosecco|AL|67|0|1.5|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|prosecco sparkling wine|L
+champagne-brut|Champagne, brut|AL|71|0|1.2|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|champagne brut sparkling|L
+wine-spritzer-wine-and-soda|Wine spritzer (wine and soda)|AL|37|0|1|0|1 glass (150 ml)=150;1 bottle (750 ml)=750;1 box (5 L)=5000|wine spritzer soda|L
+old-brown-sherry|Old Brown Sherry|AL|154|0|15|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|old brown sherry obs|L
+sherry-medium-cream|Sherry, medium cream|AL|142|0|12|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|cream sherry|L
+sherry-dry-fino|Sherry, dry (fino)|AL|89|0|1.5|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|dry sherry fino|L
+cape-ruby-port|Cape Ruby Port|AL|153|0|12|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|ruby port cape|L
+cape-tawny-port|Cape Tawny Port|AL|149|0|11|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|tawny port cape|L
+hanepoot-jerepigo|Hanepoot Jerepigo|AL|174|0|20|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|hanepoot jerepigo sweet fortified wine|L
+red-muscadel|Red Muscadel|AL|174|0|20|0|1 small glass (60 ml)=60;1 glass (100 ml)=100;1 bottle (750 ml)=750|muscadel sweet fortified wine|L
+cadbury-dairy-milk|Cadbury Dairy Milk|SN|534|7.3|57|30|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150;1 small bar (35 g)=35|chocolate slab milk chocolate choc cdm
+cadbury-dairy-milk-top-deck|Cadbury Dairy Milk Top Deck|SN|540|6.5|58|31|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|topdeck chocolate slab white milk choc
+cadbury-dairy-milk-whole-nut|Cadbury Dairy Milk Whole Nut|SN|550|8.5|50|35|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|wholenut hazelnut chocolate slab nuts
+cadbury-dairy-milk-fruit-nut|Cadbury Dairy Milk Fruit & Nut|SN|500|7.5|56|27|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|fruit and nut raisin chocolate slab
+cadbury-dairy-milk-mint-crisp|Cadbury Dairy Milk Mint Crisp|SN|520|5.5|61|28|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|mint crisp peppermint chocolate slab
+cadbury-dairy-milk-caramel|Cadbury Dairy Milk Caramel|SN|485|5.2|62|24|1 block=7;1 row (4 blocks)=28;1 slab (80 g)=80;1 slab (150 g)=150|caramello caramel chocolate slab
+cadbury-dairy-milk-oreo|Cadbury Dairy Milk Oreo|SN|555|6.2|56|34|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|oreo cookies cream chocolate slab
+cadbury-dairy-milk-bubbly|Cadbury Dairy Milk Bubbly|SN|535|7|57|30.5|1 block=5;1 row=20;1 bar (40 g)=40;1 slab (87 g)=87;1 slab (140 g)=140|bubbly aerated chocolate slab
+cadbury-dairy-milk-bubbly-mint|Cadbury Dairy Milk Bubbly Mint|SN|535|6.5|58|30|1 block=5;1 row=20;1 bar (40 g)=40;1 slab (87 g)=87|bubbly mint aerated chocolate
+cadbury-dairy-milk-hazelnut|Cadbury Dairy Milk Hazelnut|SN|545|8|53|33|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|chopped hazelnut chocolate slab
+cadbury-dairy-milk-coconut|Cadbury Dairy Milk Coconut|SN|540|6|56|32.5|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|coconut chocolate slab
+cadbury-dairy-milk-black-forest|Cadbury Dairy Milk Black Forest|SN|510|6|60|27|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|black forest cherry chocolate slab
+cadbury-dairy-milk-turkish|Cadbury Dairy Milk Turkish|SN|460|5|66|20|1 block=7;1 row (4 blocks)=28;1 slab (80 g)=80;1 slab (150 g)=150|turkish delight chocolate slab rose
+cadbury-dairy-milk-lunch-bar-slab|Cadbury Dairy Milk Lunch Bar Slab|SN|505|7.5|56|28|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|lunchbar slab peanut wafer chocolate
+cadbury-dairy-milk-buttons|Cadbury Dairy Milk Buttons|SN|530|7.6|57|30|1 button=1.5;1 bag (30 g)=30;1 share bag (75 g)=75|buttons chocolate kids
+cadbury-lunch-bar|Cadbury Lunch Bar|SN|487|6.3|60|24.5|1 bar (48 g)=48;1 large bar (62 g)=62;1 mini bar (24 g)=24|chocolate bar peanut wafer caramel
+cadbury-lunch-bar-dream|Cadbury Lunch Bar Dream|SN|495|6|61|25|1 bar (48 g)=48|lunch bar white chocolate peanut wafer
+cadbury-ps|Cadbury PS|SN|505|5.5|62|26|1 bar (48 g)=48|ps bar chocolate caramel biscuit
+cadbury-tempo|Cadbury Tempo|SN|480|5|63|23.5|1 bar (48 g)=48|tempo chocolate bar caramel wafer peanut
+cadbury-chomp|Cadbury Chomp|SN|470|3.5|70|20|1 bar (23 g)=23;1 large bar (49 g)=49|chomp chocolate caramel bar
+cadbury-crunchie|Cadbury Crunchie|SN|465|4|72|18|1 bar (40 g)=40;1 king size (60 g)=60|crunchie honeycomb chocolate bar
+cadbury-flake|Cadbury Flake|SN|530|7.7|56|30.7|1 bar (32 g)=32;1 flake 99 (10 g)=10|flake crumbly chocolate
+cadbury-astros|Cadbury Astros|SN|470|5|70|19|1 box (40 g)=40;1 share bag (150 g)=150;10 pieces=10|astros chocolate candy coated sweets
+cadbury-5-star|Cadbury 5 Star|SN|460|4|72|18|1 bar (40 g)=40|five star caramel nougat chocolate bar
+cadbury-picnic|Cadbury Picnic|SN|495|7.5|58|26|1 bar (46 g)=46|picnic peanut raisin caramel chocolate bar
+cadbury-boost|Cadbury Boost|SN|515|5.5|62|27.5|1 bar (49 g)=49|boost caramel biscuit chocolate bar
+cadbury-dream-white-chocolate|Cadbury Dream White Chocolate|SN|555|6.5|57|33.5|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|dream white chocolate slab
+cadbury-dream-bubbly|Cadbury Dream Bubbly|SN|550|6|58|32.5|1 block=5;1 row=20;1 slab (87 g)=87|white bubbly aerated chocolate
+cadbury-eclairs|Cadbury Eclairs|SN|450|3|70|17.5|1 sweet (8 g)=8;1 bag (100 g)=100|eclairs caramel toffee chocolate centre sweets
+cadbury-whispers|Cadbury Whispers|SN|510|7|60|27|1 bag (40 g)=40;1 share bag (150 g)=150;10 pieces=12|whispers malt chocolate balls
+cadbury-creme-egg|Cadbury Creme Egg|SN|440|3.2|71|16|1 egg (40 g)=40;1 mini egg (12 g)=12|creme egg easter fondant chocolate
+cadbury-mini-eggs|Cadbury Mini Eggs|SN|495|4.6|66|23|1 egg=3.5;1 bag (80 g)=80|mini eggs easter candy shell chocolate
+cadbury-roses|Cadbury Roses|SN|490|4.2|63|24.5|1 sweet=8.5;1 box (250 g)=250|roses assorted chocolates box
+cadbury-dairy-milk-hollow-easter-egg|Cadbury Dairy Milk Hollow Easter Egg|SN|534|7.3|57|30|1 small egg (72 g)=72;1 medium egg (130 g)=130;1 row (4 blocks)=24|easter egg chocolate hollow
+cadbury-dairy-milk-marshmallow-egg|Cadbury Dairy Milk Marshmallow Egg|SN|430|4|66|16.5|1 egg (35 g)=35|marshmallow egg easter chocolate mallow
+cadbury-brazil-nut-bar|Cadbury Brazil Nut Bar|SN|545|8.5|51|34|1 bar (45 g)=45|brazil nut chocolate bar
+cadbury-dairy-milk-caramello-bites|Cadbury Dairy Milk Caramello Bites|SN|480|5|62|23.5|1 piece=5;1 bag (75 g)=75|caramel bites chocolate
+cadbury-top-deck-bar|Cadbury Top Deck Bar|SN|540|6.5|58|31|1 bar (40 g)=40|topdeck bar white milk chocolate
+cadbury-dairy-milk-bar|Cadbury Dairy Milk Bar|SN|534|7.3|57|30|1 bar (45 g)=45|dairy milk bar chocolate
+nestle-bar-one|Nestle Bar One|SN|460|4.5|67|19.5|1 bar (55 g)=55;1 mini bar (22 g)=22;1 king size (80 g)=80|bar-one barone chocolate bar nougat caramel
+nestle-kitkat-4-finger|Nestle KitKat 4 Finger|SN|518|6.5|60|27|1 bar (41.5 g)=41.5;1 finger=10.4|kit kat kitkat wafer chocolate
+nestle-kitkat-2-finger|Nestle KitKat 2 Finger|SN|518|6.5|60|27|1 bar (20.7 g)=20.7;1 finger=10.4|kit kat kitkat wafer chocolate small
+nestle-kitkat-chunky|Nestle KitKat Chunky|SN|520|5.8|60|28.5|1 bar (40 g)=40;1 king size (64 g)=64|kit kat chunky wafer chocolate
+nestle-kitkat-chunky-peanut-butter|Nestle KitKat Chunky Peanut Butter|SN|535|8|52|32|1 bar (42 g)=42|kit kat chunky peanut butter wafer
+nestle-kitkat-chunky-white|Nestle KitKat Chunky White|SN|540|6.5|60|30.5|1 bar (40 g)=40|kit kat white chocolate wafer
+nestle-kitkat-gold|Nestle KitKat Gold|SN|525|5.5|63|28|1 bar (41.5 g)=41.5;1 finger=10.4|kit kat gold caramel blond chocolate wafer
+nestle-kitkat-dark|Nestle KitKat Dark|SN|515|6.5|57|28.5|1 bar (41.5 g)=41.5;1 finger=10.4|kit kat dark chocolate wafer
+nestle-kitkat-slab|Nestle KitKat Slab|SN|525|6.5|59|29|1 block=10;1 slab (112 g)=112|kit kat slab wafer chocolate
+nestle-aero|Nestle Aero|SN|540|6.5|57|31.5|1 bar (40 g)=40;1 block=6;1 slab (85 g)=85|aero bubbly aerated chocolate
+nestle-aero-peppermint|Nestle Aero Peppermint|SN|540|5.8|58|31|1 bar (40 g)=40;1 block=6;1 slab (85 g)=85|aero mint peppermint aerated chocolate
+nestle-peppermint-crisp|Nestle Peppermint Crisp|SN|495|4.5|64|24.5|1 bar (49 g)=49;1 small bar (35 g)=35|peppermint crisp mint chocolate bar tart
+nestle-smarties|Nestle Smarties|SN|470|4.5|70|18.5|1 box (40 g)=40;1 share bag (150 g)=150;10 smarties=9|smarties candy coated chocolate sweets
+nestle-tex|Nestle Tex|SN|525|6.5|60|28.5|1 bar (40 g)=40|tex wafer chocolate bar
+nestle-tex-white|Nestle Tex White|SN|540|6.5|60|30.5|1 bar (40 g)=40|tex white chocolate wafer bar
+nestle-milkybar|Nestle Milkybar|SN|545|7.5|57|32|1 block=6;1 slab (80 g)=80;1 slab (150 g)=150;1 small bar (20 g)=20|milky bar white chocolate kids
+nestle-milkybar-buttons|Nestle Milkybar Buttons|SN|545|7.5|57|32|1 bag (30 g)=30|milky bar white chocolate buttons
+nestle-lion-bar|Nestle Lion Bar|SN|480|5.1|66|21|1 bar (42 g)=42;1 king size (60 g)=60|lion lions bar caramel wafer cereal chocolate
+nestle-quality-street|Nestle Quality Street|SN|480|4.5|64|22.5|1 sweet=8.5;1 tin (250 g)=250;1 box (500 g)=500|quality street assorted chocolates toffee tin
+nestle-munchies|Nestle Munchies|SN|475|4.5|66|21.5|1 roll (52 g)=52;1 sweet=5|munchies caramel biscuit chocolate
+beacon-mmmmallows|Beacon Mmmmallows|SN|430|4|65|17|1 mallow (25 g)=25;1 pack of 6 (150 g)=150|mmmallows mallows marshmallow biscuit chocolate beacon
+beacon-mallow-eggs|Beacon Mallow Eggs|SN|410|3|66|15|1 egg (18 g)=18;1 tray of 6 (108 g)=108|mallow eggs marshmallow easter chocolate beacon
+mars-bar|Mars Bar|SN|449|4.2|70|17|1 bar (51 g)=51;1 king size (84 g)=84;1 fun size (18 g)=18|mars chocolate caramel nougat bar
+bounty-milk-chocolate|Bounty Milk Chocolate|SN|487|3.7|58|26|1 bar (57 g)=57;1 piece (28.5 g)=28.5|bounty coconut chocolate bar
+bounty-dark-chocolate|Bounty Dark Chocolate|SN|490|3.4|55|28|1 bar (57 g)=57;1 piece (28.5 g)=28.5|bounty dark coconut chocolate
+maltesers|Maltesers|SN|505|8|61|24.5|1 bag (37 g)=37;1 share bag (120 g)=120;10 maltesers=20|maltesers malt chocolate balls honeycomb
+galaxy-smooth-milk|Galaxy Smooth Milk|SN|546|6.4|56|32.4|1 bar (42 g)=42;1 block=6;1 slab (110 g)=110|galaxy milk chocolate slab
+galaxy-caramel|Galaxy Caramel|SN|485|4.6|60|25|1 bar (48 g)=48;1 slab (135 g)=135|galaxy caramel chocolate
+twix-twin-bar-sa-uk|Twix Twin Bar (SA/UK)|SN|495|4.5|64|24|1 twin pack (50 g)=50;1 finger (25 g)=25;1 king size (75 g)=75|twix caramel biscuit chocolate bar
+snickers-king-size|Snickers King Size|SN|488|8.6|59|24|1 king size (80 g)=80;1 bar (50 g)=50;1 fun size (18 g)=18|snickers peanut caramel nougat chocolate
+maltesers-teasers|Maltesers Teasers|SN|540|7|57|31.5|1 bar (35 g)=35|teasers malt chocolate bar maltesers
+kinder-bueno|Kinder Bueno|SN|572|8.6|50|37.3|1 pack of 2 (43 g)=43;1 bar (21.5 g)=21.5|kinder bueno hazelnut wafer chocolate
+kinder-bueno-white|Kinder Bueno White|SN|571|8.8|49|37|1 pack of 2 (39 g)=39;1 bar (19.5 g)=19.5|kinder bueno white chocolate hazelnut wafer
+kinder-joy|Kinder Joy|SN|559|8.2|51|36|1 egg (20 g)=20|kinder joy egg toy chocolate cream wafer
+kinder-surprise|Kinder Surprise|SN|562|8.7|53|34.8|1 egg (20 g)=20|kinder surprise egg chocolate toy
+kinder-chocolate|Kinder Chocolate|SN|566|8.7|53|35|1 bar (12.5 g)=12.5;1 pack of 4 (50 g)=50;1 pack of 8 (100 g)=100|kinder chocolate bar kids milk
+kinder-maxi|Kinder Maxi|SN|566|8.7|53|35|1 bar (21 g)=21|kinder maxi chocolate bar
+kinder-country|Kinder Country|SN|561|9|49|36|1 bar (23.5 g)=23.5|kinder country cereal chocolate
+kinder-delice|Kinder Delice|SN|468|6.5|53|25.5|1 cake (39 g)=39|kinder delice cake chocolate
+kinder-happy-hippo|Kinder Happy Hippo|SN|566|8|55|34.5|1 hippo (20.7 g)=20.7|kinder happy hippo wafer hazelnut
+ferrero-rocher|Ferrero Rocher|SN|603|8.2|44|42.7|1 chocolate (12.5 g)=12.5;1 pack of 3 (37.5 g)=37.5;1 box of 16 (200 g)=200|ferrero rocher hazelnut chocolate praline
+ferrero-raffaello|Ferrero Raffaello|SN|628|7.2|36|50|1 piece (10 g)=10;1 box of 15 (150 g)=150|raffaello coconut almond white
+ferrero-mon-cheri|Ferrero Mon Cheri|SN|455|3.5|50|22|1 piece (10.5 g)=10.5|mon cheri cherry liqueur chocolate
+ferrero-collection|Ferrero Collection|SN|590|7.5|45|41|1 piece=11;1 box of 15 (172 g)=172|ferrero collection rondnoir chocolates
+lindt-lindor-milk|Lindt Lindor Milk|SN|630|4.9|43|48|1 ball (12.5 g)=12.5;1 bag (200 g)=200;1 bar (38 g)=38|lindor truffle milk chocolate lindt
+lindt-lindor-dark-60|Lindt Lindor Dark 60%|SN|625|5|38|49|1 ball (12.5 g)=12.5;1 bag (200 g)=200|lindor dark truffle lindt
+lindt-lindor-white|Lindt Lindor White|SN|640|4.5|45|49|1 ball (12.5 g)=12.5|lindor white truffle lindt
+lindt-lindor-salted-caramel|Lindt Lindor Salted Caramel|SN|625|4.5|45|47|1 ball (12.5 g)=12.5|lindor salted caramel truffle lindt
+lindt-excellence-70-cocoa|Lindt Excellence 70% Cocoa|SN|566|9.5|34|41|1 square (10 g)=10;1 slab (100 g)=100|lindt excellence dark chocolate 70
+lindt-excellence-85-cocoa|Lindt Excellence 85% Cocoa|SN|584|12.5|19|46|1 square (10 g)=10;1 slab (100 g)=100|lindt excellence dark chocolate 85
+lindt-excellence-90-cocoa|Lindt Excellence 90% Cocoa|SN|592|10|14|55|1 square (10 g)=10;1 slab (100 g)=100|lindt excellence dark chocolate 90
+lindt-excellence-78-cocoa|Lindt Excellence 78% Cocoa|SN|575|11|24|45|1 square (10 g)=10;1 slab (100 g)=100|lindt excellence dark chocolate 78
+lindt-excellence-sea-salt|Lindt Excellence Sea Salt|SN|570|7|38|42|1 square (10 g)=10;1 slab (100 g)=100|lindt excellence dark sea salt
+lindt-excellence-orange-intense|Lindt Excellence Orange Intense|SN|540|6.5|43|37|1 square (10 g)=10;1 slab (100 g)=100|lindt dark orange
+lindt-swiss-classic-milk|Lindt Swiss Classic Milk|SN|545|6.3|55|32|1 square (10 g)=10;1 slab (100 g)=100|lindt milk chocolate slab
+lindt-gold-bunny|Lindt Gold Bunny|SN|550|7.5|56|32|1 bunny (100 g)=100;1 mini bunny (10 g)=10|lindt easter bunny milk chocolate
+toblerone-dark|Toblerone Dark|SN|515|5|60|28|1 triangle=8;1 bar (100 g)=100;1 bar (35 g)=35|toblerone dark chocolate honey almond nougat
+toblerone-white|Toblerone White|SN|540|6|60|30|1 triangle=8;1 bar (100 g)=100;1 bar (35 g)=35|toblerone white chocolate honey almond nougat
+hersheys-milk-chocolate-bar|Hershey's Milk Chocolate Bar|SN|535|7.6|59|30|1 bar (43 g)=43;1 block=3.6|hersheys milk chocolate bar
+hersheys-kisses|Hershey's Kisses|SN|510|7|62|28|1 kiss (4.5 g)=4.5;9 kisses=41|hersheys kisses milk chocolate
+hersheys-cookies-n-creme|Hershey's Cookies 'n' Creme|SN|530|7|60|28|1 bar (43 g)=43|hersheys cookies and cream white chocolate
+milka-alpine-milk|Milka Alpine Milk|SN|530|6.3|59|29|1 block=4;1 row=20;1 slab (100 g)=100|milka milk chocolate slab
+milka-oreo|Milka Oreo|SN|545|6|57|32|1 row=20;1 slab (100 g)=100|milka oreo chocolate
+milka-whole-hazelnuts|Milka Whole Hazelnuts|SN|545|8|49|34|1 row=20;1 slab (100 g)=100|milka hazelnut chocolate
+ritter-sport-milk-chocolate|Ritter Sport Milk Chocolate|SN|545|8|53|33|1 square (6 g)=6;1 slab (100 g)=100|ritter sport milk chocolate
+ritter-sport-whole-hazelnuts|Ritter Sport Whole Hazelnuts|SN|570|9|44|39|1 square=6;1 slab (100 g)=100|ritter sport hazelnut chocolate
+ritter-sport-marzipan|Ritter Sport Marzipan|SN|495|6.5|50|29|1 square=6;1 slab (100 g)=100|ritter sport marzipan dark chocolate
+guylian-seashells|Guylian Seashells|SN|550|7|49|35.5|1 shell (11 g)=11;1 box (250 g)=250|guylian seashells praline belgian chocolates
+terrys-chocolate-orange|Terry's Chocolate Orange|SN|530|7.3|57|29.5|1 segment (8.7 g)=8.7;1 ball (157 g)=157|terrys chocolate orange
+celebrations|Celebrations|SN|500|6|60|26|1 sweet=8.6;1 box (240 g)=240|celebrations assorted chocolates mars
+cadbury-heroes|Cadbury Heroes|SN|495|5.5|62|25|1 sweet=9;1 tub (290 g)=290|heroes assorted chocolates tub
+dove-galaxy-promises|Dove Galaxy Promises|SN|550|6.5|55|33|1 piece (6 g)=6|galaxy promises chocolate
+beacon-chocolate-coated-peanuts|Beacon Chocolate Coated Peanuts|SN|530|14|44|33|1 handful (25 g)=25;1 bag (100 g)=100|choc peanuts chocolate coated nuts
+hollow-milk-chocolate-easter-egg|Hollow Milk Chocolate Easter Egg|SN|534|7|58|30|1 small egg (30 g)=30;1 medium egg (100 g)=100|easter egg generic milk chocolate
+chocolate-advent-calendar-chocolate|Chocolate Advent Calendar Chocolate|SN|530|6.5|58|30|1 piece (4 g)=4|advent christmas chocolate
+beacon-jelly-tots|Beacon Jelly Tots|SN|350|0.1|86|0|1 box (40 g)=40;1 bag (100 g)=100;1 bag (125 g)=125;10 jelly tots=8|jelly tots sweets gummies jellies
+beacon-sour-jelly-tots|Beacon Sour Jelly Tots|SN|345|0.1|85|0|1 box (40 g)=40;1 bag (100 g)=100|sour jelly tots sweets
+beacon-wine-gums|Beacon Wine Gums|SN|330|5|77|0|1 bag (75 g)=75;1 sweet=4.5;1 bag (150 g)=150|winegums wine gums sweets
+beacon-fizzers|Beacon Fizzers|SN|370|0.3|85|2.8|1 fizzer (9 g)=9;1 pack of 10 (90 g)=90|fizzers chews sweets candy stick
+beacon-sparkles|Beacon Sparkles|SN|392|0|97|0.5|1 sweet (5 g)=5;1 bag (125 g)=125|sparkles hard boiled sweets
+beacon-super-c|Beacon Super C|SN|390|0|96|0.5|1 sweet (3.5 g)=3.5;1 roll (35 g)=35|super c vitamin c sweets roll
+beacon-liquorice-allsorts|Beacon Liquorice Allsorts|SN|360|3|78|4|1 sweet (8 g)=8;1 bag (125 g)=125|allsorts liquorice licorice sweets
+beacon-jelly-babies|Beacon Jelly Babies|SN|340|4|80|0|1 jelly baby (6 g)=6;1 bag (125 g)=125|jelly babies sweets
+beacon-sour-worms|Beacon Sour Worms|SN|330|4|78|0|1 worm (5 g)=5;1 bag (125 g)=125|sour worms gummy sweets
+beacon-nutty-wafers|Beacon Nutty Wafers|SN|520|9|55|29|1 wafer (20 g)=20;1 pack (100 g)=100|nutty wafers peanut chocolate wafer
+manhattan-marshmallows|Manhattan Marshmallows|SN|330|3.5|78|0.2|1 marshmallow (7 g)=7;1 bag (150 g)=150|marshmallows pink white mallows
+manhattan-mini-marshmallows|Manhattan Mini Marshmallows|SN|330|3.5|78|0.2|10 minis=5;1 bag (150 g)=150|mini marshmallows hot chocolate
+chappies-bubblegum|Chappies Bubblegum|SN|348|0|86|0.5|1 chappie (4 g)=4;1 pack of 5=20|chappies bubble gum chewing gum
+chappies-sour|Chappies Sour|SN|345|0|86|0.3|1 chappie (4 g)=4|chappies sour bubble gum
+stimorol-sugar-free-gum|Stimorol Sugar Free Gum|SN|160|0|50|0|1 piece (1.4 g)=1.4;1 pack (14 g)=14|stimorol chewing gum sugar free
+airwaves-menthol-eucalyptus-gum|Airwaves Menthol & Eucalyptus Gum|SN|160|0|50|0|1 piece (1.4 g)=1.4;1 pack (14 g)=14|airwaves chewing gum sugar free
+orbit-sugar-free-gum|Orbit Sugar Free Gum|SN|160|0|50|0|1 piece (1.4 g)=1.4;1 pack (14 g)=14|orbit chewing gum sugar free
+hubba-bubba-bubble-gum|Hubba Bubba Bubble Gum|SN|300|0|74|0.5|1 piece (5 g)=5|hubba bubba bubblegum
+mentos-mint|Mentos Mint|SN|390|0|92|2.5|1 mento (2.7 g)=2.7;1 roll (38 g)=38|mentos mint chewy sweets
+mentos-fruit|Mentos Fruit|SN|385|0|91|2.3|1 mento (2.7 g)=2.7;1 roll (38 g)=38|mentos fruit chewy sweets
+mentos-rainbow|Mentos Rainbow|SN|385|0|91|2.3|1 mento (2.7 g)=2.7;1 roll (38 g)=38|mentos rainbow chewy sweets
+halls-original|Halls Original|SN|390|0|97|0|1 lozenge (3.5 g)=3.5;1 roll (33.5 g)=33.5|halls menthol lozenge sweets
+halls-mentho-lyptus|Halls Mentho-Lyptus|SN|390|0|97|0|1 lozenge (3.5 g)=3.5;1 roll (33.5 g)=33.5|halls mentholyptus cherry lozenge
+maynards-wine-gums|Maynards Wine Gums|SN|320|5|75|0.2|1 sweet=4.5;1 bag (75 g)=75;1 bag (125 g)=125|maynards winegums sweets
+maynards-jelly-babies|Maynards Jelly Babies|SN|335|4.5|79|0|1 jelly baby (6 g)=6;1 bag (125 g)=125|maynards jelly babies
+maynards-sour-worms|Maynards Sour Worms|SN|330|4|78|0|1 worm (5 g)=5;1 bag (125 g)=125|maynards sour worms gummy
+bassetts-liquorice-allsorts|Bassett's Liquorice Allsorts|SN|375|3.5|79|5|1 sweet (8 g)=8;1 bag (190 g)=190|bassetts allsorts liquorice
+black-liquorice-strip|Black Liquorice Strip|SN|336|3|80|0.5|1 strip (10 g)=10;1 stick (20 g)=20|liquorice licorice black
+sally-williams-honey-nougat|Sally Williams Honey Nougat|SN|430|6|63|17|1 bar (25 g)=25;1 bar (50 g)=50|sally williams nougat honey almond
+sally-williams-chocolate-nougat|Sally Williams Chocolate Nougat|SN|460|6.5|60|22|1 bar (25 g)=25;1 bar (50 g)=50|sally williams chocolate nougat
+soft-nougat-sa-style|Soft Nougat (SA style)|SN|400|4|72|10.5|1 piece (20 g)=20|nougat soft sweets
+condensed-milk-fudge-sa-homemade|Condensed Milk Fudge (SA homemade)|SN|410|2.5|75|11|1 square (20 g)=20|fudge condensed milk vanilla sweet
+mint-imperials|Mint Imperials|SN|395|0|98|0.3|1 mint (3 g)=3;1 roll (36 g)=36|mint imperials peppermints
+polo-mints|Polo Mints|SN|400|0|98|1|1 mint (2.3 g)=2.3;1 roll (34 g)=34|polo mints peppermint
+wilsons-xxx-mints|Wilson's XXX Mints|SN|390|0|97|0.3|1 mint (3 g)=3;1 roll (32 g)=32|wilsons xxx mints peppermint
+wilsons-toffees|Wilson's Toffees|SN|430|2|75|14|1 toffee (7 g)=7;1 bag (100 g)=100|wilsons toffee chewy caramel
+mister-sweet-toffees|Mister Sweet Toffees|SN|420|1.5|78|11.5|1 toffee (6 g)=6;1 bag (100 g)=100|mister sweet toffee chew
+werthers-original|Werther's Original|SN|426|0.1|85|9.2|1 sweet (5 g)=5;1 bag (80 g)=80|werthers butter candy caramel
+fishermans-friend-original|Fisherman's Friend Original|SN|380|0|95|0|1 lozenge (1 g)=1;1 pack (25 g)=25|fishermans friend lozenge
+candy-floss|Candy Floss|SN|392|0|98|0|1 stick (30 g)=30;1 tub (50 g)=50|candy floss cotton candy spun sugar
+tic-tac-fresh-mint|Tic Tac Fresh Mint|SN|390|0|97|0.4|1 tic tac (0.5 g)=0.5;1 box (16 g)=16;1 large box (49 g)=49|tic tac mints
+tic-tac-orange|Tic Tac Orange|SN|390|0|97|0.4|1 tic tac (0.5 g)=0.5;1 box (16 g)=16|tic tac orange mints
+tic-tac-strawberry|Tic Tac Strawberry|SN|390|0|97|0.4|1 tic tac (0.5 g)=0.5;1 box (16 g)=16|tic tac strawberry
+haribo-goldbears|Haribo Goldbears|SN|343|6.9|77|0.5|1 bear (2 g)=2;1 bag (80 g)=80;1 bag (160 g)=160|haribo gold bears gummy bears jelly
+haribo-starmix|Haribo Starmix|SN|344|6.3|77|0.5|1 bag (80 g)=80;1 bag (160 g)=160;1 piece=3|haribo starmix gummies
+haribo-tangfastics|Haribo Tangfastics|SN|337|6.3|76|0.5|1 bag (80 g)=80;1 bag (160 g)=160;1 piece=3|haribo sour tangfastics
+haribo-happy-cola|Haribo Happy Cola|SN|344|5.6|79|0.2|1 bag (80 g)=80;1 bottle=3|haribo cola bottles gummy
+haribo-supermix|Haribo Supermix|SN|343|6.5|77|0.4|1 bag (80 g)=80;1 bag (160 g)=160|haribo supermix gummies
+trolli-sour-brite-crawlers|Trolli Sour Brite Crawlers|SN|330|3.4|77|0.1|1 worm (5 g)=5;1 bag (100 g)=100|trolli sour worms gummy
+sour-patch-kids|Sour Patch Kids|SN|367|0|91|0|1 piece (4 g)=4;1 bag (140 g)=140|sour patch kids sour sweets
+nerds|Nerds|SN|390|0|94|0|1 box (46.7 g)=46.7|nerds candy
+rowntrees-fruit-pastilles|Rowntree's Fruit Pastilles|SN|344|4.4|81|0|1 pastille (4 g)=4;1 tube (52.5 g)=52.5|fruit pastilles
+rowntrees-fruit-gums|Rowntree's Fruit Gums|SN|335|3.8|79|0|1 gum (4 g)=4;1 tube (48 g)=48|fruit gums
+chupa-chups-lollipop|Chupa Chups Lollipop|SN|390|0|97|0.2|1 lollipop (12 g)=12|chupa chups lolly lollipop sucker
+chupa-chups-melody-pops|Chupa Chups Melody Pops|SN|390|0|97|0.2|1 lollipop (15 g)=15|chupa chups whistle lollipop
+candy-sticks|Candy Sticks|SN|390|0|96|1|1 stick (6 g)=6;1 pack of 10 (60 g)=60|candy sticks sweet cigarettes
+turkish-delight-rose|Turkish Delight (rose)|SN|369|0.2|92|0.2|1 cube (12 g)=12;1 box (200 g)=200|turkish delight lokum rose
+frys-turkish-delight|Fry's Turkish Delight|SN|370|1.6|72|8.9|1 bar (51 g)=51|frys turkish delight chocolate bar
+coconut-ice|Coconut Ice|SN|425|1.8|72|14.5|1 square (20 g)=20|coconut ice pink white sweets
+honeycomb-pieces|Honeycomb Pieces|SN|397|1.5|90|3.5|1 piece (10 g)=10;1 bag (100 g)=100|honeycomb cinder toffee
+hard-boiled-sweets-assorted|Hard Boiled Sweets (assorted)|SN|390|0|97|0.3|1 sweet (5 g)=5;1 bag (100 g)=100|boiled sweets hard candy
+pink-sugar-mice|Pink Sugar Mice|SN|395|0|98|0.5|1 mouse (15 g)=15|sugar mice sweets
+popping-candy|Popping Candy|SN|380|0|95|0|1 sachet (7 g)=7|pop rocks popping candy
+candy-necklace|Candy Necklace|SN|385|0|95|0.5|1 necklace (17 g)=17|candy necklace sweets
+jelly-snakes|Jelly Snakes|SN|335|3.5|79|0.1|1 snake (15 g)=15;1 bag (125 g)=125|jelly snakes gummy
+fizzy-cola-bottles|Fizzy Cola Bottles|SN|340|4|80|0.2|1 bottle (5 g)=5;1 bag (100 g)=100|fizzy cola bottles sour gummy
+jelly-beans-jelly-belly|Jelly Beans (Jelly Belly)|SN|350|0|89|0|1 bean (1.1 g)=1.1;1 bag (100 g)=100|jelly belly beans
+chocolate-mallow-fish|Chocolate Mallow Fish|SN|410|3|68|14|1 fish (10 g)=10;1 bag (150 g)=150|chocolate fish marshmallow mallow
+sherbet-dip|Sherbet Dip|SN|385|0|96|0|1 sachet (10 g)=10|sherbet dip lolly sherbert
+wilsons-mint-toffees|Wilson's Mint Toffees|SN|420|1.5|78|11.5|1 toffee (7 g)=7|wilsons mint toffee
+butter-fudge-woolworths|Butter Fudge (Woolworths)|SN|440|2|73|15.5|1 piece (12 g)=12;1 box (200 g)=200|woolies butter fudge
+nougat-bar-chocolate-coated|Nougat Bar, chocolate coated|SN|440|5|66|17.5|1 bar (35 g)=35|nougat chocolate coated bar
+chewy-fruit-chews-fruit-salad-style|Chewy Fruit Chews (Fruit Salad style)|SN|390|0.5|84|5.5|1 chew (5 g)=5;1 bag (100 g)=100|fruit chews fruit salad sweets
+lollipop-swirl|Lollipop, swirl|SN|390|0|97|0.2|1 lollipop (30 g)=30|swirl lolly lollipop
+peppermint-chews|Peppermint Chews|SN|390|0.5|84|5.5|1 chew (5 g)=5|peppermint chews sweets
+yoghurt-coated-raisins|Yoghurt-Coated Raisins|SN|430|4|68|16|1 handful (25 g)=25|yoghurt coated raisins
+chocolate-coated-almonds|Chocolate Coated Almonds|SN|565|12|43|38|1 handful (25 g)=25|choc almonds chocolate coated
+chocolate-covered-mallows-sweetie-pie-style|Chocolate Covered Mallows (Sweetie Pie style)|SN|410|3|68|14|1 piece (18 g)=18|sweetie pie chocolate marshmallow
+ola-magnum-classic|Ola Magnum Classic|SN|300|3.8|29|18|1 stick (79 g)=79;1 mini (45 g)=45|magnum classic ice cream chocolate stick
+ola-magnum-almond|Ola Magnum Almond|SN|311|4.7|29|19.5|1 stick (80 g)=80;1 mini (45 g)=45|magnum almond ice cream
+ola-magnum-white|Ola Magnum White|SN|300|3.6|32|17.5|1 stick (79 g)=79;1 mini (45 g)=45|magnum white chocolate ice cream
+ola-magnum-double-caramel|Ola Magnum Double Caramel|SN|330|3.4|35|19.5|1 stick (72 g)=72|magnum double caramel ice cream
+ola-magnum-double-chocolate|Ola Magnum Double Chocolate|SN|330|4.3|33|20|1 stick (72 g)=72|magnum double chocolate ice cream
+ola-magnum-mint|Ola Magnum Mint|SN|300|3.5|30|18.5|1 stick (79 g)=79|magnum mint ice cream
+ola-magnum-ruby|Ola Magnum Ruby|SN|300|3.8|31|18|1 stick (72 g)=72|magnum ruby ice cream
+ola-magnum-tub-classic|Ola Magnum Tub Classic|SN|290|3.8|28|18|1 scoop (50 g)=50;1 tub (440 ml)=330|magnum tub ice cream
+ola-cornetto-classic-vanilla|Ola Cornetto Classic Vanilla|SN|290|3.5|36|14.5|1 cone (70 g)=70|cornetto vanilla cone ice cream
+ola-cornetto-chocolate|Ola Cornetto Chocolate|SN|300|3.8|36|15.5|1 cone (70 g)=70|cornetto chocolate cone ice cream
+ola-cornetto-strawberry|Ola Cornetto Strawberry|SN|250|2.5|36|10.5|1 cone (70 g)=70|cornetto strawberry cone ice cream
+ola-cornetto-mint-choc|Ola Cornetto Mint Choc|SN|290|3.3|36|14.5|1 cone (70 g)=70|cornetto mint cone ice cream
+ola-paddle-pop-chocolate|Ola Paddle Pop Chocolate|SN|150|3|22|5.5|1 stick (72 g)=72|paddle pop chocolate ice cream lolly
+ola-paddle-pop-rainbow|Ola Paddle Pop Rainbow|SN|110|1|24|1.2|1 stick (72 g)=72|paddle pop rainbow ice lolly
+ola-paddle-pop-banana|Ola Paddle Pop Banana|SN|145|2.8|22|5|1 stick (72 g)=72|paddle pop banana
+ola-fruttare-strawberry|Ola Fruttare Strawberry|SN|110|1|21|2.5|1 stick (80 g)=80|fruttare strawberry fruit ice lolly
+ola-fruttare-mango|Ola Fruttare Mango|SN|95|0.3|23|0.1|1 stick (80 g)=80|fruttare mango fruit ice lolly
+ola-feast|Ola Feast|SN|330|4|30|21.5|1 stick (75 g)=75|feast ice cream chocolate peanut
+ola-choc-ice|Ola Choc-Ice|SN|300|3|26|20.5|1 choc ice (50 g)=50|choc ice chocolate coated ice cream
+ola-rich-n-creamy-vanilla|Ola Rich 'n Creamy Vanilla|SN|195|3.5|25|9|1 scoop (50 g)=50;1/2 cup (65 g)=65;1 bowl (130 g)=130|ola rich vanilla tub ice cream frozen dessert
+ola-rich-n-creamy-chocolate|Ola Rich 'n Creamy Chocolate|SN|200|3.5|26|9|1 scoop (50 g)=50;1/2 cup (65 g)=65;1 bowl (130 g)=130|ola rich chocolate tub ice cream
+ola-rich-n-creamy-neapolitan|Ola Rich 'n Creamy Neapolitan|SN|195|3.3|25.5|9|1 scoop (50 g)=50;1/2 cup (65 g)=65;1 bowl (130 g)=130|ola neapolitan tub ice cream
+ola-rich-n-creamy-mint-choc-chip|Ola Rich 'n Creamy Mint Choc Chip|SN|205|3.3|26|10|1 scoop (50 g)=50;1/2 cup (65 g)=65|ola mint choc chip tub
+ola-rich-n-creamy-cookies-cream|Ola Rich 'n Creamy Cookies & Cream|SN|210|3.5|27|10|1 scoop (50 g)=50;1/2 cup (65 g)=65|ola cookies cream tub
+ola-king-cone|Ola King Cone|SN|285|3.8|35|14.5|1 cone (85 g)=85|king cone ice cream cone
+ola-twister|Ola Twister|SN|110|1.2|23|1.5|1 stick (75 g)=75|twister ice lolly swirl
+dairymaid-kool-kaps|Dairymaid Kool Kaps|SN|90|0|22|0|1 kool kap (60 g)=60|kool kaps ice lolly frozen
+dairymaid-choc-mint|Dairymaid Choc Mint|SN|232|3|28|12|1 scoop (50 g)=50;1/2 cup (65 g)=65|dairymaid choc mint ice cream
+dairymaid-tin-roof|Dairymaid Tin Roof|SN|242|3.5|30|12|1 scoop (50 g)=50;1/2 cup (65 g)=65;1 bowl (130 g)=130|dairymaid tin roof ice cream tub caramel
+dairymaid-vanilla|Dairymaid Vanilla|SN|190|3.3|25|8.5|1 scoop (50 g)=50;1/2 cup (65 g)=65;1 bowl (130 g)=130|dairymaid vanilla tub ice cream
+dairymaid-chocolate|Dairymaid Chocolate|SN|200|3.5|26|9|1 scoop (50 g)=50;1/2 cup (65 g)=65|dairymaid chocolate tub ice cream
+dairymaid-honeycomb|Dairymaid Honeycomb|SN|225|3.2|30|10.5|1 scoop (50 g)=50;1/2 cup (65 g)=65|dairymaid honeycomb ice cream
+dairymaid-cookies-cream|Dairymaid Cookies & Cream|SN|225|3.5|29|10.5|1 scoop (50 g)=50;1/2 cup (65 g)=65|dairymaid cookies cream
+dairymaid-choc-dip-stick|Dairymaid Choc Dip Stick|SN|280|3|27|18|1 stick (60 g)=60|dairymaid choc dip ice cream stick
+haagen-dazs-vanilla|Haagen-Dazs Vanilla|SN|250|4.5|20|17|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs haagendazs vanilla ice cream
+haagen-dazs-cookies-cream|Haagen-Dazs Cookies & Cream|SN|263|4.5|23|17|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs cookies cream
+haagen-dazs-salted-caramel|Haagen-Dazs Salted Caramel|SN|271|3.9|29|15.5|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs salted caramel
+haagen-dazs-strawberry-cheesecake|Haagen-Dazs Strawberry Cheesecake|SN|258|3.7|27|15|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs strawberry cheesecake
+haagen-dazs-belgian-chocolate|Haagen-Dazs Belgian Chocolate|SN|299|5|26|19.5|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs belgian chocolate
+haagen-dazs-macadamia-nut-brittle|Haagen-Dazs Macadamia Nut Brittle|SN|290|4.4|24|19.6|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs macadamia
+haagen-dazs-dulce-de-leche|Haagen-Dazs Dulce de Leche|SN|266|4.5|27|15.5|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs dulce de leche caramel
+haagen-dazs-pralines-cream|Haagen-Dazs Pralines & Cream|SN|268|4|27|16|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs pralines cream
+haagen-dazs-strawberry|Haagen-Dazs Strawberry|SN|235|3.8|23|14|1 mini cup (83 g)=83;1 scoop (60 g)=60;1 tub (460 ml)=400|haagen dazs strawberry
+haagen-dazs-vanilla-stick-bar|Haagen-Dazs Vanilla Stick Bar|SN|320|4|26|22.5|1 stick bar (70 g)=70|haagen dazs stick bar chocolate coated
+ben-jerrys-cookie-dough|Ben & Jerry's Cookie Dough|SN|266|4|30|14.5|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys cookie dough ice cream
+ben-jerrys-chocolate-fudge-brownie|Ben & Jerry's Chocolate Fudge Brownie|SN|254|4.3|29|13.5|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys chocolate fudge brownie
+ben-jerrys-phish-food|Ben & Jerry's Phish Food|SN|261|3.3|34|12.5|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys phish food
+ben-jerrys-half-baked|Ben & Jerry's Half Baked|SN|256|4|32|12.5|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys half baked
+ben-jerrys-caramel-chew-chew|Ben & Jerry's Caramel Chew Chew|SN|277|3.3|30|16|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys caramel chew chew
+ben-jerrys-karamel-sutra|Ben & Jerry's Karamel Sutra|SN|270|3.8|29|15.5|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys karamel sutra
+ben-jerrys-strawberry-cheesecake|Ben & Jerry's Strawberry Cheesecake|SN|249|3.3|28|13.8|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys strawberry cheesecake
+ben-jerrys-peanut-butter-cup|Ben & Jerry's Peanut Butter Cup|SN|329|6.5|24|23|1 scoop (60 g)=60;1 tub (465 ml)=410;1 serving (100 ml)=88|ben and jerrys peanut butter cup
+ben-jerrys-cookies-on-cookie-dough|Ben & Jerry's Cookies on Cookie Dough|SN|275|3.8|31|15|1 scoop (60 g)=60;1 tub (465 ml)=410|ben and jerrys cookies cookie dough
+ben-jerrys-non-dairy-chocolate-fudge-brownie|Ben & Jerry's Non-Dairy Chocolate Fudge Brownie|SN|260|3|33|12.5|1 scoop (60 g)=60;1 tub (465 ml)=410|ben and jerrys vegan non dairy
+ben-jerrys-chunky-monkey|Ben & Jerry's Chunky Monkey|SN|280|4|28|16.5|1 scoop (60 g)=60;1 tub (465 ml)=410|ben and jerrys chunky monkey banana
+mint-chocolate-chip-ice-cream|Mint Chocolate Chip Ice Cream|SN|230|3.5|27|12|1 scoop (50 g)=50;1/2 cup (65 g)=65|mint choc chip ice cream
+cookies-and-cream-ice-cream|Cookies and Cream Ice Cream|SN|225|3.8|28|11|1 scoop (50 g)=50;1/2 cup (65 g)=65|cookies cream ice cream oreo
+neapolitan-ice-cream|Neapolitan Ice Cream|SN|195|3.5|25|9|1 scoop (50 g)=50;1/2 cup (65 g)=65|neapolitan ice cream
+rum-and-raisin-ice-cream|Rum and Raisin Ice Cream|SN|215|3.5|28|10|1 scoop (50 g)=50;1/2 cup (65 g)=65|rum raisin ice cream
+coffee-ice-cream|Coffee Ice Cream|SN|225|3.8|25|12|1 scoop (50 g)=50;1/2 cup (65 g)=65|coffee ice cream
+salted-caramel-ice-cream|Salted Caramel Ice Cream|SN|240|3.5|30|11.5|1 scoop (50 g)=50;1/2 cup (65 g)=65|caramel ice cream
+butter-pecan-ice-cream|Butter Pecan Ice Cream|SN|250|4|25|15|1 scoop (50 g)=50;1/2 cup (65 g)=65|butter pecan ice cream
+vegan-ice-cream-coconut-or-oat-based|Vegan Ice Cream (coconut or oat based)|SN|220|1.5|26|12|1 scoop (50 g)=50;1/2 cup (65 g)=65|dairy free plant based vegan ice cream
+gelato-vanilla-fior-di-latte|Gelato, vanilla (fior di latte)|SN|200|4|27|8.5|1 scoop (70 g)=70;1 small cup (100 g)=100|gelato vanilla italian ice cream
+gelato-chocolate|Gelato, chocolate|SN|215|4.5|28|9.5|1 scoop (70 g)=70;1 small cup (100 g)=100|gelato chocolate cioccolato
+gelato-pistachio|Gelato, pistachio|SN|225|5|25|11.5|1 scoop (70 g)=70;1 small cup (100 g)=100|gelato pistachio
+gelato-hazelnut-nocciola|Gelato, hazelnut (nocciola)|SN|230|5|25|12.5|1 scoop (70 g)=70;1 small cup (100 g)=100|gelato hazelnut nocciola
+gelato-stracciatella|Gelato, stracciatella|SN|220|4|27|10.5|1 scoop (70 g)=70;1 small cup (100 g)=100|gelato stracciatella
+sorbet-lemon|Sorbet, lemon|SN|120|0.2|30|0|1 scoop (70 g)=70;1 small cup (100 g)=100|sorbet lemon sorbetto
+sorbet-mango|Sorbet, mango|SN|125|0.5|30|0.2|1 scoop (70 g)=70;1 small cup (100 g)=100|sorbet mango
+sorbet-raspberry|Sorbet, raspberry|SN|120|0.4|29.5|0.2|1 scoop (70 g)=70;1 small cup (100 g)=100|sorbet raspberry berry
+sorbet-strawberry|Sorbet, strawberry|SN|118|0.4|29|0.1|1 scoop (70 g)=70;1 small cup (100 g)=100|sorbet strawberry
+ice-lolly-fruit-flavoured-water-ice|Ice Lolly, fruit flavoured water ice|SN|80|0|20|0|1 lolly (60 g)=60|ice lolly water ice popsicle
+ice-lolly-fruit-juice|Ice Lolly, fruit juice|SN|75|0.3|18|0.1|1 lolly (70 g)=70|fruit juice lolly ice pop
+freezit-ice-pop|Freezit Ice Pop|SN|60|0|15|0|1 freezit (60 ml)=60;1 large freezit (100 ml)=100|freezits freezie ice pop
+kulfi-malai|Kulfi, malai|SN|234|5.5|25|12.5|1 kulfi stick (60 g)=60;1 kulfi cone (80 g)=80|kulfi indian ice cream cardamom
+kulfi-pistachio|Kulfi, pistachio|SN|245|6|24|14|1 kulfi stick (60 g)=60|pista kulfi pistachio
+kulfi-mango|Kulfi, mango|SN|199|4.5|25|9|1 kulfi stick (60 g)=60|mango kulfi
+frozen-yoghurt-original-tart-self-serve|Frozen Yoghurt, original tart (self-serve)|SN|107|3.5|21|1|1 small cup (150 g)=150;1 medium cup (250 g)=250|froyo frozen yogurt tart
+wafer-ice-cream-cone-empty|Wafer Ice Cream Cone (empty)|SN|388|8|80|4|1 cone (4 g)=4;1 sugar cone (12 g)=12|cone wafer ice cream cone
+chocolate-dipped-soft-serve-cone|Chocolate Dipped Soft Serve Cone|SN|240|3.5|30|12|1 cone (130 g)=130|choc dip cone soft serve
+ice-cream-sandwich-sa-vanilla-wafer|Ice Cream Sandwich (SA vanilla wafer)|SN|230|3.5|32|10|1 sandwich (70 g)=70|ice cream wafer sandwich
+mochi-ice-cream|Mochi Ice Cream|SN|230|3|37|7.5|1 piece (35 g)=35|mochi ice cream
+ice-cream-choc-topping-shell|Ice Cream Choc Topping (shell)|SN|560|2|40|44|1 tbsp (15 g)=15|bar one sauce choc shell ice magic
+cadbury-twirl|Cadbury Twirl|SN|525|7.6|56|30|1 bar (43 g)=43;1 finger (21.5 g)=21.5|twirl flake chocolate bar
+cadbury-wispa|Cadbury Wispa|SN|550|6.4|52|34|1 bar (36 g)=36|wispa aerated chocolate bar
+cadbury-double-decker|Cadbury Double Decker|SN|465|4.4|67|20|1 bar (54.5 g)=54.5|double decker nougat crispy chocolate
+cadbury-fudge-bar|Cadbury Fudge Bar|SN|440|2.9|71|16|1 bar (25.5 g)=25.5|fudge bar chocolate caramel
+cadbury-freddo|Cadbury Freddo|SN|530|7.5|57|30|1 freddo (18 g)=18|freddo frog chocolate kids
+cadbury-caramilk|Cadbury Caramilk|SN|525|6.5|60|28.5|1 row=20;1 slab (80 g)=80|caramilk caramelised white chocolate
+cadbury-bournville-dark|Cadbury Bournville Dark|SN|505|4.7|59|26|1 block=6;1 row=24;1 slab (80 g)=80;1 slab (150 g)=150|bournville plain dark chocolate
+cadbury-dairy-milk-roast-almond|Cadbury Dairy Milk Roast Almond|SN|540|9|51|33|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|roasted almond chocolate slab
+cadbury-dairy-milk-salted-caramel|Cadbury Dairy Milk Salted Caramel|SN|495|5.5|61|25|1 block=6;1 row (4 blocks)=24;1 slab (80 g)=80;1 slab (150 g)=150|salted caramel chocolate slab
+galaxy-ripple|Galaxy Ripple|SN|532|7|57|30.5|1 bar (33 g)=33|galaxy ripple chocolate bar
+galaxy-hazelnut|Galaxy Hazelnut|SN|555|7.5|51|35.5|1 row=20;1 slab (110 g)=110|galaxy hazelnut chocolate
+nestle-yorkie|Nestle Yorkie|SN|525|6.5|58|29|1 bar (46 g)=46|yorkie chunky milk chocolate
+nestle-toffee-crisp|Nestle Toffee Crisp|SN|515|4|62|27.5|1 bar (38 g)=38|toffee crisp chocolate bar
+nestle-aero-mint-bubbles|Nestle Aero Mint Bubbles|SN|540|5.8|58|31|1 bag (36 g)=36;1 share bag (102 g)=102|aero bubbles mint
+nestle-smarties-mini-box|Nestle Smarties Mini Box|SN|470|4.5|70|18.5|1 mini box (14.5 g)=14.5|smarties mini fun size
+nestle-kitkat-mini|Nestle KitKat Mini|SN|518|6.5|60|27|1 mini bar (16.7 g)=16.7|kit kat mini kitkat bites
+kinder-schoko-bons|Kinder Schoko-Bons|SN|578|8.6|50|37.4|1 piece (5.8 g)=5.8;1 bag (125 g)=125|kinder schokobons chocolate
+lindt-hello-cookies-cream|Lindt Hello Cookies & Cream|SN|540|6|55|32|1 bar (39 g)=39;1 slab (100 g)=100|lindt hello chocolate
+lindt-lindor-stracciatella|Lindt Lindor Stracciatella|SN|625|5|44|47.5|1 ball (12.5 g)=12.5|lindor stracciatella truffle
+tonys-chocolonely-milk|Tony's Chocolonely Milk|SN|551|8.5|51|34|1 row=30;1 slab (180 g)=180|tonys chocolonely milk chocolate
+green-blacks-organic-dark-70|Green & Black's Organic Dark 70%|SN|580|9.1|36|42|1 square=6;1 slab (90 g)=90|green and blacks dark organic
+hersheys-special-dark|Hershey's Special Dark|SN|530|5|60|32|1 bar (41 g)=41|hersheys special dark chocolate
+chocolate-truffles-assorted|Chocolate Truffles (assorted)|SN|560|5|48|39|1 truffle (12 g)=12|truffles chocolate box
+airheads|Airheads|SN|382|0|90|2.5|1 bar (15.6 g)=15.6|airheads taffy chews
+chocolate-covered-honeycomb-crunchie-rocks-style|Chocolate Covered Honeycomb (Crunchie Rocks style)|SN|480|5|68|21|1 piece (10 g)=10;1 bag (100 g)=100|choc honeycomb pieces
+simba-salt-vinegar|Simba Salt & Vinegar|SN|524|6|53|32|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba vinegar
+simba-cheese-onion|Simba Cheese & Onion|SN|531|6.5|52|33|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba cheese onion
+simba-mrs-balls-chutney|Simba Mrs Ball's Chutney|SN|528|6|54|32|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba chutney mrs balls
+simba-smoked-beef|Simba Smoked Beef|SN|530|6.5|52|33|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba beef
+simba-tomato|Simba Tomato|SN|528|6|53|32.5|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba tomato
+simba-creamy-cheddar|Simba Creamy Cheddar|SN|536|6.5|51|34|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba cheese cheddar
+simba-chakalaka|Simba Chakalaka|SN|527|6|53|32|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba chakalaka spicy
+simba-peri-peri|Simba Peri-Peri|SN|527|6|53|32|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba peri peri spicy
+simba-salted|Simba Salted|SN|534|6.5|51|34|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba plain lightly salted
+simba-sour-cream-onion|Simba Sour Cream & Onion|SN|531|6.5|52|33|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba sour cream onion
+simba-mexican-chilli|Simba Mexican Chilli|SN|527|6|53|32|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps simba chilli spicy
+lays-salted|Lay's Salted|SN|539|6|50|35|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays plain
+lays-sour-cream-onion|Lay's Sour Cream & Onion|SN|536|6.5|51|34|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays sour cream onion
+lays-spring-onion-cheese|Lay's Spring Onion & Cheese|SN|536|6.5|51|34|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays spring onion cheese
+lays-thai-sweet-chilli|Lay's Thai Sweet Chilli|SN|528|6|54|32|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays sweet chilli
+lays-salt-vinegar|Lay's Salt & Vinegar|SN|529|6|52|33|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays vinegar
+lays-cheese-onion|Lay's Cheese & Onion|SN|536|6.5|51|34|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays cheese onion
+lays-caribbean-onion-balsamic-vinegar|Lay's Caribbean Onion & Balsamic Vinegar|SN|529|6|52|33|1 small packet (36 g)=36;1 large packet (120 g)=120;1 handful=25|chips crisps lays balsamic onion
+lays-oven-baked-original|Lay's Oven Baked Original|SN|438|6|72|14|1 packet (32 g)=32;1 large packet (100 g)=100;1 handful=25|chips crisps lays baked
+doritos-cheese-supreme|Doritos Cheese Supreme|SN|502|7|60|26|1 small packet (45 g)=45;1 large packet (150 g)=150;1 handful=25|tortilla chips doritos cheese nacho
+doritos-sweet-chilli|Doritos Sweet Chilli|SN|499|6.5|62|25|1 small packet (45 g)=45;1 large packet (150 g)=150;1 handful=25|tortilla chips doritos sweet chilli
+doritos-salsa|Doritos Salsa|SN|499|6.5|61|25.5|1 small packet (45 g)=45;1 large packet (150 g)=150;1 handful=25|tortilla chips doritos salsa tomato
+doritos-chilli-heatwave|Doritos Chilli Heatwave|SN|499|6.5|61|25.5|1 small packet (45 g)=45;1 large packet (150 g)=150;1 handful=25|tortilla chips doritos chilli hot
+doritos-cool-original|Doritos Cool Original|SN|497|7|61|25|1 small packet (45 g)=45;1 large packet (150 g)=150;1 handful=25|tortilla chips doritos cool ranch
+niknaks-cheese|NikNaks Cheese|SN|516|6|60|28|1 small packet (55 g)=55;1 large packet (135 g)=135;1 handful=25|nik naks maize snack cheese
+niknaks-chutney|NikNaks Chutney|SN|513|5.5|61|27.5|1 small packet (55 g)=55;1 large packet (135 g)=135;1 handful=25|nik naks maize snack chutney
+niknaks-spicy-tomato|NikNaks Spicy Tomato|SN|513|5.5|61|27.5|1 small packet (55 g)=55;1 large packet (135 g)=135;1 handful=25|nik naks maize snack tomato spicy
+fritos-original-corn-chips|Fritos Original Corn Chips|SN|558|6|57|34|1 small packet (28 g)=28;1 bag (100 g)=100;1 handful=25|fritos corn chips
+fritos-tomato|Fritos Tomato|SN|506|6|62|26|1 small packet (25 g)=25;1 packet (120 g)=120;1 handful=25|fritos maize snack tomato
+cheese-curls-corn-puffs|Cheese curls (corn puffs)|SN|541|6|55|33|1 small packet (20 g)=20;1 packet (100 g)=100;1 handful=20|cheese curls puffs maize
+cheetos-puffs|Cheetos Puffs|SN|562|5.5|54|36|1 small packet (28 g)=28;1 bag (100 g)=100;1 handful=20|cheetos cheese puffs
+cheetos-crunchy|Cheetos Crunchy|SN|573|6|54|37|1 small packet (28 g)=28;1 bag (100 g)=100;1 handful=25|cheetos cheese crunchy
+simba-ghost-pops-salt-vinegar|Simba Ghost Pops Salt & Vinegar|SN|483|5|64|23|1 small packet (25 g)=25;1 packet (100 g)=100;1 handful=20|ghost pops puffed potato vinegar
+simba-ghost-pops-cheese|Simba Ghost Pops Cheese|SN|488|5.5|63|23.5|1 small packet (25 g)=25;1 packet (100 g)=100;1 handful=20|ghost pops puffed cheese
+big-korn-bites-cheese|Big Korn Bites Cheese|SN|501|6|62|25.5|1 small packet (40 g)=40;1 packet (120 g)=120;1 handful=25|big korn bites corn snack cheese
+big-korn-bites-chutney|Big Korn Bites Chutney|SN|499|5.5|63|25|1 small packet (40 g)=40;1 packet (120 g)=120;1 handful=25|big korn bites corn snack chutney
+willards-flings|Willards Flings|SN|527|5|57|31|1 small packet (25 g)=25;1 large packet (150 g)=150;1 handful=20|flings willards cheese puffs
+willards-cheese-curls|Willards Cheese Curls|SN|536|6|55|32.5|1 small packet (25 g)=25;1 large packet (150 g)=150;1 handful=20|willards cheese curls puffs
+willards-crinkle-cut-salt-vinegar|Willards Crinkle Cut Salt & Vinegar|SN|528|6|54|32|1 small packet (30 g)=30;1 packet (125 g)=125;1 handful=25|willards crinkles chips crisps vinegar
+willards-crinkle-cut-cheese-onion|Willards Crinkle Cut Cheese & Onion|SN|531|6.5|53|32.5|1 small packet (30 g)=30;1 packet (125 g)=125;1 handful=25|willards crinkles chips crisps cheese onion
+willards-crinkle-cut-tomato|Willards Crinkle Cut Tomato|SN|527|6|54|32|1 small packet (30 g)=30;1 packet (125 g)=125;1 handful=25|willards crinkles chips crisps tomato
+pringles-original|Pringles Original|SN|530|5|51|34|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps plain
+pringles-sour-cream-onion|Pringles Sour Cream & Onion|SN|519|5.5|51|32.5|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps sour cream onion
+pringles-paprika|Pringles Paprika|SN|519|5.5|51|32.5|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps paprika
+pringles-salt-vinegar|Pringles Salt & Vinegar|SN|516|5|52|32|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps vinegar
+pringles-cheese-onion|Pringles Cheese & Onion|SN|519|5.5|51|32.5|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps cheese onion
+pringles-hot-spicy|Pringles Hot & Spicy|SN|520|5.5|51|32.5|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps hot spicy
+pringles-texas-bbq-sauce|Pringles Texas BBQ Sauce|SN|516|5|52|32|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps barbecue bbq
+messaris-original-salted|Messaris Original Salted|SN|539|6|50|35|1 packet (125 g)=125;1 handful=25|messaris chips crisps salted
+messaris-salt-vinegar|Messaris Salt & Vinegar|SN|529|6|52|33|1 packet (125 g)=125;1 handful=25|messaris chips crisps vinegar
+messaris-chutney|Messaris Chutney|SN|529|6|53|32.5|1 packet (125 g)=125;1 handful=25|messaris chips crisps chutney
+messaris-cheese-onion|Messaris Cheese & Onion|SN|535|6.5|51|34|1 packet (125 g)=125;1 handful=25|messaris chips crisps cheese onion
+flanagans-sea-salt|Flanagan's Sea Salt|SN|522|6.5|52|32|1 packet (125 g)=125;1 handful=25|flanagans chips crisps salted
+flanagans-salt-vinegar|Flanagan's Salt & Vinegar|SN|515|6|53|31|1 packet (125 g)=125;1 handful=25|flanagans chips crisps vinegar
+flanagans-sweet-chilli|Flanagan's Sweet Chilli|SN|514|6|55|30|1 packet (125 g)=125;1 handful=25|flanagans chips crisps sweet chilli
+kettle-chips-sea-salt|Kettle Chips Sea Salt|SN|512|6.5|54|30|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|kettle chips crisps salted hand cooked
+kettle-chips-sea-salt-balsamic-vinegar|Kettle Chips Sea Salt & Balsamic Vinegar|SN|500|6|56|28|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|kettle chips crisps balsamic vinegar
+kettle-chips-sweet-chilli-sour-cream|Kettle Chips Sweet Chilli & Sour Cream|SN|500|6|56|28|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|kettle chips crisps sweet chilli
+kettle-chips-mature-cheddar-red-onion|Kettle Chips Mature Cheddar & Red Onion|SN|505|7|54|29|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|kettle chips crisps cheese onion
+woolworths-hand-cooked-crisps-sea-salt|Woolworths Hand Cooked Crisps Sea Salt|SN|515|6.5|54|30.5|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|woolies chips crisps hand cooked
+woolworths-hand-cooked-crisps-salt-vinegar|Woolworths Hand Cooked Crisps Salt & Vinegar|SN|505|6|55|29|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|woolies chips crisps hand cooked vinegar
+walkers-ready-salted|Walkers Ready Salted|SN|525|6.5|51|32.5|1 bag (32.5 g)=32.5;1 sharing bag (150 g)=150|walkers crisps chips plain
+walkers-cheese-onion|Walkers Cheese & Onion|SN|523|6.5|51|32|1 bag (32.5 g)=32.5;1 sharing bag (150 g)=150|walkers crisps chips cheese onion
+walkers-salt-vinegar|Walkers Salt & Vinegar|SN|519|6|52|32|1 bag (32.5 g)=32.5;1 sharing bag (150 g)=150|walkers crisps chips vinegar
+walkers-prawn-cocktail|Walkers Prawn Cocktail|SN|524|6|52|32.5|1 bag (32.5 g)=32.5;1 sharing bag (150 g)=150|walkers crisps chips prawn
+ruffles-original|Ruffles Original|SN|536|7|53|33|1 small bag (28 g)=28;1 bag (184 g)=184;1 handful=25|ruffles chips crisps ridged
+takis-fuego|Takis Fuego|SN|498|6|60|26|1 small bag (56 g)=56;1 bag (280 g)=280;1 handful=25|takis rolled tortilla chips chilli lime
+tostitos-original|Tostitos Original|SN|499|7|66|23|1 serving (28 g)=28;1 bag (283 g)=283;1 handful=25|tostitos tortilla chips corn
+santa-maria-tortilla-chips-salted|Santa Maria Tortilla Chips Salted|SN|487|7|63|23|1 bag (185 g)=185;1 handful=25|tortilla chips nachos salted
+popchips-sea-salt|Popchips Sea Salt|SN|425|6|71|13|1 bag (23 g)=23;1 bag (85 g)=85|popchips popped chips
+bugles-original|Bugles Original|SN|524|4|64|28|1 serving (30 g)=30;1 bag (100 g)=100|bugles corn snack
+wotsits-really-cheesy|Wotsits Really Cheesy|SN|544|5.5|54|34|1 bag (16.5 g)=16.5;1 sharing bag (150 g)=150|wotsits cheese puffs
+monster-munch-pickled-onion|Monster Munch Pickled Onion|SN|503|5|60|27|1 bag (22 g)=22;1 sharing bag (100 g)=100|monster munch corn snack
+kurkure-masala-munch|Kurkure Masala Munch|SN|545|6|56|33|1 packet (35 g)=35;1 packet (90 g)=90|kurkure corn puffs masala
+veggie-straws|Veggie straws|SN|471|3|63|23|1 serving (30 g)=30;1 bag (100 g)=100|vegetable straws crisps
+kale-chips|Kale chips|SN|482|13|40|30|1 packet (30 g)=30;1 handful=15|kale crisps
+popped-lentil-chips|Popped lentil chips|SN|435|13|62|15|1 bag (22 g)=22;1 bag (85 g)=85|lentil crisps popped
+popcorn-salted-oil-popped|Popcorn, salted (oil-popped)|SN|516|9|57|28|1 cup popped (8 g)=8;1 small bag (30 g)=30;1 bowl (50 g)=50|popcorn salted
+movie-theatre-popcorn-butter|Movie theatre popcorn, butter|SN|536|8|54|32|1 small tub (50 g)=50;1 medium tub (90 g)=90;1 large tub (130 g)=130|cinema popcorn butter
+act-ii-butter-lovers-microwave-popcorn|Act II Butter Lovers Microwave Popcorn|SN|527|8|54|31|1 bag popped (85 g)=85;1 cup popped (8 g)=8|act 2 microwave popcorn butter
+act-ii-salted-microwave-popcorn|Act II Salted Microwave Popcorn|SN|516|9|57|28|1 bag popped (85 g)=85;1 cup popped (8 g)=8|act 2 microwave popcorn salted
+act-ii-sweet-salty-kettle-corn|Act II Sweet & Salty Kettle Corn|SN|492|7|62|24|1 bag popped (85 g)=85;1 cup popped (8 g)=8|act 2 kettle corn popcorn sweet
+butterkist-sweet-popcorn|Butterkist Sweet Popcorn|SN|475|3.6|77|17|1 small bag (30 g)=30;1 bag (120 g)=120|butterkist popcorn sweet
+butterkist-toffee-popcorn|Butterkist Toffee Popcorn|SN|419|2.3|80|10|1 small bag (30 g)=30;1 bag (120 g)=120|butterkist popcorn toffee caramel
+skinnypop-original-popcorn|SkinnyPop Original Popcorn|SN|559|7|54|35|1 small bag (28 g)=28;1 bag (100 g)=100|skinny pop popcorn
+caramel-popcorn-cinema|Caramel popcorn (cinema)|SN|430|3.5|78|11.5|1 small tub (50 g)=50;1 medium tub (90 g)=90;1 handful=20|popcorn caramel sweet
+snyders-of-hanover-mini-pretzels|Snyder's of Hanover Mini Pretzels|SN|387|10|80|3|1 serving (30 g)=30;1 bag (125 g)=125;10 mini pretzels=15|pretzels snyders mini
+snyders-pretzel-pieces-honey-mustard-onion|Snyder's Pretzel Pieces Honey Mustard & Onion|SN|482|8|63|22|1 serving (30 g)=30;1 bag (125 g)=125|pretzels snyders honey mustard
+rold-gold-tiny-twists-pretzels|Rold Gold Tiny Twists Pretzels|SN|387|10|80|3|1 serving (28 g)=28;1 bag (100 g)=100|pretzels twists
+kallo-lightly-salted-rice-cakes|Kallo Lightly Salted Rice Cakes|SN|379|8|80|3|1 rice cake (7.5 g)=7.5;2 rice cakes=15;1 pack (130 g)=130|rice cakes kallo
+woolworths-lightly-salted-rice-cakes|Woolworths Lightly Salted Rice Cakes|SN|381|8|80|3.2|1 rice cake (8 g)=8;2 rice cakes=16;1 pack (130 g)=130|rice cakes woolies
+quaker-rice-cakes-caramel-corn|Quaker Rice Cakes Caramel Corn|SN|386|6|85|2.5|1 rice cake (13 g)=13;2 rice cakes=26|rice cakes caramel quaker
+kallo-dark-chocolate-rice-cake-thins|Kallo Dark Chocolate Rice Cake Thins|SN|489|6|60|25|1 rice cake (11 g)=11;1 pack (90 g)=90|rice cakes chocolate coated
+yoghurt-coated-rice-cakes|Yoghurt coated rice cakes|SN|487|5|65|23|1 rice cake (15 g)=15;1 pack (100 g)=100|rice cakes yogurt coated
+kallo-corn-cakes|Kallo Corn Cakes|SN|376|8|80|2.7|1 corn cake (6 g)=6;2 corn cakes=12;1 pack (130 g)=130|corn cakes kallo
+corn-thins-original|Corn Thins Original|SN|367|10|75|3|1 corn thin (6 g)=6;2 corn thins=12;1 pack (150 g)=150|corn thins real foods
+poppadoms-fried|Poppadoms, fried|SN|508|11.5|28|38.8|1 poppadom (13 g)=13;1 small poppadom (6 g)=6|poppadom pappadum papad fried
+poppadoms-microwaved-no-oil|Poppadoms, microwaved (no oil)|SN|338|22|58|2|1 poppadom (13 g)=13;1 small poppadom (6 g)=6|poppadom pappadum papad plain
+pataks-pappadums-plain-ready-to-eat|Patak's Pappadums Plain (ready to eat)|SN|474|16|44|26|1 pappadum (8 g)=8;1 pack (60 g)=60|pataks poppadoms pappadums
+roasted-seaweed-snack-salted|Roasted seaweed snack, salted|SN|514|26|17|38|1 pack (5 g)=5;1 multipack sheet (2.5 g)=2.5|seaweed snack nori crispy
+roasted-chickpeas-salted|Roasted chickpeas, salted|SN|402|20|58|10|1 serving (30 g)=30;1 bag (100 g)=100|chickpea snack roasted crunchy
+corn-nuts-original|Corn nuts, original|SN|456|8|70|16|1 serving (30 g)=30;1 bag (100 g)=100|corn nuts toasted corn
+roasted-broad-beans-salted|Roasted broad beans, salted|SN|422|26|48|14|1 serving (30 g)=30;1 bag (100 g)=100|broad beans fava snack
+wasabi-peas|Wasabi peas|SN|401|14|66|9|1 serving (30 g)=30;1 bag (100 g)=100|wasabi coated peas
+dry-roasted-edamame|Dry roasted edamame|SN|433|40|30|17|1 serving (30 g)=30;1 bag (100 g)=100|edamame soy beans roasted
+bombay-mix-chevro|Bombay mix (chevro)|SN|518|17|45|30|1 serving (30 g)=30;1 bag (200 g)=200;1 handful=25|bombay mix chevro chevra indian snack
+chivda-spiced-cornflake-mix|Chivda (spiced cornflake mix)|SN|518|12|50|30|1 serving (30 g)=30;1 bag (200 g)=200;1 handful=25|chivda chevda indian snack
+sesame-snaps|Sesame snaps|SN|522|11|52|30|1 bar (30 g)=30;1 small bar (15 g)=15|sesame snap bar
+cheese-straws-baked|Cheese straws (baked)|SN|502|13|45|30|1 straw (8 g)=8;5 straws=40;1 pack (100 g)=100|cheese sticks straws
+cheestrings-string-cheese|Cheestrings (string cheese)|SN|321|24|0.5|24.5|1 stick (20 g)=20|string cheese sticks cheestrings
+fruit-roll-apricot-fruit-leather|Fruit roll, apricot (fruit leather)|SN|332|2|80|0.5|1 roll (20 g)=20;1 large roll (80 g)=80|fruit roll leather apricot
+coconut-chips-toasted|Coconut chips, toasted|NS|680|6.5|24|62|1 serving (30 g)=30;1 bag (100 g)=100|coconut chips flakes toasted
+bakers-tennis-biscuits|Bakers Tennis Biscuits|BB|486|6|66|22|1 biscuit (8 g)=8;4 biscuits=33;1 pack (200 g)=200|tennis biscuits coconut bakers
+bakers-tennis-lemon|Bakers Tennis Lemon|BB|488|6|66|22.2|1 biscuit (8 g)=8;4 biscuits=33;1 pack (200 g)=200|tennis biscuits lemon bakers
+bakers-marie-biscuits|Bakers Marie Biscuits|BB|434|7.5|75|11.5|1 biscuit (6.5 g)=6.5;3 biscuits=20;1 pack (200 g)=200|marie biscuits bakers
+bakers-blue-label-marie|Bakers Blue Label Marie|BB|441|7|74|13|1 biscuit (6.5 g)=6.5;3 biscuits=20;1 pack (200 g)=200|blue label marie biscuits bakers
+bakers-romany-creams-original|Bakers Romany Creams Original|BB|513|5.5|62|27|1 biscuit (13 g)=13;2 biscuits=26;1 pack (200 g)=200|romany creams chocolate biscuits bakers
+bakers-romany-creams-mint|Bakers Romany Creams Mint|BB|513|5.5|62|27|1 biscuit (13 g)=13;2 biscuits=26;1 pack (200 g)=200|romany creams mint chocolate biscuits
+bakers-romany-creams-double-choc|Bakers Romany Creams Double Choc|BB|515|6|61|27.5|1 biscuit (13 g)=13;2 biscuits=26;1 pack (200 g)=200|romany creams double chocolate biscuits
+bakers-choice-assorted|Bakers Choice Assorted|BB|497|5.5|67|23|1 biscuit (12 g)=12;2 biscuits=24;1 pack (200 g)=200|choice assorted biscuits bakers
+bakers-eet-sum-mor|Bakers Eet-Sum-Mor|BB|512|6.5|63|26|1 biscuit (14 g)=14;2 biscuits=28;1 pack (200 g)=200|eet sum mor shortbread biscuits bakers
+bakers-lemon-creams|Bakers Lemon Creams|BB|502|4.5|67|24|1 biscuit (13 g)=13;2 biscuits=26;1 pack (200 g)=200|lemon creams biscuits bakers
+bakers-zoo-biscuits|Bakers Zoo Biscuits|BB|440|5|77|12.5|1 biscuit (5 g)=5;5 biscuits=25;1 pack (150 g)=150|zoo biscuits iced animal bakers
+bakers-toppers-strawberry|Bakers Toppers Strawberry|BB|485|5|68|21.5|1 biscuit (13 g)=13;2 biscuits=26;1 pack (125 g)=125|toppers strawberry cream biscuits bakers
+bakers-toppers-chocolate|Bakers Toppers Chocolate|BB|487|5.5|67|22|1 biscuit (13 g)=13;2 biscuits=26;1 pack (125 g)=125|toppers chocolate cream biscuits bakers
+bakers-toppers-mint|Bakers Toppers Mint|BB|485|5|68|21.5|1 biscuit (13 g)=13;2 biscuits=26;1 pack (125 g)=125|toppers mint cream biscuits bakers
+bakers-toppers-vanilla|Bakers Toppers Vanilla|BB|485|5|68|21.5|1 biscuit (13 g)=13;2 biscuits=26;1 pack (125 g)=125|toppers vanilla cream biscuits bakers
+bakers-ginger-nuts|Bakers Ginger Nuts|BB|452|5|73|15.5|1 biscuit (10 g)=10;2 biscuits=20;1 pack (200 g)=200|ginger nuts biscuits bakers
+bakers-nuttikrust|Bakers Nuttikrust|BB|505|7|63|25|1 biscuit (11 g)=11;2 biscuits=22;1 pack (200 g)=200|nutticrust nuttikrust peanut biscuits bakers
+bakers-boudoir-biscuits|Bakers Boudoir Biscuits|BB|393|8|80|4.5|1 biscuit (6 g)=6;1 pack (200 g)=200|boudoir sponge fingers ladyfingers bakers
+bakers-choc-kits|Bakers Choc-Kits|BB|491|6|66|22.5|1 biscuit (11 g)=11;2 biscuits=22;1 pack (200 g)=200|choc kits chocolate chip biscuits bakers
+oreo-original|Oreo Original|BB|476|5|69|20|1 biscuit (11 g)=11;3 biscuits=33;1 pack (128 g)=128|oreo cookies chocolate sandwich
+oreo-double-stuf|Oreo Double Stuf|BB|500|4|67|24|1 biscuit (14.5 g)=14.5;2 biscuits=29;1 pack (157 g)=157|oreo double stuff cookies
+golden-oreo|Golden Oreo|BB|478|4.5|70|20|1 biscuit (11 g)=11;3 biscuits=33;1 pack (128 g)=128|oreo golden vanilla cookies
+oreo-thins-original|Oreo Thins Original|BB|476|5|70|19.5|1 biscuit (6 g)=6;4 biscuits=24;1 pack (95 g)=95|oreo thins cookies
+oreo-thins-vanilla|Oreo Thins Vanilla|BB|476|4.5|71|19.5|1 biscuit (6 g)=6;4 biscuits=24;1 pack (95 g)=95|oreo thins vanilla cookies
+mcvities-digestives-original|McVitie's Digestives Original|BB|469|7|63|21|1 biscuit (15 g)=15;2 biscuits=30;1 pack (400 g)=400|mcvities digestive biscuits plain
+mcvities-milk-chocolate-digestives|McVitie's Milk Chocolate Digestives|BB|491|6.8|62|24|1 biscuit (17 g)=17;2 biscuits=34;1 pack (266 g)=266|mcvities chocolate digestive biscuits
+mcvities-dark-chocolate-digestives|McVitie's Dark Chocolate Digestives|BB|481|6.3|60|24|1 biscuit (17 g)=17;2 biscuits=34;1 pack (266 g)=266|mcvities dark chocolate digestive biscuits
+mcvities-rich-tea|McVitie's Rich Tea|BB|451|7|72|15|1 biscuit (8 g)=8;2 biscuits=16;1 pack (300 g)=300|mcvities rich tea biscuits
+mcvities-hobnobs-original|McVitie's Hobnobs Original|BB|464|6.8|62|21|1 biscuit (15 g)=15;2 biscuits=30;1 pack (300 g)=300|hobnobs oat biscuits
+mcvities-milk-chocolate-hobnobs|McVitie's Milk Chocolate Hobnobs|BB|477|6.5|61|23|1 biscuit (16 g)=16;2 biscuits=32;1 pack (262 g)=262|hobnobs chocolate oat biscuits
+mcvities-jaffa-cakes|McVitie's Jaffa Cakes|BB|373|4|70|8.5|1 cake (12.2 g)=12.2;3 cakes=37;1 pack (147 g)=147|jaffa cakes orange
+lotus-biscoff|Lotus Biscoff|BB|481|4.9|72.6|19|1 biscuit (7.8 g)=7.8;2 biscuits=15.6;1 pack (250 g)=250|biscoff lotus speculoos caramelised biscuits
+lotus-biscoff-sandwich-vanilla|Lotus Biscoff Sandwich Vanilla|BB|493|4.5|67|23|1 biscuit (15 g)=15;1 pack (150 g)=150|biscoff lotus sandwich cream
+chips-ahoy-original|Chips Ahoy Original|BB|491|5|66|23|1 cookie (11 g)=11;3 cookies=33;1 pack (128 g)=128|chips ahoy chocolate chip cookies
+maryland-choc-chip-cookies|Maryland Choc Chip Cookies|BB|502|5.5|66|24|1 cookie (11 g)=11;3 cookies=33;1 pack (200 g)=200|maryland chocolate chip cookies
+nutella-biscuits|Nutella Biscuits|BB|509|7|64|25|1 biscuit (13.8 g)=13.8;2 biscuits=27.6;1 pack (193 g)=193|nutella biscuits hazelnut
+pepperidge-farm-milano|Pepperidge Farm Milano|BB|502|5|62|26|1 cookie (11.5 g)=11.5;3 cookies=34;1 pack (170 g)=170|milano cookies chocolate
+belvita-breakfast-milk-cereals|Belvita Breakfast Milk & Cereals|BB|443|8|69|15|1 sachet 4 biscuits (50 g)=50;1 biscuit (12.5 g)=12.5|belvita breakfast biscuits
+belvita-breakfast-chocolate-chips|Belvita Breakfast Chocolate Chips|BB|455|7.5|68|17|1 sachet 4 biscuits (50 g)=50;1 biscuit (12.5 g)=12.5|belvita breakfast biscuits chocolate
+belvita-breakfast-honey-nuts|Belvita Breakfast Honey & Nuts|BB|448|8|68|16|1 sachet 4 biscuits (50 g)=50;1 biscuit (12.5 g)=12.5|belvita breakfast biscuits honey nut
+jammie-dodgers|Jammie Dodgers|BB|439|5|71|15|1 biscuit (18.5 g)=18.5;1 pack (140 g)=140|jammie dodgers jam biscuits
+jacobs-fig-rolls|Jacob's Fig Rolls|BB|360|4|68|8|1 fig roll (17 g)=17;2 fig rolls=34|fig rolls biscuits
+manner-neapolitaner-wafers|Manner Neapolitaner Wafers|BB|506|7|61|26|1 wafer (7.5 g)=7.5;1 pack (75 g)=75|manner hazelnut wafers
+loacker-quadratini-napolitaner|Loacker Quadratini Napolitaner|BB|514|7.5|58|28|1 wafer (5 g)=5;5 wafers=25;1 pack (125 g)=125|loacker hazelnut wafers
+wafer-biscuits-chocolate-cream-filled|Wafer biscuits, chocolate cream filled|BB|520|5.5|63|27.5|1 wafer (8 g)=8;3 wafers=24;1 pack (100 g)=100|wafers chocolate cream
+walkers-pure-butter-shortbread-fingers|Walkers Pure Butter Shortbread Fingers|BB|524|5.8|60|29|1 finger (20 g)=20;2 fingers=40;1 pack (160 g)=160|walkers shortbread butter
+custard-creams|Custard creams|BB|486|5|68|21.5|1 biscuit (12.5 g)=12.5;2 biscuits=25|custard cream biscuits
+bourbon-biscuits|Bourbon biscuits|BB|483|5.5|68|21|1 biscuit (12.5 g)=12.5;2 biscuits=25|bourbon chocolate cream biscuits
+jam-tarts-biscuit|Jam tarts (biscuit)|BB|420|4|65|16|1 tart (30 g)=30;1 small tart (15 g)=15|jam tarts shortcrust
+snowballs-coconut-marshmallow|Snowballs (coconut marshmallow)|SN|404|3|62|16|1 snowball (20 g)=20;1 pack of 6 (120 g)=120|snowballs coconut marshmallow
+ouma-buttermilk-rusks|Ouma Buttermilk Rusks|BB|426|8|67|14|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|ouma rusks buttermilk beskuit
+ouma-muesli-rusks|Ouma Muesli Rusks|BB|435|8.5|62|17|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|ouma rusks muesli beskuit
+ouma-condensed-milk-rusks|Ouma Condensed Milk Rusks|BB|432|7.5|68|14.5|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|ouma rusks condensed milk beskuit
+ouma-wholewheat-rusks|Ouma Wholewheat Rusks|BB|419|9|62|15|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|ouma rusks wholewheat beskuit
+bokomo-buttermilk-rusks|Bokomo Buttermilk Rusks|BB|425|8|67|14|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|bokomo rusks buttermilk beskuit
+bokomo-muesli-rusks|Bokomo Muesli Rusks|BB|438|8.5|62|17.5|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|bokomo rusks muesli beskuit
+woolworths-buttermilk-rusks|Woolworths Buttermilk Rusks|BB|430|8.5|63|16|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|woolies rusks buttermilk beskuit
+woolworths-muesli-rusks|Woolworths Muesli Rusks|BB|439|9|58|19|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|woolies rusks muesli beskuit
+woolworths-condensed-milk-rusks|Woolworths Condensed Milk Rusks|BB|438|8|66|16|1 rusk (35 g)=35;2 rusks=70;1 box (500 g)=500|woolies rusks condensed milk beskuit
+bakers-salticrax-original|Bakers Salticrax Original|BB|469|8.5|66|19|1 cracker (5 g)=5;5 crackers=25;1 box (200 g)=200|salticrax crackers bakers
+bakers-provita-original|Bakers ProVita Original|BB|406|12|68|9.5|1 biscuit (6 g)=6;3 biscuits=18;1 box (250 g)=250|provita crispbread crackers original
+bakers-provita-wholewheat|Bakers ProVita Wholewheat|BB|398|12|65|10|1 biscuit (6 g)=6;3 biscuits=18;1 box (250 g)=250|provita crispbread crackers wholewheat
+bakers-cream-crackers|Bakers Cream Crackers|BB|440|9.5|70|13.5|1 cracker (8 g)=8;3 crackers=24;1 box (200 g)=200|cream crackers bakers
+jacobs-cream-crackers|Jacob's Cream Crackers|BB|429|10|68|13|1 cracker (8 g)=8;3 crackers=24;1 pack (200 g)=200|jacobs cream crackers
+tuc-original|Tuc Original|BB|494|7.5|62|24|1 cracker (4 g)=4;6 crackers=24;1 pack (100 g)=100|tuc crackers
+tuc-cheese|Tuc Cheese|BB|499|8.5|60|25|1 cracker (4 g)=4;6 crackers=24;1 pack (100 g)=100|tuc crackers cheese
+tuc-sour-cream-onion|Tuc Sour Cream & Onion|BB|494|7.5|62|24|1 cracker (4 g)=4;6 crackers=24;1 pack (100 g)=100|tuc crackers sour cream onion
+tuc-paprika|Tuc Paprika|BB|494|7.5|62|24|1 cracker (4 g)=4;6 crackers=24;1 pack (100 g)=100|tuc crackers paprika
+ritz-bits-cheese|Ritz Bits Cheese|BB|511|9|58|27|1 serving (30 g)=30;1 box (100 g)=100|ritz bits cheese sandwich crackers
+ryvita-crackerbread-original|Ryvita Crackerbread Original|BB|377|10|77|3.2|1 slice (5 g)=5;2 slices=10;1 pack (200 g)=200|cracker bread crackerbread ryvita
+woolworths-cracker-bread|Woolworths Cracker Bread|BB|385|10|78|3.5|1 slice (5 g)=5;2 slices=10;1 pack (125 g)=125|cracker bread crackerbread woolies
+ryvita-original-crispbread|Ryvita Original Crispbread|BB|323|9|68|1.7|1 slice (10 g)=10;2 slices=20;1 pack (250 g)=250|ryvita rye crispbread
+carrs-table-water-crackers|Carr's Table Water Crackers|BB|404|9.5|79|5.5|1 cracker (4 g)=4;5 crackers=20;1 pack (125 g)=125|water biscuits crackers carrs
+sakata-rice-crackers-plain|Sakata Rice Crackers Plain|BB|404|7|83|4|1 serving (25 g)=25;1 pack (100 g)=100|sakata rice crackers plain
+sakata-rice-crackers-seaweed|Sakata Rice Crackers Seaweed|BB|403|7.5|82|4|1 serving (25 g)=25;1 pack (100 g)=100|sakata rice crackers seaweed
+sakata-rice-crackers-bbq|Sakata Rice Crackers BBQ|BB|409|7|83|4.5|1 serving (25 g)=25;1 pack (100 g)=100|sakata rice crackers barbecue
+sakata-rice-crackers-sweet-chilli|Sakata Rice Crackers Sweet Chilli|BB|407|6.5|84|4.3|1 serving (25 g)=25;1 pack (100 g)=100|sakata rice crackers sweet chilli
+japanese-rice-cracker-mix-senbei|Japanese rice cracker mix (senbei)|BB|399|8|84|3|1 serving (30 g)=30;1 pack (100 g)=100|senbei rice crackers japanese
+bakers-cheddars|Bakers Cheddars|BB|526|10|54|30|1 cracker (3 g)=3;10 crackers=30;1 box (200 g)=200|cheddars cheese crackers bakers
+jacobs-mini-cheddars|Jacob's Mini Cheddars|BB|503|11|54|27|1 bag (25 g)=25;1 sharing bag (90 g)=90|mini cheddars cheese crackers
+triscuit-original|Triscuit Original|BB|440|10.7|71|12.5|1 cracker (4.7 g)=4.7;6 crackers=28;1 box (250 g)=250|triscuit wheat crackers
+wheat-thins-original|Wheat Thins Original|BB|466|8|68|18|1 serving (31 g)=31;1 box (255 g)=255|wheat thins crackers
+future-life-smart-bar-chocolate|Future Life Smart Bar Chocolate|SN|397|15|55|13|1 bar (40 g)=40|futurelife future life bar chocolate
+future-life-high-protein-bar-chocolate|Future Life High Protein Bar Chocolate|SU|380|30|38|12|1 bar (45 g)=45|futurelife future life protein bar
+jungle-oats-energy-bar-chocolate-chip|Jungle Oats Energy Bar Chocolate Chip|SN|424|7|63|16|1 bar (40 g)=40|jungle energy bar oats choc chip
+jungle-oats-energy-bar-original|Jungle Oats Energy Bar Original|SN|418|7|64|15|1 bar (40 g)=40|jungle energy bar oats honey
+jungle-oats-energy-bar-nut-crunch|Jungle Oats Energy Bar Nut Crunch|SN|440|8.5|58|19|1 bar (40 g)=40|jungle energy bar oats nuts
+weet-bix-bar-choc-chip|Weet-Bix Bar Choc Chip|SN|404|8|65|12.5|1 bar (30 g)=30|weetbix weet bix cereal bar
+nature-valley-crunchy-oats-honey|Nature Valley Crunchy Oats & Honey|SN|459|8|64|19|1 pack 2 bars (42 g)=42;1 bar (21 g)=21|nature valley granola bar oats honey
+nature-valley-crunchy-canadian-maple-syrup|Nature Valley Crunchy Canadian Maple Syrup|SN|459|8|64|19|1 pack 2 bars (42 g)=42;1 bar (21 g)=21|nature valley granola bar maple
+nature-valley-crunchy-oats-dark-chocolate|Nature Valley Crunchy Oats & Dark Chocolate|SN|465|8|63|20|1 pack 2 bars (42 g)=42;1 bar (21 g)=21|nature valley granola bar dark chocolate
+nature-valley-crunchy-peanut-butter|Nature Valley Crunchy Peanut Butter|SN|472|10|58|22|1 pack 2 bars (42 g)=42;1 bar (21 g)=21|nature valley granola bar peanut butter
+nature-valley-protein-peanut-chocolate|Nature Valley Protein Peanut & Chocolate|SU|480|25|30|30|1 bar (40 g)=40|nature valley protein bar peanut chocolate
+nature-valley-protein-salted-caramel-nut|Nature Valley Protein Salted Caramel Nut|SU|480|25|31|29.5|1 bar (40 g)=40|nature valley protein bar caramel nut
+kelloggs-nutri-grain-bar-strawberry|Kellogg's Nutri-Grain Bar Strawberry|SN|367|4.5|67|9|1 bar (37 g)=37|nutrigrain nutri grain cereal bar strawberry
+kelloggs-nutri-grain-bar-blueberry|Kellogg's Nutri-Grain Bar Blueberry|SN|367|4.5|67|9|1 bar (37 g)=37|nutrigrain nutri grain cereal bar blueberry
+kelloggs-nutri-grain-bar-apple-cinnamon|Kellogg's Nutri-Grain Bar Apple Cinnamon|SN|367|4.5|67|9|1 bar (37 g)=37|nutrigrain nutri grain cereal bar apple
+kelloggs-special-k-bar-red-berries|Kellogg's Special K Bar Red Berries|SN|376|5|71|8|1 bar (23 g)=23|special k bar red berry
+kelloggs-special-k-bar-milk-chocolate|Kellogg's Special K Bar Milk Chocolate|SN|399|6|69|11|1 bar (23 g)=23|special k bar chocolate
+kelloggs-special-k-protein-bar-chocolate|Kellogg's Special K Protein Bar Chocolate|SU|400|22|48|13|1 bar (28 g)=28|special k protein bar
+muesli-bar-fruit|Muesli bar, fruit|SN|402|7|62|14|1 bar (30 g)=30|muesli bar granola fruit
+muesli-bar-chocolate-chip|Muesli bar, chocolate chip|SN|431|6.5|63|17|1 bar (30 g)=30|muesli bar granola chocolate
+muesli-bar-yoghurt-coated|Muesli bar, yoghurt coated|SN|441|6|64|18|1 bar (30 g)=30|muesli bar granola yogurt
+uncle-tobys-chewy-choc-chip-muesli-bar|Uncle Tobys Chewy Choc Chip Muesli Bar|SN|423|6|66|15|1 bar (31 g)=31|uncle tobys muesli bar choc chip
+clif-bar-chocolate-chip|Clif Bar Chocolate Chip|SN|384|13|66|7.5|1 bar (68 g)=68|clif bar energy chocolate chip
+kind-dark-chocolate-nuts-sea-salt|Kind Dark Chocolate Nuts & Sea Salt|SN|520|15|38|35|1 bar (40 g)=40|kind bar nuts dark chocolate
+rxbar-chocolate-sea-salt|RXBAR Chocolate Sea Salt|SU|413|23|42|17|1 bar (52 g)=52|rxbar protein bar chocolate
+nakd-cocoa-orange|Nakd Cocoa Orange|SN|398|9|50|18|1 bar (35 g)=35|nakd fruit nut bar cocoa orange
+usn-trust-crunch-protein-bar-chocolate-brownie|USN Trust Crunch Protein Bar Chocolate Brownie|SU|390|33|33|14|1 bar (60 g)=60|usn trust crunch protein bar chocolate
+usn-trust-crunch-protein-bar-cookies-cream|USN Trust Crunch Protein Bar Cookies & Cream|SU|390|33|33|14|1 bar (60 g)=60|usn trust crunch protein bar cookies cream
+usn-trust-crunch-protein-bar-peanut-butter|USN Trust Crunch Protein Bar Peanut Butter|SU|398|33|31|15.5|1 bar (60 g)=60|usn trust crunch protein bar peanut
+evox-high-protein-bar-chocolate|Evox High Protein Bar Chocolate|SU|380|30|38|12|1 bar (45 g)=45|evox protein bar chocolate
+evox-high-protein-bar-salted-caramel|Evox High Protein Bar Salted Caramel|SU|380|30|38|12|1 bar (45 g)=45|evox protein bar caramel
+quest-bar-chocolate-chip-cookie-dough|Quest Bar Chocolate Chip Cookie Dough|SU|358|35|24|14|1 bar (60 g)=60|quest protein bar cookie dough
+quest-bar-cookies-cream|Quest Bar Cookies & Cream|SU|349|35|23|13|1 bar (60 g)=60|quest protein bar cookies cream
+quest-bar-birthday-cake|Quest Bar Birthday Cake|SU|349|35|23|13|1 bar (60 g)=60|quest protein bar birthday cake
+quest-bar-peanut-butter|Quest Bar Peanut Butter|SU|368|35|21|16|1 bar (60 g)=60|quest protein bar peanut butter
+quest-bar-chocolate-brownie|Quest Bar Chocolate Brownie|SU|353|35|24|12.5|1 bar (60 g)=60|quest protein bar brownie
+barebells-salty-peanut|Barebells Salty Peanut|SU|380|36|28|14|1 bar (55 g)=55|barebells protein bar salty peanut
+barebells-cookies-cream|Barebells Cookies & Cream|SU|370|36|30|13|1 bar (55 g)=55|barebells protein bar cookies cream
+barebells-caramel-cashew|Barebells Caramel Cashew|SU|375|36|30|13.5|1 bar (55 g)=55|barebells protein bar caramel cashew
+barebells-hazelnut-nougat|Barebells Hazelnut Nougat|SU|375|36|30|13.5|1 bar (55 g)=55|barebells protein bar hazelnut
+barebells-white-chocolate-almond|Barebells White Chocolate Almond|SU|375|36|30|13.5|1 bar (55 g)=55|barebells protein bar white chocolate
+grenade-oreo|Grenade Oreo|SU|376|33|25|16|1 bar (60 g)=60|grenade carb killa protein bar oreo
+grenade-chocolate-chip-salted-caramel|Grenade Chocolate Chip Salted Caramel|SU|372|33|26|15.5|1 bar (60 g)=60|grenade carb killa protein bar salted caramel
+grenade-peanut-nutter|Grenade Peanut Nutter|SU|380|33|24|17|1 bar (60 g)=60|grenade carb killa protein bar peanut
+grenade-white-chocolate-cookie|Grenade White Chocolate Cookie|SU|376|33|25|16|1 bar (60 g)=60|grenade carb killa protein bar white chocolate
+grenade-fudged-up|Grenade Fudged Up|SU|372|33|26|15.5|1 bar (60 g)=60|grenade carb killa protein bar fudge
+grenade-birthday-cake|Grenade Birthday Cake|SU|376|33|25|16|1 bar (60 g)=60|grenade carb killa protein bar birthday cake
+pvm-energy-bar-original|PVM Energy Bar Original|SN|397|10|60|13|1 bar (45 g)=45|pvm energy bar
+pvm-protein-bar-chocolate|PVM Protein Bar Chocolate|SU|385|28|40|12.5|1 bar (45 g)=45|pvm protein bar chocolate
+phd-smart-bar-chocolate-brownie|PhD Smart Bar Chocolate Brownie|SU|364|31|32|12.5|1 bar (64 g)=64|phd smart bar protein brownie
+myprotein-layered-protein-bar|Myprotein Layered Protein Bar|SU|375|33|27|15|1 bar (60 g)=60|myprotein layered bar
+fulfil-chocolate-peanut-butter|Fulfil Chocolate Peanut Butter|SU|385|36|29|14|1 bar (55 g)=55|fulfil protein bar peanut butter
+snickers-hi-protein-bar|Snickers Hi Protein Bar|SU|385|36|31|13|1 bar (55 g)=55|snickers protein bar
+beef-biltong-chilli|Beef biltong, chilli|MP|262|54|3|4|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|biltong chilli spicy beef
+beef-biltong-peppered|Beef biltong, peppered|MP|258|55|3|3.5|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|biltong pepper beef
+beef-biltong-garlic|Beef biltong, garlic|MP|258|55|3|3.5|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|biltong garlic beef
+beef-biltong-moist-medium-fat|Beef biltong, moist (medium fat)|MP|320|50|2|12.5|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|biltong wet moist beef
+biltong-chips-thin-sliced-lean|Biltong chips (thin sliced, lean)|MP|276|58|2|4|1 packet (30 g)=30;1 bag (80 g)=80|biltong chips crisps sliced
+kudu-biltong|Kudu biltong|MP|250|56|1|2.5|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|game biltong kudu venison
+springbok-biltong|Springbok biltong|MP|255|56|1|3|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|game biltong springbok venison
+ostrich-biltong|Ostrich biltong|MP|250|57|1|2|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|biltong ostrich
+game-biltong-mixed|Game biltong, mixed|MP|255|56|1.5|3|1 handful (30 g)=30;1 packet (50 g)=50;1 bag (100 g)=100|game biltong wildsbiltong venison
+chilli-droewors|Chilli droëwors|MP|479|38|3|35|1 stick (15 g)=15;1 packet (50 g)=50;1 bag (100 g)=100|droewors chilli dry wors sausage
+game-droewors|Game droëwors|MP|417|45|3|25|1 stick (15 g)=15;1 packet (50 g)=50;1 bag (100 g)=100|droewors game venison dry wors
+ostrich-droewors|Ostrich droëwors|MP|384|48|3|20|1 stick (15 g)=15;1 packet (50 g)=50;1 bag (100 g)=100|droewors ostrich dry wors
+chilli-bites-spicy-beef-meat-sticks|Chilli bites (spicy beef meat sticks)|MP|416|45|5|24|1 piece (5 g)=5;1 packet (50 g)=50;1 bag (100 g)=100|chilli bites meat snack beef spicy
+chilli-stokkies-spicy-biltong-sticks|Chilli stokkies (spicy biltong sticks)|MP|338|50|3|14|1 stick (10 g)=10;1 packet (50 g)=50;1 bag (100 g)=100|stokkies biltong sticks chilli
+jack-links-original-beef-jerky|Jack Link's Original Beef Jerky|MP|272|39|21|3.6|1 serving (28 g)=28;1 bag (70 g)=70|jerky beef jack links
+jack-links-teriyaki-beef-jerky|Jack Link's Teriyaki Beef Jerky|MP|272|39|25|1.8|1 serving (28 g)=28;1 bag (70 g)=70|jerky beef teriyaki jack links
+jack-links-peppered-beef-jerky|Jack Link's Peppered Beef Jerky|MP|272|40|20|3.5|1 serving (28 g)=28;1 bag (70 g)=70|jerky beef pepper jack links
+beef-jerky-sweet-chilli|Beef jerky, sweet chilli|MP|290|40|22|4.5|1 serving (28 g)=28;1 bag (70 g)=70|jerky beef sweet chilli
+pork-scratchings|Pork scratchings|MP|603|47|0.2|46|1 small bag (30 g)=30;1 bag (60 g)=60|pork scratchings crackling
+pork-rinds-plain|Pork rinds, plain|MP|523|61|0|31|1 serving (14 g)=14;1 bag (50 g)=50|pork rinds chicharrones
+peperami-original|Peperami Original|MP|500|23|2.9|44|1 stick (22.5 g)=22.5|peperami salami stick
+cabanossi-snack-sticks|Cabanossi snack sticks|MP|380|20|3|32|1 stick (25 g)=25;1 pack (100 g)=100|cabanossi kabanos salami stick
+safari-seedless-raisins|Safari Seedless Raisins|NS|323|2.6|77|0.6|1 small box (35 g)=35;1 handful (30 g)=30;1 pack (250 g)=250|safari raisins dried fruit
+safari-sultanas|Safari Sultanas|NS|320|2.7|76|0.5|1 handful (30 g)=30;1 pack (250 g)=250|safari sultanas dried fruit
+safari-dried-mango|Safari Dried Mango|NS|321|2|76|1|1 strip (10 g)=10;1 handful (30 g)=30;1 pack (100 g)=100|safari dried mango strips
+safari-pitted-dates|Safari Pitted Dates|NS|286|2.5|68|0.4|1 date (8 g)=8;3 dates=24;1 pack (250 g)=250|safari dates
+safari-dried-apricots|Safari Dried Apricots|NS|270|3.5|63|0.5|1 apricot (8 g)=8;1 handful (30 g)=30;1 pack (250 g)=250|safari dried apricots
+safari-fruit-salad-mixed-dried-fruit|Safari Fruit Salad (mixed dried fruit)|NS|275|2.5|65|0.6|1 handful (30 g)=30;1 pack (250 g)=250|safari dried fruit mix fruit salad
+safari-dried-cranberries|Safari Dried Cranberries|NS|341|0.1|82|1.4|1 handful (30 g)=30;1 pack (100 g)=100|safari cranberries dried
+safari-prunes|Safari Prunes|NS|246|2.5|58|0.4|1 prune (9 g)=9;1 handful (30 g)=30;1 pack (250 g)=250|safari prunes dried plums
+safari-dried-peaches|Safari Dried Peaches|NS|267|3|62|0.5|1 piece (12 g)=12;1 pack (250 g)=250|safari dried peaches
+safari-dried-apple-rings|Safari Dried Apple Rings|NS|282|1.5|68|0.5|1 ring (5 g)=5;1 handful (30 g)=30;1 pack (100 g)=100|safari dried apple rings
+safari-dried-figs|Safari Dried Figs|NS|269|3|62|1|1 fig (20 g)=20;1 pack (250 g)=250|safari dried figs
+safari-dried-pineapple|Safari Dried Pineapple|NS|328|1|80|0.5|1 handful (30 g)=30;1 pack (100 g)=100|safari dried pineapple
+montagu-mango-strips|Montagu Mango Strips|NS|321|2|76|1|1 strip (10 g)=10;1 pack (100 g)=100|montagu dried mango strips
+montagu-trail-mix|Montagu Trail Mix|NS|453|12|45|25|1 handful (30 g)=30;1 pack (200 g)=200|montagu trail mix nuts fruit
+dried-mango-unsweetened|Dried mango, unsweetened|NS|320|2.5|75|1|1 handful (30 g)=30;1 pack (100 g)=100|dried mango no sugar
+safari-trail-mix|Safari Trail Mix|NS|453|12|45|25|1 handful (30 g)=30;1 pack (100 g)=100;1 pack (200 g)=200|safari trail mix nuts raisins
+safari-nuts-raisins|Safari Nuts & Raisins|NS|459|14|40|27|1 handful (30 g)=30;1 pack (100 g)=100;1 pack (200 g)=200|safari nuts raisins student mix
+safari-peanuts-raisins|Safari Peanuts & Raisins|NS|454|15|40|26|1 handful (30 g)=30;1 pack (100 g)=100;1 pack (200 g)=200|safari peanuts raisins
+safari-salted-peanuts|Safari Salted Peanuts|NS|610|26|14|50|1 handful (30 g)=30;1 pack (100 g)=100;1 pack (200 g)=200|safari peanuts salted roasted
+safari-honey-roasted-peanuts|Safari Honey Roasted Peanuts|NS|560|23|27|40|1 handful (30 g)=30;1 pack (100 g)=100|safari honey peanuts
+safari-mixed-nuts|Safari Mixed Nuts|NS|630|18|18|54|1 handful (30 g)=30;1 pack (100 g)=100|safari mixed nuts
+safari-roasted-salted-cashews|Safari Roasted Salted Cashews|NS|598|18|28|46|1 handful (30 g)=30;1 pack (100 g)=100|safari cashews salted
+safari-almonds|Safari Almonds|NS|588|21|9|52|1 handful (30 g)=30;1 pack (100 g)=100|safari almonds
+safari-macadamia-nuts|Safari Macadamia Nuts|NS|740|8|6|76|1 handful (30 g)=30;1 pack (100 g)=100|safari macadamias
+safari-tropical-fruit-nut-mix|Safari Tropical Fruit & Nut Mix|NS|430|8|55|20|1 handful (30 g)=30;1 pack (200 g)=200|safari tropical mix fruit nut
+woolworths-cranberry-nut-mix|Woolworths Cranberry & Nut Mix|NS|470|12|45|27|1 handful (30 g)=30;1 pack (200 g)=200|woolies cranberry nut mix
+woolworths-trail-mix|Woolworths Trail Mix|NS|455|12|46|25|1 handful (30 g)=30;1 pack (200 g)=200|woolies trail mix
+chocolate-coated-peanuts-raisins|Chocolate coated peanuts & raisins|NS|480|10|55|25|1 handful (30 g)=30;1 pack (100 g)=100|chocolate peanuts raisins
+rice-cracker-peanut-mix|Rice cracker & peanut mix|NS|468|14|58|20|1 handful (30 g)=30;1 pack (100 g)=100|rice crackers peanuts mix japanese
+doritos-tangy-cheese|Doritos Tangy Cheese|SN|500|7|60|26|1 small bag (40 g)=40;1 sharing bag (180 g)=180;1 handful=25|doritos tortilla chips tangy cheese
+doritos-spicy-sweet-chilli|Doritos Spicy Sweet Chilli|SN|497|6.5|62|25|1 small bag (40 g)=40;1 sharing bag (180 g)=180;1 handful=25|doritos tortilla chips spicy sweet chilli
+pringles-pizza|Pringles Pizza|SN|519|5.5|51|32.5|1 small tube (40 g)=40;1 large tube (165 g)=165;10 crisps=16|pringles chips crisps pizza
+kettle-chips-sea-salt-crushed-black-peppercorns|Kettle Chips Sea Salt & Crushed Black Peppercorns|SN|505|6.5|55|29|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|kettle chips crisps black pepper
+tyrrells-lightly-sea-salted|Tyrrells Lightly Sea Salted|SN|512|6.5|54|30|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|tyrrells crisps hand cooked salted
+tyrrells-sweet-chilli-red-pepper|Tyrrells Sweet Chilli & Red Pepper|SN|500|6|56|28|1 small bag (40 g)=40;1 bag (150 g)=150;1 handful=25|tyrrells crisps sweet chilli
+walkers-baked-ready-salted|Walkers Baked Ready Salted|SN|428|6|74|12|1 bag (22 g)=22;1 sharing bag (100 g)=100|walkers baked crisps
+hula-hoops-original|Hula Hoops Original|SN|511|3.5|58|29.5|1 bag (24 g)=24;1 sharing bag (130 g)=130|hula hoops potato rings
+quavers-cheese|Quavers Cheese|SN|528|2.5|62|30|1 bag (16 g)=16;1 sharing bag (70 g)=70|quavers cheese curls
+lays-classic-us|Lay's Classic (US)|SN|536|7|53|33|1 serving (28 g)=28;1 bag (226 g)=226|lays classic potato chips
+lays-barbecue-us|Lay's Barbecue (US)|SN|530|6.5|54|32|1 serving (28 g)=28;1 bag (219 g)=219|lays bbq barbecue potato chips
+potato-sticks-straw-chips|Potato sticks (straw chips)|SN|529|6|52|33|1 small bag (25 g)=25;1 bag (100 g)=100|potato sticks straws chip sticks
+tortilla-chips-sweet-chilli|Tortilla chips, sweet chilli|SN|490|6.5|63|23.5|1 serving (30 g)=30;1 bag (150 g)=150|tortilla chips nachos sweet chilli
+popcorn-ready-popped-salted-bagged|Popcorn, ready-popped salted (bagged)|SN|517|9|55|29|1 small bag (25 g)=25;1 bag (80 g)=80|popcorn ready popped salted
+popcorn-ready-popped-sweet-salty|Popcorn, ready-popped sweet & salty|SN|474|6|63|22|1 small bag (25 g)=25;1 bag (80 g)=80|popcorn sweet salty kettle
+rice-cakes-sweet-chilli-flavour|Rice cakes, sweet chilli flavour|SN|392|7|82|4|1 rice cake (9 g)=9;1 pack (100 g)=100|rice cakes sweet chilli
+roasted-chickpeas-chilli|Roasted chickpeas, chilli|SN|411|20|58|11|1 serving (30 g)=30;1 bag (100 g)=100|chickpea snack chilli
+itsu-crispy-seaweed-thins-sea-salt|itsu Crispy Seaweed Thins Sea Salt|SN|514|26|17|38|1 pack (5 g)=5|itsu seaweed thins
+keebler-club-crackers-original|Keebler Club Crackers Original|BB|501|7|62|25|1 cracker (3.5 g)=3.5;4 crackers=14;1 box (388 g)=388|club crackers keebler
+cheez-it-original|Cheez-It Original|BB|501|11|58|25|1 serving (30 g)=30;1 box (200 g)=200|cheez it cheese crackers
+oreo-mint|Oreo Mint|BB|480|4.5|69|20.5|1 biscuit (11 g)=11;3 biscuits=33;1 pack (154 g)=154|oreo mint creme cookies
+mcvities-caramel-digestives|McVitie's Caramel Digestives|BB|477|5.8|64|22|1 biscuit (17 g)=17;2 biscuits=34;1 pack (250 g)=250|mcvities caramel digestive biscuits
+lotus-biscoff-milk-chocolate|Lotus Biscoff Milk Chocolate|BB|515|6|62|27|1 biscuit (8 g)=8;1 pack (154 g)=154|biscoff chocolate coated biscuits
+party-rings|Party Rings|BB|456|4.5|77|14.5|1 biscuit (6 g)=6;1 pack (125 g)=125|party rings iced biscuits
+pink-wafers|Pink wafers|BB|514|5|65|26|1 wafer (9 g)=9;1 pack (100 g)=100|pink wafer biscuits
+garibaldi-biscuits|Garibaldi biscuits|BB|376|5|70|8.5|1 biscuit (10 g)=10;1 pack (200 g)=200|garibaldi raisin biscuits
+crawfords-nice-biscuits|Crawford's Nice Biscuits|BB|485|6|68|21|1 biscuit (8 g)=8;1 pack (250 g)=250|nice coconut biscuits crawfords
+trek-cocoa-oat-bar|Trek Cocoa Oat Bar|SN|380|17|51|12|1 bar (50 g)=50|trek protein flapjack cocoa oat
+kelloggs-rice-krispies-squares|Kellogg's Rice Krispies Squares|SN|413|3.5|75|11|1 bar (28 g)=28|rice krispies squares treats bar
+bounce-cacao-mint-protein-ball|Bounce Cacao Mint Protein Ball|SU|411|20|40|19|1 ball (42 g)=42|bounce energy ball protein
+quest-bar-chocolate-peanut-butter|Quest Bar Chocolate Peanut Butter|SU|368|35|21|16|1 bar (60 g)=60|quest protein bar chocolate peanut butter
+quest-bar-white-chocolate-raspberry|Quest Bar White Chocolate Raspberry|SU|349|35|23|13|1 bar (60 g)=60|quest protein bar raspberry
+barebells-chocolate-dough|Barebells Chocolate Dough|SU|375|36|30|13.5|1 bar (55 g)=55|barebells protein bar chocolate dough
+grenade-chocolate-chip-cookie-dough|Grenade Chocolate Chip Cookie Dough|SU|376|33|25|16|1 bar (60 g)=60|grenade carb killa protein bar cookie dough
+usn-trust-crunch-protein-bar-salted-caramel|USN Trust Crunch Protein Bar Salted Caramel|SU|390|33|33|14|1 bar (60 g)=60|usn trust crunch protein bar caramel
+fulfil-chocolate-caramel|Fulfil Chocolate Caramel|SU|380|36|29|13.5|1 bar (55 g)=55|fulfil protein bar caramel
+phd-smart-bar-cookies-cream|PhD Smart Bar Cookies & Cream|SU|364|31|32|12.5|1 bar (64 g)=64|phd smart bar protein cookies cream
+myprotein-layered-bar-cookies-cream|Myprotein Layered Bar Cookies & Cream|SU|375|33|27|15|1 bar (60 g)=60|myprotein layered bar cookies cream
+chicken-biltong|Chicken biltong|MP|262|58|2|2.5|1 handful (30 g)=30;1 packet (50 g)=50|chicken biltong
+safari-pecan-nuts|Safari Pecan Nuts|NS|691|9|14|72|1 handful (30 g)=30;1 pack (100 g)=100|safari pecans
+safari-pistachios|Safari Pistachios|NS|597|20|28|45|1 handful (30 g)=30;1 pack (100 g)=100|safari pistachio nuts
+safari-macadamia-cranberry-mix|Safari Macadamia & Cranberry Mix|NS|544|6|40|40|1 handful (30 g)=30;1 pack (100 g)=100|safari macadamia cranberry mix
+safari-coated-peanuts|Safari Coated Peanuts|NS|525|17|40|33|1 handful (30 g)=30;1 pack (100 g)=100|safari coated peanuts beer nuts
+kelloggs-corn-flakes|Kellogg's Corn Flakes|BF|378|7|84|0.9|1 bowl (30 g)=30;1 cup=28;1 large bowl (45 g)=45|kelloggs cornflakes corn flakes
+kelloggs-all-bran-flakes|Kellogg's All-Bran Flakes|BF|342|10.5|65|2.3|1 bowl (30 g)=30;1 cup=35|all bran flakes kelloggs bran
+kelloggs-all-bran-original|Kellogg's All-Bran Original|BF|300|13|50|3.5|1 bowl (40 g)=40;1/2 cup=30|all bran sticks kelloggs
+kelloggs-coco-pops|Kellogg's Coco Pops|BF|386|5.5|85|2.5|1 bowl (30 g)=30;1 cup=33|coco pops chocolate rice kelloggs
+kelloggs-special-k-original|Kellogg's Special K Original|BF|378|12|78|1.5|1 bowl (30 g)=30;1 cup=31|special k kelloggs
+kelloggs-special-k-red-berries|Kellogg's Special K Red Berries|BF|374|10|80|1.5|1 bowl (30 g)=30|special k berries kelloggs
+kelloggs-crunchy-nut-corn-flakes|Kellogg's Crunchy Nut Corn Flakes|BF|402|6.5|82|5|1 bowl (30 g)=30;1 cup=33|crunchy nut kelloggs honey nut cornflakes
+kelloggs-crunchy-nut-clusters|Kellogg's Crunchy Nut Clusters|BF|440|8|71|13|1 bowl (45 g)=45|crunchy nut granola clusters
+kelloggs-froot-loops|Kellogg's Froot Loops|BF|385|6.5|84|3|1 bowl (30 g)=30;1 cup=29|froot loops fruit loops kelloggs
+kelloggs-strawberry-pops|Kellogg's Strawberry Pops|BF|383|5.5|86|1.5|1 bowl (30 g)=30|strawberry pops kelloggs
+kelloggs-frosties|Kellogg's Frosties|BF|375|4.5|87|0.6|1 bowl (30 g)=30|frosties frosted flakes kelloggs
+kelloggs-muesli-fruit|Kellogg's Muesli Fruit|BF|358|8|68|5|1 bowl (45 g)=45;1/2 cup=50|kelloggs muesli
+kelloggs-muesli-nuts-and-seeds|Kellogg's Muesli Nuts and Seeds|BF|395|10|62|11|1 bowl (45 g)=45|kelloggs muesli nuts
+kelloggs-granola-honey-and-almond|Kellogg's Granola Honey and Almond|BF|430|9|66|14|1 serving (45 g)=45|kelloggs granola
+kelloggs-rice-krispies-chocolate|Kellogg's Rice Krispies Chocolate|BF|385|5|85|2.5|1 bowl (30 g)=30|choc krispies
+bokomo-weet-bix-bites-honey|Bokomo Weet-Bix Bites Honey|BF|365|9.5|73|2|1 bowl (40 g)=40;1 cup=40|weetbix bites weet-bix bites
+bokomo-weet-bix-bites-chocolate|Bokomo Weet-Bix Bites Chocolate|BF|370|9.5|72|3|1 bowl (40 g)=40|weetbix bites choc
+bokomo-weet-bix-bites-strawberry|Bokomo Weet-Bix Bites Strawberry|BF|362|9|74|1.8|1 bowl (40 g)=40|weetbix bites strawberry
+bokomo-weet-bix-oat-bran|Bokomo Weet-Bix Oat Bran|BF|360|12|63|4.5|2 biscuits=30|weetbix oatbran
+bokomo-corn-flakes|Bokomo Corn Flakes|BF|376|7|84|0.8|1 bowl (30 g)=30;1 cup=28|bokomo cornflakes
+bokomo-pronutro-chocolate|Bokomo ProNutro Chocolate|BF|380|17|63|5|1 bowl (50 g)=50;1/2 cup=35|pronutro choc chocolate
+bokomo-pronutro-banana-bran|Bokomo ProNutro Banana Bran|BF|365|18|60|4|1 bowl (50 g)=50|pronutro banana
+bokomo-pronutro-wholewheat|Bokomo ProNutro Wholewheat|BF|355|20|55|4.5|1 bowl (50 g)=50|pronutro whole wheat
+bokomo-pronutro-apple-bake|Bokomo ProNutro Apple Bake|BF|370|17|62|4.5|1 bowl (50 g)=50|pronutro apple
+bokomo-pronutro-honeynut|Bokomo ProNutro Honeynut|BF|385|17|62|6.5|1 bowl (50 g)=50|pronutro honey nut
+bokomo-muesli-original|Bokomo Muesli Original|BF|395|9|66|10|1 serving (45 g)=45;1/2 cup=55|bokomo muesli
+bokomo-muesli-fruit|Bokomo Muesli Fruit|BF|380|8|70|7.5|1 serving (45 g)=45|bokomo fruit muesli
+bokomo-muesli-nutty-crunch|Bokomo Muesli Nutty Crunch|BF|430|10|60|16|1 serving (45 g)=45|bokomo muesli nuts
+bokomo-oats-so-easy-original|Bokomo Oats So Easy Original|BF|375|11|66|7|1 sachet (35 g)=35|instant oats sachet bokomo
+jungle-oats-instant-original|Jungle Oats Instant Original|BF|375|12|63|7.5|1 sachet (35 g)=35|jungle oats instant plain
+jungle-oats-instant-apple-and-cinnamon|Jungle Oats Instant Apple and Cinnamon|BF|380|9|72|6|1 sachet (35 g)=35|jungle instant apple cinnamon
+jungle-oats-instant-golden-syrup|Jungle Oats Instant Golden Syrup|BF|385|9|73|6|1 sachet (35 g)=35|jungle instant syrup
+jungle-oats-instant-strawberry|Jungle Oats Instant Strawberry|BF|380|9|72|6|1 sachet (35 g)=35|jungle instant strawberry
+jungle-oats-instant-chocolate|Jungle Oats Instant Chocolate|BF|385|10|70|7|1 sachet (35 g)=35|jungle instant choc
+jungle-oats-cooked-with-water|Jungle Oats Cooked with Water|BF|70|2.5|11.5|1.5|1 bowl (250 g)=250;1 cup=234|jungle oats porridge cooked oatmeal
+jungle-crunch-original|Jungle Crunch Original|BF|440|9|65|15|1 serving (45 g)=45;1/2 cup=50|jungle crunch granola
+jungle-crunch-berry|Jungle Crunch Berry|BF|430|8.5|67|13.5|1 serving (45 g)=45|jungle crunch berries
+jungle-crunch-nutty|Jungle Crunch Nutty|BF|455|10|60|18.5|1 serving (45 g)=45|jungle crunch nuts
+jungle-energy-bar-oats|Jungle Energy Bar Oats|SN|415|7.5|62|14|1 bar (50 g)=50|jungle oats bar
+future-life-smart-food-chocolate|Future Life Smart Food Chocolate|BF|395|17|61|8|1 serving (50 g)=50|futurelife choc
+future-life-high-protein-original|Future Life High Protein Original|BF|380|30|44|7|1 serving (50 g)=50|futurelife high protein
+future-life-high-protein-chocolate|Future Life High Protein Chocolate|BF|385|30|44|8|1 serving (50 g)=50|futurelife high protein choc
+future-life-smart-food-banana|Future Life Smart Food Banana|BF|395|17|62|8|1 serving (50 g)=50|futurelife banana
+future-life-zero-added-sugar|Future Life Zero Added Sugar|BF|385|20|55|8|1 serving (50 g)=50|futurelife zero
+future-life-crunch-original|Future Life Crunch Original|BF|410|12|62|11|1 serving (45 g)=45|futurelife crunch cereal
+natures-source-muesli-original|Nature's Source Muesli Original|BF|398|10|63|11|1 serving (45 g)=45|natures source muesli
+natures-source-muesli-berry|Nature's Source Muesli Berry|BF|385|9|66|9|1 serving (45 g)=45|natures source berry muesli
+natures-choice-granola-original|Nature's Choice Granola Original|BF|445|10|62|16|1 serving (45 g)=45|natures choice granola
+natures-choice-low-gi-muesli|Nature's Choice Low GI Muesli|BF|380|11|60|9|1 serving (45 g)=45|natures choice muesli
+maltabella-cooked|Maltabella Cooked|BF|60|1.6|12.5|0.4|1 bowl (250 g)=250|maltabella porridge cooked mabela
+morvite-prepared-with-water|Morvite Prepared with Water|BF|85|2.5|17|0.7|1 bowl (250 g)=250|morvite porridge cooked
+tastic-instant-porridge-original|Tastic Instant Porridge Original|BF|375|9|78|2|1 serving (40 g)=40|tastic instant maize porridge
+ace-instant-porridge-original|Ace Instant Porridge Original|BF|372|8.5|79|2|1 serving (40 g)=40|ace instant porridge maize
+ace-instant-porridge-vanilla|Ace Instant Porridge Vanilla|BF|380|7.5|81|2|1 serving (40 g)=40|ace instant porridge vanilla
+nestle-nespray-instant-maize-porridge|Nestle Nespray Instant Maize Porridge|BF|380|9|79|2.5|1 serving (40 g)=40|instant maize porridge
+woolworths-toasted-muesli|Woolworths Toasted Muesli|BF|425|10|60|15|1 serving (45 g)=45|woolies muesli
+woolworths-low-fat-granola|Woolworths Low Fat Granola|BF|385|10|70|6|1 serving (45 g)=45|woolies granola low fat
+woolworths-crunchy-granola-nuts-and-seeds|Woolworths Crunchy Granola Nuts and Seeds|BF|470|12|52|22|1 serving (45 g)=45|woolies granola nuts
+woolworths-oat-crunchies|Woolworths Oat Crunchies|BF|415|9|68|11|1 serving (40 g)=40|woolies oat cereal
+kelloggs-nutri-grain-cereal|Kellogg's Nutri-Grain Cereal|BF|380|12|77|2|1 bowl (30 g)=30|nutri grain
+bokomo-weet-bix-porridge-weet-bix-hot-oats|Bokomo Weet-Bix Porridge (Weet-Bix Hot Oats)|BF|365|12|62|6|1 serving (40 g)=40|weetbix porridge
+clover-full-cream-milk|Clover Full Cream Milk|DE|64|3.3|4.7|3.4|1 cup=250;1 glass=200;splash in tea=30|full cream milk clover|L
+clover-low-fat-milk-2|Clover Low Fat Milk (2%)|DE|50|3.4|4.8|2|1 cup=250;1 glass=200;splash in tea=30|low fat milk clover 2%|L
+clover-fat-free-milk|Clover Fat Free Milk|DE|35|3.5|4.9|0.1|1 cup=250;1 glass=200|skim milk fat free clover|L
+clover-lactose-free-low-fat-milk|Clover Lactose Free Low Fat Milk|DE|48|3.3|4.6|1.8|1 cup=250|lactose free milk clover|L
+clover-danao-mango-and-orange|Clover Danao Mango and Orange|DE|44|0.8|9.5|0.3|1 bottle (350 ml)=350;1 glass=200|danao|L
+clover-danao-pineapple-strawberry|Clover Danao Pineapple Strawberry|DE|44|0.8|9.5|0.3|1 bottle (350 ml)=350;1 glass=200|danao|L
+clover-mmmmilk-chocolate|Clover Mmmmilk Chocolate|DE|75|3.2|10.5|2.2|1 bottle (500 ml)=500;1 glass=250|flavoured milk chocolate clover|L
+clover-butter-salted|Clover Butter Salted|DE|740|0.5|0.5|82|1 tsp=5;1 tbsp=14;1 portion (10 g)=10|clover butter
+clover-cheddar-cheese|Clover Cheddar Cheese|DE|405|25|0.5|33.5|1 slice (20 g)=20;1 grated handful (30 g)=30|clover cheddar
+clover-gouda-cheese|Clover Gouda Cheese|DE|360|25|0|28.5|1 slice (20 g)=20;1 cube (30 g)=30|clover gouda
+clover-mozzarella-cheese|Clover Mozzarella Cheese|DE|290|24|1|21|1 slice (20 g)=20;1 grated handful (30 g)=30|clover mozzarella
+clover-cheese-slices-cheddar-flavour|Clover Cheese Slices Cheddar Flavour|DE|300|16|6|23.5|1 slice (20 g)=20|processed cheese slices clover
+clover-fresh-cream|Clover Fresh Cream|DE|340|2|3|36|1 tbsp=15;1 cup=240|fresh cream clover whipping|L
+clover-sour-cream|Clover Sour Cream|DE|195|2.8|4|19|1 tbsp=15;2 tbsp=30|sour cream clover
+clover-custard-vanilla|Clover Custard Vanilla|DE|105|3|16|3.2|1 cup=250;1 serving (125 ml)=125|clover custard ready to eat|L
+clover-double-cream-yoghurt-plain|Clover Double Cream Yoghurt Plain|DE|120|4|5|9.5|1 tub (175 g)=175;1 cup=245|double cream yoghurt clover
+clover-super-m-chocolate|Clover Super M Chocolate|DE|85|3.2|12.5|2.3|1 bottle (300 ml)=300|super m flavoured milk|L
+clover-amasi|Clover Amasi|DE|62|3.3|4.5|3.4|1 cup=250|amasi maas clover|L
+clover-cottage-cheese-plain|Clover Cottage Cheese Plain|DE|105|12|3.5|4.8|1 tbsp=25;1/2 cup=110|cottage cheese clover
+danone-nutriday-strawberry|Danone Nutriday Strawberry|DE|95|3|15|2.5|1 tub (100 g)=100;1 tub (150 g)=150|nutriday yoghurt
+danone-nutriday-vanilla|Danone Nutriday Vanilla|DE|98|3|15.5|2.6|1 tub (100 g)=100|nutriday vanilla
+danone-ultra-mel-custard-vanilla|Danone Ultra Mel Custard Vanilla|DE|110|3|17.5|3|1 cup=250;1 tub (125 g)=125|ultra mel custard ultramel|L
+danone-ultra-mel-custard-chocolate|Danone Ultra Mel Custard Chocolate|DE|120|3.2|19|3.4|1 tub (125 g)=125|ultra mel chocolate|L
+danone-activia-plain|Danone Activia Plain|DE|75|4.2|6|3.5|1 tub (125 g)=125;1 tub (175 g)=175|activia plain yoghurt
+danone-activia-strawberry|Danone Activia Strawberry|DE|92|3.5|13|2.8|1 tub (125 g)=125|activia strawberry
+danone-activia-fat-free-vanilla|Danone Activia Fat Free Vanilla|DE|55|4|9|0.1|1 tub (125 g)=125|activia fat free
+danone-yogo-strawberry|Danone YoGo Strawberry|DE|95|2.8|15|2.5|1 tub (100 g)=100|yogo yoghurt kids
+danone-danonino-strawberry|Danone Danonino Strawberry|DE|105|6|13|3|1 tub (50 g)=50|danonino kids
+danone-oikos-greek-style-plain|Danone Oikos Greek Style Plain|DE|115|5|4.5|8.5|1 tub (150 g)=150|oikos greek yoghurt
+danone-ultra-mel-dessert-chocolate|Danone Ultra Mel Dessert Chocolate|DE|125|3.5|19|3.8|1 tub (100 g)=100|ultramel dessert
+parmalat-everyday-cheese-slices|Parmalat Everyday Cheese Slices|DE|285|15|7|22|1 slice (20 g)=20|everyday cheese parmalat
+parmalat-cheddar-cheese|Parmalat Cheddar Cheese|DE|405|25|0.5|33.5|1 slice (20 g)=20;1 grated handful (30 g)=30|parmalat cheddar
+parmalat-gouda-cheese|Parmalat Gouda Cheese|DE|360|25|0|28.5|1 slice (20 g)=20|parmalat gouda
+parmalat-mozzarella-cheese|Parmalat Mozzarella Cheese|DE|290|24|1.5|21|1 grated handful (30 g)=30|parmalat mozzarella
+parmalat-fruit-yoghurt-strawberry|Parmalat Fruit Yoghurt Strawberry|DE|95|3.2|15|2.5|1 tub (100 g)=100;1 tub (175 g)=175|parmalat yoghurt
+parmalat-fat-free-yoghurt-vanilla|Parmalat Fat Free Yoghurt Vanilla|DE|60|4|10.5|0.1|1 tub (175 g)=175|parmalat fat free
+parmalat-bonnita-custard|Parmalat Bonnita Custard|DE|105|3|16|3|1 serving (125 ml)=125|parmalat custard|L
+parmalat-steri-stumpie-chocolate|Parmalat Steri Stumpie Chocolate|DE|80|3.2|12|2|1 bottle (350 ml)=350|steri stumpie flavoured milk|L
+parmalat-full-cream-long-life-milk|Parmalat Full Cream Long Life Milk|DE|63|3.2|4.8|3.3|1 cup=250|uht milk long life|L
+woolworths-double-cream-plain-yoghurt|Woolworths Double Cream Plain Yoghurt|DE|135|4|5|11|1 tub (175 g)=175;1 cup=245|woolies double cream yoghurt
+woolworths-double-cream-vanilla-yoghurt|Woolworths Double Cream Vanilla Yoghurt|DE|155|3.6|13|9.8|1 tub (175 g)=175|woolies vanilla double cream
+woolworths-fat-free-greek-yoghurt|Woolworths Fat Free Greek Yoghurt|DE|60|9.5|4.5|0.2|1 tub (175 g)=175;1 cup=245|woolies greek fat free
+woolworths-low-fat-plain-yoghurt|Woolworths Low Fat Plain Yoghurt|DE|62|5|6.5|1.5|1 tub (175 g)=175|woolies plain yoghurt
+woolworths-full-cream-milk|Woolworths Full Cream Milk|DE|64|3.3|4.7|3.4|1 cup=250;1 glass=200|woolies milk|L
+woolworths-low-fat-cottage-cheese|Woolworths Low Fat Cottage Cheese|DE|85|12|3.5|2.3|1/2 cup=110;2 tbsp=50|woolies cottage cheese
+woolworths-high-protein-yoghurt-plain|Woolworths High Protein Yoghurt Plain|DE|68|10|5|0.5|1 tub (175 g)=175|woolies protein yoghurt
+fage-total-0-greek-yoghurt|Fage Total 0% Greek Yoghurt|DE|54|10|3|0|1 tub (170 g)=170|fage 0 greek
+fage-total-5-greek-yoghurt|Fage Total 5% Greek Yoghurt|DE|93|9|3|5|1 tub (170 g)=170|fage greek full
+ayrshire-full-cream-milk|Ayrshire Full Cream Milk|DE|66|3.4|4.7|3.6|1 cup=250|ayrshire milk|L
+ayrshire-double-cream-yoghurt|Ayrshire Double Cream Yoghurt|DE|140|3.8|6|11|1 tub (175 g)=175|ayrshire yoghurt
+inkomazi-amasi|Inkomazi Amasi|DE|62|3.3|4.5|3.4|1 cup=250|inkomazi maas amasi|L
+dairybelle-cottage-cheese-plain|Dairybelle Cottage Cheese Plain|DE|110|12|3.5|5.2|1/2 cup=110|dairybelle cottage
+lancewood-cottage-cheese-plain|Lancewood Cottage Cheese Plain|DE|110|12|3|5.5|1/2 cup=110|lancewood cottage
+lancewood-cream-cheese-plain|Lancewood Cream Cheese Plain|DE|290|6|3|28|1 tbsp=15;2 tbsp=30|lancewood cream cheese
+lancewood-double-cream-yoghurt-plain|Lancewood Double Cream Yoghurt Plain|DE|130|4|5|10.5|1 tub (175 g)=175|lancewood yoghurt
+melrose-cheese-spread-original|Melrose Cheese Spread Original|DE|270|11|5|23|1 tbsp=15;1 portion (20 g)=20|melrose
+philadelphia-cream-cheese-original|Philadelphia Cream Cheese Original|DE|235|5.5|4|22|1 tbsp=15;2 tbsp=30|philadelphia cream cheese
+philadelphia-cream-cheese-light|Philadelphia Cream Cheese Light|DE|155|7.5|5|11.5|1 tbsp=15|philadelphia light
+lurpak-slightly-salted-butter|Lurpak Slightly Salted Butter|DE|730|0.6|0.6|81|1 tsp=5;1 tbsp=14|lurpak butter
+lurpak-spreadable|Lurpak Spreadable|OS|700|0.4|0.5|78|1 tsp=5;1 tbsp=14|lurpak spreadable
+flora-original-spread|Flora Original Spread|OS|530|0|0.5|59|1 tsp=5;1 tbsp=14|flora margarine
+flora-light-spread|Flora Light Spread|OS|350|0|1|39|1 tsp=5;1 tbsp=14|flora light
+rama-original-spread|Rama Original Spread|OS|560|0|0.5|62|1 tsp=5;1 tbsp=14|rama margarine
+rama-light-spread|Rama Light Spread|OS|350|0|1|39|1 tsp=5|rama light
+stork-bake|Stork Bake|OS|720|0|0.5|80|1 tbsp=14;1 cup=225|stork baking margarine
+stork-country-spread|Stork Country Spread|OS|540|0|0.5|60|1 tsp=5;1 tbsp=14|stork spread
+nulaid-eggs-large|Nulaid Eggs Large|DE|143|12.5|0.7|10|1 large egg=51;2 eggs=102|nulaid egg
+black-cat-peanut-butter-smooth|Black Cat Peanut Butter Smooth|OS|613|25|15|50|1 tbsp=16;1 heaped tbsp=25|peanut butter black cat
+black-cat-peanut-butter-crunchy|Black Cat Peanut Butter Crunchy|OS|615|25.5|14.5|50.5|1 tbsp=16;1 heaped tbsp=25|peanut butter crunchy black cat
+black-cat-peanut-butter-no-added-sugar|Black Cat Peanut Butter No Added Sugar|OS|620|27|11|51|1 tbsp=16;1 heaped tbsp=25|black cat no sugar
+black-cat-peanut-butter-reduced-fat|Black Cat Peanut Butter Reduced Fat|OS|540|25|30|36|1 tbsp=16|black cat reduced fat
+yum-yum-peanut-butter-smooth|Yum Yum Peanut Butter Smooth|OS|615|24|16|50|1 tbsp=16;1 heaped tbsp=25|yum yum peanut butter
+yum-yum-peanut-butter-crunchy|Yum Yum Peanut Butter Crunchy|OS|615|24.5|15.5|50|1 tbsp=16|yum yum crunchy
+nutella-hazelnut-spread|Nutella Hazelnut Spread|OS|540|6.3|57.5|31|1 tbsp=15;1 portion (15 g)=15|nutella chocolate spread
+beacon-smooth-apricot-jam|Beacon Smooth Apricot Jam|OS|255|0.4|63|0|1 tsp=7;1 tbsp=20|apricot jam
+rhodes-smooth-apricot-jam|Rhodes Smooth Apricot Jam|OS|255|0.4|63|0|1 tsp=7;1 tbsp=20|rhodes jam apricot
+koo-smooth-apricot-jam|Koo Smooth Apricot Jam|OS|255|0.4|63|0|1 tsp=7;1 tbsp=20|koo jam apricot
+koo-strawberry-jam|Koo Strawberry Jam|OS|255|0.4|63|0|1 tsp=7;1 tbsp=20|koo strawberry jam
+rhodes-mixed-fruit-jam|Rhodes Mixed Fruit Jam|OS|255|0.3|63|0|1 tsp=7;1 tbsp=20|mixed fruit jam
+lyles-golden-syrup|Lyle's Golden Syrup|OS|325|0|81|0|1 tbsp=21;1 tsp=7|golden syrup lyles
+illovo-golden-syrup|Illovo Golden Syrup|OS|325|0|81|0|1 tbsp=21|golden syrup illovo
+mrs-balls-chutney-hot|Mrs Ball's Chutney Hot|OS|195|0.8|47|0.3|1 tbsp=20;2 tbsp=40|chutney hot mrs balls
+mrs-balls-chutney-peach|Mrs Ball's Chutney Peach|OS|195|0.8|47|0.3|1 tbsp=20|chutney peach mrs balls
+all-gold-tomato-sauce|All Gold Tomato Sauce|OS|120|1.2|28|0.1|1 tbsp=17;1 sachet=15|tomato sauce all gold ketchup
+all-gold-tomato-sauce-lite|All Gold Tomato Sauce Lite|OS|60|1.2|13|0.1|1 tbsp=17|tomato sauce lite
+wellingtons-tomato-sauce|Wellington's Tomato Sauce|OS|115|1|27|0.2|1 tbsp=17|wellingtons tomato sauce
+wellingtons-sweet-chilli-sauce|Wellington's Sweet Chilli Sauce|OS|200|0.3|49|0.2|1 tbsp=17|wellingtons sweet chilli
+wellingtons-chilli-sauce-hot|Wellington's Chilli Sauce Hot|OS|85|1|20|0.2|1 tsp=5;1 tbsp=17|wellingtons chilli
+crosse-blackwell-mayonnaise-original|Crosse & Blackwell Mayonnaise Original|OS|585|0.8|12|59|1 tbsp=15;1 tsp=5|mayonnaise mayo crosse blackwell
+crosse-blackwell-tangy-mayonnaise|Crosse & Blackwell Tangy Mayonnaise|OS|505|0.6|18|48|1 tbsp=15;1 tsp=5|tangy mayo crosse blackwell
+crosse-blackwell-mayonnaise-lite|Crosse & Blackwell Mayonnaise Lite|OS|290|0.8|15|25|1 tbsp=15|lite mayo crosse blackwell
+hellmanns-real-mayonnaise|Hellmann's Real Mayonnaise|OS|720|1.1|1.3|79|1 tbsp=15;1 tsp=5|hellmanns mayo
+hellmanns-light-mayonnaise|Hellmann's Light Mayonnaise|OS|260|0.7|8|25|1 tbsp=15|hellmanns light
+nandos-peri-peri-sauce-medium|Nando's Peri-Peri Sauce Medium|OS|70|1|5.5|4.8|1 tbsp=15;1 tsp=5|nandos peri peri sauce
+nandos-peri-peri-sauce-hot|Nando's Peri-Peri Sauce Hot|OS|70|1|5|5|1 tbsp=15;1 tsp=5|nandos hot peri
+nandos-peri-peri-sauce-lemon-and-herb|Nando's Peri-Peri Sauce Lemon and Herb|OS|90|0.5|6|7|1 tbsp=15|nandos lemon herb
+nandos-garlic-peri-peri-sauce|Nando's Garlic Peri-Peri Sauce|OS|85|1|6|6.2|1 tbsp=15|nandos garlic peri
+nandos-peri-peri-marinade-medium|Nando's Peri-Peri Marinade Medium|OS|95|0.8|7|7|1 tbsp=15|nandos marinade
+steers-monkey-gland-sauce|Steers Monkey Gland Sauce|OS|135|0.6|32|0.3|1 tbsp=17|monkey gland steers
+steers-pepper-sauce|Steers Pepper Sauce|OS|120|1|14|6.5|1 tbsp=17|steers pepper sauce
+steers-garlic-sauce|Steers Garlic Sauce|OS|300|0.5|12|27.5|1 tbsp=15|steers garlic
+steers-peri-peri-sauce|Steers Peri-Peri Sauce|OS|80|0.8|12|3|1 tbsp=15|steers peri
+steers-bbq-sauce|Steers BBQ Sauce|OS|140|0.8|33|0.3|1 tbsp=17|steers barbecue
+knorr-brown-onion-gravy-powder|Knorr Brown Onion Gravy Powder|OS|345|7|70|3.5|1 tbsp dry (10 g)=10;1 serving prepared dry mix=15|knorr gravy brown onion
+knorr-brown-onion-gravy-prepared|Knorr Brown Onion Gravy Prepared|OS|30|0.6|6|0.3|1/4 cup=60;1 serving (60 ml)=60|knorr gravy made up|L
+knorr-thick-vegetable-soup-powder|Knorr Thick Vegetable Soup Powder|HM|330|10|63|2.5|1 serving dry (15 g)=15|knorr soup vegetable
+knorr-cream-of-mushroom-soup-prepared|Knorr Cream of Mushroom Soup Prepared|HM|45|0.8|5.5|2.2|1 cup=250|knorr mushroom soup|L
+knorr-oxtail-soup-prepared|Knorr Oxtail Soup Prepared|HM|30|0.8|6|0.3|1 cup=250|knorr oxtail soup|L
+knorr-chicken-stock-cube|Knorr Chicken Stock Cube|OS|255|8|23|15|1 cube=10|knorr stock cube chicken
+knorr-beef-stock-cube|Knorr Beef Stock Cube|OS|245|8|21|14|1 cube=10|knorr stock cube beef
+knorr-cook-in-sauce-butter-chicken|Knorr Cook-in Sauce Butter Chicken|OS|115|1.5|12|7|1/4 jar=100;1 jar (400 g)=400|knorr butter chicken sauce
+knorr-cook-in-sauce-sweet-and-sour|Knorr Cook-in Sauce Sweet and Sour|OS|95|0.5|22|0.5|1/4 jar=100|knorr sweet sour sauce
+knorr-cook-in-sauce-chicken-a-la-king|Knorr Cook-in Sauce Chicken a la King|OS|85|1|8|5.5|1/4 sachet=100|knorr chicken a la king
+royco-brown-onion-gravy-powder|Royco Brown Onion Gravy Powder|OS|340|6|72|3|1 tbsp dry (10 g)=10|royco gravy
+royco-soup-thickener-powder|Royco Soup Thickener Powder|OS|335|7|72|1.5|1 tbsp dry (10 g)=10|royco thickener
+royco-minestrone-soup-powder|Royco Minestrone Soup Powder|HM|330|10|65|2.5|1 serving dry (15 g)=15|royco minestrone
+royco-cup-a-soup-chicken-prepared|Royco Cup-a-Soup Chicken Prepared|HM|35|0.6|6|1|1 cup (200 ml)=200|cup a soup royco|L
+royco-cook-in-sauce-beef-stroganoff|Royco Cook-in Sauce Beef Stroganoff|OS|70|1.5|9|3|1/4 sachet=100|royco stroganoff sauce
+royco-cook-in-sauce-chicken-curry|Royco Cook-in Sauce Chicken Curry|OS|75|1.5|10|3|1/4 sachet=100|royco curry sauce
+ina-paarmans-seasoned-sea-salt|Ina Paarman's Seasoned Sea Salt|OS|20|0.5|4|0.2|1 tsp=5|ina paarman seasoning salt
+ina-paarmans-coat-and-cook-sticky-marinade|Ina Paarman's Coat and Cook Sticky Marinade|OS|180|0.5|43|0.6|1 tbsp=17|ina paarman sticky marinade
+ina-paarmans-creamy-mushroom-sauce|Ina Paarman's Creamy Mushroom Sauce|OS|110|1.2|6|9|1/4 cup=60|ina paarman mushroom sauce
+ina-paarmans-lemon-and-black-pepper-seasoning|Ina Paarman's Lemon and Black Pepper Seasoning|OS|120|3|25|1|1 tsp=5|ina paarman lemon pepper
+rajah-curry-powder-mild-and-spicy|Rajah Curry Powder Mild and Spicy|OS|310|11|40|12|1 tsp=3;1 tbsp=8|rajah curry powder
+rajah-all-in-one-curry-powder|Rajah All-in-One Curry Powder|OS|300|10|42|10|1 tsp=3;1 tbsp=8|rajah all in one
+aromat-original-seasoning|Aromat Original Seasoning|OS|110|8|16|1.5|1 tsp=5;1 shake=1|aromat knorr
+robertsons-braai-and-grill-spice|Robertsons Braai and Grill Spice|OS|140|4|24|3|1 tsp=5|braai spice robertsons
+maggi-2-minute-noodles-chicken-dry|Maggi 2-Minute Noodles Chicken (dry)|GR|455|9.5|60|19.5|1 pack (73 g)=73|maggi noodles chicken 2 minute
+maggi-2-minute-noodles-beef-dry|Maggi 2-Minute Noodles Beef (dry)|GR|455|9.5|60|19.5|1 pack (73 g)=73|maggi noodles beef
+maggi-2-minute-noodles-cheese-dry|Maggi 2-Minute Noodles Cheese (dry)|GR|460|9.5|60|20|1 pack (73 g)=73|maggi cheese noodles
+maggi-2-minute-noodles-chicken-prepared|Maggi 2-Minute Noodles Chicken Prepared|GR|155|3.2|20.5|6.6|1 pack prepared=215|maggi noodles cooked
+indomie-instant-noodles-chicken-dry|Indomie Instant Noodles Chicken (dry)|GR|465|8.5|62|20|1 pack (70 g)=70|indomie noodles
+pot-noodle-chicken-dry|Pot Noodle Chicken (dry)|GR|440|9|62|17|1 pot (70 g)=70|pot noodle
+koo-baked-beans-in-tomato-sauce|Koo Baked Beans in Tomato Sauce|PP|80|4.5|13|0.3|1/2 can (205 g)=205;1 can (410 g)=410;1/2 cup=130|koo baked beans
+koo-chakalaka-mild-and-spicy|Koo Chakalaka Mild and Spicy|VG|60|1.5|9|1.5|1/2 can (205 g)=205;1 serving (100 g)=100|koo chakalaka
+koo-chakalaka-hot|Koo Chakalaka Hot|VG|60|1.5|9|1.5|1/2 can (205 g)=205|koo chakalaka hot
+koo-mixed-vegetables-in-brine|Koo Mixed Vegetables in Brine|VG|50|2.5|8|0.3|1/2 can=205|koo mixed veg
+koo-butter-beans|Koo Butter Beans|PP|85|5.5|13|0.5|1/2 can (205 g)=205|koo butter beans
+koo-red-kidney-beans|Koo Red Kidney Beans|PP|95|6.5|14|0.5|1/2 can (205 g)=205|koo kidney beans
+koo-creamed-sweetcorn|Koo Creamed Sweetcorn|VG|85|2|18|0.6|1/2 can (205 g)=205|koo creamed sweetcorn
+koo-peach-halves-in-syrup|Koo Peach Halves in Syrup|FR|75|0.4|18|0.1|1 serving (125 g)=125|koo peaches canned
+koo-curried-beans|Koo Curried Beans|PP|95|4.5|16|1.5|1/2 can (205 g)=205|koo curry beans
+koo-pasta-mania-spaghetti-in-tomato-sauce|Koo Pasta Mania Spaghetti in Tomato Sauce|GR|75|2|15|0.6|1/2 can (205 g)=205|koo spaghetti
+lucky-star-pilchards-in-tomato-sauce|Lucky Star Pilchards in Tomato Sauce|FS|140|16|3.5|7|1 can (400 g)=400;1/2 can=200;1 pilchard=80|lucky star pilchards
+lucky-star-pilchards-in-chilli-sauce|Lucky Star Pilchards in Chilli Sauce|FS|140|16|3.8|7|1/2 can=200|lucky star pilchards chilli
+lucky-star-pilchards-in-tomato-sauce-low-fat|Lucky Star Pilchards in Tomato Sauce Low Fat|FS|110|17|3.5|3.2|1/2 can=200|lucky star pilchards lite
+lucky-star-light-meat-tuna-chunks-in-brine|Lucky Star Light Meat Tuna Chunks in Brine|FS|105|24|0|1|1 can drained (120 g)=120;1/2 can=60|lucky star tuna brine
+lucky-star-light-meat-tuna-chunks-in-oil|Lucky Star Light Meat Tuna Chunks in Oil|FS|190|23|0|11|1 can drained (120 g)=120|lucky star tuna oil
+lucky-star-sardines-in-oil|Lucky Star Sardines in Oil|FS|210|22|0|13.5|1 can drained (90 g)=90|lucky star sardines
+lucky-star-mackerel-in-tomato-sauce|Lucky Star Mackerel in Tomato Sauce|FS|165|15|3.5|10|1/2 can=200|lucky star mackerel
+lucky-star-pilchards-and-spaghetti-mild-curry|Lucky Star Pilchards and Spaghetti Mild Curry|FS|130|9|13|4.5|1 can (215 g)=215|lucky star curry pilchards
+john-west-tuna-chunks-in-brine|John West Tuna Chunks in Brine|FS|110|25|0|1|1 can drained (120 g)=120;1/2 can=60|john west tuna brine
+john-west-tuna-chunks-in-sunflower-oil|John West Tuna Chunks in Sunflower Oil|FS|195|24|0|11|1 can drained (120 g)=120|john west tuna oil
+pakco-atchar-mango|Pakco Atchar Mango|VG|195|1|8|18|1 tbsp=15;2 tbsp=30|pakco achar atchar mango pickle
+pakco-mixed-atchar|Pakco Mixed Atchar|VG|185|1|7.5|17|1 tbsp=15|pakco atchar mixed
+albany-superior-white-bread|Albany Superior White Bread|BB|250|8|47|2.5|1 slice (38 g)=38;2 slices=76|albany white bread
+albany-superior-brown-bread|Albany Superior Brown Bread|BB|235|8.5|42|2.8|1 slice (38 g)=38;2 slices=76|albany brown bread
+albany-superior-wholewheat-brown-bread|Albany Superior Wholewheat Brown Bread|BB|230|9.5|39|3|1 slice (38 g)=38;2 slices=76|albany wholewheat bread
+albany-low-gi-brown-bread|Albany Low GI Brown Bread|BB|235|9.5|40|3.5|1 slice (38 g)=38|albany low gi
+albany-ultima-seeded-bread|Albany Ultima Seeded Bread|BB|255|11|38|6|1 slice (40 g)=40|albany ultima seeded
+albany-hot-dog-rolls|Albany Hot Dog Rolls|BB|265|8.5|49|3.5|1 roll (55 g)=55|albany hot dog buns
+albany-hamburger-rolls|Albany Hamburger Rolls|BB|265|8.5|49|3.5|1 roll (60 g)=60|albany burger buns
+sasko-premium-white-bread|Sasko Premium White Bread|BB|250|8|48|2.3|1 slice (38 g)=38;2 slices=76|sasko white bread
+sasko-premium-brown-bread|Sasko Premium Brown Bread|BB|235|8.5|43|2.5|1 slice (38 g)=38|sasko brown bread
+sasko-whole-wheat-brown-bread|Sasko Whole Wheat Brown Bread|BB|232|9|40|3|1 slice (38 g)=38|sasko wholewheat
+sasko-low-gi-bread|Sasko Low GI Bread|BB|238|10|40|3.5|1 slice (38 g)=38|sasko low gi
+blue-ribbon-white-bread|Blue Ribbon White Bread|BB|250|8|48|2.3|1 slice (38 g)=38|blue ribbon white
+blue-ribbon-brown-bread|Blue Ribbon Brown Bread|BB|236|8.5|43|2.5|1 slice (38 g)=38|blue ribbon brown
+sunbake-white-bread|Sunbake White Bread|BB|250|8|48|2.3|1 slice (38 g)=38|sunbake white
+sunbake-brown-bread|Sunbake Brown Bread|BB|236|8.5|43|2.5|1 slice (38 g)=38|sunbake brown
+woolworths-low-gi-health-loaf|Woolworths Low GI Health Loaf|BB|250|11|35|7|1 slice (40 g)=40|woolies health bread
+woolworths-seed-loaf|Woolworths Seed Loaf|BB|275|11|33|11|1 slice (40 g)=40|woolies seed bread
+woolworths-sourdough-loaf|Woolworths Sourdough Loaf|BB|245|9|48|1.5|1 slice (45 g)=45|woolies sourdough
+woolworths-rye-bread|Woolworths Rye Bread|BB|225|7|42|2.5|1 slice (40 g)=40|woolies rye
+woolworths-white-sandwich-loaf|Woolworths White Sandwich Loaf|BB|245|8.5|46|2.5|1 slice (38 g)=38|woolies white bread
+woolworths-wholewheat-sandwich-loaf|Woolworths Wholewheat Sandwich Loaf|BB|235|10|39|3.5|1 slice (38 g)=38|woolies wholewheat bread
+woolworths-portuguese-rolls|Woolworths Portuguese Rolls|BB|275|9|54|2|1 roll (75 g)=75|portuguese roll paposseco
+woolworths-wholewheat-wraps|Woolworths Wholewheat Wraps|BB|290|9|45|7|1 wrap (60 g)=60|woolies wraps wholewheat
+woolworths-white-wraps|Woolworths White Wraps|BB|300|8.5|49|7|1 wrap (60 g)=60|woolies wraps
+woolworths-low-carb-wraps|Woolworths Low Carb Wraps|BB|245|18|16|10|1 wrap (40 g)=40|woolies low carb wrap
+mission-wholewheat-wraps|Mission Wholewheat Wraps|BB|300|8.5|45|8|1 wrap (61 g)=61|mission wraps whole wheat
+mission-wraps-original-sa-6-pack|Mission Wraps Original (SA 6 pack)|BB|310|8.5|50|7.5|1 wrap (61 g)=61|mission tortilla original
+portuguese-roll-supermarket-bakery|Portuguese Roll (supermarket bakery)|BB|275|9|54|2|1 roll (75 g)=75|portuguese roll paposseco
+pita-bread-white-sa-pocket-pita|Pita Bread White (SA pocket pita)|BB|265|9|53|1.5|1 pita (60 g)=60|pita pocket
+pita-bread-wholewheat|Pita Bread Wholewheat|BB|250|10|48|2|1 pita (60 g)=60|wholewheat pita
+flapjacks-sa-crumpets-small|Flapjacks (SA crumpets small)|BB|245|6.5|40|6.5|1 flapjack (30 g)=30;3 flapjacks=90|flapjacks mini pancakes
+woolworths-english-muffins|Woolworths English Muffins|BB|230|8.5|44|2|1 muffin (65 g)=65|woolies english muffin
+hot-dog-rolls-sa-bakery|Hot Dog Rolls (SA bakery)|BB|265|8.5|49|3.5|1 roll (55 g)=55|hot dog bun
+hamburger-buns-sesame-sa-bakery|Hamburger Buns Sesame (SA bakery)|BB|275|9|49|4.5|1 bun (70 g)=70|burger bun sesame
+bread-rolls-white-sa-bakery|Bread Rolls White (SA bakery)|BB|270|8.5|52|2.5|1 roll (60 g)=60|white roll
+bread-rolls-brown-sa-bakery|Bread Rolls Brown (SA bakery)|BB|250|9|46|3|1 roll (60 g)=60|brown roll
+pyotts-rusks-buttermilk|Pyotts Rusks Buttermilk|BB|420|7|68|13|1 rusk=35|rusks
+ouma-rusks-buttermilk|Ouma Rusks Buttermilk|SA|425|7|68|14|1 rusk (40 g)=40|ouma rusks buttermilk
+ouma-rusks-muesli|Ouma Rusks Muesli|SA|440|8|62|17|1 rusk (40 g)=40|ouma rusks muesli
+ouma-rusks-condensed-milk|Ouma Rusks Condensed Milk|SA|430|7|70|13.5|1 rusk (40 g)=40|ouma rusks condensed
+mccain-slap-chips-frozen-oven-baked|McCain Slap Chips (frozen, oven baked)|VG|155|2.5|24|5.5|1 serving (100 g)=100;1 cup=80|mccain chips slap chips
+mccain-crinkle-cut-chips-oven-baked|McCain Crinkle Cut Chips (oven baked)|VG|165|2.5|25|6|1 serving (100 g)=100|mccain crinkle chips
+mccain-french-fries-oven-baked|McCain French Fries (oven baked)|VG|175|2.8|27|6|1 serving (100 g)=100|mccain french fries
+mccain-potato-wedges|McCain Potato Wedges|VG|145|2.5|22|5|1 serving (100 g)=100|mccain wedges
+mccain-hash-browns|McCain Hash Browns|VG|185|2|22|10|1 hash brown (50 g)=50|mccain hash brown
+mccain-stir-fry-vegetables|McCain Stir Fry Vegetables|VG|35|2|6|0.3|1 cup=100;1/2 bag=200|mccain stir fry veg
+mccain-garden-peas|McCain Garden Peas|VG|70|5|10|0.5|1/2 cup=80|mccain peas
+mccain-mixed-vegetables|McCain Mixed Vegetables|VG|55|2.8|9|0.5|1/2 cup=80;1 cup=150|mccain mixed veg
+mccain-country-vegetables|McCain Country Vegetables|VG|35|2|6|0.3|1 cup=100|mccain country veg
+mccain-broccoli-florets|McCain Broccoli Florets|VG|30|3|3|0.4|1 cup=90|mccain broccoli
+mccain-butternut-cubes|McCain Butternut Cubes|VG|40|1|8.5|0.1|1 cup=140|mccain butternut
+mccain-sweetcorn-kernels|McCain Sweetcorn Kernels|VG|85|3|16|1.2|1/2 cup=80|mccain corn
+denny-button-mushrooms|Denny Button Mushrooms|VG|24|3.1|2|0.3|1 cup sliced=70;1 punnet (250 g)=250|denny mushrooms
+denny-portabellini-mushrooms|Denny Portabellini Mushrooms|VG|26|3|2.5|0.3|1 mushroom=20;1 punnet=250|denny portabellini
+denny-sliced-mushrooms-in-brine|Denny Sliced Mushrooms in Brine|VG|20|2|2|0.3|1/2 can drained=100|denny tinned mushrooms
+i-j-fish-fingers|I&J Fish Fingers|FS|215|12|19|10|1 finger (25 g)=25;4 fingers=100|fish fingers i&j
+i-j-crumbed-hake-portions|I&J Crumbed Hake Portions|FS|200|12|16|9.5|1 portion (100 g)=100|i&j crumbed hake
+i-j-hake-fillets-natural|I&J Hake Fillets Natural|FS|80|17|0|1|1 fillet (120 g)=120|i&j hake plain
+i-j-lemon-and-herb-crumbed-fish|I&J Lemon and Herb Crumbed Fish|FS|210|11|18|10|1 portion (100 g)=100|i&j lemon crumbed
+i-j-fish-cakes|I&J Fish Cakes|FS|190|9|18|9|1 fishcake (50 g)=50|i&j fishcakes
+i-j-battered-hake|I&J Battered Hake|FS|230|11|19|12.5|1 portion (110 g)=110|i&j battered fish
+sea-harvest-crumbed-hake|Sea Harvest Crumbed Hake|FS|200|12|16|9.5|1 portion (100 g)=100|sea harvest crumbed hake
+sea-harvest-hake-fillets-natural|Sea Harvest Hake Fillets Natural|FS|80|17|0|1|1 fillet (120 g)=120|sea harvest hake
+sea-harvest-fish-fingers|Sea Harvest Fish Fingers|FS|215|12|19|10|4 fingers (100 g)=100|sea harvest fish fingers
+sea-harvest-lightly-dusted-hake|Sea Harvest Lightly Dusted Hake|FS|150|14|10|6|1 portion (110 g)=110|sea harvest dusted
+frys-traditional-burgers|Fry's Traditional Burgers|PP|235|18|9|13.5|1 burger (80 g)=80|frys vegetarian burger
+frys-chicken-style-nuggets|Fry's Chicken-Style Nuggets|PP|235|15|20|10|1 nugget=20;5 nuggets=100|frys vegan nuggets
+frys-polony|Fry's Polony|PP|180|11|7|12|1 slice (15 g)=15;3 slices=45|frys vegetarian polony
+frys-traditional-sausages|Fry's Traditional Sausages|PP|220|18|8|13|1 sausage (60 g)=60|frys sausages vegan
+frys-chicken-style-strips|Fry's Chicken-Style Strips|PP|155|19|8|5|1 serving (100 g)=100|frys strips
+frys-hotdogs|Fry's Hotdogs|PP|195|13|7|12.5|1 hotdog (50 g)=50|frys vegan viennas
+frys-mince-savoury|Fry's Mince Savoury|PP|125|17|6|3.5|1 serving (100 g)=100|frys mince
+enterprise-polony|Enterprise Polony|MP|200|10.5|7|14.5|1 slice (15 g)=15;3 slices=45|enterprise polony
+enterprise-viennas|Enterprise Viennas|MP|245|11|4|20.5|1 vienna (37 g)=37;2 viennas=74|enterprise viennas hot dog
+enterprise-russians|Enterprise Russians|MP|270|11|4|23.5|1 russian (80 g)=80|enterprise russians
+enterprise-ham-sliced|Enterprise Ham (sliced)|MP|110|15|3|4|1 slice (20 g)=20|enterprise ham
+enterprise-chicken-viennas|Enterprise Chicken Viennas|MP|225|11|6|17.5|1 vienna (37 g)=37|chicken viennas
+eskort-streaky-bacon-raw|Eskort Streaky Bacon (raw)|MP|310|15|0.8|27.5|1 rasher (18 g)=18;3 rashers=54|eskort streaky bacon
+eskort-back-bacon-raw|Eskort Back Bacon (raw)|MP|195|18|0.8|13.5|1 rasher (25 g)=25;2 rashers=50|eskort back bacon
+eskort-pork-sausages|Eskort Pork Sausages|MP|275|12|6|22.5|1 sausage (60 g)=60|eskort sausages
+eskort-ham-sliced|Eskort Ham (sliced)|MP|110|16|2|4.2|1 slice (20 g)=20|eskort ham
+eskort-smoked-viennas|Eskort Smoked Viennas|MP|245|11|4|20.5|1 vienna (37 g)=37|eskort viennas
+rainbow-chicken-nuggets|Rainbow Chicken Nuggets|MP|245|13|18|13.5|1 nugget (20 g)=20;5 nuggets=100|rainbow nuggets
+rainbow-chicken-strips-crumbed|Rainbow Chicken Strips Crumbed|MP|240|14|17|13|1 serving (100 g)=100|rainbow strips
+rainbow-chicken-burger-patties|Rainbow Chicken Burger Patties|MP|240|12|14|15|1 patty (80 g)=80|rainbow chicken patty
+rainbow-chicken-viennas|Rainbow Chicken Viennas|MP|225|10.5|6|17.5|1 vienna=37|rainbow viennas
+rainbow-chicken-polony|Rainbow Chicken Polony|MP|190|10|7|13.5|1 slice (15 g)=15|rainbow polony
+rainbow-chicken-fillets-frozen-raw|Rainbow Chicken Fillets Frozen (raw)|MP|110|22|0|2.3|1 fillet (130 g)=130|rainbow chicken breast
+rainbow-braai-pack-chicken-raw|Rainbow Braai Pack Chicken (raw)|MP|200|18|0|14|1 piece (120 g)=120|rainbow chicken pieces
+goodies-chicken-nuggets|Goodies Chicken Nuggets|MP|245|12|19|13.5|5 nuggets (100 g)=100|goodies nuggets
+goodies-crumbed-chicken-strips|Goodies Crumbed Chicken Strips|MP|235|13|17|13|1 serving (100 g)=100|goodies strips
+county-fair-chicken-nuggets|County Fair Chicken Nuggets|MP|245|13|18|13.5|5 nuggets (100 g)=100|county fair nuggets
+county-fair-chicken-viennas|County Fair Chicken Viennas|MP|225|11|6|17.5|1 vienna (37 g)=37|county fair viennas
+farmer-brown-chicken-portions-raw|Farmer Brown Chicken Portions (raw)|MP|200|18|0|14|1 piece (120 g)=120|farmer brown chicken
+freshmark-boerewors-raw|Freshmark Boerewors (raw)|MP|265|14|3|22|1 serving (100 g)=100|boerewors wors
+woolworths-beef-boerewors-raw|Woolworths Beef Boerewors (raw)|MP|240|15|3|19|1 serving (100 g)=100|woolies boerewors
+woolworths-lean-beef-mince-raw|Woolworths Lean Beef Mince (raw)|MP|160|20|0|9|1 serving (125 g)=125|woolies mince
+woolworths-chicken-breast-fillets-raw|Woolworths Chicken Breast Fillets (raw)|MP|110|23|0|1.8|1 fillet (150 g)=150|woolies chicken breast
+woolworths-roast-chicken-breast-slices|Woolworths Roast Chicken Breast Slices|MP|120|22|1.5|2.8|1 slice (20 g)=20|woolies chicken slices
+woolworths-biltong-beef-sliced|Woolworths Biltong Beef Sliced|MP|290|55|2|6.5|1 handful (30 g)=30|biltong sliced
+woolworths-droewors|Woolworths Droewors|MP|480|40|2|35|1 stick (15 g)=15|droewors dry wors
+dr-oetker-ristorante-pizza-margherita|Dr Oetker Ristorante Pizza Margherita|HM|255|10|27|11.5|1/2 pizza=150;1 pizza (295 g)=295|ristorante pizza
+dr-oetker-casa-di-mama-pizza-salami|Dr Oetker Casa di Mama Pizza Salami|HM|245|10|26|11|1/2 pizza=200|casa di mama pizza
+mccain-pizza-margherita|McCain Pizza Margherita|HM|240|10|30|8.5|1/2 pizza=175|mccain pizza
+woolworths-frozen-pizza-margherita|Woolworths Frozen Pizza Margherita|HM|245|10.5|31|8.5|1/2 pizza=190|woolies pizza
+woolworths-frozen-pizza-something-meaty|Woolworths Frozen Pizza Something Meaty|HM|255|12|28|10.5|1/2 pizza=200|woolies meat pizza
+woolworths-butter-chicken-with-rice|Woolworths Butter Chicken with Rice|HM|145|8|16|5.5|1 meal (400 g)=400|woolies butter chicken ready meal
+woolworths-beef-lasagne|Woolworths Beef Lasagne|HM|145|8|12|7|1 meal (400 g)=400|woolies lasagne ready meal
+woolworths-cottage-pie|Woolworths Cottage Pie|HM|110|6|10.5|4.8|1 meal (400 g)=400|woolies cottage pie
+woolworths-chicken-a-la-king-with-rice|Woolworths Chicken a la King with Rice|HM|135|7|16|4.8|1 meal (400 g)=400|woolies chicken a la king
+woolworths-macaroni-cheese|Woolworths Macaroni Cheese|HM|165|7|17|7.5|1 meal (400 g)=400|woolies mac and cheese
+woolworths-bobotie-with-rice|Woolworths Bobotie with Rice|HM|140|7|15|5.5|1 meal (400 g)=400|woolies bobotie
+woolworths-thai-green-chicken-curry-with-rice|Woolworths Thai Green Chicken Curry with Rice|HM|130|6.5|15|5|1 meal (400 g)=400|woolies green curry
+woolworths-spaghetti-bolognese|Woolworths Spaghetti Bolognese|HM|125|7|15|4|1 meal (400 g)=400|woolies bolognese ready meal
+woolworths-chicken-tikka-masala-with-rice|Woolworths Chicken Tikka Masala with Rice|HM|140|7.5|16|5|1 meal (400 g)=400|woolies tikka masala
+woolworths-beef-curry-with-rice|Woolworths Beef Curry with Rice|HM|140|7|16|5.2|1 meal (400 g)=400|woolies beef curry
+woolworths-chicken-pie|Woolworths Chicken Pie|HM|270|8|25|15|1 pie (180 g)=180|woolies chicken pie
+woolworths-chicken-stir-fry-with-noodles|Woolworths Chicken Stir Fry with Noodles|HM|120|8|15|3|1 meal (350 g)=350|woolies stir fry
+woolworths-chicken-mayo-sandwich|Woolworths Chicken Mayo Sandwich|HM|235|10|25|10.5|1 sandwich (160 g)=160|woolies sandwich chicken mayo
+woolworths-chicken-caesar-wrap|Woolworths Chicken Caesar Wrap|HM|225|11|22|10|1 wrap (200 g)=200|woolies chicken wrap
+woolworths-crumbed-chicken-schnitzel|Woolworths Crumbed Chicken Schnitzel|MP|240|16|15|13|1 schnitzel (120 g)=120|woolies schnitzel
+woolworths-chicken-kebabs|Woolworths Chicken Kebabs|MP|150|20|3|6.5|1 kebab (80 g)=80|woolies sosaties chicken
+woolworths-beef-burger-patties|Woolworths Beef Burger Patties|MP|245|17|4|18|1 patty (125 g)=125|woolies beef patties
+woolworths-pork-sausages|Woolworths Pork Sausages|MP|260|13|6|20.5|1 sausage (60 g)=60|woolies sausages
+woolworths-hummus-classic|Woolworths Hummus Classic|PP|300|7|12|24.5|2 tbsp=30;1 tub (200 g)=200|woolies hummus
+woolworths-chicken-and-mushroom-pie|Woolworths Chicken and Mushroom Pie|HM|265|8|25|14.5|1 pie (180 g)=180|woolies pie
+mr-bakers-steak-pie|Mr Bakers Steak Pie|HM|275|9|25|15.5|1 pie (180 g)=180|steak pie
+pie-city-chicken-pie|Pie City Chicken Pie|HM|275|8|26|15.5|1 pie (180 g)=180|pie city chicken pie
+pie-city-mince-pie|Pie City Mince Pie|HM|285|9|25|16.5|1 pie (180 g)=180|pie city mince pie
+tastic-long-grain-parboiled-rice-raw|Tastic Long Grain Parboiled Rice (raw)|GR|355|7.5|79|0.6|1/2 cup raw=90;1 serving raw=75|tastic rice uncooked
+tastic-long-grain-rice-cooked|Tastic Long Grain Rice (cooked)|GR|135|2.8|30|0.3|1 cup=180;1 serving=150|tastic rice cooked
+tastic-basmati-rice-raw|Tastic Basmati Rice (raw)|GR|355|8|78|0.8|1/2 cup raw=90|tastic basmati
+tastic-brown-rice-raw|Tastic Brown Rice (raw)|GR|355|8|74|2.7|1/2 cup raw=90|tastic brown rice
+tastic-savoury-rice-cooked|Tastic Savoury Rice (cooked)|GR|140|2.8|29|1.5|1 cup=180|tastic savoury rice
+spekko-long-grain-parboiled-rice-raw|Spekko Long Grain Parboiled Rice (raw)|GR|355|7.5|79|0.6|1/2 cup raw=90|spekko rice
+spekko-rice-cooked|Spekko Rice (cooked)|GR|135|2.8|30|0.3|1 cup=180|spekko rice cooked
+spekko-basmati-rice-raw|Spekko Basmati Rice (raw)|GR|355|8|78|0.8|1/2 cup raw=90|spekko basmati
+white-star-super-maize-meal-dry|White Star Super Maize Meal (dry)|GR|355|8|75|1.8|1 cup dry=160|white star mielie meal dry
+white-star-pap-cooked-stiff|White Star Pap (cooked stiff)|GR|110|2.5|23|0.6|1 cup=240;1 portion (200 g)=200;1 fist=150|white star pap stywe pap cooked
+white-star-instant-porridge-dry|White Star Instant Porridge (dry)|BF|375|8.5|78|2.3|1 serving (40 g)=40|white star instant porridge
+iwisa-super-maize-meal-dry|Iwisa Super Maize Meal (dry)|GR|355|8|75|1.8|1 cup dry=160|iwisa mielie meal
+iwisa-pap-cooked-stiff|Iwisa Pap (cooked stiff)|GR|110|2.5|23|0.6|1 portion (200 g)=200|iwisa pap cooked
+ace-super-maize-meal-dry|Ace Super Maize Meal (dry)|GR|355|8|75|1.8|1 cup dry=160|ace mielie meal
+ace-pap-cooked-stiff|Ace Pap (cooked stiff)|GR|110|2.5|23|0.6|1 portion (200 g)=200|ace pap cooked
+tastic-pap-cooked-soft|Tastic Pap (cooked soft)|GR|60|1.4|12.5|0.3|1 bowl (250 g)=250|slap pap soft porridge
+fattis-monis-spaghetti-dry|Fatti's & Moni's Spaghetti (dry)|GR|355|12|72|1.5|1 serving dry (80 g)=80|fattis monis spaghetti
+fattis-monis-macaroni-dry|Fatti's & Moni's Macaroni (dry)|GR|355|12|72|1.5|1 serving dry (80 g)=80|fattis monis macaroni
+fattis-monis-penne-dry|Fatti's & Moni's Penne (dry)|GR|355|12|72|1.5|1 serving dry (80 g)=80|fattis monis penne
+fattis-monis-spaghetti-cooked|Fatti's & Moni's Spaghetti (cooked)|GR|150|5|30|0.7|1 cup=140;1 serving=200|fattis monis pasta cooked
+fattis-monis-wholewheat-spaghetti-dry|Fatti's & Moni's Wholewheat Spaghetti (dry)|GR|340|13|64|2.2|1 serving dry (80 g)=80|fattis wholewheat pasta
+fattis-monis-egg-noodles-dry|Fatti's & Moni's Egg Noodles (dry)|GR|370|13|70|3.5|1 serving dry (80 g)=80|egg noodles fattis
+imbo-samp-dry|Imbo Samp (dry)|GR|345|8|76|1.2|1 serving dry (80 g)=80|imbo samp
+imbo-samp-and-beans-dry|Imbo Samp and Beans (dry)|GR|340|12|66|1.5|1 serving dry (80 g)=80|imbo samp beans umngqusho
+imbo-sugar-beans-dry|Imbo Sugar Beans (dry)|PP|320|21|48|1.5|1 serving dry (80 g)=80|sugar beans dry imbo
+imbo-lentils-brown-dry|Imbo Lentils Brown (dry)|PP|320|24|46|1.5|1 serving dry (60 g)=60|imbo lentils
+imbo-split-peas-dry|Imbo Split Peas (dry)|PP|330|23|52|1.2|1 serving dry (60 g)=60|imbo split peas
+tastic-couscous-dry|Tastic Couscous (dry)|GR|360|12.5|73|1.2|1 serving dry (60 g)=60|couscous
+woolworths-quinoa-dry|Woolworths Quinoa (dry)|GR|370|14|64|6|1 serving dry (60 g)=60|woolies quinoa
+huletts-white-sugar|Huletts White Sugar|OS|400|0|100|0|1 tsp=4;1 tbsp=12|sugar huletts
+huletts-brown-sugar|Huletts Brown Sugar|OS|390|0|97|0|1 tsp=4|brown sugar huletts
+selati-white-sugar|Selati White Sugar|OS|400|0|100|0|1 tsp=4|sugar selati
+snowflake-cake-flour|Snowflake Cake Flour|GR|345|10|73|1|1 cup=140;1 tbsp=9|cake flour snowflake
+sasko-self-raising-flour|Sasko Self-Raising Flour|GR|340|9.5|72|1|1 cup=140|self raising flour
+nestle-milo-powder|Nestle Milo Powder|DR|410|8|68|9.5|1 heaped tsp=8;3 tsp=20|milo
+ricoffy-instant-coffee|Ricoffy Instant Coffee|DR|355|5.5|75|1|1 tsp=2|ricoffy
+nestle-cremora-coffee-creamer|Nestle Cremora Coffee Creamer|DR|545|2.5|60|33|1 tsp=4;2 tsp=8|cremora creamer
+nestle-condensed-milk-sweetened|Nestle Condensed Milk Sweetened|DE|325|7.5|55|8.5|1 tbsp=20;1 tin (385 g)=385|condensed milk nestle
+nestle-ideal-evaporated-milk|Nestle Ideal Evaporated Milk|DE|135|6.5|10|7.8|1 tbsp=15;1/2 cup=125|ideal milk evaporated|L
+nestle-caramel-treat|Nestle Caramel Treat|DE|320|6.5|55|8|1 tbsp=20|caramel treat
+nestle-nespray-full-cream-milk-powder|Nestle Nespray Full Cream Milk Powder|DE|495|25|38|26.5|2 tbsp=12;1 cup made up=32|nespray milk powder
+klim-full-cream-milk-powder|Klim Full Cream Milk Powder|DE|495|25|38|26.5|2 tbsp=12|klim milk powder
+moirs-instant-pudding-vanilla-made-with-milk|Moir's Instant Pudding Vanilla (made with milk)|DE|110|3|18|3|1 serving (125 g)=125|instant pudding moirs
+moirs-jelly-prepared|Moir's Jelly (prepared)|SN|65|1.5|15|0|1 serving (125 g)=125|jelly moirs
+sunfoil-sunflower-oil|Sunfoil Sunflower Oil|OS|884|0|0|100|1 tbsp=14;1 tsp=5|sunflower oil sunfoil|L
+excella-sunflower-oil|Excella Sunflower Oil|OS|884|0|0|100|1 tbsp=14;1 tsp=5|excella oil|L
+spray-and-cook|Spray and Cook|OS|790|0|0|88|1 second spray=0.3;5 sprays=1.5|spray and cook cooking spray
+woolworths-basil-pesto|Woolworths Basil Pesto|OS|470|4.5|6|47|1 tbsp=15|woolies pesto
+woolworths-tzatziki|Woolworths Tzatziki|DE|115|4|5|9|2 tbsp=30|woolies tzatziki
+woolworths-guacamole|Woolworths Guacamole|VG|155|1.5|5|14|2 tbsp=30|woolies guacamole
+woolworths-double-thick-cream|Woolworths Double Thick Cream|DE|345|2|3|36|1 tbsp=15|woolies cream|L
+clover-butro-spread|Clover Butro Spread|OS|560|0.5|0.5|62|1 tsp=5|butro spread
+clover-elite-butter-spread-blend|Clover Elite Butter Spread (blend)|OS|660|0.5|0.5|73|1 tsp=5|clover elite
+clover-cream-cheese|Clover Cream Cheese|DE|255|6|3.5|24.5|1 tbsp=15|clover cream cheese
+clover-feta-cheese|Clover Feta Cheese|DE|265|15|2|22|1 cube=30;1/4 round=50|clover feta
+clover-pizza-cheese|Clover Pizza Cheese|DE|300|23|2|22|1 handful (30 g)=30|pizza cheese grated
+clover-parmesan-style-grated|Clover Parmesan Style Grated|DE|420|35|1|31|1 tbsp=5|parmesan grated
+simonsberg-feta|Simonsberg Feta|DE|265|14|2|22.5|1 round/4 (50 g)=50|feta simonsberg
+dairybelle-cheddar-cheese|Dairybelle Cheddar Cheese|DE|405|25|0.5|33.5|1 slice (20 g)=20|dairybelle cheddar
+dairybelle-fruit-yoghurt|Dairybelle Fruit Yoghurt|DE|95|3.2|15|2.5|1 tub (175 g)=175|dairybelle yoghurt
+kelloggs-special-k-protein-cereal|Kellogg's Special K Protein Cereal|BF|375|25|58|3.8|1 bowl (30 g)=30|special k high protein
+bokomo-crunchy-oats-honey|Bokomo Crunchy Oats Honey|BF|450|8|64|18|1 serving (45 g)=45|bokomo crunchy oats
+nestle-bar-one-milk-drink|Nestle Bar-One Milk Drink|DE|80|3.2|11.5|2.3|1 bottle (500 ml)=500|bar one milk drink|L
+kelloggs-pop-tarts-strawberry|Kellogg's Pop-Tarts Strawberry|SN|395|4|70|10.5|1 pastry (48 g)=48|pop tarts
+beacon-honey-squeeze|Beacon Honey (squeeze)|OS|330|0.3|82|0|1 tbsp=21|honey squeeze
+rhodes-lite-apricot-jam|Rhodes Lite Apricot Jam|OS|145|0.4|35|0|1 tbsp=20|lite jam
+wellingtons-worcester-sauce|Wellington's Worcester Sauce|OS|95|0.5|22|0.1|1 tsp=5|worcestershire sauce
+wellingtons-sweet-and-sour-sauce|Wellington's Sweet and Sour Sauce|OS|140|0.4|34|0.2|1 tbsp=17|sweet sour sauce wellingtons
+crosse-blackwell-salad-cream|Crosse & Blackwell Salad Cream|OS|315|1.2|18|26.5|1 tbsp=15|salad cream
+kraft-mayonnaise-original|Kraft Mayonnaise Original|OS|670|1|3|73|1 tbsp=15|kraft mayo
+knorr-parisienne-mushroom-sauce-prepared|Knorr Parisienne Mushroom Sauce Prepared|OS|70|2.5|8|3|1/4 cup=60|knorr mushroom sauce
+knorr-cheese-sauce-prepared|Knorr Cheese Sauce Prepared|OS|95|3.5|9|5|1/4 cup=60|cheese sauce knorr
+knorr-pepper-sauce-prepared|Knorr Pepper Sauce Prepared|OS|65|2|8|2.8|1/4 cup=60|knorr pepper sauce
+royco-cup-a-soup-creamy-tomato-prepared|Royco Cup-a-Soup Creamy Tomato Prepared|HM|40|0.6|7|1|1 cup (200 ml)=200|royco tomato cup soup|L
+knorrox-stock-cube-beef|Knorrox Stock Cube Beef|OS|245|8|21|14|1 cube=10|knorrox cube
+mrs-balls-chutney-chilli|Mrs Ball's Chutney Chilli|OS|195|0.8|47|0.3|1 tbsp=20|chutney chilli mrs balls
+baby-soft-white-toaster-bread|Baby Soft White Toaster Bread|BB|255|8|48|3|1 slice (35 g)=35|baby soft
+baby-soft-brown-bread|Baby Soft Brown Bread|BB|240|8.5|43|3|1 slice (35 g)=35|baby soft brown
+albany-wraps-plain|Albany Wraps Plain|BB|300|8.5|49|7|1 wrap (60 g)=60|albany wraps
+bokomo-weet-bix-crunch-bar|Bokomo Weet-Bix Crunch Bar|SN|400|8|67|10|1 bar (35 g)=35|weetbix bar
+future-life-energy-bar|Future Life Energy Bar|SN|405|12|58|13|1 bar (45 g)=45|futurelife bar
+nestle-cerevita-instant-porridge|Nestle Cerevita Instant Porridge|BF|395|15|67|7|1 serving (40 g)=40|cerevita
+nestle-cerelac-wheat|Nestle Cerelac Wheat|BF|410|15|67|9|1 serving (40 g)=40|cerelac
+woolworths-ready-made-custard|Woolworths Ready-Made Custard|DE|110|3|16.5|3.5|1 serving (125 ml)=125|woolies custard|L
+moirs-custard-powder-made-with-milk-and-sugar|Moir's Custard Powder (made with milk and sugar)|DE|115|3.3|18|3.2|1 serving (125 ml)=125|custard powder moirs|L
+lucky-star-tuna-chunks-mayo-and-sweetcorn|Lucky Star Tuna Chunks Mayo and Sweetcorn|FS|155|12|6|9|1 can (85 g)=85|lucky star tuna salad
+sea-harvest-tuna-chunks-in-brine|Sea Harvest Tuna Chunks in Brine|FS|105|24|0|1|1 can drained (120 g)=120|sea harvest tuna
+i-j-prawns-deveined-raw|I&J Prawns Deveined (raw)|FS|70|15|0.5|0.8|1 serving (100 g)=100|i&j prawns
+i-j-calamari-rings-crumbed|I&J Calamari Rings Crumbed|FS|215|10|22|9.5|1 serving (100 g)=100|i&j calamari
+woolworths-salmon-fillets-raw|Woolworths Salmon Fillets (raw)|FS|200|20|0|13|1 fillet (125 g)=125|woolies salmon
+woolworths-smoked-trout-ribbons|Woolworths Smoked Trout Ribbons|FS|160|21|0.5|8|1 serving (50 g)=50|smoked trout
+mamas-samoosas-beef-frozen-fried|Mama's Samoosas Beef (frozen, fried)|SA|275|8|25|16|1 samoosa (30 g)=30|samoosa samosa
+denny-mushroom-soup|Denny Mushroom Soup|HM|55|1.2|5|3.3|1 cup=250|denny soup|L
+mccain-rustic-oven-chips|McCain Rustic Oven Chips|VG|170|2.8|25|6.5|1 serving (100 g)=100|mccain rustic chips
+mccain-sweet-potato-fries|McCain Sweet Potato Fries|VG|190|2|28|8|1 serving (100 g)=100|mccain sweet potato fries
+pnp-full-cream-milk|PnP Full Cream Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|pick n pay milk fresh full cream|L
+pnp-low-fat-milk|PnP Low Fat Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|pick n pay 2% milk low fat|L
+pnp-fat-free-milk|PnP Fat Free Milk|DE|34|3.4|4.9|0.1|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|pick n pay skim milk fat free|L
+pnp-long-life-full-cream-milk|PnP Long Life Full Cream Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200|pick n pay uht milk long life|L
+pnp-long-life-low-fat-milk|PnP Long Life Low Fat Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200|pick n pay uht low fat milk|L
+pnp-double-cream-yoghurt-plain|PnP Double Cream Yoghurt Plain|DE|128|3.5|5.5|10.2|1 cup (175 g)=175;1 tub (1 kg)=1000;2 tbsp (40 g)=40|pick n pay double cream yogurt plain
+pnp-double-cream-yoghurt-vanilla|PnP Double Cream Yoghurt Vanilla|DE|150|3.2|12.5|9.6|1 cup (175 g)=175;2 tbsp (40 g)=40|pick n pay double cream yogurt vanilla
+pnp-low-fat-plain-yoghurt|PnP Low Fat Plain Yoghurt|DE|58|4.9|6.5|1.4|1 cup (175 g)=175;1 tub (1 kg)=1000;2 tbsp (40 g)=40|pick n pay low fat yogurt plain
+pnp-fat-free-plain-yoghurt|PnP Fat Free Plain Yoghurt|DE|44|5|6|0.1|1 cup (175 g)=175;2 tbsp (40 g)=40|pick n pay fat free yogurt plain
+pnp-greek-style-yoghurt-plain|PnP Greek Style Yoghurt Plain|DE|105|5.5|5.2|7|1 cup (175 g)=175;2 tbsp (40 g)=40|pick n pay greek yogurt
+pnp-fat-free-greek-yoghurt|PnP Fat Free Greek Yoghurt|DE|58|9.5|4.8|0.2|1 cup (175 g)=175;2 tbsp (40 g)=40|pick n pay greek yogurt fat free high protein
+pnp-low-fat-strawberry-yoghurt|PnP Low Fat Strawberry Yoghurt|DE|88|3.6|15|1.5|1 tub (100 g)=100;1 cup (175 g)=175|pick n pay fruit yogurt strawberry
+pnp-low-fat-mixed-berry-yoghurt|PnP Low Fat Mixed Berry Yoghurt|DE|88|3.6|15|1.5|1 tub (100 g)=100;1 cup (175 g)=175|pick n pay fruit yogurt berry
+pnp-drinking-yoghurt-strawberry|PnP Drinking Yoghurt Strawberry|DE|78|2.8|13|1.6|1 bottle (500 ml)=500;1 glass (250 ml)=250|pick n pay drinking yogurt|L
+pnp-amasi|PnP Amasi|DE|62|3.2|4.5|3.4|1 cup (250 ml)=250|pick n pay maas amasi sour milk|L
+pnp-cheddar-cheese|PnP Cheddar Cheese|DE|402|25|0.5|33|1 slice (20 g)=20;1 grated handful (30 g)=30;1 block (400 g)=400|pick n pay cheddar cheese
+pnp-gouda-cheese|PnP Gouda Cheese|DE|356|25|0.5|28|1 slice (20 g)=20;1 grated handful (30 g)=30|pick n pay gouda cheese
+pnp-mozzarella-cheese|PnP Mozzarella Cheese|DE|300|23|1|22.5|1 grated handful (30 g)=30;1 slice (20 g)=20|pick n pay mozzarella
+pnp-cheese-slices|PnP Cheese Slices|DE|300|15|6|24|1 slice (18 g)=18;2 slices=36|pick n pay processed cheese slices
+pnp-feta-cheese-plain|PnP Feta Cheese Plain|DE|265|15|1.5|22|1 round (60 g)=60;crumbled 30 g=30|pick n pay feta
+pnp-low-fat-cottage-cheese|PnP Low Fat Cottage Cheese|DE|85|12|3.5|2.5|2 tbsp (40 g)=40;1 tub (250 g)=250;half cup (110 g)=110|pick n pay cottage cheese low fat
+pnp-cream-cheese-plain|PnP Cream Cheese Plain|DE|290|6|3.5|28|1 tbsp (15 g)=15;2 tbsp (30 g)=30|pick n pay cream cheese
+pnp-salted-butter|PnP Salted Butter|OS|737|0.6|0.6|81.5|1 tsp (5 g)=5;1 tbsp (14 g)=14;1 pat (10 g)=10|pick n pay butter salted
+pnp-medium-fat-spread|PnP Medium Fat Spread|OS|485|0.1|0.5|54|1 tsp (5 g)=5;1 tbsp (14 g)=14|pick n pay margarine spread tub
+pnp-large-eggs|PnP Large Eggs|DE|140|12.5|0.7|9.7|1 large egg (55 g)=55;2 eggs=110;3 eggs=165|pick n pay eggs
+pnp-fresh-cream|PnP Fresh Cream|DE|340|2.1|3|36|1 tbsp (15 ml)=15;quarter cup (60 ml)=60|pick n pay cream|L
+no-name-full-cream-long-life-milk|No Name Full Cream Long Life Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200|pnp no name uht milk budget|L
+no-name-low-fat-plain-yoghurt|No Name Low Fat Plain Yoghurt|DE|60|4.5|7|1.5|1 cup (175 g)=175;2 tbsp (40 g)=40|pnp no name yogurt
+no-name-medium-fat-margarine|No Name Medium Fat Margarine|OS|485|0.1|0.5|54|1 tsp (5 g)=5;1 tbsp (14 g)=14|pnp no name margarine spread
+no-name-cheddar-cheese|No Name Cheddar Cheese|DE|400|25|0.5|33|1 slice (20 g)=20;1 grated handful (30 g)=30|pnp no name cheddar
+checkers-housebrand-full-cream-milk|Checkers Housebrand Full Cream Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|checkers milk full cream|L
+checkers-housebrand-low-fat-milk|Checkers Housebrand Low Fat Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|checkers low fat milk 2%|L
+checkers-housebrand-fat-free-milk|Checkers Housebrand Fat Free Milk|DE|34|3.4|4.9|0.1|1 cup (250 ml)=250;1 glass (200 ml)=200|checkers skim milk|L
+checkers-housebrand-double-cream-yoghurt-plain|Checkers Housebrand Double Cream Yoghurt Plain|DE|128|3.5|5.5|10.2|1 cup (175 g)=175;2 tbsp (40 g)=40|checkers double cream yogurt
+checkers-housebrand-low-fat-plain-yoghurt|Checkers Housebrand Low Fat Plain Yoghurt|DE|58|4.9|6.5|1.4|1 cup (175 g)=175;2 tbsp (40 g)=40|checkers low fat yogurt
+checkers-housebrand-fruit-yoghurt-strawberry|Checkers Housebrand Fruit Yoghurt Strawberry|DE|90|3.4|15.5|1.6|1 tub (100 g)=100;1 cup (175 g)=175|checkers fruit yogurt
+checkers-simple-truth-greek-yoghurt-plain|Checkers Simple Truth Greek Yoghurt Plain|DE|98|5.8|4.5|6.3|1 cup (175 g)=175;2 tbsp (40 g)=40|checkers simple truth greek yogurt
+checkers-simple-truth-fat-free-greek-yoghurt|Checkers Simple Truth Fat Free Greek Yoghurt|DE|57|10|3.8|0.2|1 cup (175 g)=175;2 tbsp (40 g)=40|checkers simple truth high protein greek yogurt
+checkers-simple-truth-almond-milk-unsweetened|Checkers Simple Truth Almond Milk Unsweetened|DR|15|0.5|0.3|1.2|1 cup (250 ml)=250;1 glass (200 ml)=200|checkers simple truth almond milk plant milk|L
+checkers-simple-truth-oat-milk|Checkers Simple Truth Oat Milk|DR|48|0.8|7|1.6|1 cup (250 ml)=250;1 glass (200 ml)=200|checkers simple truth oat milk plant milk|L
+checkers-simple-truth-coconut-milk-drink|Checkers Simple Truth Coconut Milk Drink|DR|22|0.1|2.5|1.3|1 cup (250 ml)=250|checkers simple truth coconut milk plant|L
+checkers-simple-truth-lactose-free-milk|Checkers Simple Truth Lactose Free Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200|checkers lactose free low fat milk|L
+checkers-housebrand-cheddar-cheese|Checkers Housebrand Cheddar Cheese|DE|402|25|0.5|33|1 slice (20 g)=20;1 grated handful (30 g)=30|checkers cheddar
+checkers-housebrand-gouda-cheese|Checkers Housebrand Gouda Cheese|DE|356|25|0.5|28|1 slice (20 g)=20;1 grated handful (30 g)=30|checkers gouda
+checkers-housebrand-cheese-slices|Checkers Housebrand Cheese Slices|DE|300|15|6|24|1 slice (18 g)=18;2 slices=36|checkers processed cheese slices
+checkers-housebrand-cottage-cheese-plain|Checkers Housebrand Cottage Cheese Plain|DE|98|11.5|3.5|4.3|2 tbsp (40 g)=40;half cup (110 g)=110|checkers cottage cheese
+checkers-housebrand-butter-salted|Checkers Housebrand Butter Salted|OS|737|0.6|0.6|81.5|1 tsp (5 g)=5;1 tbsp (14 g)=14|checkers butter
+checkers-housebrand-large-eggs|Checkers Housebrand Large Eggs|DE|140|12.5|0.7|9.7|1 large egg (55 g)=55;2 eggs=110|checkers eggs
+ritebrand-full-cream-long-life-milk|Ritebrand Full Cream Long Life Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200|shoprite ritebrand uht milk|L
+ritebrand-low-fat-long-life-milk|Ritebrand Low Fat Long Life Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200|shoprite ritebrand low fat milk|L
+ritebrand-medium-fat-spread|Ritebrand Medium Fat Spread|OS|485|0.1|0.5|54|1 tsp (5 g)=5;1 tbsp (14 g)=14|shoprite ritebrand margarine
+ritebrand-cheddar-cheese|Ritebrand Cheddar Cheese|DE|400|25|0.5|33|1 slice (20 g)=20;1 grated handful (30 g)=30|shoprite ritebrand cheddar
+ritebrand-plain-yoghurt|Ritebrand Plain Yoghurt|DE|62|4.3|7.2|1.7|1 cup (175 g)=175;2 tbsp (40 g)=40|shoprite ritebrand yogurt
+spar-full-cream-milk|Spar Full Cream Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|spar milk fresh|L
+spar-low-fat-milk|Spar Low Fat Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|spar 2% milk|L
+spar-fat-free-milk|Spar Fat Free Milk|DE|34|3.4|4.9|0.1|1 cup (250 ml)=250;1 glass (200 ml)=200|spar skim milk|L
+spar-double-cream-yoghurt-plain|Spar Double Cream Yoghurt Plain|DE|128|3.5|5.5|10.2|1 cup (175 g)=175;2 tbsp (40 g)=40|spar double cream yogurt
+spar-low-fat-fruit-yoghurt-peach|Spar Low Fat Fruit Yoghurt Peach|DE|88|3.6|15|1.5|1 tub (100 g)=100;1 cup (175 g)=175|spar fruit yogurt peach
+spar-greek-style-yoghurt|Spar Greek Style Yoghurt|DE|105|5.5|5.2|7|1 cup (175 g)=175;2 tbsp (40 g)=40|spar greek yogurt
+spar-good-living-fat-free-greek-yoghurt|Spar Good Living Fat Free Greek Yoghurt|DE|58|9.5|4.8|0.2|1 cup (175 g)=175;2 tbsp (40 g)=40|spar good living greek yogurt fat free
+spar-cheddar-cheese|Spar Cheddar Cheese|DE|402|25|0.5|33|1 slice (20 g)=20;1 grated handful (30 g)=30|spar cheddar
+spar-gouda-cheese|Spar Gouda Cheese|DE|356|25|0.5|28|1 slice (20 g)=20;1 grated handful (30 g)=30|spar gouda
+spar-mozzarella-cheese|Spar Mozzarella Cheese|DE|300|23|1|22.5|1 grated handful (30 g)=30|spar mozzarella
+spar-butter-salted|Spar Butter Salted|OS|737|0.6|0.6|81.5|1 tsp (5 g)=5;1 tbsp (14 g)=14|spar butter
+spar-cottage-cheese-low-fat|Spar Cottage Cheese Low Fat|DE|85|12|3.5|2.5|2 tbsp (40 g)=40;half cup (110 g)=110|spar cottage cheese
+spar-large-eggs|Spar Large Eggs|DE|140|12.5|0.7|9.7|1 large egg (55 g)=55;2 eggs=110|spar eggs
+woolworths-low-fat-milk|Woolworths Low Fat Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250;1 glass (200 ml)=200;splash in tea (30 ml)=30|woolies low fat milk 2%|L
+woolworths-fat-free-milk|Woolworths Fat Free Milk|DE|34|3.4|4.9|0.1|1 cup (250 ml)=250;1 glass (200 ml)=200|woolies skim milk|L
+woolworths-almond-milk-unsweetened|Woolworths Almond Milk Unsweetened|DR|14|0.5|0.2|1.2|1 cup (250 ml)=250;1 glass (200 ml)=200|woolies almond milk plant|L
+woolworths-lactose-free-milk|Woolworths Lactose Free Milk|DE|48|3.3|4.8|1.8|1 cup (250 ml)=250|woolies lactose free milk|L
+woolworths-greek-yoghurt-plain|Woolworths Greek Yoghurt Plain|DE|118|5.5|4.5|8.7|1 cup (175 g)=175;2 tbsp (40 g)=40|woolies greek yogurt full fat
+woolworths-fruit-yoghurt-strawberry|Woolworths Fruit Yoghurt Strawberry|DE|95|3.8|15.5|1.8|1 tub (100 g)=100;1 cup (175 g)=175|woolies fruit yogurt
+woolworths-mature-cheddar-cheese|Woolworths Mature Cheddar Cheese|DE|410|25|0.1|34.5|1 slice (20 g)=20;1 grated handful (30 g)=30|woolies cheddar mature
+woolworths-mozzarella-cheese|Woolworths Mozzarella Cheese|DE|300|23|1|22.5|1 grated handful (30 g)=30|woolies mozzarella
+woolworths-halloumi|Woolworths Halloumi|DE|320|21|2|25.5|1 slice (30 g)=30;half block (125 g)=125|woolies haloumi
+woolworths-feta-cheese|Woolworths Feta Cheese|DE|265|15|1.5|22|crumbled 30 g=30;1 round (60 g)=60|woolies feta
+woolworths-salted-butter|Woolworths Salted Butter|OS|737|0.6|0.6|81.5|1 tsp (5 g)=5;1 tbsp (14 g)=14|woolies butter
+woolworths-free-range-large-eggs|Woolworths Free Range Large Eggs|DE|140|12.5|0.7|9.7|1 large egg (55 g)=55;2 eggs=110|woolies eggs free range
+food-lovers-market-double-cream-yoghurt-plain|Food Lover's Market Double Cream Yoghurt Plain|DE|128|3.5|5.5|10.2|1 cup (175 g)=175;2 tbsp (40 g)=40|food lovers yogurt
+food-lovers-market-full-cream-milk|Food Lover's Market Full Cream Milk|DE|63|3.2|4.7|3.3|1 cup (250 ml)=250;1 glass (200 ml)=200|food lovers milk|L
+pnp-white-bread|PnP White Bread|BB|245|8|47|2.2|1 slice (38 g)=38;2 slices=76|pick n pay white loaf sliced
+pnp-brown-bread|PnP Brown Bread|BB|232|8.5|43|2.3|1 slice (38 g)=38;2 slices=76|pick n pay brown loaf
+pnp-wholewheat-bread|PnP Wholewheat Bread|BB|228|9.5|39|2.8|1 slice (38 g)=38;2 slices=76|pick n pay whole wheat loaf
+pnp-seed-loaf|PnP Seed Loaf|BB|265|11|36|8|1 slice (40 g)=40;2 slices=80|pick n pay seeded bread
+pnp-white-rolls|PnP White Rolls|BB|268|8.5|50|3.2|1 roll (60 g)=60;2 rolls=120|pick n pay bread rolls hotdog
+pnp-wholewheat-rolls|PnP Wholewheat Rolls|BB|250|9.5|44|3.5|1 roll (60 g)=60|pick n pay brown rolls
+pnp-white-wraps|PnP White Wraps|BB|300|8|50|7|1 wrap (60 g)=60;2 wraps=120|pick n pay tortilla wraps
+pnp-wholewheat-wraps|PnP Wholewheat Wraps|BB|290|9|46|7|1 wrap (60 g)=60|pick n pay brown wraps tortilla
+pnp-hot-cross-buns|PnP Hot Cross Buns|BB|285|7.5|52|5|1 bun (70 g)=70|pick n pay hot cross buns
+no-name-white-bread|No Name White Bread|BB|245|8|47|2.2|1 slice (38 g)=38;2 slices=76|pnp no name white loaf budget
+no-name-brown-bread|No Name Brown Bread|BB|232|8.5|43|2.3|1 slice (38 g)=38;2 slices=76|pnp no name brown loaf
+checkers-housebrand-white-bread|Checkers Housebrand White Bread|BB|245|8|47|2.2|1 slice (38 g)=38;2 slices=76|checkers white loaf
+checkers-housebrand-brown-bread|Checkers Housebrand Brown Bread|BB|232|8.5|43|2.3|1 slice (38 g)=38;2 slices=76|checkers brown loaf
+checkers-housebrand-wholewheat-bread|Checkers Housebrand Wholewheat Bread|BB|228|9.5|39|2.8|1 slice (38 g)=38;2 slices=76|checkers whole wheat loaf
+checkers-simple-truth-seed-loaf|Checkers Simple Truth Seed Loaf|BB|270|11.5|34|9|1 slice (40 g)=40;2 slices=80|checkers simple truth seeded bread
+checkers-simple-truth-low-carb-wraps|Checkers Simple Truth Low Carb Wraps|BB|245|14|22|9|1 wrap (40 g)=40|checkers simple truth keto wrap low carb
+checkers-housebrand-white-wraps|Checkers Housebrand White Wraps|BB|300|8|50|7|1 wrap (60 g)=60|checkers tortilla wraps
+checkers-bakery-portuguese-rolls|Checkers Bakery Portuguese Rolls|BB|275|9|53|2.5|1 roll (70 g)=70|checkers portuguese roll bakery
+checkers-bakery-ciabatta-roll|Checkers Bakery Ciabatta Roll|BB|260|9|49|2.8|1 roll (80 g)=80|checkers ciabatta
+ritebrand-white-bread|Ritebrand White Bread|BB|245|8|47|2.2|1 slice (38 g)=38;2 slices=76|shoprite ritebrand white loaf
+ritebrand-brown-bread|Ritebrand Brown Bread|BB|232|8.5|43|2.3|1 slice (38 g)=38;2 slices=76|shoprite ritebrand brown loaf
+shoprite-bakery-vetkoek|Shoprite Bakery Vetkoek|BB|330|7.5|45|13|1 vetkoek (80 g)=80|shoprite vetkoek fat cake magwinya
+spar-freshline-white-bread|Spar Freshline White Bread|BB|245|8|47|2.2|1 slice (38 g)=38;2 slices=76|spar freshline white loaf
+spar-freshline-brown-bread|Spar Freshline Brown Bread|BB|232|8.5|43|2.3|1 slice (38 g)=38;2 slices=76|spar freshline brown loaf
+spar-freshline-wholewheat-bread|Spar Freshline Wholewheat Bread|BB|228|9.5|39|2.8|1 slice (38 g)=38;2 slices=76|spar whole wheat bread
+spar-good-living-seed-loaf|Spar Good Living Seed Loaf|BB|268|11|35|8.5|1 slice (40 g)=40|spar good living seeded bread
+spar-white-wraps|Spar White Wraps|BB|300|8|50|7|1 wrap (60 g)=60|spar tortilla wraps
+spar-freshline-bread-rolls|Spar Freshline Bread Rolls|BB|268|8.5|50|3.2|1 roll (60 g)=60|spar rolls
+woolworths-brown-bread|Woolworths Brown Bread|BB|232|8.5|43|2.3|1 slice (38 g)=38;2 slices=76|woolies brown loaf
+woolworths-wholewheat-rolls|Woolworths Wholewheat Rolls|BB|250|9.5|44|3.5|1 roll (60 g)=60|woolies brown rolls
+woolworths-bagels-plain|Woolworths Bagels Plain|BB|265|10|51|1.8|1 bagel (85 g)=85|woolies bagel
+woolworths-croissants|Woolworths Croissants|BB|410|8|44|22|1 croissant (60 g)=60|woolies croissant butter
+woolworths-pita-breads|Woolworths Pita Breads|BB|270|9|53|1.8|1 pita (60 g)=60|woolies pita bread
+food-lovers-market-seed-loaf|Food Lover's Market Seed Loaf|BB|270|11|35|9|1 slice (40 g)=40|food lovers seeded bread
+pnp-corn-flakes|PnP Corn Flakes|BF|378|7|84|0.9|1 bowl (30 g)=30;1 large bowl (45 g)=45|pick n pay cornflakes cereal
+pnp-bran-flakes|PnP Bran Flakes|BF|340|10.5|65|2.8|1 bowl (40 g)=40|pick n pay bran flakes cereal
+pnp-choc-pops|PnP Choc Pops|BF|385|6|84|2.5|1 bowl (30 g)=30|pick n pay chocolate rice cereal
+pnp-rice-crispies|PnP Rice Crispies|BF|382|6.5|86|0.9|1 bowl (30 g)=30|pick n pay rice pops cereal
+pnp-wheat-biscuits|PnP Wheat Biscuits|BF|355|11.5|68|2.5|2 biscuits (30 g)=30;3 biscuits (45 g)=45|pick n pay weet bix style wheat biscuits
+pnp-toasted-muesli|PnP Toasted Muesli|BF|440|9|62|16|half cup (55 g)=55;1 bowl (45 g)=45|pick n pay muesli
+pnp-granola-honey-nut|PnP Granola Honey & Nut|BF|455|9.5|62|18|half cup (50 g)=50;3 tbsp (30 g)=30|pick n pay granola
+pnp-rolled-oats|PnP Rolled Oats|BF|375|12|60|7.5|half cup (40 g)=40;1 cup (80 g)=80|pick n pay oats oatmeal porridge
+pnp-instant-oats-original|PnP Instant Oats Original|BF|375|11.5|61|7.5|1 sachet (35 g)=35;half cup (40 g)=40|pick n pay instant oats
+pnp-maize-meal-super|PnP Maize Meal Super|GR|355|8|76|1.8|half cup dry (65 g)=65;1 cup dry (130 g)=130|pick n pay mielie meal pap
+pnp-buttermilk-rusks|PnP Buttermilk Rusks|BF|425|7.5|68|13.5|1 rusk (40 g)=40;2 rusks=80|pick n pay rusks beskuit
+pnp-muesli-rusks|PnP Muesli Rusks|BF|430|8.5|63|15.5|1 rusk (40 g)=40;2 rusks=80|pick n pay muesli rusks beskuit
+no-name-corn-flakes|No Name Corn Flakes|BF|378|7|84|0.9|1 bowl (30 g)=30|pnp no name cornflakes
+no-name-oats|No Name Oats|BF|375|12|60|7.5|half cup (40 g)=40|pnp no name oats porridge
+checkers-housebrand-corn-flakes|Checkers Housebrand Corn Flakes|BF|378|7|84|0.9|1 bowl (30 g)=30;1 large bowl (45 g)=45|checkers cornflakes
+checkers-housebrand-bran-flakes|Checkers Housebrand Bran Flakes|BF|340|10.5|65|2.8|1 bowl (40 g)=40|checkers bran flakes
+checkers-housebrand-wheat-biscuits|Checkers Housebrand Wheat Biscuits|BF|355|11.5|68|2.5|2 biscuits (30 g)=30|checkers weetbix wheat biscuits
+checkers-simple-truth-low-sugar-granola|Checkers Simple Truth Low Sugar Granola|BF|450|12|48|22|3 tbsp (30 g)=30;half cup (50 g)=50|checkers simple truth granola low sugar
+checkers-simple-truth-muesli-no-added-sugar|Checkers Simple Truth Muesli No Added Sugar|BF|385|11|58|10.5|half cup (50 g)=50|checkers simple truth muesli
+checkers-simple-truth-rolled-oats|Checkers Simple Truth Rolled Oats|BF|375|12|60|7.5|half cup (40 g)=40|checkers simple truth oats
+checkers-forage-feast-granola-berry|Checkers Forage & Feast Granola Berry|BF|440|9|62|16.5|3 tbsp (30 g)=30;half cup (50 g)=50|checkers forage and feast granola
+checkers-housebrand-buttermilk-rusks|Checkers Housebrand Buttermilk Rusks|BF|425|7.5|68|13.5|1 rusk (40 g)=40|checkers rusks beskuit
+ritebrand-corn-flakes|Ritebrand Corn Flakes|BF|378|7|84|0.9|1 bowl (30 g)=30|shoprite ritebrand cornflakes
+ritebrand-oats|Ritebrand Oats|BF|375|12|60|7.5|half cup (40 g)=40|shoprite ritebrand oats porridge
+ritebrand-maize-meal|Ritebrand Maize Meal|GR|355|8|76|1.8|half cup dry (65 g)=65;1 cup dry (130 g)=130|shoprite ritebrand mielie meal pap
+ritebrand-buttermilk-rusks|Ritebrand Buttermilk Rusks|BF|420|7.5|68|13|1 rusk (40 g)=40|shoprite ritebrand rusks
+spar-corn-flakes|Spar Corn Flakes|BF|378|7|84|0.9|1 bowl (30 g)=30|spar cornflakes
+spar-toasted-muesli|Spar Toasted Muesli|BF|440|9|62|16|half cup (55 g)=55|spar muesli
+spar-good-living-granola|Spar Good Living Granola|BF|445|11|55|19|3 tbsp (30 g)=30;half cup (50 g)=50|spar good living granola
+spar-oats|Spar Oats|BF|375|12|60|7.5|half cup (40 g)=40|spar oats porridge
+spar-buttermilk-rusks|Spar Buttermilk Rusks|BF|425|7.5|68|13.5|1 rusk (40 g)=40|spar rusks
+woolworths-rolled-oats|Woolworths Rolled Oats|BF|375|12|60|7.5|half cup (40 g)=40|woolies oats porridge
+woolworths-protein-granola|Woolworths Protein Granola|BF|430|20|45|17|3 tbsp (30 g)=30;half cup (50 g)=50|woolies high protein granola
+woolworths-bran-flakes|Woolworths Bran Flakes|BF|340|10.5|65|2.8|1 bowl (40 g)=40|woolies bran flakes
+pnp-smooth-peanut-butter|PnP Smooth Peanut Butter|NS|610|26|14|49|1 tbsp (16 g)=16;2 tbsp (32 g)=32|pick n pay peanut butter smooth
+pnp-crunchy-peanut-butter|PnP Crunchy Peanut Butter|NS|610|26|14|49|1 tbsp (16 g)=16;2 tbsp (32 g)=32|pick n pay peanut butter crunchy
+checkers-simple-truth-100-peanut-butter|Checkers Simple Truth 100% Peanut Butter|NS|620|27|11|51|1 tbsp (16 g)=16;2 tbsp (32 g)=32|checkers simple truth natural peanut butter
+checkers-simple-truth-almond-butter|Checkers Simple Truth Almond Butter|NS|630|22|9|55|1 tbsp (16 g)=16|checkers simple truth almond butter
+ritebrand-peanut-butter-smooth|Ritebrand Peanut Butter Smooth|NS|605|25|15|48.5|1 tbsp (16 g)=16|shoprite ritebrand peanut butter
+spar-peanut-butter-smooth|Spar Peanut Butter Smooth|NS|610|26|14|49|1 tbsp (16 g)=16|spar peanut butter
+woolworths-crunchy-peanut-butter|Woolworths Crunchy Peanut Butter|NS|615|27|12|50|1 tbsp (16 g)=16;2 tbsp (32 g)=32|woolies peanut butter
+pnp-apricot-jam|PnP Apricot Jam|OS|255|0.4|63|0.1|1 tbsp (20 g)=20;1 tsp (7 g)=7|pick n pay jam apricot
+pnp-strawberry-jam|PnP Strawberry Jam|OS|255|0.4|63|0.1|1 tbsp (20 g)=20;1 tsp (7 g)=7|pick n pay jam strawberry
+ritebrand-mixed-fruit-jam|Ritebrand Mixed Fruit Jam|OS|255|0.3|63|0.1|1 tbsp (20 g)=20|shoprite ritebrand jam
+spar-apricot-jam|Spar Apricot Jam|OS|255|0.4|63|0.1|1 tbsp (20 g)=20|spar jam
+woolworths-strawberry-jam|Woolworths Strawberry Jam|OS|240|0.4|59|0.1|1 tbsp (20 g)=20|woolies jam
+pnp-mayonnaise|PnP Mayonnaise|OS|545|1|10|56|1 tbsp (15 g)=15|pick n pay mayo
+pnp-tomato-sauce|PnP Tomato Sauce|OS|110|1.2|25|0.2|1 tbsp (15 g)=15|pick n pay ketchup
+spar-mayonnaise|Spar Mayonnaise|OS|545|1|10|56|1 tbsp (15 g)=15|spar mayo
+checkers-housebrand-sunflower-oil|Checkers Housebrand Sunflower Oil|OS|884|0|0|100|1 tsp (5 ml)=4.5;1 tbsp (15 ml)=13.6|checkers cooking oil
+ritebrand-sunflower-oil|Ritebrand Sunflower Oil|OS|884|0|0|100|1 tsp (5 ml)=4.5;1 tbsp (15 ml)=13.6|shoprite ritebrand cooking oil
+pnp-rice-cakes-lightly-salted|PnP Rice Cakes Lightly Salted|SN|385|8|81|3|1 rice cake (8 g)=8;2 rice cakes=16|pick n pay rice cakes
+checkers-simple-truth-rice-cakes|Checkers Simple Truth Rice Cakes|SN|385|8|81|3|1 rice cake (8 g)=8;2 rice cakes=16|checkers simple truth rice cakes
+spar-rice-cakes|Spar Rice Cakes|SN|385|8|81|3|1 rice cake (8 g)=8|spar rice cakes
+pnp-cream-crackers|PnP Cream Crackers|SN|430|9.5|70|12.5|3 crackers (24 g)=24;1 cracker (8 g)=8|pick n pay crackers
+pnp-salticrax-style-crackers|PnP Salticrax Style Crackers|SN|480|8.5|65|20.5|5 crackers (25 g)=25|pick n pay salty crackers
+checkers-simple-truth-seed-crackers|Checkers Simple Truth Seed Crackers|SN|480|15|35|30|5 crackers (25 g)=25|checkers simple truth seed crackers
+pnp-salted-potato-chips|PnP Salted Potato Chips|SN|535|6|52|33.5|1 small bag (36 g)=36;1 handful (25 g)=25;1 large bag (125 g)=125|pick n pay crisps salted
+pnp-salt-vinegar-chips|PnP Salt & Vinegar Chips|SN|530|6|53|32.5|1 small bag (36 g)=36;1 handful (25 g)=25|pick n pay crisps vinegar
+no-name-potato-chips-salted|No Name Potato Chips Salted|SN|535|6|52|33.5|1 handful (25 g)=25;1 bag (125 g)=125|pnp no name crisps
+checkers-housebrand-potato-chips-salted|Checkers Housebrand Potato Chips Salted|SN|535|6|52|33.5|1 small bag (36 g)=36;1 handful (25 g)=25|checkers crisps
+ritebrand-maize-snacks-cheese|Ritebrand Maize Snacks Cheese|SN|505|6|60|27|1 bag (30 g)=30|shoprite ritebrand cheese curls
+spar-potato-chips-salted|Spar Potato Chips Salted|SN|535|6|52|33.5|1 small bag (36 g)=36;1 handful (25 g)=25|spar crisps
+pnp-marie-biscuits|PnP Marie Biscuits|SN|440|7|75|12.5|1 biscuit (7 g)=7;4 biscuits=28|pick n pay marie biscuits
+pnp-choc-chip-cookies|PnP Choc Chip Cookies|SN|495|5.5|65|23.5|1 cookie (12 g)=12;3 cookies=36|pick n pay chocolate chip biscuits
+pnp-digestive-biscuits|PnP Digestive Biscuits|SN|480|7|64|21.5|1 biscuit (15 g)=15;2 biscuits=30|pick n pay digestives
+checkers-housebrand-tennis-style-biscuits|Checkers Housebrand Tennis Style Biscuits|SN|495|6|68|22|1 biscuit (10 g)=10;3 biscuits=30|checkers coconut biscuits
+ritebrand-marie-biscuits|Ritebrand Marie Biscuits|SN|440|7|75|12.5|4 biscuits (28 g)=28|shoprite ritebrand marie biscuits
+spar-shortbread-biscuits|Spar Shortbread Biscuits|SN|510|6|62|26.5|1 finger (18 g)=18|spar shortbread
+woolworths-choc-chip-cookies|Woolworths Choc Chip Cookies|SN|500|6|62|25.5|1 cookie (15 g)=15;2 cookies=30|woolies cookies
+pnp-frozen-mixed-vegetables|PnP Frozen Mixed Vegetables|VG|55|2.8|8.5|0.5|1 cup (130 g)=130;half cup (65 g)=65|pick n pay frozen veg mix
+pnp-frozen-peas|PnP Frozen Peas|VG|70|5.2|11|0.4|half cup (70 g)=70;1 cup (140 g)=140|pick n pay frozen peas
+pnp-frozen-broccoli-florets|PnP Frozen Broccoli Florets|VG|27|2.8|2.8|0.4|1 cup (90 g)=90|pick n pay frozen broccoli
+pnp-frozen-stir-fry-vegetables|PnP Frozen Stir Fry Vegetables|VG|38|1.8|6|0.3|1 cup (100 g)=100|pick n pay stir fry mix
+pnp-frozen-oven-chips|PnP Frozen Oven Chips|VG|150|2.5|24|4.8|1 portion (150 g)=150;1 cup (100 g)=100|pick n pay frozen fries oven
+checkers-housebrand-frozen-mixed-vegetables|Checkers Housebrand Frozen Mixed Vegetables|VG|55|2.8|8.5|0.5|1 cup (130 g)=130|checkers frozen veg
+checkers-housebrand-frozen-oven-chips|Checkers Housebrand Frozen Oven Chips|VG|150|2.5|24|4.8|1 portion (150 g)=150|checkers frozen fries
+checkers-simple-truth-cauliflower-rice|Checkers Simple Truth Cauliflower Rice|VG|25|2|3|0.3|1 cup (120 g)=120|checkers simple truth cauli rice riced cauliflower
+ritebrand-frozen-mixed-vegetables|Ritebrand Frozen Mixed Vegetables|VG|55|2.8|8.5|0.5|1 cup (130 g)=130|shoprite ritebrand frozen veg
+ritebrand-frozen-slap-chips|Ritebrand Frozen Slap Chips|VG|155|2.3|24|5.5|1 portion (150 g)=150|shoprite ritebrand frozen chips
+spar-frozen-mixed-vegetables|Spar Frozen Mixed Vegetables|VG|55|2.8|8.5|0.5|1 cup (130 g)=130|spar frozen veg
+spar-frozen-oven-chips|Spar Frozen Oven Chips|VG|150|2.5|24|4.8|1 portion (150 g)=150|spar frozen fries
+woolworths-frozen-sweet-potato-fries|Woolworths Frozen Sweet Potato Fries|VG|175|2|26|7|1 portion (150 g)=150|woolies sweet potato chips
+woolworths-frozen-edamame-beans|Woolworths Frozen Edamame Beans|PP|125|11|8|5.2|half cup (75 g)=75|woolies edamame
+pnp-chicken-breast-fillets-raw|PnP Chicken Breast Fillets (raw)|MP|110|23|0|1.8|1 fillet (150 g)=150;100 g=100|pick n pay chicken breast
+pnp-chicken-drumsticks-raw|PnP Chicken Drumsticks (raw)|MP|165|18.5|0|10|1 drumstick (100 g)=100;2 drumsticks=200|pick n pay drumsticks chicken
+pnp-chicken-thighs-raw|PnP Chicken Thighs (raw)|MP|200|17|0|14.8|1 thigh (120 g)=120|pick n pay chicken thighs
+pnp-crumbed-chicken-strips|PnP Crumbed Chicken Strips|MP|230|15|18|11|4 strips (100 g)=100;6 strips=150|pick n pay chicken strips crumbed
+pnp-chicken-nuggets|PnP Chicken Nuggets|MP|245|13|19|13|6 nuggets (100 g)=100;4 nuggets=67|pick n pay nuggets
+pnp-lean-beef-mince-raw|PnP Lean Beef Mince (raw)|MP|170|20|0|10|100 g=100;1 portion (125 g)=125|pick n pay mince lean
+pnp-extra-lean-beef-mince-raw|PnP Extra Lean Beef Mince (raw)|MP|135|21.5|0|5.5|100 g=100;1 portion (125 g)=125|pick n pay extra lean mince
+pnp-traditional-boerewors-raw|PnP Traditional Boerewors (raw)|MP|265|14|2.5|22|1 portion (100 g)=100;1 coil (500 g)=500|pick n pay boerewors wors sausage
+pnp-chicken-viennas|PnP Chicken Viennas|MP|245|10.5|5|20.5|1 vienna (40 g)=40;2 viennas=80|pick n pay viennas hot dog
+pnp-polony|PnP Polony|MP|230|10|6|18.5|1 slice (20 g)=20;2 slices=40|pick n pay polony
+pnp-sliced-ham|PnP Sliced Ham|MP|110|16|2|4.2|2 slices (40 g)=40;1 slice (20 g)=20|pick n pay ham
+pnp-sliced-chicken-breast|PnP Sliced Chicken Breast|MP|105|18|2|2.8|2 slices (40 g)=40|pick n pay sliced chicken
+no-name-chicken-viennas|No Name Chicken Viennas|MP|245|10|5.5|20.5|1 vienna (40 g)=40|pnp no name viennas
+no-name-polony|No Name Polony|MP|230|10|6|18.5|1 slice (20 g)=20|pnp no name polony
+checkers-chicken-breast-fillets-raw|Checkers Chicken Breast Fillets (raw)|MP|110|23|0|1.8|1 fillet (150 g)=150|checkers chicken breast
+checkers-chicken-drumsticks-raw|Checkers Chicken Drumsticks (raw)|MP|165|18.5|0|10|1 drumstick (100 g)=100|checkers drumsticks
+checkers-housebrand-crumbed-chicken-burgers|Checkers Housebrand Crumbed Chicken Burgers|MP|235|13.5|17|12.5|1 patty (80 g)=80|checkers chicken patty crumbed
+checkers-housebrand-chicken-nuggets|Checkers Housebrand Chicken Nuggets|MP|245|13|19|13|6 nuggets (100 g)=100|checkers nuggets
+checkers-beef-mince-raw|Checkers Beef Mince (raw)|MP|200|18.5|0|14|100 g=100;1 portion (125 g)=125|checkers mince
+checkers-farmers-boerewors-raw|Checkers Farmers Boerewors (raw)|MP|265|14|2.5|22|1 portion (100 g)=100|checkers boerewors wors
+checkers-housebrand-polony|Checkers Housebrand Polony|MP|230|10|6|18.5|1 slice (20 g)=20|checkers polony
+checkers-housebrand-viennas|Checkers Housebrand Viennas|MP|245|10.5|5|20.5|1 vienna (40 g)=40|checkers viennas
+checkers-forage-feast-beef-biltong|Checkers Forage & Feast Beef Biltong|MP|290|52|2.5|8|1 handful (30 g)=30;1 bag (80 g)=80|checkers forage and feast biltong
+ritebrand-chicken-viennas|Ritebrand Chicken Viennas|MP|245|10|5.5|20.5|1 vienna (40 g)=40|shoprite ritebrand viennas
+ritebrand-polony|Ritebrand Polony|MP|230|10|6|18.5|1 slice (20 g)=20|shoprite ritebrand polony
+shoprite-chicken-mixed-portions-raw|Shoprite Chicken Mixed Portions (raw)|MP|190|18|0|13|1 portion (120 g)=120|shoprite chicken pieces braai pack
+shoprite-boerewors-raw|Shoprite Boerewors (raw)|MP|270|13.5|3|22.5|1 portion (100 g)=100|shoprite boerewors wors
+spar-chicken-breast-fillets-raw|Spar Chicken Breast Fillets (raw)|MP|110|23|0|1.8|1 fillet (150 g)=150|spar chicken breast
+spar-beef-mince-raw|Spar Beef Mince (raw)|MP|200|18.5|0|14|100 g=100|spar mince
+spar-boerewors-raw|Spar Boerewors (raw)|MP|265|14|2.5|22|1 portion (100 g)=100|spar wors
+spar-sliced-ham|Spar Sliced Ham|MP|110|16|2|4.2|2 slices (40 g)=40|spar ham
+spar-chicken-nuggets|Spar Chicken Nuggets|MP|245|13|19|13|6 nuggets (100 g)=100|spar nuggets
+woolworths-chicken-drumsticks-raw|Woolworths Chicken Drumsticks (raw)|MP|165|18.5|0|10|1 drumstick (100 g)=100|woolies drumsticks
+woolworths-chicken-nuggets|Woolworths Chicken Nuggets|MP|225|15|15|11.5|6 nuggets (100 g)=100|woolies nuggets
+woolworths-shaved-smoked-ham|Woolworths Shaved Smoked Ham|MP|105|18|1.5|3|2 slices (40 g)=40|woolies ham
+woolworths-chicken-viennas|Woolworths Chicken Viennas|MP|230|12|4|18.5|1 vienna (45 g)=45|woolies viennas
+food-lovers-market-chicken-breast-fillets-raw|Food Lover's Market Chicken Breast Fillets (raw)|MP|110|23|0|1.8|1 fillet (150 g)=150|food lovers chicken breast
+food-lovers-market-boerewors-raw|Food Lover's Market Boerewors (raw)|MP|265|14|2.5|22|1 portion (100 g)=100|food lovers wors
+pnp-hake-fillets-crumbed-frozen|PnP Hake Fillets Crumbed (frozen)|FS|185|11|16|8.5|1 fillet (100 g)=100|pick n pay crumbed hake fish
+pnp-hake-fillets-plain-frozen|PnP Hake Fillets Plain (frozen)|FS|78|16.5|0|1.2|1 fillet (120 g)=120|pick n pay hake fish
+checkers-housebrand-tuna-chunks-in-water|Checkers Housebrand Tuna Chunks in Water|FS|105|24|0|1|1 can drained (120 g)=120;half can (60 g)=60|checkers tuna
+ritebrand-pilchards-in-tomato-sauce|Ritebrand Pilchards in Tomato Sauce|FS|160|16|3|9.3|half can (100 g)=100;1 can (400 g)=400|shoprite ritebrand pilchards
+spar-tuna-chunks-in-brine|Spar Tuna Chunks in Brine|FS|105|24|0|1|1 can drained (120 g)=120|spar tuna
+pnp-beef-lasagne|PnP Beef Lasagne|HM|150|8|13|7.2|1 pack (400 g)=400;1 portion (300 g)=300|pick n pay lasagne ready meal
+pnp-cottage-pie|PnP Cottage Pie|HM|115|6|11|5.2|1 pack (400 g)=400;1 portion (300 g)=300|pick n pay cottage pie ready meal
+pnp-butter-chicken-with-rice|PnP Butter Chicken with Rice|HM|145|7.5|17|5.2|1 pack (350 g)=350|pick n pay butter chicken ready meal
+pnp-macaroni-cheese|PnP Macaroni Cheese|HM|165|7|17|7.7|1 pack (350 g)=350|pick n pay mac and cheese
+pnp-chicken-curry-with-rice|PnP Chicken Curry with Rice|HM|135|7|18|3.8|1 pack (350 g)=350|pick n pay curry and rice ready meal
+pnp-chicken-a-la-king-with-rice|PnP Chicken a la King with Rice|HM|140|7.5|17|4.8|1 pack (350 g)=350|pick n pay chicken ala king
+pnp-spaghetti-bolognese|PnP Spaghetti Bolognese|HM|130|7|15|4.6|1 pack (350 g)=350|pick n pay spag bol ready meal
+checkers-beef-lasagne|Checkers Beef Lasagne|HM|150|8|13|7.2|1 pack (400 g)=400;1 portion (300 g)=300|checkers lasagne ready meal
+checkers-cottage-pie|Checkers Cottage Pie|HM|115|6|11|5.2|1 pack (400 g)=400|checkers cottage pie
+checkers-butter-chicken-with-rice|Checkers Butter Chicken with Rice|HM|145|7.5|17|5.2|1 pack (350 g)=350|checkers butter chicken
+checkers-macaroni-cheese|Checkers Macaroni Cheese|HM|165|7|17|7.7|1 pack (350 g)=350|checkers mac and cheese
+checkers-chicken-a-la-king-with-rice|Checkers Chicken a la King with Rice|HM|140|7.5|17|4.8|1 pack (350 g)=350|checkers chicken ala king
+checkers-simple-truth-chicken-veg-bowl|Checkers Simple Truth Chicken & Veg Bowl|HM|95|9|8|3|1 bowl (350 g)=350|checkers simple truth healthy meal
+spar-beef-lasagne|Spar Beef Lasagne|HM|150|8|13|7.2|1 pack (400 g)=400|spar lasagne
+spar-chicken-curry-with-rice|Spar Chicken Curry with Rice|HM|135|7|18|3.8|1 pack (350 g)=350|spar curry and rice
+spar-spaghetti-bolognese|Spar Spaghetti Bolognese|HM|130|7|15|4.6|1 pack (350 g)=350|spar spag bol
+spar-cottage-pie|Spar Cottage Pie|HM|115|6|11|5.2|1 pack (400 g)=400|spar cottage pie
+woolworths-beef-curry-rice-low-fat|Woolworths Beef Curry & Rice Low Fat|HM|110|7.5|15|2.2|1 pack (350 g)=350|woolies low fat curry
+woolworths-chicken-lasagne|Woolworths Chicken Lasagne|HM|135|8.5|12|5.8|1 pack (400 g)=400|woolies chicken lasagne
+food-lovers-market-butter-chicken|Food Lover's Market Butter Chicken|HM|165|10|6|11.5|1 portion (250 g)=250|food lovers butter chicken deli
+food-lovers-market-chicken-lasagne|Food Lover's Market Chicken Lasagne|HM|145|8.5|12|7|1 portion (300 g)=300|food lovers lasagne deli
+pnp-coleslaw|PnP Coleslaw|VG|150|1|10|12|half cup (80 g)=80|pick n pay coleslaw salad
+pnp-potato-salad|PnP Potato Salad|VG|165|1.8|14|11.5|half cup (100 g)=100|pick n pay potato salad
+pnp-greek-salad|PnP Greek Salad|VG|95|3|4|7.5|1 bowl (200 g)=200|pick n pay greek salad
+checkers-chicken-caesar-salad|Checkers Chicken Caesar Salad|HM|150|9|7|9.8|1 bowl (250 g)=250|checkers caesar salad
+woolworths-chicken-quinoa-salad|Woolworths Chicken & Quinoa Salad|HM|135|9|12|5.5|1 bowl (250 g)=250|woolies quinoa salad
+pnp-hummus|PnP Hummus|OS|260|7|14|19|2 tbsp (30 g)=30|pick n pay hummus houmous
+checkers-simple-truth-hummus|Checkers Simple Truth Hummus|OS|255|7.5|13|19|2 tbsp (30 g)=30|checkers simple truth hummus
+spar-hummus|Spar Hummus|OS|260|7|14|19|2 tbsp (30 g)=30|spar hummus
+pnp-tzatziki|PnP Tzatziki|OS|115|4|5|9|2 tbsp (30 g)=30|pick n pay tzatziki dip
+pnp-cheese-onion-dip|PnP Cheese & Onion Dip|OS|300|3.5|6|29|2 tbsp (30 g)=30|pick n pay dip
+woolworths-sweet-chilli-cream-cheese-dip|Woolworths Sweet Chilli Cream Cheese Dip|OS|255|4|15|20|2 tbsp (30 g)=30|woolies dip
+pnp-butternut-soup|PnP Butternut Soup|HM|48|1|7|1.8|1 bowl (300 ml)=300|pick n pay butternut soup
+woolworths-chicken-vegetable-soup|Woolworths Chicken & Vegetable Soup|HM|45|3.2|5|1.3|1 bowl (300 g)=300|woolies chicken soup
+checkers-tomato-basil-soup|Checkers Tomato & Basil Soup|HM|50|1.2|7|1.9|1 bowl (300 g)=300|checkers tomato soup
+pnp-100-orange-juice|PnP 100% Orange Juice|DR|44|0.6|10|0.1|1 glass (250 ml)=250;1 cup (200 ml)=200|pick n pay orange juice|L
+pnp-apple-juice-100|PnP Apple Juice 100%|DR|46|0.1|11|0.1|1 glass (250 ml)=250|pick n pay apple juice|L
+pnp-mango-orange-juice-blend|PnP Mango Orange Juice Blend|DR|48|0.3|11.5|0.1|1 glass (250 ml)=250|pick n pay fruit juice|L
+checkers-housebrand-orange-juice-100|Checkers Housebrand Orange Juice 100%|DR|44|0.6|10|0.1|1 glass (250 ml)=250|checkers orange juice|L
+checkers-housebrand-fruit-nectar-guava|Checkers Housebrand Fruit Nectar Guava|DR|55|0.2|13.5|0|1 glass (250 ml)=250|checkers guava juice nectar|L
+ritebrand-fruit-juice-blend|Ritebrand Fruit Juice Blend|DR|48|0.2|11.8|0|1 glass (250 ml)=250|shoprite ritebrand juice|L
+spar-100-orange-juice|Spar 100% Orange Juice|DR|44|0.6|10|0.1|1 glass (250 ml)=250|spar orange juice|L
+pnp-iced-tea-peach|PnP Iced Tea Peach|DR|28|0|7|0|1 bottle (500 ml)=500;1 glass (250 ml)=250|pick n pay iced tea peach|L
+checkers-housebrand-iced-tea-lemon|Checkers Housebrand Iced Tea Lemon|DR|28|0|7|0|1 bottle (500 ml)=500|checkers iced tea|L
+spar-iced-tea-peach|Spar Iced Tea Peach|DR|28|0|7|0|1 bottle (500 ml)=500|spar iced tea|L
+pnp-muesli-bar|PnP Muesli Bar|SN|410|6|65|13.5|1 bar (30 g)=30|pick n pay cereal bar
+checkers-simple-truth-nut-bar|Checkers Simple Truth Nut Bar|SN|520|14|36|35|1 bar (40 g)=40|checkers simple truth nut bar
+pnp-trail-mix|PnP Trail Mix|NS|475|12|44|28|1 handful (30 g)=30;quarter cup (40 g)=40|pick n pay trail mix
+checkers-forage-feast-trail-mix|Checkers Forage & Feast Trail Mix|NS|480|12.5|43|29|1 handful (30 g)=30|checkers forage feast trail mix
+spar-trail-mix|Spar Trail Mix|NS|475|12|44|28|1 handful (30 g)=30|spar trail mix
+food-lovers-market-trail-mix|Food Lover's Market Trail Mix|NS|475|12|44|28|1 handful (30 g)=30|food lovers trail mix
+pnp-raw-almonds|PnP Raw Almonds|NS|600|21|8|52|1 handful (30 g)=30;10 almonds (12 g)=12|pick n pay almonds
+pnp-roasted-salted-peanuts|PnP Roasted Salted Peanuts|NS|600|26|12|50|1 handful (30 g)=30|pick n pay peanuts
+pnp-raw-cashews|PnP Raw Cashews|NS|575|18|27|44|1 handful (30 g)=30|pick n pay cashews
+checkers-forage-feast-mixed-nuts|Checkers Forage & Feast Mixed Nuts|NS|615|19|13|54|1 handful (30 g)=30|checkers forage feast nuts
+food-lovers-market-raw-almonds|Food Lover's Market Raw Almonds|NS|600|21|8|52|1 handful (30 g)=30|food lovers almonds
+food-lovers-market-cashews-roasted|Food Lover's Market Cashews Roasted|NS|590|18|28|46|1 handful (30 g)=30|food lovers cashews
+pnp-dried-mango|PnP Dried Mango|FR|320|2|76|0.8|1 handful (30 g)=30|pick n pay dried mango
+pnp-raisins|PnP Raisins|FR|300|3|70|0.5|2 tbsp (20 g)=20;1 box (40 g)=40|pick n pay raisins
+checkers-forage-feast-dried-apricots|Checkers Forage & Feast Dried Apricots|FR|250|3.5|56|0.5|5 apricots (35 g)=35|checkers dried apricots
+food-lovers-market-dried-mango|Food Lover's Market Dried Mango|FR|320|2|76|0.8|1 handful (30 g)=30|food lovers dried mango
+pnp-white-rice-dry|PnP White Rice (dry)|GR|355|7|79|0.6|quarter cup dry (50 g)=50;half cup dry (90 g)=90|pick n pay rice
+pnp-spaghetti-dry|PnP Spaghetti (dry)|GR|355|12|72|1.5|1 portion dry (80 g)=80|pick n pay pasta spaghetti
+ritebrand-rice-dry|Ritebrand Rice (dry)|GR|355|7|79|0.6|quarter cup dry (50 g)=50|shoprite ritebrand rice
+ritebrand-macaroni-dry|Ritebrand Macaroni (dry)|GR|355|12|72|1.5|1 portion dry (80 g)=80|shoprite ritebrand pasta
+checkers-housebrand-baked-beans-in-tomato-sauce|Checkers Housebrand Baked Beans in Tomato Sauce|PP|85|4.5|14|0.4|half can (205 g)=205|checkers baked beans
+ritebrand-baked-beans|Ritebrand Baked Beans|PP|85|4.5|14|0.4|half can (205 g)=205|shoprite ritebrand baked beans
+usn-100-whey-premium-protein-chocolate|USN 100% Whey Premium Protein Chocolate|SU|377|75|8|5|1 scoop (30 g)=30;2 scoops (60 g)=60|usn whey protein powder shake
+usn-100-whey-premium-protein-vanilla|USN 100% Whey Premium Protein Vanilla|SU|377|75|8|5|1 scoop (30 g)=30;2 scoops (60 g)=60|usn whey protein powder vanilla
+usn-blue-lab-100-whey-chocolate|USN Blue Lab 100% Whey Chocolate|SU|386|72|10|6.5|1 scoop (34 g)=34;2 scoops (68 g)=68|usn bluelab whey protein
+usn-blue-lab-100-whey-vanilla|USN Blue Lab 100% Whey Vanilla|SU|386|72|10|6.5|1 scoop (34 g)=34;2 scoops (68 g)=68|usn bluelab whey protein vanilla
+usn-iso-pro-100-whey-isolate|USN Iso-Pro 100% Whey Isolate|SU|368|86|3|1.2|1 scoop (30 g)=30|usn isolate whey protein
+usn-casein-protein-chocolate|USN Casein Protein Chocolate|SU|358|75|10|2|1 scoop (33 g)=33|usn casein slow release protein
+usn-plant-protein-chocolate|USN Plant Protein Chocolate|SU|390|70|12|7|1 scoop (32 g)=32|usn vegan plant protein pea
+usn-hyperbolic-mass-chocolate|USN Hyperbolic Mass Chocolate|SU|385|18|72|2.8|1 serving (100 g)=100;1 scoop (50 g)=50|usn mass gainer weight gainer
+usn-muscle-fuel-anabolic|USN Muscle Fuel Anabolic|SU|374|30|50|6|1 serving (110 g)=110;1 scoop (55 g)=55|usn muscle fuel all in one gainer
+usn-diet-fuel-ultralean|USN Diet Fuel Ultralean|SU|375|40|38|7|1 serving (55 g)=55;1 scoop (27 g)=27|usn diet fuel meal replacement shake
+usn-creatine-monohydrate|USN Creatine Monohydrate|SU|0|0|0|0|1 scoop (5 g)=5|usn creatine
+usn-bcaa-amino-grow|USN BCAA Amino Grow|SU|10|0|2.5|0|1 scoop (10 g)=10|usn bcaa amino acids
+usn-pre-workout-anabolic-nitro|USN Pre-Workout Anabolic Nitro|SU|40|0|10|0|1 scoop (10 g)=10|usn preworkout
+usn-electrolyte-hydration-powder|USN Electrolyte Hydration Powder|SU|360|0|90|0|1 sachet (20 g)=20|usn hydrate electrolyte isotonic
+usn-pure-protein-shake-chocolate-rtd|USN Pure Protein Shake Chocolate RTD|DR|61|8|5|1|1 bottle (500 ml)=500;1 bottle (330 ml)=330|usn protein shake ready to drink|L
+evox-100-whey-protein-chocolate|Evox 100% Whey Protein Chocolate|SU|381|73|10|5.5|1 scoop (30 g)=30;2 scoops (60 g)=60|evox whey protein powder
+evox-100-whey-protein-vanilla|Evox 100% Whey Protein Vanilla|SU|381|73|10|5.5|1 scoop (30 g)=30;2 scoops (60 g)=60|evox whey protein vanilla
+evox-isolate-whey-protein|Evox Isolate Whey Protein|SU|370|85|3.5|1.5|1 scoop (30 g)=30|evox whey isolate
+evox-mass-gainer|Evox Mass Gainer|SU|387|20|70|3|1 serving (100 g)=100;1 scoop (50 g)=50|evox weight gainer
+evox-creatine-monohydrate|Evox Creatine Monohydrate|SU|0|0|0|0|1 scoop (5 g)=5|evox creatine
+evox-pre-workout|Evox Pre-Workout|SU|40|0|10|0|1 scoop (10 g)=10|evox preworkout
+evox-collagen-peptides|Evox Collagen Peptides|SU|360|90|0|0|1 scoop (10 g)=10|evox collagen
+biogen-whey-protein-chocolate|Biogen Whey Protein Chocolate|SU|391|70|12|7|1 scoop (30 g)=30;2 scoops (60 g)=60|biogen whey protein powder
+biogen-whey-protein-vanilla|Biogen Whey Protein Vanilla|SU|391|70|12|7|1 scoop (30 g)=30;2 scoops (60 g)=60|biogen whey protein vanilla
+biogen-iso-whey|Biogen Iso Whey|SU|370|85|4|1.5|1 scoop (30 g)=30|biogen isolate whey protein
+biogen-casein|Biogen Casein|SU|358|74|9|2.5|1 scoop (33 g)=33|biogen casein protein
+biogen-vegan-protein|Biogen Vegan Protein|SU|385|72|10|6.5|1 scoop (30 g)=30|biogen plant protein vegan pea
+biogen-mass-gainer|Biogen Mass Gainer|SU|383|20|68|3.5|1 serving (100 g)=100;1 scoop (50 g)=50|biogen weight gainer
+biogen-creatine-monohydrate|Biogen Creatine Monohydrate|SU|0|0|0|0|1 scoop (5 g)=5|biogen creatine
+biogen-bcaa|Biogen BCAA|SU|10|0|2.5|0|1 scoop (10 g)=10|biogen bcaa amino
+biogen-eaa|Biogen EAA|SU|10|0|2.5|0|1 scoop (10 g)=10|biogen eaa essential amino acids
+biogen-pre-workout|Biogen Pre-Workout|SU|40|0|10|0|1 scoop (10 g)=10|biogen preworkout
+biogen-collagen-max|Biogen Collagen Max|SU|360|90|0|0|1 scoop (10 g)=10|biogen collagen powder
+biogen-electrolyte-powder|Biogen Electrolyte Powder|SU|360|0|90|0|1 sachet (20 g)=20|biogen electrolytes hydration
+biogen-energy-gel|Biogen Energy Gel|SU|250|0|62|0|1 gel (40 g)=40|biogen gel running cycling
+nutritech-100-whey-protein|NutriTech 100% Whey Protein|SU|385|72|10|6|1 scoop (30 g)=30;2 scoops (60 g)=60|nutritech whey protein powder
+nutritech-whey-isolate|NutriTech Whey Isolate|SU|370|85|3|1.5|1 scoop (30 g)=30|nutritech isolate whey protein
+nutritech-mass-gainer|NutriTech Mass Gainer|SU|383|20|68|3.5|1 serving (100 g)=100;1 scoop (50 g)=50|nutritech weight gainer
+nutritech-creatine-monohydrate|NutriTech Creatine Monohydrate|SU|0|0|0|0|1 scoop (5 g)=5|nutritech creatine
+nutritech-vegan-protein|NutriTech Vegan Protein|SU|385|72|10|6.5|1 scoop (30 g)=30|nutritech plant protein
+nutritech-protein-shake-rtd|NutriTech Protein Shake RTD|DR|55|8|4.5|0.5|1 bottle (500 ml)=500|nutritech protein shake ready to drink|L
+optimum-nutrition-gold-standard-100-whey-chocolate|Optimum Nutrition Gold Standard 100% Whey Chocolate|SU|395|79|10|5|1 scoop (30.4 g)=30.4;2 scoops=61|on gold standard whey double rich chocolate
+optimum-nutrition-gold-standard-100-whey-vanilla|Optimum Nutrition Gold Standard 100% Whey Vanilla|SU|395|79|10|5|1 scoop (30.4 g)=30.4;2 scoops=61|on gold standard whey vanilla ice cream
+optimum-nutrition-gold-standard-casein|Optimum Nutrition Gold Standard Casein|SU|355|71|9|3|1 scoop (34 g)=34|on casein protein
+optimum-nutrition-serious-mass|Optimum Nutrition Serious Mass|SU|373|15|75|1.4|1 serving (334 g)=334;1 scoop (167 g)=167|on serious mass gainer
+optimum-nutrition-micronized-creatine|Optimum Nutrition Micronized Creatine|SU|0|0|0|0|1 scoop (5 g)=5|on creatine
+muscle-science-whey-protein|Muscle Science Whey Protein|SU|386|74|9|6|1 scoop (30 g)=30;2 scoops (60 g)=60|muscle science whey protein powder
+muscle-science-mass-gainer|Muscle Science Mass Gainer|SU|383|20|68|3.5|1 serving (100 g)=100|muscle science weight gainer
+muscle-science-creatine|Muscle Science Creatine|SU|0|0|0|0|1 scoop (5 g)=5|muscle science creatine
+dymatize-iso100-hydrolyzed-whey-isolate|Dymatize ISO100 Hydrolyzed Whey Isolate|SU|360|80|4|1.5|1 scoop (32 g)=32|dymatize iso 100 whey isolate
+dymatize-elite-100-whey|Dymatize Elite 100% Whey|SU|381|69|14|5.5|1 scoop (36 g)=36|dymatize elite whey
+pvm-whey-protein|PVM Whey Protein|SU|382|70|12|6|1 scoop (30 g)=30;2 scoops (60 g)=60|pvm whey protein powder
+pvm-mass-gainer|PVM Mass Gainer|SU|380|20|68|3.2|1 serving (100 g)=100|pvm weight gainer
+c4-original-pre-workout|C4 Original Pre-Workout|SU|40|0|10|0|1 scoop (6.5 g)=6.5|c4 cellucor preworkout
+vital-proteins-collagen-peptides|Vital Proteins Collagen Peptides|SU|360|90|0|0|1 scoop (10 g)=10;2 scoops (20 g)=20|vital proteins collagen
+rehidrat-oral-electrolyte-sachet|Rehidrat Oral Electrolyte Sachet|SU|350|0|87.5|0|1 sachet (14 g)=14|rehidrat rehydration solution electrolytes
+hydrate-electrolyte-drink|Hydrate Electrolyte Drink|DR|12|0|3|0|1 bottle (500 ml)=500;1 glass (250 ml)=250|hydrate electrolyte sports drink|L
+hi-5-zero-electrolyte-tablet|Hi-5 Zero Electrolyte Tablet|SU|30|0|7.5|0|1 tablet (4.5 g)=4.5|hi5 high5 zero electrolyte tablet
+hi-5-energy-drink-powder|Hi-5 Energy Drink Powder|SU|380|0|95|0|1 serving (47 g)=47|hi5 high5 energy source carb drink
+hi-5-energy-gel|Hi-5 Energy Gel|SU|152|0|38|0|1 gel (60 g)=60|hi5 high5 energy gel
+hi-5-isogel|Hi-5 Isogel|SU|150|0|37.5|0|1 gel (60 g)=60|hi5 high5 isogel isotonic gel
+nuun-sport-electrolyte-tablet|Nuun Sport Electrolyte Tablet|SU|273|0|68|0|1 tablet (5.5 g)=5.5|nuun hydration tablet
+gu-energy-gel|GU Energy Gel|SU|300|0|70|0|1 gel (32 g)=32|gu gel running
+gu-roctane-energy-gel|GU Roctane Energy Gel|SU|300|0|71|0|1 gel (32 g)=32|gu roctane gel
+32gi-race-gel|32Gi Race Gel|SU|268|0|67|0|1 gel (40 g)=40|32gi gel
+32gi-endure-sports-drink-powder|32Gi Endure Sports Drink Powder|SU|380|0|95|0|1 serving (25 g)=25|32gi endure carb drink
+32gi-hydrate-electrolyte-tablet|32Gi Hydrate Electrolyte Tablet|SU|20|0|5|0|1 tablet (4 g)=4|32gi hydrate tablet
+clover-protein-milk-chocolate|Clover Protein Milk Chocolate|DR|68|6|8|1.4|1 bottle (500 ml)=500;1 bottle (300 ml)=300|clover protein drink milk|L
+oh-mega-protein-shake|Oh Mega Protein Shake|DR|60|7|6|0.9|1 bottle (330 ml)=330|oh mega protein drink|L
+future-life-high-protein-shake-rtd|Future Life High Protein Shake RTD|DR|75|5|11|1.2|1 bottle (350 ml)=350|future life protein drink ready to drink|L
+herbalife-formula-1-shake-vanilla|Herbalife Formula 1 Shake Vanilla|SU|377|35|48|5|2 scoops (26 g)=26|herbalife f1 meal replacement shake
+herbalife-formula-1-shake-chocolate|Herbalife Formula 1 Shake Chocolate|SU|377|35|48|5|1 serving (26 g)=26|herbalife f1 chocolate meal replacement
+herbalife-protein-drink-mix|Herbalife Protein Drink Mix|SU|375|55|30|3.5|1 serving (26 g)=26|herbalife pdm protein
+bcaa-ready-to-drink|BCAA Ready to Drink|DR|5|0|1.2|0|1 bottle (500 ml)=500|bcaa drink zero sugar|L
+purity-apple-stage-1|Purity Apple (Stage 1)|FR|55|0.2|13|0.1|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food apple puree first foods
+purity-pear-stage-1|Purity Pear (Stage 1)|FR|52|0.3|12.5|0.1|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food pear puree first foods
+purity-banana-stage-1|Purity Banana (Stage 1)|FR|72|0.8|16.8|0.2|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food banana puree first foods
+purity-butternut-stage-1|Purity Butternut (Stage 1)|VG|35|0.8|7.5|0.1|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food butternut puree first foods vegetable
+purity-sweet-potato-stage-1|Purity Sweet Potato (Stage 1)|VG|55|1|12.3|0.1|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food sweet potato puree first foods
+purity-carrot-stage-1|Purity Carrot (Stage 1)|VG|28|0.6|5.8|0.1|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food carrot puree first foods
+purity-apple-and-banana-stage-1|Purity Apple and Banana (Stage 1)|FR|65|0.5|15.3|0.2|1 jar (80 g)=80;1 jar (125 g)=125;1 tbsp=15|purity baby food apple banana puree
+purity-mixed-fruit-stage-2|Purity Mixed Fruit (Stage 2)|FR|58|0.4|13.7|0.1|1 jar (125 g)=125;1 tbsp=15|purity baby food mixed fruit puree
+purity-vanilla-custard-stage-2|Purity Vanilla Custard (Stage 2)|SN|90|2.5|15|2.2|1 jar (125 g)=125;1 tbsp=15|purity baby food custard dessert
+purity-rice-pudding-stage-2|Purity Rice Pudding (Stage 2)|SN|85|2.5|15|1.7|1 jar (125 g)=125;1 tbsp=15|purity baby food rice pudding dessert
+purity-chicken-and-vegetables-stage-2|Purity Chicken and Vegetables (Stage 2)|HM|60|3.5|7|2|1 jar (125 g)=125;1 tbsp=15|purity baby food chicken veg savoury
+purity-beef-and-vegetables-stage-2|Purity Beef and Vegetables (Stage 2)|HM|62|3.5|7|2.2|1 jar (125 g)=125;1 tbsp=15|purity baby food beef veg savoury
+purity-chicken-casserole-stage-3|Purity Chicken Casserole (Stage 3)|HM|70|3.8|8.5|2.3|1 jar (125 g)=125;1 jar (200 g)=200;1 tbsp=15|purity baby food chicken casserole toddler chunky
+purity-mince-and-pasta-stage-3|Purity Mince and Pasta (Stage 3)|HM|75|4|9|2.5|1 jar (125 g)=125;1 jar (200 g)=200;1 tbsp=15|purity baby food mince pasta toddler chunky
+purity-macaroni-and-cheese-stage-3|Purity Macaroni and Cheese (Stage 3)|HM|80|3.5|10.5|2.6|1 jar (125 g)=125;1 jar (200 g)=200;1 tbsp=15|purity baby food mac cheese toddler chunky
+purity-spaghetti-bolognaise-stage-3|Purity Spaghetti Bolognaise (Stage 3)|HM|72|3.5|9|2.3|1 jar (125 g)=125;1 jar (200 g)=200;1 tbsp=15|purity baby food spaghetti bolognese toddler chunky
+purity-pouch-apple-and-mango|Purity Pouch Apple and Mango|FR|62|0.4|14.6|0.1|1 pouch (110 g)=110|purity squeeze pouch baby fruit puree
+purity-pouch-banana-and-strawberry|Purity Pouch Banana and Strawberry|FR|66|0.6|15.4|0.2|1 pouch (110 g)=110|purity squeeze pouch baby fruit puree
+purity-pouch-strawberry-yoghurt|Purity Pouch Strawberry Yoghurt|DE|85|2|15|1.8|1 pouch (110 g)=110|purity squeeze pouch baby yogurt fruit
+purity-pouch-pumpkin-and-sweet-potato|Purity Pouch Pumpkin and Sweet Potato|VG|45|0.8|9.8|0.2|1 pouch (110 g)=110|purity squeeze pouch baby vegetable puree
+purity-baby-rice-cereal-dry|Purity Baby Rice Cereal, dry|BF|390|7|84|1.5|1 serving dry (15 g)=15;1 tbsp dry=5|purity infant cereal rice first foods
+purity-maize-cereal-dry|Purity Maize Cereal, dry|BF|395|8|83|2.5|1 serving dry (15 g)=15;1 tbsp dry=5|purity infant cereal maize baby porridge
+purity-mixed-grain-cereal-with-milk-dry|Purity Mixed Grain Cereal with Milk, dry|BF|410|13|72|7.5|1 serving dry (25 g)=25;1 tbsp dry=5|purity infant cereal mixed grain milk baby porridge
+nestle-nestum-rice-dry|Nestle Nestum Rice, dry|BF|385|6.5|85|0.8|1 serving dry (20 g)=20;1 tbsp dry=5|nestum infant cereal rice baby
+nestle-nestum-5-cereals-dry|Nestle Nestum 5 Cereals, dry|BF|385|10|80|1.8|1 serving dry (20 g)=20;1 tbsp dry=5|nestum infant cereal multigrain baby
+nestle-nestum-prepared-with-formula|Nestle Nestum, prepared with formula|BF|85|2.2|13.5|2.5|1 bowl (120 g)=120;1 tbsp=15|nestum baby cereal made up prepared
+nestle-cerelac-rice-dry|Nestle Cerelac Rice, dry|BF|415|15|68|8.5|1 serving dry (25 g)=25;1 tbsp dry=5|cerelac infant cereal rice milk baby
+nestle-cerelac-honey-dry|Nestle Cerelac Honey, dry|BF|410|14.5|70|8|1 serving dry (25 g)=25;1 tbsp dry=5|cerelac infant cereal wheat honey baby
+nestle-cerelac-mixed-fruit-dry|Nestle Cerelac Mixed Fruit, dry|BF|420|14.5|68.5|9.5|1 serving dry (25 g)=25;1 tbsp dry=5|cerelac infant cereal fruit baby
+nestle-cerelac-prepared-with-water|Nestle Cerelac, prepared with water|BF|95|3.4|15.8|2|1 bowl (125 g)=125;1 tbsp=15|cerelac baby cereal made up prepared
+nestle-nan-optipro-1-made-up|Nestle NAN Optipro 1, made up|DR|67|1.2|7.6|3.4|1 bottle (90 ml)=90;1 bottle (150 ml)=150;1 bottle (210 ml)=210|nan infant formula stage 1 baby milk|L
+nestle-nan-optipro-2-made-up|Nestle NAN Optipro 2, made up|DR|68|1.4|7.8|3.3|1 bottle (150 ml)=150;1 bottle (210 ml)=210|nan follow on formula stage 2 baby milk|L
+nestle-nan-optipro-3-growing-up-milk-made-up|Nestle NAN Optipro 3 Growing-up Milk, made up|DR|65|1.7|7.9|2.9|1 cup (200 ml)=200;1 bottle (210 ml)=210|nan toddler milk growing up stage 3|L
+nestle-lactogen-1-made-up|Nestle Lactogen 1, made up|DR|67|1.3|7.5|3.5|1 bottle (90 ml)=90;1 bottle (150 ml)=150;1 bottle (210 ml)=210|lactogen infant formula stage 1 baby milk|L
+nestle-lactogen-2-made-up|Nestle Lactogen 2, made up|DR|67|1.5|7.8|3.3|1 bottle (150 ml)=150;1 bottle (210 ml)=210|lactogen follow on formula stage 2 baby milk|L
+nestle-lactogen-3-toddler-milk-made-up|Nestle Lactogen 3 Toddler Milk, made up|DR|67|2|8.2|2.9|1 cup (200 ml)=200;1 bottle (210 ml)=210|lactogen toddler milk growing up stage 3|L
+infacare-1-made-up|Infacare 1, made up|DR|66|1.3|7.3|3.4|1 bottle (90 ml)=90;1 bottle (150 ml)=150;1 bottle (210 ml)=210|infacare infant formula stage 1 baby milk aspen|L
+infacare-2-made-up|Infacare 2, made up|DR|67|1.5|7.6|3.3|1 bottle (150 ml)=150;1 bottle (210 ml)=210|infacare follow on formula stage 2 baby milk|L
+infacare-3-toddler-milk-made-up|Infacare 3 Toddler Milk, made up|DR|66|1.9|7.8|3|1 cup (200 ml)=200;1 bottle (210 ml)=210|infacare toddler milk growing up stage 3|L
+s-26-gold-1-made-up|S-26 Gold 1, made up|DR|66|1.3|7.2|3.5|1 bottle (90 ml)=90;1 bottle (150 ml)=150;1 bottle (210 ml)=210|s26 s 26 infant formula stage 1 baby milk|L
+s-26-gold-2-made-up|S-26 Gold 2, made up|DR|67|1.5|7.4|3.4|1 bottle (150 ml)=150;1 bottle (210 ml)=210|s26 s 26 follow on formula stage 2 baby milk|L
+s-26-gold-3-toddler-milk-made-up|S-26 Gold 3 Toddler Milk, made up|DR|67|2|7.8|3|1 cup (200 ml)=200;1 bottle (210 ml)=210|s26 s 26 promil toddler milk growing up stage 3|L
+baby-teething-rusks|Baby teething rusks|SN|409|7|77|8|1 rusk (17 g)=17|baby rusk teething rusks farleys infant
+teething-biscuits|Teething biscuits|SN|395|8|78|5.5|1 biscuit (10 g)=10|baby teething biscuit infant
+baby-puffs-melts-rice-or-corn|Baby puffs / melts (rice or corn)|SN|390|7|82|3|1 handful (5 g)=5;1 pack (20 g)=20|baby puffs melts finger food rice corn
+bokomo-baby-cereal-wheat-with-milk-dry|Bokomo baby cereal (wheat with milk), dry|BF|405|13|72|7|1 serving dry (25 g)=25;1 tbsp dry=5|bokomo infant cereal baby porridge
+quorn-mince|Quorn Mince|PP|100|14.5|4.5|2|1 portion (75 g)=75;1 cup=120|quorn meat free mince vegetarian mycoprotein
+quorn-pieces|Quorn Pieces|PP|103|14|4.5|2.6|1 portion (75 g)=75;1 cup=120|quorn chicken style pieces vegetarian mycoprotein
+quorn-crispy-nuggets|Quorn Crispy Nuggets|PP|190|11|16|8.5|1 nugget (17 g)=17;5 nuggets=85|quorn nuggets vegetarian chicken style
+quorn-fillets|Quorn Fillets|PP|90|12.5|4|2.4|1 fillet (52 g)=52;2 fillets=104|quorn chicken style fillets vegetarian
+quorn-sausages|Quorn Sausages|PP|150|12|9|7|1 sausage (42 g)=42;2 sausages=84|quorn vegetarian sausages
+frys-chicken-style-burgers|Fry's Chicken-Style Burgers|PP|210|16|17|8.5|1 burger (80 g)=80|frys fry's vegan chicken burger patty
+frys-big-fry-burger|Fry's Big Fry Burger|PP|230|18|12|12|1 burger (120 g)=120|frys fry's big fry vegan burger patty
+frys-chicken-style-schnitzels|Fry's Chicken-Style Schnitzels|PP|230|15|19|10|1 schnitzel (95 g)=95|frys fry's vegan schnitzel crumbed
+frys-prawn-style-pieces|Fry's Prawn-Style Pieces|PP|120|9|14|3|1 portion (80 g)=80|frys fry's vegan prawn style
+frys-braai-sausages|Fry's Braai Sausages|PP|200|14|10|11.5|1 sausage (60 g)=60|frys fry's vegan boerewors braai sausage
+soya-mince-dry|Soya mince, dry|PP|330|50|30|1|1 portion dry (30 g)=30;1 cup dry=90|soy mince tvp dry textured vegetable protein
+textured-vegetable-protein-tvp-chunks-dry|Textured vegetable protein (TVP) chunks, dry|PP|335|52|30|1.2|1 portion dry (30 g)=30;1 cup dry=60|tvp soya chunks soy chunks dry
+tvp-chunks-rehydrated-and-cooked|TVP chunks, rehydrated and cooked|PP|110|17|10|0.4|1 portion (100 g)=100;1 cup=160|tvp soya chunks soy chunks cooked
+imana-toppers-soya-mince-flavoured-dry|Imana / Toppers soya mince, flavoured, dry|PP|330|38|40|2|1 sachet (100 g)=100;1 portion dry (25 g)=25|imana toppers soya mince savoury soy mince mix
+lentil-burger-patty-cooked|Lentil burger patty, cooked|PP|170|8|22|5.5|1 patty (90 g)=90|lentil burger vegetarian patty
+bean-burger-patty-cooked|Bean burger patty, cooked|PP|180|7|24|6|1 patty (100 g)=100|bean burger vegetarian patty black bean
+chickpea-patty-pan-fried|Chickpea patty, pan-fried|PP|200|7.5|22|9|1 patty (80 g)=80|chickpea patty vegetarian burger
+falafel-mix-dry|Falafel mix, dry|PP|330|17|50|5.5|1 portion dry (40 g)=40|falafel mix dry chickpea
+vegan-cheese-cheddar-style|Vegan cheese, cheddar-style|PP|290|0.5|20|23|1 slice (20 g)=20;1 portion (30 g)=30;1 cup grated=110|vegan cheddar dairy free cheese plant based coconut oil
+vegan-cheese-mozzarella-style|Vegan cheese, mozzarella-style|PP|280|0.5|21|21.5|1 portion (30 g)=30;1 cup grated=110|vegan mozzarella dairy free cheese plant based coconut oil
+vegan-cream-cheese|Vegan cream cheese|PP|250|2|8|23|1 tbsp=15;2 tbsp=30|vegan cream cheese dairy free plant based
+vegan-feta-style-cheese|Vegan feta-style cheese|PP|280|0.5|8|27|1 portion (30 g)=30|vegan feta dairy free plant based
+vegan-mayonnaise|Vegan mayonnaise|OS|560|0.5|6|59|1 tbsp=15;1 tsp=5|vegan mayo egg free plant based mayonnaise
+tofu-smoked|Tofu, smoked|PP|180|18|2.5|11|1 portion (100 g)=100;1 block (200 g)=200|smoked tofu beancurd
+beyond-burger|Beyond Burger|PP|204|17.7|6.2|12.4|1 patty (113 g)=113|beyond meat burger plant based patty
+beyond-sausage|Beyond Sausage|PP|250|21|6.6|15.8|1 sausage (76 g)=76|beyond meat sausage plant based
+beyond-mince|Beyond Mince|PP|220|17.5|4|15|1 portion (100 g)=100|beyond meat mince beef plant based
+impossible-style-plant-based-patty|Impossible-style plant-based patty|PP|212|16.8|8|12.4|1 patty (113 g)=113|impossible burger plant based patty
+woolworths-plant-based-burger-patty|Woolworths Plant-Based Burger Patty|PP|220|15|9|13.5|1 patty (113 g)=113|woolworths woolies plant power vegan burger
+woolworths-plant-based-mince|Woolworths Plant-Based Mince|PP|180|16|6|10|1 portion (100 g)=100|woolworths woolies plant power vegan mince
+woolworths-plant-based-chicken-style-nuggets|Woolworths Plant-Based Chicken-Style Nuggets|PP|220|12|20|10|1 nugget (20 g)=20;5 nuggets=100|woolworths woolies plant power vegan nuggets
+checkers-simple-truth-plant-based-burger|Checkers Simple Truth Plant-Based Burger|PP|215|16|8|13|1 patty (113 g)=113|checkers simple truth vegan burger
+checkers-simple-truth-meat-free-boerewors|Checkers Simple Truth Meat-Free Boerewors|PP|200|14|8|12.5|1 portion (100 g)=100|checkers simple truth vegan wors sausage
+oat-yoghurt-plain|Oat yoghurt, plain|PP|70|1|9|3.2|1 tub (150 g)=150;1 cup=245|oat yogurt dairy free plant based oatly
+oat-yoghurt-flavoured|Oat yoghurt, flavoured|PP|90|1|14|3|1 tub (150 g)=150;1 cup=245|oat yogurt strawberry vanilla dairy free
+soy-yoghurt-plain|Soy yoghurt, plain|PP|48|4|2.5|2.3|1 tub (150 g)=150;1 cup=245|soya yogurt dairy free alpro plain
+soy-yoghurt-flavoured|Soy yoghurt, flavoured|PP|75|3.5|10|2|1 tub (125 g)=125;1 cup=245|soya yogurt strawberry vanilla dairy free
+almond-yoghurt-plain|Almond yoghurt, plain|PP|90|2.5|6|6.5|1 tub (150 g)=150;1 cup=245|almond yogurt dairy free plant based
+coconut-yoghurt-plain|Coconut yoghurt, plain|PP|130|1|6|11.5|1 tub (150 g)=150;1 cup=245|coconut yogurt dairy free plant based
+coconut-yoghurt-flavoured|Coconut yoghurt, flavoured|PP|140|0.8|11|10|1 tub (150 g)=150;1 cup=245|coconut yogurt mango berry dairy free
+nutritional-yeast-flakes|Nutritional yeast flakes|PP|380|50|36|5|1 tbsp=5;2 tbsp=10|nooch nutritional yeast vegan cheese flavour
+pulled-jackfruit-bbq|Pulled jackfruit, BBQ|PP|95|1.5|19|1.2|1 portion (100 g)=100|jackfruit pulled vegan bbq
+smileys-sheeps-head-cooked|Smileys (sheep's head, cooked)|SA|220|18|0|16.5|1 portion (150 g)=150;half head (250 g)=250|smiley sheep head skopo skaapkop
+prickly-pear-raw|Prickly pear, raw|FR|41|0.7|9.6|0.5|1 fruit (100 g)=100|prickly pear turksvy cactus pear
+dragon-fruit-raw|Dragon fruit, raw|FR|60|1.2|13|0.4|1 fruit (350 g)=350;1 cup=225|dragon fruit pitaya pitahaya
+cape-gooseberries-raw|Cape gooseberries, raw|FR|53|1.9|11.2|0.7|1 cup=140;10 berries=50|cape gooseberry physalis appelliefie golden berry
+patty-pans-raw|Patty pans, raw|VG|18|1.2|3.6|0.2|1 patty pan (60 g)=60;1 cup=130|patty pan squash pattypan
+patty-pans-cooked|Patty pans, cooked|VG|18|1|3.5|0.2|1 patty pan (60 g)=60;1 cup=180|patty pan squash pattypan boiled
+yellowtail-raw|Yellowtail, raw|FS|146|23|0|5.2|1 fillet (200 g)=200|yellowtail geelstert fish
+yellowtail-grilled|Yellowtail, grilled|FS|185|29|0|7.5|1 fillet (150 g)=150;1 portion (120 g)=120|yellowtail geelstert fish braaied
+angelfish-raw|Angelfish, raw|FS|110|20|0|3.2|1 fillet (180 g)=180|angelfish pomfret fish
+angelfish-grilled|Angelfish, grilled|FS|140|25|0|4.2|1 fillet (150 g)=150|angelfish pomfret fish
+snoek-pate|Snoek pate|FS|260|13|3|22|1 tbsp=15;1 portion (40 g)=40|snoek pate smoked snoek spread
+baking-powder|Baking powder|BB|110|0|27.7|0|1 tsp=4;1 tbsp=12|baking powder raising agent
+bicarbonate-of-soda|Bicarbonate of soda|BB|0|0|0|0|1 tsp=5|bicarb baking soda sodium bicarbonate
+custard-powder|Custard powder|BB|355|0.5|88|0.1|1 tbsp=10|custard powder moirs pearce duff
+brown-bread-flour|Brown bread flour|GR|335|12.5|66|2|1 cup=140;1 tbsp=9|brown bread flour wheat
+trifle|Trifle|SN|160|3|22|6.5|1 bowl (150 g)=150;1 portion (200 g)=200|trifle dessert sponge jelly custard
+cupcake-plain-un-iced|Cupcake, plain (un-iced)|BB|360|5|50|16|1 cupcake (45 g)=45|cupcake plain muffin cake
+cupcake-iced-buttercream|Cupcake, iced (buttercream)|BB|400|3.5|58|17.5|1 cupcake (60 g)=60|cupcake iced frosted buttercream
+chicken-korma|Chicken korma|IN|170|12|6|11|1 cup=240;1 portion (300 g)=300|chicken korma curry creamy
+lamb-vindaloo|Lamb vindaloo|IN|165|13|5|10.5|1 cup=240;1 portion (300 g)=300|lamb vindaloo curry hot
+beef-vindaloo|Beef vindaloo|IN|155|14|5|9|1 cup=240;1 portion (300 g)=300|beef vindaloo curry hot
+mutton-curry-and-rice-plate|Mutton curry and rice plate|CM|165|8|18|6.8|1 plate (400 g)=400|mutton curry rice plate durban
+bean-curry-and-rice-plate|Bean curry and rice plate|CM|135|4.5|22|3.2|1 plate (400 g)=400|bean curry rice sugar bean plate
+chicken-a-la-king-2|Chicken a la king|HM|150|11|6|9.2|1 cup=240;1 portion (250 g)=250|chicken a la king creamy
+chicken-a-la-king-with-rice|Chicken a la king with rice|HM|145|7|17|5.3|1 plate (350 g)=350|chicken a la king rice plate
+smoked-chicken-breast-sliced|Smoked chicken breast, sliced|MP|110|21|1.5|2|1 slice (20 g)=20;1 portion (100 g)=100|smoked chicken breast deli sliced
+sweetcorn-fritters|Sweetcorn fritters|SA|220|5.5|28|9.5|1 fritter (40 g)=40;3 fritters=120|mielie fritters corn fritters mieliepoffers
+roosterkoek|Roosterkoek|SA|265|8|50|3.5|1 roosterkoek (100 g)=100|roosterkoek braai bread grilled bread roll
+potbrood|Potbrood|SA|260|8.5|48|3.8|1 slice (60 g)=60;1 thick slice (90 g)=90|potbrood pot bread braai bread
+sheep-tail-skaapstert-braaied|Sheep tail (skaapstert), braaied|SA|520|12|0|52|1 portion (50 g)=50|skaapstert sheep tail fat
+lamb-liver-pan-fried|Lamb liver, pan-fried|MP|220|26|4|11|1 portion (100 g)=100|lamb liver skaaplewer offal
+chicken-hearts-cooked|Chicken hearts, cooked|MP|185|26.4|0.1|7.9|1 portion (100 g)=100;5 hearts=30|chicken hearts offal braai
+chicken-gizzards-cooked|Chicken gizzards, cooked|MP|154|30|0|2.7|1 portion (100 g)=100|chicken gizzards maotwana offal
+sheep-trotters-cooked|Sheep trotters, cooked|SA|200|20|0|13|1 portion (150 g)=150|trotters sheep feet pootjies offal
+mopane-worms-dried|Mopane worms, dried|AF|420|56|7|16|1 handful (30 g)=30;1 portion (50 g)=50|mopane worms masonja phane dried
+mopane-worms-stewed-in-tomato|Mopane worms, stewed in tomato|AF|180|20|6|8|1 portion (150 g)=150|mopane worms masonja phane stew
+isijingi-pumpkin-pap|Isijingi (pumpkin pap)|AF|80|1.5|15.5|1.3|1 bowl (250 g)=250|isijingi pumpkin pap pumpkin porridge
+soft-pap-with-amasi|Soft pap with amasi|AF|85|2.5|13|2.2|1 bowl (250 g)=250|amasi porridge soft pap maas
+lamb-kidney-cooked|Lamb kidney, cooked|MP|137|24|1|3.8|1 kidney (50 g)=50;1 portion (100 g)=100|lamb kidney offal skaapniertjies
+beef-tongue-cooked|Beef tongue, cooked|MP|280|19|0|22|1 slice (30 g)=30;1 portion (100 g)=100|ox tongue beef tongue beestong
+ox-heart-cooked|Ox heart, cooked|MP|165|28|0.2|5.5|1 portion (100 g)=100|ox heart beef heart offal
+afval-sheep-offal-stew|Afval (sheep offal stew)|SA|150|15|3|8.5|1 cup=240;1 portion (250 g)=250|afval offal stew tripe pens
+ujeqe-steamed-bread|Ujeqe (steamed bread)|AF|245|7.5|48|2.2|1 slice (80 g)=80|ujeqe dombolo steamed bread
+sousboontjies|Sousboontjies|SA|140|5.5|25|1.5|1 serving (100 g)=100;1 cup=250|sousboontjies sweet sour beans
+tamatie-bredie-tomato-lamb-stew|Tamatie bredie (tomato lamb stew)|SA|140|10|7|8|1 cup=240;1 portion (300 g)=300|tamatiebredie tomato bredie lamb stew
+frikkadelle|Frikkadelle|SA|230|16|8|15|1 frikkadel (60 g)=60|frikkadel meatballs mince rissoles
+hoenderpastei-chicken-pie|Hoenderpastei (chicken pie)|SA|260|10|22|14.5|1 slice (150 g)=150|hoenderpastei chicken pie
+souskluitjies|Souskluitjies|SA|230|4|40|6|1 dumpling (40 g)=40;1 portion (120 g)=120|souskluitjies dumplings cinnamon syrup
+pap-tert|Pap tert|SA|180|6|18|9.5|1 slice (150 g)=150|pap tert mieliepap tart braai
+tomato-and-onion-relish-sheba|Tomato and onion relish (sheba)|OS|60|1.2|7|3|1 tbsp=15;half cup=120|sheba tomato onion gravy relish braai
+snoek-smoked|Snoek, smoked|FS|180|24|0|9.3|1 portion (100 g)=100|smoked snoek gerookte snoek
+kob-kabeljou-grilled|Kob (kabeljou), grilled|FS|125|24|0|3|1 fillet (150 g)=150|kob kabeljou cob fish
+harders-fried|Harders, fried|FS|220|20|5|13.5|1 harder (120 g)=120|harders mullet fried fish
+bokkoms|Bokkoms|FS|300|60|0|6.5|1 bokkom (30 g)=30|bokkoms dried salted mullet
+melkkos|Melkkos|SA|125|4|17|4.5|1 bowl (250 g)=250|melkkos milk food cinnamon sugar
+tipsy-tart-brandy-tart|Tipsy tart (brandy tart)|SA|330|4|48|13|1 slice (120 g)=120|tipsy tart brandy tart cape brandy pudding
+cremora-tart|Cremora tart|SA|330|4|36|19|1 slice (100 g)=100|cremora tart fridge tart
+soetkoekies|Soetkoekies|SA|440|5.5|65|17.5|1 biscuit (15 g)=15|soetkoekies spice biscuits
+skilpadjies|Skilpadjies|SA|260|20|3|19|1 skilpadjie (50 g)=50|skilpadjies lamb liver caul fat braai
+ystervarkies-porcupine-cakes|Ystervarkies (porcupine cakes)|SA|400|4.5|55|18.5|1 cake (50 g)=50|ystervarkies lamingtons porcupine
+marula-fruit-raw|Marula fruit, raw|FR|52|0.7|11|0.3|1 fruit (25 g)=25|marula fruit
+soutribbetjie-salted-lamb-rib-braaied|Soutribbetjie (salted lamb rib), braaied|SA|330|20|0|28|1 portion (150 g)=150|soutribbetjie salted rib lamb braai
 `;

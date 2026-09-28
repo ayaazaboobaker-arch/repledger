@@ -44,7 +44,7 @@ function parse(data: string, seen: Set<string>, tier: number): Food[] {
   return out;
 }
 
-/** 0 = hand-picked everyday foods, 1 = restaurant & chain menus, 2 = USDA reference foods. Ties in search go to the lower tier. */
+/** 0 = hand-picked everyday foods, 1 = branded products & chain menus, 2 = USDA reference foods. Ties in search go to the lower tier. */
 const TIER = new Map<string, number>();
 const SEEN = new Set<string>();
 /** The everyday list ships with the app; the big chain + USDA list loads in the background. */
@@ -57,8 +57,8 @@ const listeners = new Set<() => void>();
 /** Load the full list (chains + USDA). Safe to call many times. */
 export function loadAllFoods(): Promise<void> {
   if (!loading) {
-    loading = import("./foodDataMore").then(({ CHAIN_FOOD_DATA, USDA_FOOD_DATA }) => {
-      for (const f of [...parse(CHAIN_FOOD_DATA, SEEN, 1), ...parse(USDA_FOOD_DATA, SEEN, 2)]) { FOODS.push(f); FOOD_BY_ID.set(f.id, f); }
+    loading = import("./foodDataMore").then(({ BRANDED_FOOD_DATA, CHAIN_FOOD_DATA, USDA_FOOD_DATA }) => {
+      for (const f of [...parse(BRANDED_FOOD_DATA, SEEN, 1), ...parse(CHAIN_FOOD_DATA, SEEN, 1), ...parse(USDA_FOOD_DATA, SEEN, 2)]) { FOODS.push(f); FOOD_BY_ID.set(f.id, f); }
       ORDER.clear();
       listeners.forEach((l) => l());
     }).catch((e) => { loading = null; throw e; });
