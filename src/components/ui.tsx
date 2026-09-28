@@ -28,6 +28,8 @@ export const Icon = {
   down: S(<path d="M6 9l6 6 6-6" />, 2.4),
   run: S(<><circle cx="14" cy="4.5" r="1.8" /><path d="M9 20l3-6 3 3v4M7 11l3-3 4 1 2 3h3M12 14l-2-4" /></>),
   stop: S(<rect x="6" y="6" width="12" height="12" rx="2" />),
+  finger: S(<><path d="M12 11v3a8 8 0 0 1-1.2 4.2" /><path d="M8.5 7.5A5 5 0 0 1 17 11v2.5a12 12 0 0 1-.6 3.8" /><path d="M7 11a5 5 0 0 1 .4-2" /><path d="M5 14.5a9 9 0 0 0 .1-3.5 7 7 0 0 1 11.8-5" /><path d="M9 11a3 3 0 0 1 6 0v1.5a14 14 0 0 1-1.3 6" /><path d="M19 11.5a16 16 0 0 1-.3 3" /></>),
+  face: S(<><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2" /><path d="M9 9v1M15 9v1M12 9v4h-1M9 16a4 4 0 0 0 6 0" /></>),
   lock: S(<><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></>),
   logout: S(<><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3" /><path d="M10 17l5-5-5-5M15 12H4" /></>),
   edit: S(<><path d="M4 20h4L19 9l-4-4L4 16z" /><path d="M13.5 6.5l4 4" /></>),

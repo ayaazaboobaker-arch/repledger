@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { biometricName, biometricSupported, disableBiometric, enableBiometric, hasBiometric } from "../lib/biometric";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NumField } from "../components/forms";
 import { PinSheet, SyncBadge } from "../components/ProfileMenu";
@@ -125,6 +126,32 @@ function TargetEditor() {
   );
 }
 
+/** Turn Face ID / fingerprint unlocking on or off for this profile on this device. Hidden where it isn't supported. */
+function BiometricTile({ acc }: { acc: { id: string; name: string; email?: string } }) {
+  const [ok, setOk] = useState(false);
+  const [on, setOn] = useState(() => hasBiometric(acc.id));
+  const [busy, setBusy] = useState(false);
+  useEffect(() => { let live = true; biometricSupported().then((v) => live && setOk(v)); return () => { live = false; }; }, []);
+  if (!ok) return null;
+  const name = biometricName();
+  const toggle = async () => {
+    if (on) { disableBiometric(acc.id); setOn(false); toast(`${name} unlock turned off`); return; }
+    setBusy(true);
+    const err = await enableBiometric(acc);
+    setBusy(false);
+    if (err) { toast(err); return; }
+    setOn(true);
+    toast(`${name} unlock is on for this device`);
+  };
+  return (
+    <button className="action-tile" onClick={() => void toggle()} disabled={busy} role="switch" aria-checked={on}>
+      <span className="at-icon">{name === "Face ID" ? Icon.face : Icon.finger}</span>
+      <span className="at-text"><b>Unlock with {name}</b><small>{on ? "On for this device · your PIN still works" : "Skip the PIN on this device"}</small></span>
+      <span className={`bio-switch${on ? " on" : ""}`} aria-hidden="true"><i /></span>
+    </button>
+  );
+}
+
 function AccountCard() {
   const acc = useCurrentAccount();
   const { loadDemo } = useStore();
@@ -148,6 +175,7 @@ function AccountCard() {
             <span className="at-chev">{Icon.right}</span>
           </button>
         )}
+        {!acc.demo && acc.pinHash && <BiometricTile acc={acc} />}
         <button className="action-tile" onClick={() => { downloadBackup(acc); toast("Backup downloaded - keep it somewhere safe"); }}>
           <span className="at-icon">{Icon.download}</span>
           <span className="at-text"><b>Back up my data</b><small>Download a copy of your logs as a file</small></span>

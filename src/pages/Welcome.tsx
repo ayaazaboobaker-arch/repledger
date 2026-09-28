@@ -5,11 +5,12 @@ import { ConfirmButton } from "../components/safety";
 import { Icon, toast } from "../components/ui";
 import {
   bringOver, cancelRecovery, cancelSetup, cloudConfigured, emailSignIn, emailSignUp, finishSetup, forgetOnDevice, openDemo,
-  reloadAccounts, sendPasswordReset, setNewPassword, setPin, unlock, useAccounts, type Account,
+  reloadAccounts, sendPasswordReset, setNewPassword, setPin, unlock, unlockVerified, useAccounts, type Account,
 } from "../lib/accounts";
 import { importBackup } from "../lib/backup";
 import { GOALS } from "../lib/calc";
 import { storageWorks } from "../lib/storage";
+import { biometricName, biometricNeedsTap, biometricSupported, hasBiometric, verifyBiometric } from "../lib/biometric";
 
 type View =
   | { kind: "list" }
@@ -161,11 +162,51 @@ function PinStep({ acc, onBack, onForgot, onNeedPassword }: { acc: Account; onBa
     return () => { live = false; };
   }, [pin, acc, onNeedPassword]);
   const press = (d: string) => { setBad(false); setPinV((v) => (d === "⌫" ? v.slice(0, -1) : (v + d).slice(0, 4))); };
+
+  // Face ID / fingerprint, when turned on for this profile on this device. Three misses in a row → PIN only.
+  const [bio, setBio] = useState(false);
+  const [bioMsg, setBioMsg] = useState("");
+  const misses = useRef(0);
+  const bioName = biometricName();
+  const tryBio = async () => {
+    setBioMsg("");
+    const r = await verifyBiometric(acc.id);
+    if (r === "ok") {
+      setBusy(true);
+      const u = await unlockVerified(acc.id);
+      setBusy(false);
+      if (u === "ok") toast(`Welcome back, ${acc.name}`);
+      else if (u === "need-password") onNeedPassword();
+      return;
+    }
+    if (r === "missing") { setBio(false); return; }
+    if (r === "failed" && ++misses.current >= 3) { setBio(false); setBioMsg(`${bioName} didn't work - use your PIN.`); return; }
+    setBioMsg(r === "cancelled" ? "" : `${bioName} didn't recognise you - try again or use your PIN.`);
+  };
+  useEffect(() => {
+    let live = true;
+    if (!hasBiometric(acc.id)) return;
+    biometricSupported().then((ok) => {
+      if (!live || !ok) return;
+      setBio(true);
+      if (!biometricNeedsTap()) void tryBio();
+    });
+    return () => { live = false; };
+    // run once per profile
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [acc.id]);
+
   return (
     <div className="pin-step">
       <span className="avatar lg">{acc.name.slice(0, 1).toUpperCase()}</span>
       <h1>Hi, {acc.name}</h1>
-      <p className="muted" style={{ margin: "4px 0 16px" }}>{busy ? "Unlocking…" : "Enter your PIN"}</p>
+      {bio && (
+        <button className="btn primary lg bio-btn" onClick={() => void tryBio()} disabled={busy}>
+          {bioName === "Face ID" ? Icon.face : Icon.finger} Unlock with {bioName}
+        </button>
+      )}
+      {bioMsg && <div className="small" style={{ marginTop: 8, color: "var(--warn)" }} role="status">{bioMsg}</div>}
+      <p className="muted" style={{ margin: "4px 0 16px" }}>{busy ? "Unlocking…" : bio ? "or enter your PIN" : "Enter your PIN"}</p>
       <PinInput id="login-pin" label={`PIN for ${acc.name}`} value={pin} onChange={(v) => { setBad(false); setPinV(v); }} autoFocus invalid={bad} />
       <div className="small" style={{ minHeight: 22, marginTop: 8, color: "var(--bad)" }} role="alert">{bad ? "That PIN isn't right - try again." : ""}</div>
       <div className="keypad" aria-hidden="true">

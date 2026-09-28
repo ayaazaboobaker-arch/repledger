@@ -1535,3 +1535,11 @@ li.lifted .ex-grip { color: var(--accent); }
 .faq summary { cursor: pointer; font-weight: 650; }
 .faq details p { margin-top: 8px; }
 .train-page .plan-daynav { max-width: none; margin-top: 12px; }
+
+/* ===== Face ID / fingerprint unlock ===== */
+.bio-btn { margin: 14px auto 2px; display: inline-flex; gap: 10px; min-width: 240px; justify-content: center; }
+.bio-btn svg { width: 22px; height: 22px; }
+.bio-switch { width: 42px; height: 24px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); position: relative; flex: none; transition: background .2s ease; }
+.bio-switch i { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: var(--muted); transition: transform .2s ease, background .2s ease; }
+.bio-switch.on { background: color-mix(in srgb, var(--accent) 35%, var(--surface-2)); border-color: var(--accent); }
+.bio-switch.on i { transform: translateX(18px); background: var(--accent); }

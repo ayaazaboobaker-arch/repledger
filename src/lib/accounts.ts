@@ -4,6 +4,7 @@ import { clearMeta, deleteRow, fetchRow, saveRow, startSync, stopSync, updateCol
 import { recommendPlan } from "./plans";
 import { closeUserData, deleteUserData, demoData, openUserData, readUserData, writeUserData, type UserData } from "./store";
 import { keepData } from "./backup";
+import { disableBiometric } from "./biometric";
 import { store } from "./storage";
 import { cloudConfigured, isNetworkError, supabase } from "./supabase";
 import type { Goal, Profile } from "./types";
@@ -152,6 +153,15 @@ export async function unlock(id: string, pin: string): Promise<UnlockResult> {
   const acc = find(id);
   if (!acc) return "bad-pin";
   if (acc.pinHash && (await hashPin(pin, id)) !== acc.pinHash) return "bad-pin";
+  if (!acc.demo && (await resumeCloud(id)) === "expired") return "need-password";
+  open(id);
+  return "ok";
+}
+
+/** Unlock after the phone has confirmed its owner with Face ID / fingerprint (see biometric.ts). */
+export async function unlockVerified(id: string): Promise<UnlockResult> {
+  const acc = find(id);
+  if (!acc) return "bad-pin";
   if (!acc.demo && (await resumeCloud(id)) === "expired") return "need-password";
   open(id);
   return "ok";
@@ -326,6 +336,7 @@ export async function forgetOnDevice(id: string) {
     if (data.session?.user.id === id) await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
   }
   store.remove(tokenKey(id));
+  disableBiometric(id);
   clearMeta(id);
   deleteUserData(id);
   useAccounts.setState((s) => ({ accounts: s.accounts.filter((a) => a.id !== id), currentId: s.currentId === id ? null : s.currentId }));
