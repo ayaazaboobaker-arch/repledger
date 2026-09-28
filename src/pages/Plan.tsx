@@ -27,7 +27,7 @@ const PRO_EXTRAS = [
 export function Plan() {
   const access = useCoachAccess();
   const acc = useCurrentAccount();
-  const tier: Tier = access.source === "subscription" ? (access.sub?.plan === "yearly" ? "yearly" : "monthly") : "free";
+  const tier: Tier = access.source === "subscription" ? (/yearly/.test(access.sub?.plan ?? "") ? "yearly" : "monthly") : "free";
   const isPro = access.pro;
   const formUsed = acc && !acc.demo ? freeFormChecksUsed(acc.id) : 0;
   const soon = () => toast("Payments open soon - we'll let you know when Pro is live.");

@@ -4,6 +4,7 @@ import { useStore } from "../lib/store";
 import { foodTotals, recentFoods } from "../lib/stats";
 import type { CustomFood, FoodEntry, MealSlot } from "../lib/types";
 import { fmt, KJ_PER_KCAL, parseNum } from "../lib/util";
+import { MealScanner } from "./MealScanner";
 import { Select } from "./Select";
 import { Icon, Sheet, toast } from "./ui";
 
@@ -29,7 +30,7 @@ function useAllFoods(active: boolean) {
   return v;
 }
 
-export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: boolean; onClose: () => void; date: string; meal: MealSlot }) {
+export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }: { open: boolean; onClose: () => void; date: string; meal: MealSlot; startScan?: boolean }) {
   const { days, savedMeals, customFoods, addFoods, addCustomFood } = useStore();
   const [meal, setMeal] = useState<MealSlot>(initialMeal);
   const [tab, setTab] = useState<Tab>("foods");
@@ -37,6 +38,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   const [cat, setCat] = useState<FoodCat | null>(null);
   const [picked, setPicked] = useState<Picked | null>(null);
   const [creating, setCreating] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const recent = useMemo(() => recentFoods(days, 14), [days]);
   const [shown, setShown] = useState(PAGE);
   const online = useOnlineSearch(q);
@@ -46,7 +48,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   const [lastOpen, setLastOpen] = useState(open);
   if (open !== lastOpen) {
     setLastOpen(open);
-    if (open) { setMeal(initialMeal); setPicked(null); setQ(""); setCreating(false); setTab("foods"); setCat(null); setShown(PAGE); }
+    if (open) { setMeal(initialMeal); setPicked(null); setQ(""); setCreating(false); setScanning(!!startScan); setTab("foods"); setCat(null); setShown(PAGE); }
   }
 
   const list = useMemo(() => {
@@ -92,7 +94,10 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
       </div>
       {!picked && !creating && (
         <>
-          <input className="in" id="food-search" placeholder={`Search ${Math.floor(FOODS.length / 100) * 100}+ foods, or any brand online`} value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); setShown(PAGE); }} autoFocus aria-label="Search foods" />
+          <div className="search-scan">
+            <input className="in" id="food-search" placeholder={`Search ${Math.floor(FOODS.length / 100) * 100}+ foods, or any brand online`} value={q} onChange={(e) => { setQ(e.target.value); setTab("foods"); setShown(PAGE); }} autoFocus aria-label="Search foods" />
+            <button className="btn scan-btn" onClick={() => setScanning(true)} aria-label="Scan a meal with the camera">{Icon.camera}<span>Scan</span></button>
+          </div>
           <div className="seg" role="tablist" aria-label="Food lists">
             {([["foods", "All foods"], ["recent", "Recent"], ["meals", `Saved meals (${savedMeals.length})`], ["mine", "My foods"]] as [Tab, string][]).map(([k, l]) => (
               <button key={k} role="tab" aria-pressed={tab === k} aria-selected={tab === k} onClick={() => setTab(k)}>{l}</button>
@@ -220,9 +225,12 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal }: { open: b
   ) : creating ? <button className="btn block" onClick={() => setCreating(false)}>Cancel</button> : undefined;
 
   return (
-    <Sheet open={open} tall={!picked && !creating} onClose={onClose} title={header} footer={footer} label="Log food">
-      {body}
-    </Sheet>
+    <>
+      <Sheet open={open && !scanning} tall={!picked && !creating} onClose={onClose} title={header} footer={footer} label="Log food">
+        {body}
+      </Sheet>
+      <MealScanner open={open && scanning} onClose={() => setScanning(false)} onDone={() => { setScanning(false); onClose(); }} date={date} meal={meal} />
+    </>
   );
 }
 

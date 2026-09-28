@@ -15,6 +15,7 @@ export function Food() {
   const [date, setDate] = useState(todayStr());
   const { days, savedMeals, addFoods, removeFood, saveMeal, deleteMeal } = useStore();
   const [picker, setPicker] = useState<MealSlot | null>(null);
+  const [scan, setScan] = useState(false);
   const [quickMeal, setQuickMeal] = useState<MealSlot>(defaultMeal());
   const foods = days[date]?.foods || [];
   const recent = useMemo(() => recentFoods(days, 8), [days]);
@@ -48,7 +49,7 @@ export function Food() {
                   </ul>
                 )}
                 <div className="meal-foot">
-                  <button className="btn sm primary" onClick={() => setPicker(slot)}>{Icon.plus} Add food</button>
+                  <button className="btn sm primary" onClick={() => { setScan(false); setPicker(slot); }}>{Icon.plus} Add food</button>
                   {items.length > 1 && (
                     <NameInline label={<>{Icon.save} Save as meal</>} initial={`My ${MEAL_LABEL[slot].toLowerCase()}`} onSave={(name) => { saveMeal(name, items.map(strip)); toast(`Saved “${name}”`); }} />
                   )}
@@ -62,7 +63,10 @@ export function Food() {
           <section className="card">
             <div className="card-h" style={{ marginBottom: 12 }}><h2>Today's totals</h2></div>
             <CalorieSummary date={date} />
-            <button className="btn primary block" style={{ marginTop: 16 }} onClick={() => setPicker(defaultMeal())}>{Icon.plus} Log food</button>
+            <div className="log-row" style={{ marginTop: 16 }}>
+              <button className="btn primary block" onClick={() => { setScan(false); setPicker(defaultMeal()); }}>{Icon.plus} Log food</button>
+              <button className="btn block scan-cta" onClick={() => { setScan(true); setPicker(defaultMeal()); }}>{Icon.camera} Scan meal</button>
+            </div>
           </section>
 
           <section className="card">
@@ -116,7 +120,7 @@ export function Food() {
           )}
         </div>
       </div>
-      <FoodPicker open={picker !== null} onClose={() => setPicker(null)} date={date} meal={picker || "breakfast"} />
+      <FoodPicker open={picker !== null} startScan={scan} onClose={() => setPicker(null)} date={date} meal={picker || "breakfast"} />
     </>
   );
 }

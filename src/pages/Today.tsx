@@ -15,7 +15,7 @@ import { DOW, DOW_LONG, dowKey, fmt, fmtKg, todayStr } from "../lib/util";
 export function Today() {
   const [date, setDate] = useState(todayStr());
   const { profile } = useStore();
-  const [picker, setPicker] = useState(false);
+  const [picker, setPicker] = useState<null | "food" | "scan">(null);
   const hour = new Date().getHours();
   const greet = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
@@ -29,7 +29,7 @@ export function Today() {
       <div className="today-stack">
         <SessionCard date={date} />
         <div className="glance-grid">
-          <NutritionCard date={date} openFood={() => setPicker(true)} />
+          <NutritionCard date={date} openFood={() => setPicker("food")} openScan={() => setPicker("scan")} />
           <BurnCard date={date} compact />
           <StepsCard date={date} compact />
         </div>
@@ -41,12 +41,12 @@ export function Today() {
         <span className="at-chev">{Icon.right}</span>
       </Link>
 
-      <FoodPicker open={picker} onClose={() => setPicker(false)} date={date} meal={defaultMeal()} />
+      <FoodPicker open={picker !== null} startScan={picker === "scan"} onClose={() => setPicker(null)} date={date} meal={defaultMeal()} />
     </>
   );
 }
 
-function NutritionCard({ date, openFood }: { date: string; openFood: () => void }) {
+function NutritionCard({ date, openFood, openScan }: { date: string; openFood: () => void; openScan: () => void }) {
   const { savedMeals, addFoods } = useStore();
   return (
     <section className="card">
@@ -67,7 +67,10 @@ function NutritionCard({ date, openFood }: { date: string; openFood: () => void 
           </div>
         </>
       )}
-      <button className="btn primary block glance-foot" style={{ marginTop: 14 }} onClick={openFood}>{Icon.plus} Log food</button>
+      <div className="log-row glance-foot" style={{ marginTop: 14 }}>
+        <button className="btn primary block" onClick={openFood}>{Icon.plus} Log food</button>
+        <button className="btn block scan-cta" onClick={openScan}>{Icon.camera} Scan meal</button>
+      </div>
     </section>
   );
 }
