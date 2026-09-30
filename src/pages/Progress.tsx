@@ -9,7 +9,7 @@ import { ExerciseProgress } from "../components/ExerciseProgress";
 import { Select } from "../components/Select";
 import { CountUp, Icon, useTheme } from "../components/ui";
 import { useStore } from "../lib/store";
-import { daysIn, periodAgg, periods, presetRange, PRESETS, rangeDays, rangeLabel, rangeSummary, type DateRange, type PeriodRow, type RangePreset } from "../lib/range";
+import { autoGrain, daysIn, periodAgg, periods, type Grain, presetRange, PRESETS, rangeDays, rangeLabel, rangeSummary, type DateRange, type PeriodRow, type RangePreset } from "../lib/range";
 import { exerciseHistory, norm, weekAgg, weeksRange } from "../lib/stats";
 import type { DayLog } from "../lib/types";
 import { addDays, DOW, fmt, fmtKg, shortDate, todayStr, weekStart } from "../lib/util";
@@ -79,14 +79,21 @@ export function Progress() {
   const [ex, setEx] = useState<string>(() => names.find((n) => exerciseHistory(days, n).length) || names[0] || "");
   const hist = useMemo(() => (ex ? exerciseHistory(inRange, ex) : []), [inRange, ex]);
   const factor = useCalibration().factor;
-  const rows = useMemo(() => periods(range).map((p) => periodAgg(days, p, profile, factor)), [days, range, profile, factor]);
-  const monthly = rows.length > 0 && !rows[0].period.startsWith("Week");
-  const per = monthly ? "month" : "week";
+  const [grainPick, setGrainPick] = useState<Grain | "auto">(() => (ss.get("rl.grain") as Grain | "auto") || "auto");
+  const pickGrain = (g: Grain | "auto") => { setGrainPick(g); ss.set("rl.grain", g); };
+  // Long ranges by day would be hundreds of hair-thin bars - cap day view at ~3 months.
+  const grain: Grain = grainPick === "auto" ? autoGrain(range) : grainPick === "day" && rangeDays(range) > 92 ? "week" : grainPick;
+  const rows = useMemo(() => periods(range, grain).map((p) => periodAgg(days, p, profile, factor)), [days, range, grain, profile, factor]);
+  const monthly = grain === "month";
+  const daily = grain === "day";
+  const per = grain;
+  /** "Daily average per week" / "Each day" */
+  const avgSub = (extra = "") => (daily ? "Each day" : `Daily average per ${per}`) + extra;
   const planned = DOW.filter((k) => plan[k].exercises.length).length;
 
-  const eaten = <WeeklyBars title="Calories eaten" sub={`Daily average per ${per}`} data={rows} k="kcal" target={targets.kcal} targetLabel={`Target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.kcal != null ? <><b>{fmt(p.kcal)} kcal/day</b>{p.period} · protein {fmt(p.protein)} g · {p.nKcal} days logged</> : null)} />;
-  const burned = <WeeklyBars title="Calories burned" sub={`Daily average per ${per} · resting + steps + training + cardio`} data={rows} k="burn" target={targets.kcal} targetLabel={`Eating target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.burn != null ? <><b>{fmt(p.burn)} kcal/day burned</b>{p.period}{p.kcal != null ? ` · ate ${fmt(p.kcal)}/day` : ""}{p.nActs ? ` · ${p.nActs} cardio/sport` : ""}</> : null)} hitAbove />;
-  const sessions = <WeeklyBars title="Weight sessions" sub={`Workouts completed per ${per}`} data={rows} k="sess" target={monthly ? Math.round(planned * 4.3) : planned} targetLabel={`Plan ${monthly ? Math.round(planned * 4.3) : planned}`} fmtY={(v) => fmt(v)} tipText={(p) => <><b>{p.sess} session{p.sess === 1 ? "" : "s"}</b>{p.period}</>} hitAbove />;
+  const eaten = <WeeklyBars title="Calories eaten" sub={avgSub()} data={rows} k="kcal" target={targets.kcal} targetLabel={`Target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.kcal != null ? <><b>{fmt(p.kcal)} kcal{daily ? "" : "/day"}</b>{p.period} · protein {fmt(p.protein)} g{daily ? "" : ` · ${p.nKcal} days logged`}</> : null)} />;
+  const burned = <WeeklyBars title="Calories burned" sub={avgSub(" · resting + steps + training + cardio")} data={rows} k="burn" target={targets.kcal} targetLabel={`Eating target ${fmt(targets.kcal)}`} fmtY={(v) => fmt(v)} tipText={(p) => (p.burn != null ? <><b>{fmt(p.burn)} kcal{daily ? "" : "/day"} burned</b>{p.period}{p.kcal != null ? ` · ate ${fmt(p.kcal)}` : ""}{p.nActs ? ` · ${p.nActs} cardio/sport` : ""}</> : null)} hitAbove />;
+  const sessions = <WeeklyBars title="Weight sessions" sub={daily ? "Workouts completed each day" : `Workouts completed per ${per}`} data={rows} k="sess" target={daily ? 0 : monthly ? Math.round(planned * 4.3) : planned} targetLabel={daily ? "" : `Plan ${monthly ? Math.round(planned * 4.3) : planned}`} fmtY={(v) => fmt(v)} tipText={(p) => <><b>{p.sess} session{p.sess === 1 ? "" : "s"}</b>{p.period}</>} hitAbove />;
 
   return (
     <>
@@ -103,6 +110,11 @@ export function Progress() {
             {PRESETS.map((p) => <button key={p.id} role="radio" aria-checked={preset === p.id} className="chip" aria-pressed={preset === p.id} onClick={() => pick(p.id)}>{p.label}</button>)}
           </div>
           <div className="range-label"><b>{rangeLabel(range)}</b><span className="muted"> · {rangeDays(range)} days</span></div>
+          <div className="seg grain-seg" role="radiogroup" aria-label="Show charts by">
+            {([["day", "By day"], ["week", "By week"], ["month", "By month"]] as [Grain, string][]).map(([g, l]) => (
+              <button key={g} role="radio" aria-checked={grain === g} aria-pressed={grain === g} disabled={g === "day" && rangeDays(range) > 92} title={g === "day" && rangeDays(range) > 92 ? "Pick 3 months or less to see single days" : undefined} onClick={() => pickGrain(g)}>{l}</button>
+            ))}
+          </div>
         </div>
         {preset === "custom" && (
           <div className="range-custom">
@@ -117,7 +129,7 @@ export function Progress() {
           <>
             <RangeStats days={days} range={range} />
             <div className="grid-2" style={{ marginTop: 16 }}>
-              <WeightTrend data={rows} sub={`Average of your weigh-ins per ${per}`} />
+              <WeightTrend data={rows} sub={daily ? "Each weigh-in" : `Average of your weigh-ins per ${per}`} />
               {eaten}
             </div>
             <div className="jump-grid">
@@ -159,14 +171,14 @@ export function Progress() {
         {tab === "body" && (
           <div className="grid-2">
             <WeightCard date={todayStr()} />
-            <WeightTrend data={rows} sub={`Average of your weigh-ins per ${per}`} />
+            <WeightTrend data={rows} sub={daily ? "Each weigh-in" : `Average of your weigh-ins per ${per}`} />
             <WeighIns days={days} range={range} />
           </div>
         )}
 
         {tab === "nutrition" && (
           <>
-            <MacroTracker days={days} range={range} rows={rows} />
+            <MacroTracker days={days} range={range} rows={rows} daily={daily} />
             <div style={{ marginTop: 12 }}>{eaten}</div>
           </>
         )}
@@ -175,8 +187,8 @@ export function Progress() {
           <div className="grid-2">
             <BurnCard date={todayStr()} />
             {burned}
-            <WeeklyBars title="Steps" sub={`Daily average per ${per}`} data={rows} k="steps" target={targets.steps} targetLabel={`Goal ${fmt(targets.steps)}`} fmtY={(v) => (v >= 1000 ? fmt(v / 1000, 0) + "k" : fmt(v))} tipText={(p) => (p.steps != null ? <><b>{fmt(p.steps)} steps/day</b>{p.period} · {p.nSteps} days logged</> : null)} hitAbove />
-            <WeeklyBars title="Cardio" sub={`Minutes of cardio and sport per ${per}`} data={rows} k="cardioMin" target={0} targetLabel="" fmtY={(v) => fmt(v)} tipText={(p) => <><b>{fmt(p.cardioMin)} min</b>{p.period} · {p.nActs} session{p.nActs === 1 ? "" : "s"} · {fmt(p.cardioKcal)} kcal</>} />
+            <WeeklyBars title="Steps" sub={avgSub()} data={rows} k="steps" target={targets.steps} targetLabel={`Goal ${fmt(targets.steps)}`} fmtY={(v) => (v >= 1000 ? fmt(v / 1000, 0) + "k" : fmt(v))} tipText={(p) => (p.steps != null ? <><b>{fmt(p.steps)} steps{daily ? "" : "/day"}</b>{p.period}{daily ? "" : ` · ${p.nSteps} days logged`}</> : null)} hitAbove />
+            <WeeklyBars title="Cardio" sub={daily ? "Minutes of cardio and sport each day" : `Minutes of cardio and sport per ${per}`} data={rows} k="cardioMin" target={0} targetLabel="" fmtY={(v) => fmt(v)} tipText={(p) => <><b>{fmt(p.cardioMin)} min</b>{p.period} · {p.nActs} session{p.nActs === 1 ? "" : "s"} · {fmt(p.cardioKcal)} kcal</>} />
           </div>
         )}
       </div>

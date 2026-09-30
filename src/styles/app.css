@@ -1614,3 +1614,6 @@ li.lifted .ex-grip { color: var(--accent); }
 .bc-type { display: flex; gap: 8px; margin-top: 10px; }
 .bc-type .in { flex: 1; min-width: 0; }
 @media (max-width: 440px) { .search-scan .scan-btn span { display: none; } }
+.grain-seg { margin-left: auto; }
+.grain-seg button:disabled { opacity: .4; cursor: default; }
+@media (max-width: 700px) { .grain-seg { margin-left: 0; width: 100%; } .grain-seg button { flex: 1; } }

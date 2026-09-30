@@ -24,7 +24,7 @@ export function onTarget(k: MacroKey, v: number, target: number) {
 }
 const dayLabel = (d: string) => (d === todayStr() ? "Today" : d === addDays(todayStr(), -1) ? "Yesterday" : `${DOW_LONG[dowKey(d)].slice(0, 3)} ${shortDate(d)}`);
 
-export function MacroTracker({ days, range, rows }: { days: Record<string, DayLog>; range: DateRange; rows: PeriodRow[] }) {
+export function MacroTracker({ days, range, rows, daily: dailyProp }: { days: Record<string, DayLog>; range: DateRange; rows: PeriodRow[]; daily?: boolean }) {
   const { targets } = useStore();
   const t = useTheme();
   const [mk, setMk] = useState<MacroKey>("p");
@@ -49,7 +49,7 @@ export function MacroTracker({ days, range, rows }: { days: Record<string, DayLo
   const avg = (k: MacroKey) => (base.length ? base.reduce((a, r) => a + r[k], 0) / base.length : null);
   const hits = (k: MacroKey) => done.filter((r) => onTarget(k, r[k], tg[k])).length;
 
-  const daily = rangeDays(range) <= 35;
+  const daily = dailyProp ?? rangeDays(range) <= 35;
   const chart = useMemo(() => {
     if (!daily) return rows.map((r) => ({ x: r.x, v: r[ROW_KEY[mk]] ?? null, tip: `${r.period} · ${r.nKcal} days logged`, avg: true, today: false }));
     const out: { x: string; v: number | null; tip: string; avg: boolean; today: boolean }[] = [];
@@ -89,7 +89,7 @@ export function MacroTracker({ days, range, rows }: { days: Record<string, DayLo
 
       <section className="card" style={{ marginTop: 12 }}>
         <div className="card-h">
-          <div><h2>{m.label} {daily ? "each day" : "per week"}</h2><div className="small muted">{daily ? "Tap a card above to switch macro" : "Daily average per period · pick 4 weeks or less to see single days"}</div></div>
+          <div><h2>{m.label} {daily ? "each day" : "per period"}</h2><div className="small muted">{daily ? "Tap a card above to switch macro" : "Daily average per period · choose By day to see single days"}</div></div>
           <div className="seg" role="tablist" aria-label="Macro">
             {MACROS.map((x) => <button key={x.k} role="tab" aria-selected={mk === x.k} aria-pressed={mk === x.k} onClick={() => setMk(x.k)}>{x.label}</button>)}
           </div>

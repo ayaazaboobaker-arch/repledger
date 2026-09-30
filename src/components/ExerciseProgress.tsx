@@ -26,7 +26,8 @@ export function ExerciseProgress({ name, days, size = "normal", idPrefix }: Prop
   const weekly = useMemo(() => weeklyExercise(hist), [hist]);
   const bodyweight = hist.length > 0 && hist.every((h) => h.top === 0);
   const [metric, setMetric] = useState<Metric>(bodyweight ? "reps" : "top");
-  const [group, setGroup] = useState<"session" | "week">("week");
+  // Day to day by default: one point per session. "By week" rolls sessions up.
+  const [group, setGroup] = useState<"session" | "week">("session");
   const m = bodyweight && (metric === "top" || metric === "one" || metric === "vol") ? "reps" : metric;
 
   if (!hist.length)
@@ -66,8 +67,8 @@ export function ExerciseProgress({ name, days, size = "normal", idPrefix }: Prop
           ))}
         </div>
         <div className="seg" role="group" aria-label="Group by">
+          <button id={`${idPrefix}-g-s`} aria-pressed={group === "session"} onClick={() => setGroup("session")}>By day</button>
           <button id={`${idPrefix}-g-w`} aria-pressed={group === "week"} onClick={() => setGroup("week")}>By week</button>
-          <button id={`${idPrefix}-g-s`} aria-pressed={group === "session"} onClick={() => setGroup("session")}>By workout</button>
         </div>
       </div>
 

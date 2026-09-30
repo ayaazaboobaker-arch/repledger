@@ -50,10 +50,22 @@ export const rangeDays = (r: DateRange) => Math.round((parseYmd(r.to).getTime() 
 
 export interface Period { week: string; start: string; end: string; x: string; period: string }
 
-/** Weekly buckets for shorter ranges, monthly for anything over ~6 months. */
-export function periods(r: DateRange): Period[] {
+export type Grain = "day" | "week" | "month";
+/** The natural grouping for a range: days up to ~6 weeks, weeks up to ~6 months, then months. */
+export const autoGrain = (r: DateRange): Grain => (rangeDays(r) <= 45 ? "day" : rangeDays(r) <= 190 ? "week" : "month");
+
+const DOW3 = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+/** Buckets for charts: one per day, week or month. */
+export function periods(r: DateRange, grain: Grain = autoGrain(r)): Period[] {
   const out: Period[] = [];
-  if (rangeDays(r) > 190) {
+  if (grain === "day") {
+    for (let d = r.from; d <= r.to; d = addDays(d, 1)) {
+      const dt = parseYmd(d);
+      out.push({ week: d, start: d, end: d, x: shortDate(d), period: d === todayStr() ? "Today (so far)" : `${DOW3[dt.getDay()]} ${shortDate(d)}` });
+    }
+    return out;
+  }
+  if (grain === "month") {
     const d = parseYmd(r.from);
     d.setDate(1);
     while (ymd(d) <= r.to) {
@@ -90,7 +102,8 @@ export function periodAgg(days: Record<string, DayLog>, p: Period, profile: Prof
     if (sessionDone(day.workout)) sess++;
     for (const a of day.activities || []) { if (a.manual) { cardioMin += a.seconds / 60; cardioKcal += a.kcal; nActs++; } }
     // Today isn't over yet - half a day of food, steps and burn would drag the daily averages down.
-    if (d === today) continue;
+    // (On a day-by-day chart today gets its own bar, marked "so far", so it's kept.)
+    if (d === today && p.start !== p.end) continue;
     if (day.steps != null) steps.push(day.steps);
     if (day.foods?.length) { const t = foodTotals(day.foods); kcal.push(t.kcal); prot.push(t.p); carb.push(t.c); fat.push(t.f); }
     if (hasActivity(day)) { const b = dayBurn(day, profile, lastW, 1, factor); if (b) burn.push(b.total); }
