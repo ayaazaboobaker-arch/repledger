@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useRef, type MouseEvent, type ReactNode } f
 import { flushSync } from "react-dom";
 import { HashRouter, Link, MemoryRouter, NavLink, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import { ProfileMenu } from "./components/ProfileMenu";
+import { TabBar } from "./components/TabBar";
 import { PageBoundary } from "./components/safety";
 import { Icon, Toaster } from "./components/ui";
 import { migrateLegacy, restoreSession, useAccounts, useCurrentAccount } from "./lib/accounts";
@@ -79,36 +80,42 @@ function Gate() {
 }
 
 /**
- * Scroll feel: the header turns to glass once something scrolls under it, and the bottom bar
- * tucks into a small pill while you scroll down, coming back as soon as you scroll up.
- * Classes are set straight on the elements (no re-render), at most once per frame.
+ * Scroll feel: the header turns to glass once something scrolls under it. (The bottom tab bar
+ * slims itself while you scroll down - see TabBar.tsx.) The class is set straight on the element
+ * (no re-render), at most once per frame.
  */
-function useScrollChrome(top: React.RefObject<HTMLElement | null>, bar: React.RefObject<HTMLElement | null>) {
+function useScrollChrome(top: React.RefObject<HTMLElement | null>) {
   const { pathname } = useLocation();
   useEffect(() => {
-    let last = window.scrollY, ticking = false, travel = 0;
+    let ticking = false;
     const update = () => {
       ticking = false;
-      const y = Math.max(0, window.scrollY);
-      const dy = y - last;
-      last = y;
-      top.current?.classList.toggle("scrolled", y > 4);
-      const nav = bar.current;
-      if (!nav) return;
-      const nearBottom = window.innerHeight + y >= document.documentElement.scrollHeight - 24;
-      // only react to a deliberate scroll, not a jiggle
-      travel = Math.sign(dy) === Math.sign(travel) ? travel + dy : dy;
-      if (y < 60 || nearBottom) nav.classList.remove("min");
-      else if (travel > 24) nav.classList.add("min");
-      else if (travel < -12) nav.classList.remove("min");
+      top.current?.classList.toggle("scrolled", window.scrollY > 4);
     };
     const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
-    // a new page starts with everything showing
-    bar.current?.classList.remove("min");
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [pathname, top, bar]);
+  }, [pathname, top]);
+}
+
+/** The phone tab bar: finds the current tab from the URL and opens the one you pick. */
+const TABS = NAV.map((n) => ({ id: n.to, label: n.label, icon: n.icon }));
+function MobileTabs() {
+  const nav = useNavigate();
+  const { pathname } = useLocation();
+  const active = NAV.findIndex((n) => (n.end ? pathname === n.to : pathname === n.to || pathname.startsWith(n.to + "/")));
+  const select = (i: number) => {
+    const to = NAV[i].to;
+    // tapping the tab you're already on scrolls back to the top, the way native apps behave
+    if (i === active) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+    const go = () => nav(to);
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (doc.startViewTransition && !calm) doc.startViewTransition(() => flushSync(go));
+    else go();
+  };
+  return <TabBar tabs={TABS} active={active} onSelect={select} />;
 }
 
 function Shell() {
@@ -116,8 +123,7 @@ function Shell() {
   const acc = useCurrentAccount();
   const { pathname } = useLocation();
   const topRef = useRef<HTMLElement>(null);
-  const barRef = useRef<HTMLElement>(null);
-  useScrollChrome(topRef, barRef);
+  useScrollChrome(topRef);
   // cards animate in when the app opens; after that, tab switches are instant like a native app
   useEffect(() => { const t = setTimeout(() => document.documentElement.classList.add("booted"), 900); return () => clearTimeout(t); }, []);
   return (
@@ -147,11 +153,7 @@ function Shell() {
           </Routes>
         </PageBoundary>
       </main>
-      <nav className="botnav" aria-label="Main" ref={barRef} onClick={() => barRef.current?.classList.remove("min")}>
-        {NAV.map((n) => (
-          <TabLink key={n.to} to={n.to} end={n.end}>{n.icon}<span>{n.label}</span></TabLink>
-        ))}
-      </nav>
+      <MobileTabs />
       <Toaster />
     </>
   );

@@ -1,4 +1,4 @@
-import { sportKcal } from "./burn";
+import { LIFT_INTENSITY, sportKcal } from "./burn";
 import type { ActivityLevel as Activity, CardioPrefs, Goal, Profile, Targets, TrainingFocus } from "./types";
 
 export const FOCUS: Record<TrainingFocus, { label: string; hint: string }> = {
@@ -60,8 +60,8 @@ const round = (n: number, to: number) => Math.round(n / to) * to;
 export function calculate(p: Profile): CalorieBreakdown {
   const bmr = 10 * p.weightKg + 6.25 * p.heightCm - 5 * p.age + (p.sex === "male" ? 5 : -161);
   const daily = bmr * ACTIVITY[p.activity].mult;
-  // Lifting (about 5 METs including rest between sets) and cardio (by sport and effort), spread over the week.
-  const weights = (p.daysPerWeek * sportKcal("weights", p.sessionMinutes, "moderate", p.weightKg)) / 7;
+  // Lifting (3.5 METs including rest between sets - same as the daily burn) and cardio (by sport and effort), spread over the week.
+  const weights = (p.daysPerWeek * sportKcal("weights", p.sessionMinutes, LIFT_INTENSITY, p.weightKg)) / 7;
   const c = cardioOf(p);
   const cardio = c.daysPerWeek && c.sports.length
     ? (c.daysPerWeek * c.sports.reduce((a, s) => a + sportKcal(s, c.minutes, c.intensity, p.weightKg), 0) / c.sports.length) / 7

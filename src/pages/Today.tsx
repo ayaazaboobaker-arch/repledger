@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CalorieSummary, DateBar, DemoBanner, StepsCard } from "../components/cards";
 import { BurnCard, CardioPlanRows } from "../components/BurnCard";
+import { DeficitCard } from "../components/DeficitCard";
 import { defaultMeal, FoodPicker, MEAL_LABEL } from "../components/FoodPicker";
 import { Icon, toast } from "../components/ui";
 import { useStore } from "../lib/store";
@@ -27,6 +28,7 @@ export function Today() {
       </DateBar>
 
       <div className="today-stack">
+        <DeficitCard date={date} />
         <SessionCard date={date} />
         <div className="glance-grid">
           <NutritionCard date={date} openFood={() => setPicker("food")} openScan={() => setPicker("scan")} />

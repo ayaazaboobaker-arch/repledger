@@ -4,16 +4,14 @@ import { useCalibration, type Calibration } from "../lib/calibration";
 import { useStore } from "../lib/store";
 import type { PlanCardio } from "../lib/types";
 import { dowKey, fmt, todayStr, uid } from "../lib/util";
+import { weightOnDate } from "../lib/weight";
 import { ActivitySheet, type ActivityDraft } from "./ActivitySheet";
 import { CountUp, Icon, toast } from "./ui";
 
 const actLabel = (kind: string) => SPORT_BY_ID.get(kind)?.label ?? (kind === "run" ? "Running" : kind === "walk" ? "Walking" : kind);
 
-/** Weight on or before a date - calorie maths follows your weight as it changes. */
-export function weightOn(days: Record<string, { weight?: number | null }>, date: string): number | null {
-  const ds = Object.keys(days).filter((k) => k <= date && days[k].weight != null).sort();
-  return ds.length ? days[ds[ds.length - 1]].weight! : null;
-}
+/** Weight on or before a date (see lib/weight.ts). */
+export const weightOn = weightOnDate;
 
 export function useLogActivity(date: string) {
   const { updateDay } = useStore();

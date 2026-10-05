@@ -9,6 +9,7 @@ import { ExerciseProgress } from "../components/ExerciseProgress";
 import { Select } from "../components/Select";
 import { CountUp, Icon, useTheme } from "../components/ui";
 import { useStore } from "../lib/store";
+import { goalDeficit } from "../lib/deficit";
 import { autoGrain, daysIn, periodAgg, periods, type Grain, presetRange, PRESETS, rangeDays, rangeLabel, rangeSummary, type DateRange, type PeriodRow, type RangePreset } from "../lib/range";
 import { exerciseHistory, norm, weekAgg, weeksRange } from "../lib/stats";
 import type { DayLog } from "../lib/types";
@@ -128,6 +129,7 @@ export function Progress() {
         {tab === "overview" && (
           <>
             <RangeStats days={days} range={range} />
+            <div style={{ marginTop: 16 }}><DeficitChart data={rows} daily={daily} per={per} /></div>
             <div className="grid-2" style={{ marginTop: 16 }}>
               <WeightTrend data={rows} sub={daily ? "Each weigh-in" : `Average of your weigh-ins per ${per}`} />
               {eaten}
@@ -178,7 +180,8 @@ export function Progress() {
 
         {tab === "nutrition" && (
           <>
-            <MacroTracker days={days} range={range} rows={rows} daily={daily} />
+            <DeficitChart data={rows} daily={daily} per={per} />
+            <div style={{ marginTop: 12 }}><MacroTracker days={days} range={range} rows={rows} daily={daily} /></div>
             <div style={{ marginTop: 12 }}>{eaten}</div>
           </>
         )}
@@ -322,6 +325,63 @@ export function WeightTrend({ data, bare, sub = "Weekly average of your weigh-in
     <section className="card">
       <h2>Body weight</h2><div className="small muted">{sub}</div>
       {chart}
+    </section>
+  );
+}
+
+/** Burned − eaten per day (or daily average per week/month). Up = deficit, down = surplus; dashed line = your plan. */
+export function DeficitChart({ data, daily, per }: { data: Row[]; daily: boolean; per: string }) {
+  const t = useTheme();
+  const { targets, profile } = useStore();
+  const goal = goalDeficit(profile, targets);
+  const rows = data.map((d) => ({ ...d, def: d.deficit == null ? null : Math.round(d.deficit) }));
+  const logged = rows.filter((r) => r.def != null && !(daily && r.start === todayStr()));
+  const avgDef = logged.length ? Math.round(logged.reduce((a, r) => a + (r.def as number), 0) / logged.length) : null;
+  const hit = logged.filter((r) => goal > 0 ? (r.def as number) >= goal * 0.8 : Math.abs((r.def as number) - goal) <= Math.max(150, Math.abs(goal) * 0.3)).length;
+  const lo = Math.min(0, goal, ...rows.map((r) => r.def ?? 0));
+  const hi = Math.max(0, goal, ...rows.map((r) => r.def ?? 0));
+  const step = hi - lo > 2500 ? 500 : 250;
+  const yLo = Math.floor((lo - 50) / step) * step, yHi = Math.ceil((hi + 50) / step) * step;
+  const ticks = Array.from({ length: Math.round((yHi - yLo) / step) + 1 }, (_, i) => yLo + i * step);
+  return (
+    <section className="card">
+      <div className="card-h">
+        <div>
+          <h2>Calorie deficit</h2>
+          <div className="small muted">{daily ? "Each day" : `Daily average per ${per}`} · burned − eaten · bars up are a deficit, down a surplus</div>
+        </div>
+        {avgDef != null && (
+          <div className="def-sum">
+            <b className={avgDef >= 0 ? "good" : "bad"}>{avgDef >= 0 ? "" : "+"}{fmt(Math.abs(avgDef))}</b>
+            <span className="xs muted">{avgDef >= 0 ? "avg deficit" : "avg surplus"} / day{daily && logged.length ? ` · plan hit ${hit} of ${logged.length} days` : ""}</span>
+          </div>
+        )}
+      </div>
+      {logged.length === 0 && !rows.some((r) => r.def != null) ? (
+        <div className="empty" style={{ marginTop: 10 }}>Log a full day of food and your deficit shows here.</div>
+      ) : (
+        <div className="chart-wrap">
+          <ResponsiveContainer>
+            <BarChart data={rows} margin={{ top: 18, right: 12, left: -6, bottom: 0 }}>
+              <CartesianGrid stroke={t.line} vertical={false} />
+              <XAxis dataKey="x" tick={{ fill: t.muted, fontSize: 11 }} tickLine={false} axisLine={{ stroke: t.line }} minTickGap={14} />
+              <YAxis tick={{ fill: t.muted, fontSize: 11 }} tickLine={false} axisLine={false} width={56} tickFormatter={(v) => (v > 0 ? "+" : v < 0 ? "−" : "") + fmt(Math.abs(v))} domain={[yLo, yHi]} ticks={ticks} interval={0} allowDecimals={false} />
+              <ReferenceLine y={0} stroke={t.muted} />
+              {goal !== 0 && <ReferenceLine y={goal} stroke={t.muted} strokeDasharray="5 4" label={{ value: goal > 0 ? `Plan: ${fmt(goal)} deficit` : `Plan: ${fmt(-goal)} surplus`, position: "insideTopRight", fill: t.muted, fontSize: 11 }} />}
+              <Tooltip cursor={{ fill: t.accentSoft, opacity: 0.4 }} content={({ active, payload }) => {
+                if (!active || !payload?.length) return null;
+                const p = payload[0].payload as Row & { def: number | null };
+                if (p.def == null) return <div className="rtip">No full day of food logged · {p.period}</div>;
+                return <div className="rtip"><b>{p.def >= 0 ? `${fmt(p.def)} kcal deficit` : `${fmt(-p.def)} kcal surplus`}{daily ? "" : " / day"}</b>{p.period}{p.burn != null && p.kcal != null ? ` · burned ${fmt(p.burn)}, ate ${fmt(p.kcal)}` : ""}</div>;
+              }} />
+              <Bar dataKey="def" radius={[4, 4, 4, 4]} maxBarSize={30} isAnimationActive={false}>
+                {rows.map((d, i) => <Cell key={i} fill={(d.def ?? 0) >= 0 ? t.good : t.warn} fillOpacity={daily && d.start === todayStr() ? 0.45 : 1} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+      <p className="xs faint" style={{ marginTop: 6 }}>Days with under 800 kcal logged are left out - they're usually not fully logged.{daily ? " Today's bar is faded: it assumes you eat nothing more." : ""}</p>
     </section>
   );
 }

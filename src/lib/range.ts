@@ -90,7 +90,7 @@ const avg = (a: number[]) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length
 const hasActivity = (d?: DayLog) => !!d && (d.steps != null || !!d.foods?.length || !!d.activities?.length || sessionDone(d.workout));
 
 export function periodAgg(days: Record<string, DayLog>, p: Period, profile: Profile | null, factor = 1) {
-  const w: number[] = [], steps: number[] = [], kcal: number[] = [], prot: number[] = [], carb: number[] = [], fat: number[] = [], burn: number[] = [];
+  const w: number[] = [], steps: number[] = [], kcal: number[] = [], prot: number[] = [], carb: number[] = [], fat: number[] = [], burn: number[] = [], def: number[] = [];
   let sess = 0, cardioMin = 0, cardioKcal = 0, nActs = 0;
   let lastW: number | null = profile?.weightKg ?? null;
   const today = todayStr();
@@ -106,9 +106,16 @@ export function periodAgg(days: Record<string, DayLog>, p: Period, profile: Prof
     if (d === today && p.start !== p.end) continue;
     if (day.steps != null) steps.push(day.steps);
     if (day.foods?.length) { const t = foodTotals(day.foods); kcal.push(t.kcal); prot.push(t.p); carb.push(t.c); fat.push(t.f); }
-    if (hasActivity(day)) { const b = dayBurn(day, profile, lastW, 1, factor); if (b) burn.push(b.total); }
+    if (hasActivity(day)) {
+      const b = dayBurn(day, profile, lastW, 1, factor);
+      if (b) {
+        burn.push(b.total);
+        // Deficit only on properly logged days (a half-logged day would look like a huge deficit).
+        if (day.foods?.length && (b.eaten >= 800 || p.start === p.end)) def.push(b.total - b.eaten);
+      }
+    }
   }
-  return { ...p, weight: avg(w), steps: avg(steps), kcal: avg(kcal), protein: avg(prot), carbs: avg(carb), fat: avg(fat), burn: avg(burn), sess, cardioMin, cardioKcal, nActs, nSteps: steps.length, nKcal: kcal.length };
+  return { ...p, weight: avg(w), steps: avg(steps), kcal: avg(kcal), protein: avg(prot), carbs: avg(carb), fat: avg(fat), burn: avg(burn), deficit: avg(def), nDef: def.length, sess, cardioMin, cardioKcal, nActs, nSteps: steps.length, nKcal: kcal.length };
 }
 export type PeriodRow = ReturnType<typeof periodAgg>;
 
@@ -122,7 +129,7 @@ export function rangeSummary(days: Record<string, DayLog>, r: DateRange, profile
     if (days[k].weight != null) lastW = days[k].weight!;
     if (k < r.from || k > r.to || k === todayStr() || !days[k].foods?.length) continue;
     const b = dayBurn(days[k], profile, lastW, 1, factor);
-    if (b) balances.push(b.balance);
+    if (b && b.eaten >= 800) balances.push(b.balance);
   }
   const weeks = Math.max(1, rangeDays(r) / 7);
   return {

@@ -74,14 +74,10 @@ a { color: var(--accent); }
 .topnav { display: flex; gap: 2px; margin-left: auto; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
 .topnav a { text-decoration: none; padding: 7px 15px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); }
 .topnav a.active { background: var(--ink); color: var(--bg); }
-.botnav { display: none; }
+.tabbar { display: none; }
 main.page { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 60px; }
 @media (max-width: 760px) {
   .topnav { display: none; }
-  .botnav { display: grid; grid-template-columns: repeat(5, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--surface); border-top: 1px solid var(--line); padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px)); }
-  .botnav a { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; font-weight: 600; color: var(--faint); text-decoration: none; padding: 4px 0; }
-  .botnav a svg { width: 22px; height: 22px; }
-  .botnav a.active { color: var(--accent); }
   main.page { padding-bottom: calc(var(--nav-h) + 40px + env(safe-area-inset-bottom, 0px)); }
 }
 
@@ -864,7 +860,7 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 ::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); }
 
 /* the frosted surfaces */
-.card, .top::before, .botnav, .sheet, .toast, .rtip {
+.card, .top::before, .sheet, .toast, .rtip {
   -webkit-backdrop-filter: blur(var(--blur)) saturate(160%); backdrop-filter: blur(var(--blur)) saturate(160%);
 }
 .card { background: var(--surface); border-color: var(--line); box-shadow: var(--shadow), inset 0 1px 0 var(--edge-hi); }
@@ -958,7 +954,7 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 
 /* glass is costly on old phones: people who ask for less transparency get solid surfaces */
 @media (prefers-reduced-transparency: reduce) {
-  .card, .top::before, .botnav, .sheet, .toast, .rtip { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--solid); }
+  .card, .top::before, .sheet, .toast, .rtip { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--solid); }
 }
 .ring-arc { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 45%, transparent)); }
 .theme-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 10px 6px; }
@@ -974,15 +970,6 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
   .top-in { padding: 8px 16px; }
   .brand { font-size: 21px; }
   .me-chip { width: 32px; height: 32px; font-size: 16px; }
-  .botnav {
-    left: 12px; right: 12px; bottom: calc(10px + env(safe-area-inset-bottom, 0px));
-    padding: 6px; gap: 2px; border: 1px solid var(--line); border-radius: 24px;
-    background: color-mix(in srgb, var(--solid) 72%, transparent);
-    box-shadow: var(--shadow), inset 0 1px 0 var(--edge-hi);
-  }
-  .botnav a { position: relative; border-radius: 18px; padding: 7px 0 6px; color: var(--muted); transition: color .2s ease, background-color .2s ease; }
-  .botnav a.active { color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent); }
-  .botnav a.active svg { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 70%, transparent)); }
   main.page { padding-bottom: calc(var(--nav-h) + 50px + env(safe-area-inset-bottom, 0px)); }
   .toast { bottom: calc(var(--nav-h) + 30px + env(safe-area-inset-bottom, 0px)); }
 }
@@ -1037,8 +1024,6 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
   /* press feedback on everything tappable */
   .btn:not(:disabled):active, .chip:active, .seg button:active { transform: scale(.97); }
   .day-tile:active, .quick button:active, .opt:active, .person:active, .action-tile:active, .pick-day button:active, .more-link:active, .keypad button:active, .lset:active { transform: scale(.98); }
-  .botnav a:active svg { transform: scale(.9); }
-  .botnav a svg { transition: transform .15s ease, filter .2s ease; }
   .day-tile:hover:not(.sel) { transform: translateY(-2px); }
   /* the primary button's sheen */
   .btn.primary { background-size: 160% 100%; background-position: 0% 0; transition: background-position .5s ease, transform .15s ease, box-shadow .15s ease, filter .15s ease; }
@@ -1060,11 +1045,6 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 @keyframes pr-glow { 50% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--good) 25%, transparent), 0 0 18px color-mix(in srgb, var(--good) 45%, transparent); } }
 
 /* ---------- Coach ---------- */
-@media (max-width: 760px) {
-  .botnav { grid-template-columns: repeat(6, 1fr); padding: 6px 4px; }
-  .botnav a { font-size: 10.5px; }
-  .botnav a svg { width: 21px; height: 21px; }
-}
 .coach { max-width: 900px; margin: 0 auto; }
 .coach-pill { background: var(--grad); color: var(--on-grad); padding: 4px 11px; font-size: 12px; }
 .coach-pill svg, .paywall-badge svg { width: 14px; height: 14px; }
@@ -1250,55 +1230,83 @@ body::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-even
 .top.scrolled::before { opacity: 1; }
 
 @media (max-width: 760px) {
-  .botnav {
-    /* liquid glass: very see-through, strong blur, a bright rim and a soft top highlight */
+  /* iOS-style glass tab bar: a floating pill with a lens behind the current tab (see TabBar.tsx) */
+  .tabbar {
+    --tb-h: 62px;
+    position: fixed; z-index: 30; left: 16px; right: 16px; bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    display: flex; align-items: center; pointer-events: none;
+    view-transition-name: tabbar;
+  }
+  .tabbar > * { pointer-events: auto; }
+  /* the glass: very see-through, strong blur, a bright rim and a soft top highlight */
+  .tb-pill {
+    position: relative; flex: 1; min-width: 0; height: var(--tb-h); padding: 4px; border-radius: 999px;
+    display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; align-items: stretch;
     background:
       linear-gradient(180deg, rgb(255 255 255 / .10), rgb(255 255 255 / .02) 45%, rgb(255 255 255 / 0) 60%),
       color-mix(in srgb, var(--bg) 28%, transparent);
     -webkit-backdrop-filter: blur(22px) saturate(190%) brightness(1.08); backdrop-filter: blur(22px) saturate(190%) brightness(1.08);
     border: 1px solid rgb(255 255 255 / .16);
     box-shadow: 0 18px 40px rgb(0 0 0 / .35), inset 0 1px 0 rgb(255 255 255 / .28), inset 0 -1px 0 rgb(255 255 255 / .06);
-    border-radius: 28px;
-    /* its own layer, so scrolling never has to repaint it (this is what stops the stick-and-jump) */
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    -webkit-backface-visibility: hidden; backface-visibility: hidden;
-    transform-origin: 50% 100%;
-    transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease;
+    touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+    transition: height .4s cubic-bezier(.2, .9, .25, 1), transform .35s cubic-bezier(.2, .9, .25, 1.15);
   }
-  .botnav a { transition: color .2s ease, background-color .2s ease, transform .35s cubic-bezier(.2, .8, .2, 1); }
-  .botnav a span { transition: opacity .2s ease; }
-  .botnav a.active {
+  .tb-pill.pressed { transform: scale(1.025); }
+  /* the lens behind the current tab: only its transform is ever animated */
+  .tb-lens {
+    position: absolute; left: 4px; top: 4px; bottom: 4px; border-radius: 999px; pointer-events: none;
+    transform: translate3d(0, 0, 0); backface-visibility: hidden; will-change: transform;
     background: linear-gradient(180deg, rgb(255 255 255 / .16), rgb(255 255 255 / .04)), color-mix(in srgb, var(--accent) 16%, transparent);
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
+    transition: scale .32s cubic-bezier(.2, .9, .25, 1.25), box-shadow .25s, background .25s, opacity .2s;
   }
-  /* scrolling down: the bar tucks down into a smaller pill (icons only); scrolling up brings it back */
-  .botnav.min { transform: translate3d(0, 14px, 0) scale(.86); box-shadow: 0 10px 26px rgb(0 0 0 / .3), inset 0 1px 0 rgb(255 255 255 / .22); }
-  .botnav.min a span { opacity: 0; }
-  .botnav.min a svg { transform: translateY(7px); }
+  .tb-pill.no-tab:not(.pressed) .tb-lens { opacity: 0; }
+  /* pressed and sliding: the lens lifts off the bar like a drop of glass */
+  .tb-pill.lifted .tb-lens {
+    scale: 1.14 1.22;
+    background: color-mix(in srgb, var(--ink) 12%, transparent);
+    box-shadow: inset 0 1px 1px rgb(255 255 255 / .6), inset 0 -1px 2px rgb(0 0 0 / .1), 0 0 0 .5px rgb(255 255 255 / .35), 0 8px 22px rgb(0 0 0 / .3);
+  }
+  /* each tab colours in as the lens covers it (--lit: 0 ... 1, set while the lens moves) */
+  .tb-tab {
+    --lit: 0;
+    position: relative; z-index: 1; border: 0; background: none; padding: 0; margin: 0; min-width: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    color: color-mix(in srgb, var(--accent) calc(var(--lit) * 100%), var(--muted));
+    font: inherit; cursor: pointer; contain: layout style;
+  }
+  .tb-tab svg { width: 22px; height: 22px; transition: transform .3s cubic-bezier(.2, .9, .25, 1.3), width .3s, height .3s; transform: scale(calc(1 + var(--lit) * .06)); }
+  .tb-label { font-size: 10.5px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap; max-height: 16px; transition: opacity .25s, max-height .35s; }
+  /* while your finger is on the bar everything follows it directly, with no easing in between */
+  .tb-pill.pressed .tb-tab svg { transition: none; }
+  .tb-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; border-radius: 999px; }
+  /* scrolling down: the bar slims to icons only; scrolling up brings the labels back */
+  .tabbar.compact { --tb-h: 50px; }
+  .tabbar.compact .tb-label { opacity: 0; max-height: 0; }
 }
 @media (max-width: 760px) {
-  :root[data-theme="light"] .botnav {
+  :root[data-theme="light"] .tb-pill {
     background: linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / .25)), color-mix(in srgb, var(--bg) 30%, transparent);
     border-color: rgb(255 255 255 / .7);
     box-shadow: 0 14px 34px rgb(15 35 50 / .16), inset 0 1px 0 rgb(255 255 255 / .9);
   }
+  :root[data-theme="light"] .tb-lens { background: color-mix(in srgb, var(--accent) 15%, rgb(255 255 255 / .35)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), inset 0 0 0 .5px color-mix(in srgb, var(--accent) 22%, transparent); }
+  :root[data-theme="light"] .tb-pill.lifted .tb-lens { background: rgb(255 255 255 / .5); box-shadow: inset 0 1px 1px rgb(255 255 255 / .9), 0 8px 22px rgb(15 35 50 / .2); }
 }
 @media (max-width: 760px) and (prefers-color-scheme: light) {
-  :root[data-theme="auto"] .botnav {
+  :root[data-theme="auto"] .tb-pill {
     background: linear-gradient(180deg, rgb(255 255 255 / .55), rgb(255 255 255 / .25)), color-mix(in srgb, var(--bg) 30%, transparent);
     border-color: rgb(255 255 255 / .7);
     box-shadow: 0 14px 34px rgb(15 35 50 / .16), inset 0 1px 0 rgb(255 255 255 / .9);
   }
+  :root[data-theme="auto"] .tb-lens { background: color-mix(in srgb, var(--accent) 15%, rgb(255 255 255 / .35)); box-shadow: inset 0 1px 0 rgb(255 255 255 / .9), inset 0 0 0 .5px color-mix(in srgb, var(--accent) 22%, transparent); }
+  :root[data-theme="auto"] .tb-pill.lifted .tb-lens { background: rgb(255 255 255 / .5); box-shadow: inset 0 1px 1px rgb(255 255 255 / .9), 0 8px 22px rgb(15 35 50 / .2); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .botnav, .botnav a, .botnav a svg, .top::before { transition: none !important; }
-  .botnav.min { transform: translate3d(0, 0, 0); }
-  .botnav.min a span { opacity: 1; }
-  .botnav.min a svg { transform: none; }
+  .tb-lens, .tb-pill, .tabbar, .tb-tab svg, .tb-label, .top::before { transition: none !important; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .botnav { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--solid) !important; }
+  .tb-pill { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; background: var(--solid) !important; }
   .top::before { background: var(--solid); }
 }
 
@@ -1359,7 +1367,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; touch-action: man
 html, body { overscroll-behavior: none; }
 * { -webkit-tap-highlight-color: transparent; }
 /* buttons, tabs and cards don't select text or pop up the copy menu when you hold them */
-button, .btn, .chip, .seg, .botnav, .topnav, .top, .day-tile, .pill, .fc-rep, .rec-tag, .eyebrow, .brand, label.btn, .opt, .menu-item, .action-tile, .cam {
+button, .btn, .chip, .seg, .topnav, .top, .day-tile, .pill, .fc-rep, .rec-tag, .eyebrow, .brand, label.btn, .opt, .menu-item, .action-tile, .cam {
   -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
 img, svg { -webkit-user-drag: none; -webkit-touch-callout: none; }
@@ -1368,7 +1376,6 @@ img, svg { -webkit-user-drag: none; -webkit-touch-callout: none; }
   input, select, textarea, .in { font-size: 16px !important; }
 }
 /* tab switches: a quick cross-fade; the bars stay put */
-.botnav { view-transition-name: botnav; }
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-old(root) { animation: vt-out .14s ease-in both; }
   ::view-transition-new(root) { animation: vt-in .2s ease-out both; }
@@ -1617,3 +1624,32 @@ li.lifted .ex-grip { color: var(--accent); }
 .grain-seg { margin-left: auto; }
 .grain-seg button:disabled { opacity: .4; cursor: default; }
 @media (max-width: 700px) { .grain-seg { margin-left: 0; width: 100%; } .grain-seg button { flex: 1; } }
+
+/* ===== Calorie deficit ===== */
+.deficit-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+@media (max-width: 1000px) { .deficit-card { grid-template-columns: minmax(0, 1fr); gap: 14px; } }
+.deficit-card.is-deficit { border-color: color-mix(in srgb, var(--good) 35%, var(--line)); background: linear-gradient(135deg, color-mix(in srgb, var(--good) 10%, var(--surface)), var(--surface) 60%); }
+.deficit-card.is-surplus { border-color: color-mix(in srgb, var(--warn) 35%, var(--line)); background: linear-gradient(135deg, color-mix(in srgb, var(--warn) 9%, var(--surface)), var(--surface) 60%); }
+.dc-num { display: flex; align-items: baseline; gap: 8px; margin: 2px 0 4px; }
+.dc-num b { font-family: var(--display); font-size: 48px; line-height: 1; }
+.is-deficit .dc-num b { color: var(--good); }
+.is-surplus .dc-num b { color: var(--warn); }
+.dc-num span { font-weight: 650; color: var(--muted); }
+.dc-bars { display: grid; gap: 10px; }
+.dc-bar { display: grid; grid-template-columns: 118px minmax(0, 1fr) 56px; align-items: center; gap: 10px; font-size: 13px; }
+.dc-bar > span { color: var(--muted); font-weight: 600; }
+.dc-bar > b { text-align: right; }
+.dc-bar > div { position: relative; height: 12px; border-radius: 99px; background: var(--surface-2); overflow: hidden; }
+.dc-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; }
+.dc-bar i.eat { background: var(--carbs); }
+.dc-bar i.burn { background: color-mix(in srgb, var(--good) 40%, var(--surface-2)); }
+.dc-bar i.burn-now { background: var(--good); }
+.dc-side { display: grid; gap: 8px; }
+.dc-line { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.dc-line b { white-space: nowrap; display: inline-flex; gap: 4px; align-items: center; }
+.dc-line b svg { width: 14px; height: 14px; }
+.dc-line .good, .def-sum .good { color: var(--good); }
+.dc-line .bad, .def-sum .bad { color: var(--warn); }
+.dc-more { justify-self: start; }
+.def-sum { text-align: right; display: grid; }
+.def-sum b { font-family: var(--display); font-size: 28px; line-height: 1; }

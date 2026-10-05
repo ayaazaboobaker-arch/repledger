@@ -93,8 +93,18 @@ export function intensityFromPace(sport: string, km: number | null | undefined, 
   return kmh < b[0] ? "easy" : kmh < b[1] ? "moderate" : "hard";
 }
 
-/** Net calories from walking around, per step (about 0.04 kcal a step at 80 kg). */
-export const stepKcal = (steps: number, weightKg: number) => Math.round(steps * weightKg * 0.0005);
+/**
+ * Net calories from walking (on top of resting burn). ACSM walking equation: about 0.5 kcal per kg
+ * per km above rest. Distance comes from stride length ≈ 0.415 × height, so 10 000 steps is ~7.3 km
+ * for someone 1.75 m tall - about 290 kcal at 80 kg.
+ */
+export const stepKcal = (steps: number, weightKg: number, heightCm = 172) => Math.round(steps * (0.415 * heightCm / 100) / 1000 * weightKg * 0.5);
+
+/**
+ * Lifting sessions are timed start to finish, so the minutes include rest between sets.
+ * 3.5 METs is the Compendium value for a typical resistance session (multiple exercises, 8-15 reps).
+ */
+export const LIFT_INTENSITY: Intensity = "easy";
 
 export const bmrOf = (p: Profile) => Math.round(10 * p.weightKg + 6.25 * p.heightCm - 5 * p.age + (p.sex === "male" ? 5 : -161));
 
@@ -141,19 +151,19 @@ export interface ActivityBurn {
  * - a walk, run or hike you log by hand is assumed to be in your step count too (your phone counted it) -
  *   that part is taken off, unless you said the steps aren't included.
  */
-export function activityBurns(day: DayLog | undefined, kg: number): ActivityBurn[] {
+export function activityBurns(day: DayLog | undefined, kg: number, heightCm?: number): ActivityBurn[] {
   const acts = day?.activities || [];
   const trackerSteps = acts.filter((a) => !a.manual).reduce((n, a) => n + (a.steps || 0), 0);
   let spare = Math.max(0, (day?.steps || 0) - trackerSteps);
   return acts.map((a) => {
     if (!a.manual) {
-      const base = stepKcal(a.steps, kg);
+      const base = stepKcal(a.steps, kg, heightCm);
       return { id: a.id, kcal: Math.max(0, a.kcal - base), inSteps: Math.min(a.kcal, base) };
     }
     if (!onFoot(a.kind) || a.inSteps === false || spare <= 0) return { id: a.id, kcal: a.kcal, inSteps: 0 };
     const overlap = Math.min(spare, estSteps(a));
     spare -= overlap;
-    const covered = Math.min(a.kcal, stepKcal(overlap, kg));
+    const covered = Math.min(a.kcal, stepKcal(overlap, kg, heightCm));
     return { id: a.id, kcal: a.kcal - covered, inSteps: covered };
   });
 }
@@ -191,9 +201,9 @@ export function dayBurn(day: DayLog | undefined, profile: Profile | null, weight
   const kg = weightOverride ?? profile.weightKg;
   const restingFull = bmrOf({ ...profile, weightKg: kg });
   const resting = Math.round(restingFull * fraction);
-  const steps = stepKcal(day?.steps || 0, kg);
-  const workout = sportKcal("weights", workoutMinutes(day?.workout), "moderate", kg);
-  const acts = activityBurns(day, kg);
+  const steps = stepKcal(day?.steps || 0, kg, profile.heightCm);
+  const workout = sportKcal("weights", workoutMinutes(day?.workout), LIFT_INTENSITY, kg);
+  const acts = activityBurns(day, kg, profile.heightCm);
   const sports = acts.reduce((a, x) => a + x.kcal, 0);
   const food = foodTotals(day?.foods);
   const digestion = Math.round(food.kcal * 0.1);
