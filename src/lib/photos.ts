@@ -164,5 +164,6 @@ export function usePhoto(id?: string | null): { url: string | null; loading: boo
     if (!cached) void photoUrl(id).then((u) => { if (!off) setState({ id, url: u, loading: false }); });
     return () => { off = true; };
   }, [id, tick]);
-  return state.id === id ? state : { id, url: id ? urls.get(id) ?? null : null, loading: !!id };
+  if (state.id === id) return { url: state.url, loading: state.loading };
+  return { url: id ? urls.get(id) ?? null : null, loading: !!id };
 }

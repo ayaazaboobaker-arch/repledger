@@ -28,6 +28,8 @@ One-time setup:
    - **Vercel → Settings → Environment Variables** as `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`, then redeploy.
    - A file called `.env.local` next to `package.json` (copy `.env.example`) for running on your laptop.
 
+Weigh-in photos use a private Storage bucket (`weigh-photos`). `supabase/schema.sql` creates it with the policies, so if you set the database up before photos existed, run the **Weigh-in photos** block at the bottom of that file once. Without it the app still works - photos just stay on the device they were taken on.
+
 Profiles created before online accounts are offered for upload the first time you sign in or create an account on that device.
 
 ## Build
@@ -46,7 +48,7 @@ Uses a hash router (`/#/train`), so it works on any static host with no server c
 | **Today** (`src/pages/Today.tsx`) | Today's session with per-exercise progress (sparkline, weight/reps/volume charts, week-by-week sets × reps), calorie ring, one-tap meals, steps, weigh-in, weekly summary |
 | **Train** (`src/pages/Train.tsx`) | Pick a session, then log each set with Sets / Reps / Weight scroll wheels, rest timer, next-weight suggestion, and a PR summary at the end |
 | **Food** (`src/pages/Food.tsx`, `src/components/FoodPicker.tsx`) | Meal-by-meal diary; search ~80 foods, portion chips + slider, recent foods, saved meals, custom foods from labels (kJ converted) |
-| **Progress** (`src/pages/Progress.tsx`) | Strength per exercise, body weight vs goal, steps, calories and sessions per week |
+| **Progress** (`src/pages/Progress.tsx`) | Strength per exercise, body weight vs goal (with the progress photo from each weigh-in), steps, calories and sessions per week |
 | **Plan** (`src/pages/Plan.tsx`) | Edit the weekly plan |
 | **Me** (`src/pages/Profile.tsx`) | Profile questionnaire → calorie target with step-by-step explanation, macros, step goal, timeline, recommended training split |
 
