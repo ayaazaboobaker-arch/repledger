@@ -7,6 +7,7 @@ import { DatePicker } from "../components/DatePicker";
 import { useCalibration } from "../lib/calibration";
 import { ExerciseProgress } from "../components/ExerciseProgress";
 import { Select } from "../components/Select";
+import { WeighPhotoButton, WeighPhotoPanel, type WeighEntry } from "../components/WeighPhoto";
 import { CountUp, Icon, useTheme } from "../components/ui";
 import { useStore } from "../lib/store";
 import { goalDeficit } from "../lib/deficit";
@@ -214,6 +215,7 @@ function WeighIns({ days, range }: { days: Record<string, DayLog>; range: DateRa
             const ch = prev != null ? days[d].weight! - prev : null;
             return (
               <li key={d}>
+                <WeighPhotoButton date={d} kg={days[d].weight!} id={days[d].photo} />
                 <span>{shortDate(d)}</span>
                 <b className="num">{fmt(days[d].weight!, 1)} kg</b>
                 <span className={`num xs ${ch == null ? "faint" : ch <= 0 ? "down" : "up"}`}>{ch == null ? "first" : `${ch > 0 ? "+" : ch < 0 ? "−" : "±"}${fmt(Math.abs(ch), 1)}`}</span>
@@ -304,21 +306,60 @@ export function useWeekRows() {
 
 export function WeightTrend({ data, bare, sub = "Weekly average of your weigh-ins" }: { data: Row[]; bare?: boolean; sub?: string }) {
   const t = useTheme();
-  const { targets } = useStore();
+  const { targets, days } = useStore();
   const axis = { tick: { fill: t.muted, fontSize: 11 }, tickLine: false } as const;
+
+  // Every weigh-in (with its photo) that falls inside each point on the graph.
+  const byPoint = useMemo(() => {
+    const dates = Object.keys(days).filter((d) => days[d].weight != null).sort();
+    const m = new Map<string, WeighEntry[]>();
+    for (const r of data) m.set(r.week, dates.filter((d) => d >= r.start && d <= r.end).map((d) => ({ date: d, kg: days[d].weight!, photo: days[d].photo })));
+    return m;
+  }, [days, data]);
+  const withWeight = data.filter((r) => r.weight != null);
+  const anyPhoto = data.some((r) => byPoint.get(r.week)?.some((e) => e.photo));
+  const latestPhoto = [...data].reverse().find((r) => byPoint.get(r.week)?.some((e) => e.photo));
+  const fallback = latestPhoto ?? withWeight[withWeight.length - 1];
+  const [picked, setPicked] = useState<string | null>(null);
+  const selKey = picked && data.some((r) => r.week === picked && r.weight != null) ? picked : fallback?.week ?? null;
+  const selRow = data.find((r) => r.week === selKey);
+
+  const choose = (s: { activeTooltipIndex?: unknown }) => {
+    const r = data[Number(s.activeTooltipIndex)];
+    if (r && r.weight != null) setPicked(r.week);
+  };
+  const dot = (p: { cx?: number; cy?: number; index?: number; payload?: Row }) => {
+    const { cx, cy, index, payload } = p;
+    if (cx == null || cy == null || !payload) return <g key={`d${index}`} />;
+    const has = byPoint.get(payload.week)?.some((e) => e.photo);
+    const on = payload.week === selKey;
+    return (
+      <g key={`d${index}`} style={{ cursor: "pointer" }}>
+        {on && <circle cx={cx} cy={cy} r={has ? 13 : 10} fill={t.accent} fillOpacity={0.18} />}
+        {has
+          ? <><circle cx={cx} cy={cy} r={8} fill={t.surface} stroke={t.accent} strokeWidth={2.2} /><circle cx={cx} cy={cy} r={3.2} fill={t.accent} /></>
+          : <circle cx={cx} cy={cy} r={4} fill={t.accent} stroke={t.surface} strokeWidth={2} />}
+      </g>
+    );
+  };
+
   const chart = (
-    <div className="chart-wrap">
-      <ResponsiveContainer>
-        <AreaChart data={data} margin={{ top: 16, right: 12, left: -6, bottom: 0 }}>
-          <CartesianGrid stroke={t.line} vertical={false} />
-          <XAxis dataKey="x" {...axis} axisLine={{ stroke: t.line }} minTickGap={16} />
-          <YAxis {...axis} axisLine={false} width={44} domain={[(min: number) => Math.floor(Math.min(min, targets.goalWeight) - 1), (max: number) => Math.ceil(max + 1)]} />
-          <ReferenceLine y={targets.goalWeight} stroke={t.muted} strokeDasharray="5 4" label={{ value: `Goal ${fmt(targets.goalWeight, 1)} kg`, position: "insideBottomRight", fill: t.muted, fontSize: 11 }} />
-          <Tooltip cursor={{ stroke: t.faint }} content={({ active, payload }) => { if (!active || !payload?.length) return null; const p = payload[0].payload as Row; return <div className="rtip">{p.weight != null ? <><b>{fmt(p.weight, 1)} kg</b>{p.period}</> : <>No weigh-in · {p.period}</>}</div>; }} />
-          <Area type="monotone" dataKey="weight" connectNulls stroke={t.accent} strokeWidth={2.2} fill={t.accent} fillOpacity={0.1} dot={{ r: 4, fill: t.accent, stroke: t.surface, strokeWidth: 2 }} isAnimationActive={false} />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
+    <>
+      <div className="chart-wrap">
+        <ResponsiveContainer>
+          <AreaChart data={data} margin={{ top: 16, right: 12, left: -6, bottom: 0 }} onClick={choose} onMouseMove={choose}>
+            <CartesianGrid stroke={t.line} vertical={false} />
+            <XAxis dataKey="x" {...axis} axisLine={{ stroke: t.line }} minTickGap={16} />
+            <YAxis {...axis} axisLine={false} width={44} domain={[(min: number) => Math.floor(Math.min(min, targets.goalWeight) - 1), (max: number) => Math.ceil(max + 1)]} />
+            <ReferenceLine y={targets.goalWeight} stroke={t.muted} strokeDasharray="5 4" label={{ value: `Goal ${fmt(targets.goalWeight, 1)} kg`, position: "insideBottomRight", fill: t.muted, fontSize: 11 }} />
+            <Tooltip cursor={{ stroke: t.faint }} content={({ active, payload }) => { if (!active || !payload?.length) return null; const p = payload[0].payload as Row; return <div className="rtip">{p.weight != null ? <><b>{fmt(p.weight, 1)} kg</b>{p.period}{byPoint.get(p.week)?.some((e) => e.photo) ? <span className="xs" style={{ display: "block", opacity: 0.75 }}>Photo below</span> : null}</> : <>No weigh-in · {p.period}</>}</div>; }} />
+            <Area type="monotone" dataKey="weight" connectNulls stroke={t.accent} strokeWidth={2.2} fill={t.accent} fillOpacity={0.1} dot={dot} activeDot={false} isAnimationActive={false} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+      {selRow && <WeighPhotoPanel key={selRow.week} entries={byPoint.get(selRow.week) ?? []} period={selRow.period} />}
+      <div className="xs faint" style={{ marginTop: 8 }}>{anyPhoto ? "Ringed points have a photo - tap or hover any point to see the photo from that weigh-in." : "Add a photo when you weigh in and it will show here, at that weight."}</div>
+    </>
   );
   if (bare) return chart;
   return (

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { signOut } from "../lib/accounts";
 import { useStore } from "../lib/store";
+import { removePhoto } from "../lib/photos";
+import { PhotoImg, PhotoViewer, usePickPhoto } from "./WeighPhoto";
 import { dayBurn, dayFraction } from "../lib/burn";
 import { useCalibration } from "../lib/calibration";
 import { foodTotals } from "../lib/stats";
@@ -144,7 +146,33 @@ export function WeightCard({ date }: { date: string }) {
   const cur = v ?? prev;
   const delta = v != null && prev != null ? v - prev : null;
   const dirty = v == null || Math.abs(pick - v) > 0.01;
-  const save = () => { updateDay(date, (d) => { d.weight = +pick.toFixed(1); }); toast(`Weigh-in saved: ${fmt(pick, 1)} kg`); };
+  // Progress photo: attaches straight away when the weigh-in is already logged, otherwise it waits and is saved together with the weight.
+  const savedPhoto = days[date]?.photo ?? null;
+  const [pending, setPending] = useState<string | null>(null);
+  const [viewing, setViewing] = useState(false);
+  useEffect(() => { setPending(null); }, [date]);
+  const photoId = pending ?? savedPhoto;
+  const onPicked = (id: string) => {
+    if (v != null) {
+      updateDay(date, (d) => { d.photo = id; });
+      if (savedPhoto && savedPhoto !== id) void removePhoto(savedPhoto);
+      toast("Photo saved with this weigh-in");
+    } else {
+      if (pending) void removePhoto(pending);
+      setPending(id);
+    }
+  };
+  const onRemovePhoto = () => {
+    if (pending) { void removePhoto(pending); setPending(null); return; }
+    if (savedPhoto) { updateDay(date, (d) => { delete d.photo; }); void removePhoto(savedPhoto); }
+  };
+  const { pick: pickPhoto, input: photoInput, busy: photoBusy } = usePickPhoto(onPicked);
+  const save = () => {
+    updateDay(date, (d) => { d.weight = +pick.toFixed(1); if (pending) d.photo = pending; });
+    if (pending && savedPhoto && savedPhoto !== pending) void removePhoto(savedPhoto);
+    toast(`Weigh-in saved: ${fmt(pick, 1)} kg${pending ? " + photo" : ""}`);
+    setPending(null);
+  };
   const change = v != null && prev != null ? null : prev != null ? pick - prev : null;
   return (
     <section className="card">
@@ -166,11 +194,21 @@ export function WeightCard({ date }: { date: string }) {
       <WeightRuler id={`ruler-${date}`} value={pick} onChange={setPick} />
       <div className="weigh-actions">
         {dirty ? (
-          <button className="btn primary block" onClick={save}>{v == null ? `Log ${fmt(pick, 1)} kg` : `Update to ${fmt(pick, 1)} kg`}{change != null && Math.abs(change) >= 0.05 ? <span className="delta-chip">{change > 0 ? "+" : ""}{fmt(change, 1)}</span> : null}</button>
+          <button className="btn primary block" onClick={save}>{v == null ? `Log ${fmt(pick, 1)} kg${pending ? " + photo" : ""}` : `Update to ${fmt(pick, 1)} kg`}{change != null && Math.abs(change) >= 0.05 ? <span className="delta-chip">{change > 0 ? "+" : ""}{fmt(change, 1)}</span> : null}</button>
         ) : (
           <div className="small muted" style={{ textAlign: "center" }}>Scroll the scale to change it</div>
         )}
       </div>
+      <div className="weigh-photo">
+        {photoInput}
+        {photoId && <button className="wp-mini lg" onClick={() => setViewing(true)} aria-label="View your progress photo"><PhotoImg id={photoId} alt="Your progress photo" /></button>}
+        <div className="wp-text">
+          <b>Progress photo</b>
+          <small>{pending ? "Saved when you log this weigh-in" : photoId ? "Shown on your graph at this weight" : "Optional - it shows on your graph at this weight"}</small>
+        </div>
+        <button className="btn sm" onClick={pickPhoto} disabled={photoBusy}>{Icon.camera} {photoBusy ? "Saving…" : photoId ? "Change" : "Add photo"}</button>
+      </div>
+      {viewing && photoId && <PhotoViewer id={photoId} title={`${fmt(v ?? pick, 1)} kg`} onClose={() => setViewing(false)} onPicked={onPicked} onRemove={onRemovePhoto} />}
       <div className="spread" style={{ marginTop: 12, alignItems: "flex-end" }}>
         <div className="small muted">
           {prev != null ? <>Previous {fmt(prev, 1)} kg · {shortDate(prevD!)}</> : "First weigh-in"}

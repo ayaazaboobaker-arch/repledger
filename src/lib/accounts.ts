@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { calculate, targetsFrom } from "./calc";
+import { removeAllOnlinePhotos } from "./photos";
 import { clearMeta, deleteRow, fetchRow, saveRow, startSync, stopSync, updateColumns } from "./cloud";
 import { recommendPlan } from "./plans";
 import { closeUserData, deleteUserData, demoData, openUserData, readUserData, writeUserData, type UserData } from "./store";
@@ -345,6 +346,7 @@ export async function forgetOnDevice(id: string) {
 /** Delete everything: the online copy too. */
 export async function deleteAccount(id: string): Promise<string | null> {
   if (id !== DEMO_ID && !find(id)?.demo) {
+    await removeAllOnlinePhotos(id);
     try { await deleteRow(id); } catch (e) { return friendly(e); }
   }
   await forgetOnDevice(id);

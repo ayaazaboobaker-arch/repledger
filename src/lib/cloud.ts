@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { applyRemoteData, onDataChange, snapshot, type UserData } from "./store";
 import { store } from "./storage";
+import { syncPhotos } from "./photos";
 import { isNetworkError, supabase, type ProfileRow } from "./supabase";
 
 /**
@@ -120,7 +121,7 @@ export async function pull(id: string): Promise<void> {
 export function startSync(id: string) {
   target = id;
   status(getMeta(id).dirty ? "saving" : "saved");
-  void pull(id);
+  void pull(id).then(() => syncPhotos());
 }
 
 /** Stop syncing - any last changes are still sent in the background. */

@@ -81,6 +81,8 @@ export interface DayLog {
   foods?: FoodEntry[];
   steps?: number | null;
   weight?: number | null;
+  /** id of the progress photo taken with this weigh-in (the picture lives in photos.ts storage) */
+  photo?: string | null;
 }
 
 export interface Targets {
