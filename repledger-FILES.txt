@@ -1,0 +1,100 @@
+Branch: app-fixes-progress-branding (2 commits on top of main dcc60a8)
+
+COMMIT 1 - features/fixes
+  M	index.html
+  M	public/apple-touch-icon.png
+  A	public/favicon.svg
+  M	public/icon-192.png
+  M	public/icon-512.png
+  M	public/icon-maskable.png
+  M	src/App.tsx
+  A	src/components/Brand.tsx
+  M	src/components/ExerciseProgress.tsx
+  M	src/components/FoodPicker.tsx
+  M	src/components/coach/FormCheck.tsx
+  M	src/components/ui.tsx
+  M	src/lib/stats.ts
+  M	src/lib/store.ts
+  M	src/pages/Coach.tsx
+  M	src/pages/Plan.tsx
+  M	src/pages/Train.tsx
+  M	src/pages/Welcome.tsx
+  M	src/styles/app.css
+
+COMMIT 2 - tidy-up (summary)
+        2 A
+       59 D
+        1 M
+        6 R100
+
+Not deleted-file detail:
+  A	.env.example
+  A	.gitignore
+  R100	mediapipe/vision_wasm_internal.js	public/mediapipe/vision_wasm_internal.js
+  R100	mediapipe/vision_wasm_internal.wasm	public/mediapipe/vision_wasm_internal.wasm
+  R100	mediapipe/vision_wasm_nosimd_internal.js	public/mediapipe/vision_wasm_nosimd_internal.js
+  R100	mediapipe/vision_wasm_nosimd_internal.wasm	public/mediapipe/vision_wasm_nosimd_internal.wasm
+  R100	models/pose_landmarker_lite.task	public/models/pose_landmarker_lite.task
+  R100	copy-mediapipe.mjs	scripts/copy-mediapipe.mjs
+  M	supabase/schema.sql
+
+Deleted in tidy-up:
+  App.tsx
+  Profile.tsx
+  ProfileMenu.tsx
+  Progress.tsx
+  Welcome.tsx
+  accounts.ts
+  app.css
+  build.d.ts
+  cards.tsx
+  cloud.ts
+  photos.ts
+  rep-ledger-for-github/README.md
+  rep-ledger-for-github/index.html
+  rep-ledger-for-github/package-lock.json
+  rep-ledger-for-github/package.json
+  rep-ledger-for-github/src/App.tsx
+  rep-ledger-for-github/src/components/ExerciseProgress.tsx
+  rep-ledger-for-github/src/components/FoodPicker.tsx
+  rep-ledger-for-github/src/components/Numbers.tsx
+  rep-ledger-for-github/src/components/Onboarding.tsx
+  rep-ledger-for-github/src/components/ProfileMenu.tsx
+  rep-ledger-for-github/src/components/Select.tsx
+  rep-ledger-for-github/src/components/TrackerPanel.tsx
+  rep-ledger-for-github/src/components/WeightRuler.tsx
+  rep-ledger-for-github/src/components/WheelPicker.tsx
+  rep-ledger-for-github/src/components/cards.tsx
+  rep-ledger-for-github/src/components/forms.tsx
+  rep-ledger-for-github/src/components/safety.tsx
+  rep-ledger-for-github/src/components/ui.tsx
+  rep-ledger-for-github/src/lib/accounts.ts
+  rep-ledger-for-github/src/lib/backup.ts
+  rep-ledger-for-github/src/lib/calc.ts
+  rep-ledger-for-github/src/lib/cloud.ts
+  rep-ledger-for-github/src/lib/demo.ts
+  rep-ledger-for-github/src/lib/foods.ts
+  rep-ledger-for-github/src/lib/plans.ts
+  rep-ledger-for-github/src/lib/stats.ts
+  rep-ledger-for-github/src/lib/stepTracker.ts
+  rep-ledger-for-github/src/lib/storage.ts
+  rep-ledger-for-github/src/lib/store.ts
+  rep-ledger-for-github/src/lib/supabase.ts
+  rep-ledger-for-github/src/lib/types.ts
+  rep-ledger-for-github/src/lib/util.ts
+  rep-ledger-for-github/src/main.tsx
+  rep-ledger-for-github/src/pages/Food.tsx
+  rep-ledger-for-github/src/pages/Plan.tsx
+  rep-ledger-for-github/src/pages/Profile.tsx
+  rep-ledger-for-github/src/pages/Progress.tsx
+  rep-ledger-for-github/src/pages/Today.tsx
+  rep-ledger-for-github/src/pages/Train.tsx
+  rep-ledger-for-github/src/pages/Welcome.tsx
+  rep-ledger-for-github/src/styles/app.css
+  rep-ledger-for-github/start-rep-ledger.bat
+  rep-ledger-for-github/supabase/schema.sql
+  rep-ledger-for-github/tsconfig.json
+  rep-ledger-for-github/vite.config.ts
+  schema.sql
+  store.ts
+  types.ts
