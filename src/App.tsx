@@ -4,6 +4,7 @@ import { HashRouter, Link, MemoryRouter, NavLink, Route, Routes, useLocation, us
 import { ProfileMenu } from "./components/ProfileMenu";
 import { TabBar } from "./components/TabBar";
 import { PageBoundary } from "./components/safety";
+import { Splash } from "./components/Brand";
 import { Icon, Toaster } from "./components/ui";
 import { migrateLegacy, restoreSession, useAccounts, useCurrentAccount } from "./lib/accounts";
 import { useStore } from "./lib/store";
@@ -191,6 +192,7 @@ export function App() {
   return (
     <Router>
       <Gate />
+      <Splash />
     </Router>
   );
 }

@@ -6,6 +6,7 @@ import type { CustomFood, FoodEntry, MealSlot } from "../lib/types";
 import { fmt, KJ_PER_KCAL, parseNum } from "../lib/util";
 import { BarcodeScanner } from "./BarcodeScanner";
 import { MealScanner } from "./MealScanner";
+import { Loader } from "./Brand";
 import { Select } from "./Select";
 import { Icon, Sheet, toast } from "./ui";
 
@@ -156,7 +157,7 @@ export function FoodPicker({ open, onClose, date, meal: initialMeal, startScan }
             {online.state === "idle" && (
               <button className="btn block" onClick={online.run}>{Icon.search} Search online for “{qq}”</button>
             )}
-            {online.state === "loading" && <div className="empty small">Searching millions of products…</div>}
+            {online.state === "loading" && <div className="empty small"><Loader size="sm" label="Searching millions of products…" /></div>}
             {online.state === "error" && <div className="empty small">{online.error} <button className="btn sm" style={{ marginLeft: 6 }} onClick={online.run}>Try again</button></div>}
             {online.state === "done" && (online.results.length
               ? <ul className="flist">{online.results.map(row)}</ul>

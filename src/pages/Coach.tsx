@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { FormCheck } from "../components/coach/FormCheck";
 import { NutritionCoach } from "../components/coach/Nutrition";
+import { Loader } from "../components/Brand";
 import { Icon, Sparkline, toast } from "../components/ui";
 import { devUnlockAllowed, FREE_FORM_CHECKS, freeFormChecksUsed, setDevUnlock, spendFreeFormCheck, useCoachAccess } from "../lib/coach/access";
 import { useCurrentAccount } from "../lib/accounts";
@@ -38,7 +39,7 @@ export function Coach() {
         </div>
         {access.pro && <span className="pill coach-pill">{Icon.coach} {access.source === "demo" ? "Pro · demo" : access.source === "dev" ? "Pro · testing" : "Pro"}</span>}
       </div>
-      {access.loading ? <div className="card empty">Checking your plan…</div> : access.pro ? <CoachTabs /> : <Paywall />}
+      {access.loading ? <div className="card"><Loader label="Checking your plan…" /></div> : access.pro ? <CoachTabs /> : <Paywall />}
       {access.source === "dev" && <button className="btn ghost sm" style={{ marginTop: 12 }} onClick={() => setDevUnlock(false)}>{Icon.lock} Lock again (testing)</button>}
     </div>
   );

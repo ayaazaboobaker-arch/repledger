@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { DemoBanner } from "../components/cards";
+import { Loader } from "../components/Brand";
 import { Icon, toast } from "../components/ui";
 import { useCurrentAccount } from "../lib/accounts";
 import { devUnlockAllowed, FREE_FORM_CHECKS, freeFormChecksUsed, setDevUnlock, useCoachAccess } from "../lib/coach/access";
@@ -48,7 +49,7 @@ export function Plan() {
         <div className="spread" style={{ alignItems: "flex-start" }}>
           <div>
             <div className="eyebrow">You're on</div>
-            <div className="pc-name">{access.loading ? "Checking…" : current.name}</div>
+            <div className="pc-name">{access.loading ? <Loader size="sm" label="Checking…" /> : current.name}</div>
             <div className="small muted">{current.sub}</div>
           </div>
           <span className={`pill ${isPro ? "good" : "off"}`}>{isPro ? <>{Icon.check} Pro</> : "Free"}</span>

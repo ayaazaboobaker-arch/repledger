@@ -9,6 +9,7 @@ import { useStore } from "../../lib/store";
 import { Select } from "../Select";
 import { CameraSession, type Filmed } from "./CameraSession";
 import { fmt, todayStr, shortDate } from "../../lib/util";
+import { Loader } from "../Brand";
 import { Icon } from "../ui";
 
 interface Saved { date: string; exercise?: string; lift: Lift; score: number | null; reps: number; headline: string; checks: { id?: string; label: string; status: string; summary: string }[] }
@@ -109,6 +110,7 @@ export function FormCheck({ freeLeft, onUsed }: { freeLeft?: number; onUsed?: ()
           <div className="deload"><span className="at-icon">{Icon.lock}</span><div><b>You've used your free form check</b><div className="small muted">Unlimited checks come with Rep Ledger Pro.</div></div></div>
         ) : progress != null ? (
           <div className="fc-progress">
+            <Loader size="sm" />
             <div className="spread small"><span>{stage}</span><b className="num">{Math.round(progress * 100)}%</b></div>
             <div className="meter"><i style={{ width: `${progress * 100}%` }} /></div>
             <button className="btn ghost sm" onClick={() => abort.current?.abort()}>Cancel</button>

@@ -1,13 +1,14 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { fmt as fmtNum } from "../lib/util";
+import { LogoMark } from "./Brand";
 
 /* ---------- icons ---------- */
 const S = (d: ReactNode, sw = 2) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>
 );
 export const Icon = {
-  logo: S(<path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12" />, 2.2),
+  logo: <LogoMark size={28} />,
   today: S(<><rect x="3" y="4" width="18" height="17" rx="2" /><path d="M3 9h18M8 2v4M16 2v4" /></>),
   train: S(<path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12" />, 2.2),
   food: S(<><path d="M4 3v7a3 3 0 0 0 6 0V3M7 3v18" /><path d="M17 3c-2 2-3 4-3 7s1 4 3 4v7" /></>),

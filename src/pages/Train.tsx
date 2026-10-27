@@ -52,7 +52,7 @@ function Chooser() {
     const status: "done" | "today" | "missed" | "upcoming" | "rest" =
       done ? "done" : !train && !cardioOnly ? "rest" : date === today ? "today" : date < today ? "missed" : "upcoming";
     const cardioMins = cardio.reduce((a, c) => a + c.minutes, 0);
-    return { k, i, date, pd, train, cardio, cardioOnly, done, sets, mins: Math.round(sets * 2.6 + 5) + (train ? 0 : cardioMins), cardioMins, status, loggedTitle: w?.title };
+    return { k, i, date, pd, train, cardio, cardioOnly, done, sets, mins: Math.round(sets * 2.6 + 5) + (train ? 0 : cardioMins), cardioMins, status, loggedTitle: w?.title, loggedPlanKey: w?.planKey };
   });
   const [key, setKey] = useState<DowKey>(() => dowKey(today));
   const swipe = useRef<{ x: number; y: number } | null>(null);
@@ -107,7 +107,7 @@ function Chooser() {
                 <span className="dt-dow">{DOW_LONG[d.k].slice(0, 3)}</span>
                 <span className="dt-num">{dt.getDate()}</span>
               </div>
-              <div className="dt-title">{d.done && d.loggedTitle ? d.loggedTitle : d.train || d.cardioOnly ? d.pd.title : "Rest"}</div>
+              <div className="dt-title">{d.loggedPlanKey && d.loggedPlanKey !== d.k && d.loggedTitle ? d.loggedTitle : d.train || d.cardioOnly ? d.pd.title : "Rest"}</div>
               <div className="dt-sub">{d.train ? `${d.pd.exercises.length} exercises${d.cardio.length ? " + cardio" : ` · ~${d.mins} min`}` : d.cardioOnly ? `Cardio · ${d.cardioMins} min` : "Recovery"}</div>
               <span className={`dt-badge b-${d.status}`}>
                 {d.status === "done" ? <>{Icon.check} Done</> : d.status === "today" ? "Today" : d.status === "missed" ? "Missed" : d.status === "rest" ? (d.date === today ? "Today · rest" : "Rest") : "Upcoming"}

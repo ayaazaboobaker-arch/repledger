@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { exerciseHistory, weeklyExercise } from "../lib/stats";
+import { exerciseHistory, weeklyExercise, type SessionPoint } from "../lib/stats";
 import type { DayLog } from "../lib/types";
 import { fmt, fmtKg, shortDate, todayStr, weekStart } from "../lib/util";
 import { useTheme } from "./ui";
@@ -103,6 +103,8 @@ export function ExerciseProgress({ name, days, size = "normal", idPrefix }: Prop
         </ResponsiveContainer>
       </div>
 
+      <WorkoutLog hist={hist} bodyweight={bodyweight} />
+
       <div className="weeks" aria-label="Sets and reps each week">
         {weekly.map((w, i) => (
           <div key={w.week} className={`wk${w.week === curWeek ? " now" : ""}`}>
@@ -112,5 +114,49 @@ export function ExerciseProgress({ name, days, size = "normal", idPrefix }: Prop
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * What you actually lifted, workout by workout: one big bubble per set showing reps and weight as logged
+ * (not as planned). Newest first; a small note shows how it compared with the plan at the time.
+ */
+function WorkoutLog({ hist, bodyweight }: { hist: SessionPoint[]; bodyweight: boolean }) {
+  const [all, setAll] = useState(false);
+  const rows = [...hist].reverse();
+  const shown = all ? rows : rows.slice(0, 6);
+  const note = (h: SessionPoint) => {
+    const p = h.planned;
+    if (!p) return null;
+    const plan = `${p.sets}×${p.reps ?? "?"}${p.kg ? ` @ ${fmtKg(p.kg)}` : ""}`;
+    const hit = h.sets >= p.sets && h.setList.every((x) => (p.reps == null || x.reps >= p.reps) && x.kg >= (p.kg || 0));
+    return { plan, hit };
+  };
+  return (
+    <section className="wlog" aria-label="Workout log - what you actually did">
+      <div className="wlog-head"><h3>Workout log</h3><span className="xs faint">What you actually did</span></div>
+      {shown.map((h) => {
+        const n = note(h);
+        return (
+          <div key={h.date} className="wlog-row">
+            <div className="wlog-top">
+              <b>{shortDate(h.date)}</b>
+              <span className="xs muted">{h.sets} set{h.sets === 1 ? "" : "s"} · {fmt(h.reps)} reps{bodyweight ? "" : ` · ${fmt(h.vol)} kg volume`}</span>
+            </div>
+            <div className="bubbles">
+              {h.setList.map((x, i) => (
+                <div key={i} className={`bubble${!bodyweight && x.kg === h.top && x.reps === h.bestReps ? " best" : ""}`}>
+                  <span className="b-n">Set {i + 1}</span>
+                  <b className="b-main">{x.kg ? fmtKg(x.kg) : "BW"}<small>{x.kg ? " kg" : ""}</small></b>
+                  <span className="b-sub">× {x.reps} reps</span>
+                </div>
+              ))}
+            </div>
+            {n && <div className="xs faint wlog-plan">Plan was {n.plan} · <span className={n.hit ? "up" : "down"}>{n.hit ? "plan hit" : "different from plan"}</span></div>}
+          </div>
+        );
+      })}
+      {rows.length > 6 && <button className="btn ghost sm" onClick={() => setAll(!all)}>{all ? "Show fewer" : `Show all ${rows.length} workouts`}</button>}
+    </section>
   );
 }

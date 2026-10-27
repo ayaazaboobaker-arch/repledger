@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PinInput } from "../components/forms";
 import { BLANK_PROFILE, Onboarding } from "../components/Onboarding";
+import { Backdrop, ScreenLoader } from "../components/Brand";
 import { ConfirmButton } from "../components/safety";
 import { Icon, toast } from "../components/ui";
 import {
@@ -118,6 +119,7 @@ export function Welcome() {
 function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="welcome-wrap">
+      <Backdrop />
       <div className="welcome">
         <div className="brand big">{Icon.logo}Rep Ledger</div>
         {children}
@@ -206,6 +208,7 @@ function PinStep({ acc, onBack, onForgot, onNeedPassword }: { acc: Account; onBa
         </button>
       )}
       {bioMsg && <div className="small" style={{ marginTop: 8, color: "var(--warn)" }} role="status">{bioMsg}</div>}
+      {busy && <ScreenLoader label="Unlocking" sub="Getting your data ready" />}
       <p className="muted" style={{ margin: "4px 0 16px" }}>{busy ? "Unlocking…" : bio ? "or enter your PIN" : "Enter your PIN"}</p>
       <PinInput id="login-pin" label={`PIN for ${acc.name}`} value={pin} onChange={(v) => { setBad(false); setPinV(v); }} autoFocus invalid={bad} />
       <div className="small" style={{ minHeight: 22, marginTop: 8, color: "var(--bad)" }} role="alert">{bad ? "That PIN isn't right - try again." : ""}</div>
@@ -253,6 +256,7 @@ function PasswordStep({ acc, reason, onBack, onForgotPassword }: { acc: Account;
         </div>
       )}
       <div className="small" style={{ minHeight: 20, color: "var(--bad)" }} role="alert">{err}</div>
+      {busy && <ScreenLoader label="Signing in" />}
       <button className="btn primary lg block" disabled={busy || !password}>{busy ? "Signing in…" : needPin ? "Save new PIN" : "Sign in"}</button>
       <div className="row" style={{ justifyContent: "center", marginTop: 6 }}>
         <button type="button" className="btn ghost sm" onClick={onBack}>{Icon.left} Back</button>
@@ -296,6 +300,7 @@ function EmailForm({ mode, email: initialEmail, onSwitch, onForgot, onBack, onCo
       <label className="f">Password<input className="in" id="password" type="password" autoComplete={signup ? "new-password" : "current-password"} autoFocus={!!initialEmail} value={password} onChange={(e) => { setErr(""); setPassword(e.target.value); }} /></label>
       {signup && <label className="f">Type the password again<input className="in" id="password2" type="password" autoComplete="new-password" value={password2} onChange={(e) => { setErr(""); setPassword2(e.target.value); }} /></label>}
       <div className="small" style={{ minHeight: 20, color: "var(--bad)" }} role="alert">{err}</div>
+      {busy && <ScreenLoader label={signup ? "Creating your account" : "Signing in"} />}
       <button className="btn primary lg block" disabled={busy || !cloudConfigured}>{busy ? "One moment…" : signup ? "Create account" : "Sign in"}</button>
       <div className="row" style={{ justifyContent: "center", marginTop: 6, flexWrap: "wrap" }}>
         {onBack && <button type="button" className="btn ghost sm" onClick={onBack}>{Icon.left} Profiles</button>}

@@ -74,7 +74,22 @@ export const useStore = create<State>()((set, get) => ({
       fn(d.workout);
     }),
   setLayout: (layout) => set({ layout }),
-  setPlan: (plan) => set({ plan: clone(plan) }),
+  setPlan: (plan) =>
+    set((s) => {
+      const next = clone(plan);
+      // A workout copies the plan when it's opened. Keep copies that haven't been started in step with the plan,
+      // otherwise edits to a day's name or exercises never show up on Today / Train.
+      let days = s.days;
+      for (const [date, day] of Object.entries(s.days)) {
+        const w = day.workout;
+        if (!w || w.finishedAt || s.active?.date === date || w.exercises.some((e) => e.sets.some((x) => x.done))) continue;
+        const fresh = planSession(next, w.planKey);
+        if (JSON.stringify({ t: fresh.title, e: fresh.exercises }) === JSON.stringify({ t: w.title, e: w.exercises })) continue;
+        if (days === s.days) days = { ...s.days };
+        days[date] = { ...day, workout: { ...fresh, startedAt: w.startedAt } };
+      }
+      return { plan: next, days };
+    }),
   setTargets: (t) => set((s) => ({ targets: { ...s.targets, ...t } })),
   setProfile: (p) => set({ profile: p }),
 

@@ -43,6 +43,10 @@ export interface SessionPoint {
   /** e.g. "4×8 @ 60" or "60×8, 60×8, 60×7" */
   scheme: string;
   detail: string;
+  /** every set actually done, in order */
+  setList: { reps: number; kg: number }[];
+  /** what the plan said at the time (null if unknown) */
+  planned: { sets: number; reps: number | null; kg: number | null } | null;
 }
 
 function schemeOf(done: { kg: number | null; reps: number | null }[]) {
@@ -77,6 +81,8 @@ export function exerciseHistory(days: Record<string, DayLog>, name: string, befo
       date: d, top, one, vol, reps, sets: done.length, bestReps,
       scheme: schemeOf(done),
       detail: done.map((s) => (s.kg ? `${s.kg}×${s.reps}` : `${s.reps}`)).join(", "),
+      setList: done.map((s) => ({ reps: s.reps || 0, kg: s.kg || 0 })),
+      planned: e.tSets ? { sets: e.tSets, reps: e.tReps, kg: e.tKg } : null,
     });
   }
   return out;
