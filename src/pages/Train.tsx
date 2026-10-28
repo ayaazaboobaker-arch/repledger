@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CardioPlanRows, openCardio } from "../components/BurnCard";
 import { PlanDayEditor, planStats } from "../components/PlanEditor";
+import { SwapDaySheet, useDaySwapDrag } from "../components/DaySwap";
+import { swapDays } from "../lib/swapDays";
 import { ExerciseProgress } from "../components/ExerciseProgress";
 import { CountUp, Icon, Sparkline, toast } from "../components/ui";
 import { KG_VALUES, REP_VALUES, SET_VALUES, WheelPicker } from "../components/WheelPicker";
@@ -69,6 +71,14 @@ function Chooser() {
   const doneCount = week.filter((d) => d.done).length;
   const todayDone = days[today]?.workout?.finishedAt;
   const start = (k: DowKey) => { startSession(today, k); nav("/train"); };
+  const [swapFor, setSwapFor] = useState<DowKey | null>(null);
+  const doSwap = (a: DowKey, b: DowKey) => {
+    const { plan: cur, setPlan } = useStore.getState();
+    setPlan(swapDays(cur, a, b));
+    setKey(b);
+    toast(`${DOW_LONG[a]} ⇄ ${DOW_LONG[b]} swapped`, { label: "Undo", run: () => { const st = useStore.getState(); st.setPlan(swapDays(st.plan, a, b)); setKey(a); } });
+  };
+  const { drag, arranging, exitArrange, stripClass, tileProps, tileState, guard } = useDaySwapDrag(strip, doSwap);
 
   return (
     <div className="train-page">
@@ -94,14 +104,22 @@ function Chooser() {
         <div><b>{stats.cardioMin}</b><span>cardio min a week</span></div>
       </div>
 
-      <div className="week-strip" ref={strip} role="radiogroup" aria-label="Day of the week">
+      {arranging && (
+        <div className="arrange-bar" role="status">
+          <span><b>Arrange days</b> · drag a day onto another to swap</span>
+          <button className="btn primary sm" onClick={exitArrange}>Done</button>
+        </div>
+      )}
+      <div className={`week-strip${stripClass}`} ref={strip} role="radiogroup" aria-label="Day of the week">
         {week.map((d) => {
           const dt = parseYmd(d.date);
           return (
             <button
               key={d.k} role="radio" aria-checked={key === d.k}
-              className={`day-tile ${d.train ? "train glow" : d.cardioOnly ? "train cardio glow" : "rest"} s-${d.status}${key === d.k ? " sel" : ""}${d.date === today ? " is-today" : ""}`}
-              onClick={() => setKey(d.k)}
+              className={`day-tile ${d.train ? "train glow" : d.cardioOnly ? "train cardio glow" : "rest"} s-${d.status}${key === d.k ? " sel" : ""}${d.date === today ? " is-today" : ""}${tileState(d.k).className}`}
+              style={tileState(d.k).style}
+              onClick={guard(() => setKey(d.k))}
+              {...tileProps(d.k)}
             >
               <div className="dt-top">
                 <span className="dt-dow">{DOW_LONG[d.k].slice(0, 3)}</span>
@@ -117,7 +135,11 @@ function Chooser() {
         })}
       </div>
 
-      <p className="small muted train-hint">Tap an exercise to change it, drag {Icon.grip} to reorder,, or add exercises and cardio.</p>
+      <div className="train-hint-row">
+        <p className="small muted train-hint">{drag ? `Drop ${DOW_LONG[drag.from]} on the day you want to swap it with.` : <>Drag a day onto another to swap them (on a phone, press and hold a day, like moving apps). Tap an exercise to change it, drag {Icon.grip} to reorder, or add exercises and cardio.</>}</p>
+        <button className="btn ghost sm" onClick={() => setSwapFor(sel.k)}>{Icon.swap} Swap {DOW_LONG[sel.k].slice(0, 3)}…</button>
+      </div>
+      <SwapDaySheet day={swapFor} plan={plan} onClose={() => setSwapFor(null)} onPick={(o) => { const a = swapFor!; setSwapFor(null); doSwap(a, o); }} />
       <div className="train-detail" key={sel.k}
         onTouchStart={(e) => { swipe.current = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }}
         onTouchEnd={(e) => {

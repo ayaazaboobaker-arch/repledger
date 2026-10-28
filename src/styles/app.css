@@ -1786,3 +1786,33 @@ li.lifted .ex-grip { color: var(--accent); }
   .lm-animate .lm-left, .lm-animate .lm-right, .lm-animate .lm-ledger, .splash-mark, .splash-ring, .splash-word span, .splash-tag { animation-duration: .01s; animation-delay: 0s; }
   .lm-animate .lm-bar { animation-duration: .01s; animation-delay: 0s; }
 }
+
+/* ---------- swap days: drag a day tile onto another ---------- */
+.train-hint-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.train-hint-row .train-hint { margin: 0; flex: 1 1 260px; }
+.train-hint-row .btn { flex: 0 0 auto; }
+@media (pointer: coarse) { .train-hint-row .train-hint { display: none; } .train-hint-row { justify-content: flex-end; margin-top: 8px; } }
+.day-tile { -webkit-touch-callout: none; user-select: none; -webkit-user-select: none; }
+.week-strip.is-swapping { cursor: grabbing; }
+.week-strip.arranging .day-tile { touch-action: none; }
+/* The tile being dragged lifts (scale and shadow spring up); the one under it slides into the gap. */
+.day-tile.dragging { z-index: 6; cursor: grabbing; scale: 1.06; transition: scale .34s cubic-bezier(.2, .9, .25, 1.3), box-shadow .3s ease !important; box-shadow: 0 18px 40px rgba(0, 0, 0, .38), 0 0 0 2px var(--accent); }
+.day-tile.shifted { z-index: 5; transition: transform .34s cubic-bezier(.2, .9, .25, 1) !important; }
+/* While two days are in the air their date labels fade, so only the workout moves; they fade back on landing. */
+.day-tile .dt-top, .day-tile .dt-badge { transition: opacity .2s ease; }
+.day-tile.moving .dt-top, .day-tile.moving .dt-badge { opacity: 0; transition-duration: .12s; }
+.week-strip.no-tx .day-tile { transition: none !important; } /* the swap lands with no tween; the date labels still fade back in */
+/* iOS-style jiggle: the individual rotate property composes with the drag transform. */
+@keyframes day-jiggle-a { 0% { rotate: -.9deg; } 50% { rotate: .9deg; } 100% { rotate: -.9deg; } }
+@keyframes day-jiggle-b { 0% { rotate: .8deg; } 50% { rotate: -.8deg; } 100% { rotate: .8deg; } }
+@media (prefers-reduced-motion: no-preference) {
+  .week-strip.arranging .day-tile.jiggle { animation: day-jiggle-a .27s ease-in-out infinite; transform-origin: 50% 55%; }
+  .week-strip.arranging .day-tile.jiggle:nth-child(even) { animation-name: day-jiggle-b; animation-duration: .31s; animation-delay: -.11s; }
+  .week-strip.arranging .day-tile.jiggle:nth-child(3n) { animation-duration: .29s; animation-delay: -.05s; }
+}
+@media (prefers-reduced-motion: reduce) { .week-strip.arranging .day-tile.jiggle { outline: 2px dashed var(--accent); outline-offset: -3px; } }
+.day-tile.dragging.jiggle { animation: none; }
+/* "Done" pill: fixed above the tab bar so showing it never moves the tiles under your finger. */
+.arrange-bar { position: fixed; left: 0; right: 0; margin-inline: auto; width: max-content; max-width: calc(100vw - 24px); bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); z-index: 40; display: flex; align-items: center; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 999px; background: color-mix(in srgb, var(--surface) 82%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(0, 0, 0, .3); font-size: 13px; }
+@media (prefers-reduced-motion: no-preference) { .arrange-bar { animation: arrange-in .42s cubic-bezier(.2, .9, .25, 1.15) both; } }
+@keyframes arrange-in { from { opacity: 0; transform: translateY(14px) scale(.94); } to { opacity: 1; transform: none; } }
